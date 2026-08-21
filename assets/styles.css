@@ -423,6 +423,8 @@ strong{font-weight:600}
    ========================================================================== */
 .steps{counter-reset:st;display:grid;gap:var(--s5);position:relative}
 @media(min-width:880px){.steps--3{grid-template-columns:repeat(3,1fr)}.steps--4{grid-template-columns:repeat(4,1fr)}}
+@media(min-width:760px){.steps--5{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1060px){.steps--5{grid-template-columns:repeat(5,1fr)}}
 .step{counter-increment:st;position:relative;padding-top:24px;border-top:2px solid var(--rule)}
 .step::before{content:counter(st,decimal-leading-zero);position:absolute;top:-16px;left:0;
   background:var(--paper);padding-right:14px;
@@ -433,6 +435,15 @@ strong{font-weight:600}
 .on-navy .step{border-top-color:var(--rule-dark)}
 .on-navy .step::before{background:var(--ink-navy);color:var(--amber)}
 .on-navy .step p{color:var(--on-navy)}
+
+/* discovery-call bar */
+.callbar{display:grid;gap:var(--s5);align-items:center;
+  background:var(--paper);border:1px solid var(--rule);border-left:3px solid var(--amber);
+  border-radius:var(--r-lg);padding:clamp(26px,3vw,40px)}
+@media(min-width:900px){.callbar{grid-template-columns:1.35fr 1fr;gap:clamp(40px,5vw,72px)}}
+.callbar h2{font-size:clamp(1.5rem,1.2rem + 1.2vw,1.95rem)}
+.callbar-l{margin:0}
+.callbar-l li{margin-bottom:10px;font-size:.97rem}
 
 /* ============================================================================
    PRICING
