@@ -472,6 +472,16 @@ strong{font-weight:600}
 .on-navy .step::before{background:var(--ink-navy);color:var(--amber)}
 .on-navy .step p{color:var(--on-navy)}
 
+/* pricing hand-off band on service pages */
+.pricebar{display:flex;flex-wrap:wrap;gap:var(--s4) var(--s6);align-items:center;
+  justify-content:space-between;background:var(--paper);border:1px solid var(--rule);
+  border-left:3px solid var(--cobalt);border-radius:var(--r-lg);
+  padding:clamp(26px,3vw,38px)}
+.pricebar > div{flex:1 1 420px}
+.pricebar h2{font-size:clamp(1.35rem,1.1rem + 1vw,1.7rem)}
+.pricebar p{margin:12px 0 0;color:var(--slate);font-size:.97rem;max-width:62ch}
+.pricebar .btn{flex:0 0 auto}
+
 /* discovery-call bar */
 .callbar{display:grid;gap:var(--s5);align-items:center;
   background:var(--paper);border:1px solid var(--rule);border-left:3px solid var(--amber);
