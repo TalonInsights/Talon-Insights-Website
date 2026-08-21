@@ -112,11 +112,16 @@ strong{font-weight:600}
 .sec-head .lead{margin-top:14px}
 
 /* ---------- buttons ---------- */
+/* Buttons carry the logo's angular geometry: opposite corners sharp,
+   and the cut corners swap sides on hover. */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;
-  font:600 1rem/1 var(--ff-b);padding:16px 26px;border-radius:var(--r-sm);
+  font:600 1rem/1 var(--ff-b);padding:16px 26px;
+  border-radius:16px 4px 16px 4px;
   border:1px solid transparent;text-decoration:none;cursor:pointer;white-space:nowrap;
   transition:background .15s var(--ease),border-color .15s var(--ease),color .15s var(--ease),
-             transform .15s var(--ease),box-shadow .15s var(--ease)}
+             transform .15s var(--ease),box-shadow .15s var(--ease),
+             border-radius .3s var(--ease)}
+.btn:hover{border-radius:4px 16px 4px 16px}
 .btn:hover{transform:translateY(-1px)}
 .btn:active{transform:none}
 .btn svg{width:18px;height:18px;flex:none;transition:transform .2s var(--ease)}
