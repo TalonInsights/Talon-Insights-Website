@@ -65,6 +65,9 @@ for src in pages:
     html = html.replace("{{DESC}}", meta["desc"])
     html = html.replace("{{PATH}}", "/" if path == "/" else path)
     html = html.replace("{{SCHEMA}}", schema)
+    if meta.get("robots"):
+        html = html.replace('<meta name="robots" content="index,follow">',
+                            '<meta name="robots" content="%s">' % meta["robots"])
     html = html.replace("{{BODY}}", body.rstrip())
     # nav current-page markers
     html = re.sub(r"\{\{CUR:([^}]*)\}\}",

@@ -235,7 +235,7 @@ strong{font-weight:600}
 
 /* sheen: a light band that sweeps once across the bird's own silhouette */
 .hero-falcon .sheen{position:absolute;inset:0;
-  -webkit-mask-image:url("/assets/falcon-bird.png");mask-image:url("/assets/falcon-bird.png");
+  -webkit-mask-image:url("/assets/falcon-bird.webp");mask-image:url("/assets/falcon-bird.webp");
   -webkit-mask-size:100% 100%;mask-size:100% 100%;
   background:linear-gradient(115deg,transparent 40%,rgba(255,255,255,.55) 50%,rgba(180,205,255,.25) 54%,transparent 62%);
   background-size:260% 100%;background-repeat:no-repeat;
