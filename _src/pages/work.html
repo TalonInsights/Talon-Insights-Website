@@ -1,4 +1,4 @@
-<!--META {"path": "/work", "title": "Case Studies | Talon Insights", "desc": "Real work for West Midlands businesses: a production scheduler running in a factory, a 3D engine-bay configurator, a ten-million-iteration model.", "crumb": "Work", "nav": "/work"} -->
+<!--META {"path": "/work", "title": "Case Studies | Talon Insights", "desc": "Real work for West Midlands businesses: a production scheduler running in a factory, a DVLA-powered remap quoter, a ten-million-iteration model.", "crumb": "Work", "nav": "/work"} -->
 <section class="page-hero">
   <img class="mini-falcon" src="/assets/falcon.webp" alt="" width="900" height="748" aria-hidden="true">
   <div class="wrap">
@@ -78,31 +78,105 @@
     <div class="case">
       <div>
         <h2>WulfTek Tuning<span class="dot">.</span></h2>
-        <div class="tags" style="margin-top:18px"><span class="tag">Website</span><span class="tag">3D configurator</span><span class="tag">Three.js</span></div>
+        <div class="tags" style="margin-top:18px"><span class="tag">Website rebuild</span><span class="tag">DVLA API</span><span class="tag">Conversion design</span><span class="tag">Market positioning</span></div>
+
         <h3 style="margin:26px 0 10px">The situation</h3>
-        <p style="color:var(--slate)">A performance tuning business whose product is invisible until the bonnet opens. A brochure site would have said "trust us"; the business needed the website itself to demonstrate the standard of the work.</p>
-        <h3 style="margin:26px 0 10px">What I built</h3>
+        <p style="color:var(--slate)">
+          Mobile ECU remapping across Telford and Shropshire, with a website that could
+          have belonged to any tuning firm in the country. Black background, red accents,
+          "UNLOCK YOUR TRUE POWER", three headline percentages, and three competing
+          buttons in the hero. Nothing on it was specific to this business, this county,
+          or this customer — and nothing on it asked the question the customer was
+          actually turning up with.
+        </p>
+
+        <h3 style="margin:26px 0 10px">What I changed</h3>
         <ul class="ticks">
-          <li>A Three.js interactive engine-bay renderer — the customer's own engine bay, explorable in the browser.</li>
-          <li>Vehicle-registration lookup wired to the renderer, so entering a plate configures the view.</li>
-          <li>A fallback chain for when the lookup comes back empty — the page still works when the data doesn't.</li>
+          <li>Rebuilt the site around one question — <strong>"What could your car actually do?"</strong> — and one input: your registration.</li>
+          <li>Wired the hero to the <strong>DVLA vehicle API</strong>, so entering a plate returns that specific vehicle rather than a generic sales pitch.</li>
+          <li>Replaced the stock dark-tuning look with real workshop photography and an editorial type hierarchy — the business's own premises doing the reassurance work.</li>
+          <li>Opened a service line nobody local was serving: <strong>agricultural remapping</strong>.</li>
         </ul>
-        <div class="outcome"><strong>Full write-up in progress.</strong> Outcome figures and the client's own words to follow — nothing gets published here that the client hasn't approved.</div>
+
+        <div class="outcome"><strong>Outcome — to be added.</strong> Enquiry volume before and after, plus the client's own words, once WulfTek have approved them.</div>
       </div>
+
       <div>
-        <div class="shot" role="img" aria-label="Placeholder for a capture of the 3D engine bay renderer">
-          <b>Renderer capture goes here</b>
-          <small>A short screen recording exported as poster + MP4 beats a still for this one.</small>
-        </div>
-        <div class="detailbox" style="margin-top:24px">
-          <p class="db-h">Engineering detail</p>
+        <div class="detailbox">
+          <p class="db-h">The reg box, and why it's that big</p>
           <ul class="ticks">
-            <li><code>Three.js</code> scene tuned for mid-range phones — the audience checks sites from the driver's seat.</li>
-            <li>Registration lookup with a graceful degradation chain: live data &rarr; cached &rarr; generic model.</li>
-            <li>Interactive moment used where it earns its place — the rest of the site stays fast and plain.</li>
+            <li><strong>It costs nothing to start.</strong> No name, no email, no phone — the smallest possible first action, taken before any commitment is asked for.</li>
+            <li><strong>It's already familiar.</strong> Styled as an actual UK plate, so it needs no instruction. Every driver knows what goes in a yellow box with a blue UK flag.</li>
+            <li><strong>It's about them, not the firm.</strong> "What could <em>your</em> car do" is a question about the visitor's own vehicle, not a claim about the business.</li>
+            <li><strong>Value arrives before the ask.</strong> Real numbers for their car come first; booking is offered afterwards, once something has already been given.</li>
+            <li><strong>One action, not three.</strong> The old hero offered Book, WhatsApp and Get a quote side by side — three doors is a decision, and a decision is friction.</li>
+          </ul>
+        </div>
+
+        <div class="detailbox" style="margin-top:24px">
+          <p class="db-h">Answering the real objection</p>
+          <ul class="ticks">
+            <li>The thing that stops people booking a remap isn't price — it's fear of what it does to the engine.</li>
+            <li>So directly beneath the call to action: <em>original file always kept</em>, <em>nothing removed from your engine</em>, <em>reversible at any time</em>.</li>
+            <li>Three sentences, placed at the exact moment of hesitation, addressing the objection the old site never acknowledged.</li>
           </ul>
         </div>
       </div>
+    </div>
+
+    <div style="margin-top:56px" data-reveal>
+      <p class="eyebrow">Before and after — drag to compare</p>
+      <div class="ba" style="--posn:50">
+        <img class="ba-after" src="/assets/wulftek-after.webp" width="1600" height="800" loading="lazy"
+             alt="After: the rebuilt WulfTek homepage — a single question, a large UK number plate input wired to the DVLA API, and reassurance about the remap being reversible.">
+        <div class="ba-before" aria-hidden="true">
+          <img src="/assets/wulftek-before.webp" width="1600" height="800" loading="lazy" alt="">
+        </div>
+        <div class="ba-divider" aria-hidden="true"></div>
+        <input type="range" min="0" max="100" value="50" step="1"
+               aria-label="Comparison slider: reveal the old WulfTek site on the left or the rebuilt site on the right">
+        <span class="ba-handle" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l-5 6 5 6M15 6l5 6-5 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <span class="ba-tag ba-tag--before" aria-hidden="true">Before</span>
+        <span class="ba-tag ba-tag--after" aria-hidden="true">After</span>
+      </div>
+      <p class="ba-caption">Left: a hero making claims about the business. Right: a hero asking a question about the customer's car.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ WULFTEK: the AI point ============================ -->
+<section class="sec on-navy" data-reveal>
+  <div class="wrap grid g2" style="gap:clamp(48px,6vw,96px);align-items:start">
+    <div>
+      <p class="eyebrow">Why the old site read like every other one</p>
+      <h2>A generator can write a website in a minute<span class="dot">.</span></h2>
+      <p class="lead" style="margin-top:16px">
+        What it can't do is spend an afternoon in the unit finding out that half the
+        machinery within twenty miles is agricultural and nobody local is remapping it.
+      </p>
+      <p style="margin-top:16px">
+        The old WulfTek site had every hallmark of copy written without anyone being
+        asked anything: interchangeable superlatives, round percentages with no test
+        data behind them, a location line naming three places and saying nothing about
+        any of them. It could have been lifted onto a competitor's domain without
+        changing a word — which is the actual problem, whatever produced it.
+      </p>
+      <p style="margin-top:16px">
+        I use modern tooling constantly, and I'd be a hypocrite to pretend otherwise.
+        The difference isn't the tools. It's that the words came after the visit.
+      </p>
+    </div>
+    <div class="detailbox">
+      <p class="db-h">Found on site, not in a brief</p>
+      <ul class="ticks">
+        <li><strong>Agricultural remapping.</strong> Tractors, telehandlers and farm machinery across Shropshire — plenty of demand, essentially nobody local marketing to it. It surfaced in conversation during the first visit and became a service line.</li>
+        <li><strong>The reversibility fear.</strong> Not on any brief. It came from what customers actually ask before booking, and it's now answered in the hero.</li>
+        <li><strong>The plate as the opening move.</strong> Everyone in the trade already asks for a registration. The site just asks for it first, and gives something back for it.</li>
+      </ul>
+      <a class="alink" style="margin-top:18px" href="/groundwork">How the Groundwork Visit works
+        {{SNIP:arrow}}</a>
     </div>
   </div>
 </section>

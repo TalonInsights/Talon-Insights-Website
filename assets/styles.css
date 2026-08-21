@@ -423,6 +423,9 @@ strong{font-weight:600}
 .detailbox .db-h::before{content:"";width:22px;height:1.5px;background:var(--amber)}
 .detailbox .ticks li{color:var(--on-navy);font-size:.94rem}
 .detailbox .ticks li::before{border-color:var(--amber)}
+/* the box is navy even inside a light section, so bold lead-ins must invert
+   here too — otherwise they render as near-black on near-black */
+.detailbox .ticks li strong,.detailbox .ticks li em{color:#fff}
 .detailbox code{font:.86em ui-monospace,SFMono-Regular,Menlo,monospace;
   background:rgba(255,255,255,.1);padding:2px 7px;border-radius:4px;color:#fff}
 
