@@ -55,7 +55,7 @@
       <a href="/pricing">Pricing</a>
       <a href="/about">About</a>
     </nav>
-    <a class="btn btn--primary head-cta" href="/contact">Book a Groundwork Visit</a>
+    <a class="btn btn--amber head-cta" href="/contact">Book a Groundwork Visit</a>
     <button class="burger" type="button" aria-expanded="false" aria-controls="mnav">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke-linecap="round"/></svg>
       Menu
@@ -70,7 +70,7 @@
     <a href="/pricing">Pricing</a>
     <a href="/about">About</a>
     <a href="/contact" aria-current="page">Contact</a>
-    <a class="btn btn--primary" href="/contact">Book a Groundwork Visit</a>
+    <a class="btn btn--amber" href="/contact">Book a Groundwork Visit</a>
   </nav>
 </header>
 
@@ -121,46 +121,71 @@
     </div>
 
     <form class="form" id="enquiry" action="https://formspree.io/f/xrpzjjzg" method="post" novalidate>
-      <h2>Send me a quick message</h2>
-      <div class="field">
-        <label for="f-name">Your name</label>
-        <input id="f-name" name="name" type="text" autocomplete="name" required>
-        <span class="err" id="e-name" role="alert"></span>
+      <div class="form-head">
+        <p class="eyebrow">Quick message</p>
+        <h2>Tell me what you need</h2>
+        <p>Two fields, then send. Everything else just helps me turn up prepared.</p>
       </div>
-      <div class="field">
-        <label for="f-biz">Business name <span class="hint">(optional)</span></label>
-        <input id="f-biz" name="business" type="text" autocomplete="organization">
-      </div>
-      <div class="field">
-        <label for="f-contact">Email or phone <span class="hint">— whichever you prefer</span></label>
-        <input id="f-contact" name="contact" type="text" autocomplete="email" required>
-        <span class="err" id="e-contact" role="alert"></span>
-      </div>
-      <fieldset class="field" style="border:0;padding:0;margin-inline:0">
-        <legend>What do you need?</legend>
-        <div class="choices">
-          <label class="choice"><input type="checkbox" name="need" value="Website"><span>Website</span></label>
-          <label class="choice"><input type="checkbox" name="need" value="Software"><span>Software</span></label>
-          <label class="choice"><input type="checkbox" name="need" value="SEO"><span>SEO</span></label>
-          <label class="choice"><input type="checkbox" name="need" value="Research"><span>Research</span></label>
-          <label class="choice"><input type="checkbox" name="need" value="Not sure"><span>Not sure</span></label>
+
+      <div class="form-body">
+        <div class="form-row">
+          <div class="field">
+            <label for="f-name">Your name <i class="req" aria-hidden="true">required</i></label>
+            <input id="f-name" name="name" type="text" autocomplete="name" required>
+            <span class="err" id="e-name" role="alert"></span>
+          </div>
+          <div class="field">
+            <label for="f-biz">Business name <span class="hint">optional</span></label>
+            <input id="f-biz" name="business" type="text" autocomplete="organization">
+          </div>
         </div>
-      </fieldset>
-      <div class="field">
-        <label for="f-msg">Anything else? <span class="hint">(optional)</span></label>
-        <textarea id="f-msg" name="message" rows="4"></textarea>
+
+        <div class="field">
+          <label for="f-contact">Email or phone <i class="req" aria-hidden="true">required</i></label>
+          <input id="f-contact" name="contact" type="text" autocomplete="email"
+                 placeholder="Whichever you'd rather I used" required>
+          <span class="err" id="e-contact" role="alert"></span>
+        </div>
+
+        <fieldset class="field">
+          <legend>What do you need? <span class="hint">optional</span></legend>
+          <div class="choices">
+            <label class="choice"><input type="checkbox" name="need" value="Website"><span>Website</span></label>
+            <label class="choice"><input type="checkbox" name="need" value="Software"><span>Software</span></label>
+            <label class="choice"><input type="checkbox" name="need" value="SEO"><span>SEO</span></label>
+            <label class="choice"><input type="checkbox" name="need" value="Research"><span>Research</span></label>
+            <label class="choice"><input type="checkbox" name="need" value="Not sure"><span>Not sure yet</span></label>
+          </div>
+        </fieldset>
+
+        <div class="form-row">
+          <div class="field">
+            <label for="f-loc">Where are you? <span class="hint">optional</span></label>
+            <input id="f-loc" name="location" type="text" autocomplete="address-level2" placeholder="Town or postcode">
+          </div>
+          <div class="field">
+            <label for="f-when">When suits? <span class="hint">optional</span></label>
+            <input id="f-when" name="timing" type="text" placeholder="e.g. next couple of weeks">
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="f-msg">Anything else? <span class="hint">optional</span></label>
+          <textarea id="f-msg" name="message" rows="4" placeholder="A sentence or two about the job is plenty."></textarea>
+        </div>
       </div>
-      <div class="field">
-        <label for="f-loc">Where are you? <span class="hint">(optional)</span></label>
-        <input id="f-loc" name="location" type="text" autocomplete="address-level2" placeholder="Town or postcode">
-      </div>
+
       <input type="hidden" name="_subject" value="New enquiry from taloninsights.co.uk">
       <div class="sr-only" aria-hidden="true">
         <label for="f-hp">Leave this blank</label>
         <input id="f-hp" name="website_url" type="text" tabindex="-1" autocomplete="off">
       </div>
-      <button class="btn btn--primary btn--lg" type="submit" style="width:100%">Send message</button>
-      <p class="formnote">No jargon. I'll explain everything in plain English, and I reply within one working day.</p>
+
+      <div class="form-foot">
+        <button class="btn btn--amber btn--lg" type="submit">Send message
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <p class="formnote">No jargon, and I reply within one working day &mdash; every time.</p>
+      </div>
       <p class="formmsg" id="formmsg" role="status" aria-live="polite"></p>
     </form>
   </div>
