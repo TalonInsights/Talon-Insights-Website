@@ -639,6 +639,47 @@ strong{font-weight:600}
 .contactlist span{color:var(--on-navy)}
 
 /* ============================================================================
+   BLOG
+   ========================================================================== */
+.postmeta{font:500 var(--fs-sm)/1.5 var(--ff-d);letter-spacing:.08em;text-transform:uppercase;
+  color:var(--on-navy-dim);margin-top:22px}
+.prose .postmeta{color:var(--slate)}
+
+.posts{display:grid;gap:var(--s4)}
+@media(min-width:900px){.posts{grid-template-columns:1fr 1fr}}
+.postcard{position:relative;display:flex;flex-direction:column;height:100%;
+  background:#fff;border:1px solid var(--rule);border-radius:var(--r-lg);
+  padding:34px 32px 28px;text-decoration:none;color:inherit;overflow:clip;
+  box-shadow:var(--shadow-1);
+  transition:transform .22s var(--ease),box-shadow .22s var(--ease),border-color .22s var(--ease)}
+.postcard::before{content:"";position:absolute;inset:0 0 auto;height:3px;
+  background:linear-gradient(90deg,var(--amber),var(--cobalt));
+  transform:scaleX(0);transform-origin:left;transition:transform .35s var(--ease)}
+.postcard:hover{transform:translateY(-4px);box-shadow:var(--shadow-2);border-color:#C7D2E0;color:inherit}
+.postcard:hover::before{transform:scaleX(1)}
+.postcard-k{font:600 var(--fs-sm)/1.4 var(--ff-d);letter-spacing:.14em;text-transform:uppercase;
+  color:var(--cobalt-deep);margin-bottom:14px}
+.postcard h2{font-size:1.5rem;line-height:1.2;margin-bottom:14px;transition:color .2s var(--ease)}
+.postcard:hover h2{color:var(--cobalt-deep)}
+.postcard-x{color:var(--slate);font-size:.97rem;margin-bottom:24px}
+.postcard-f{margin-top:auto;padding-top:18px;border-top:1px solid var(--rule);
+  display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.postcard-f .postmeta{margin:0;font-size:.72rem}
+
+/* long-form article body */
+.prose h2{font-size:1.6rem;margin:52px 0 16px}
+.prose h3{font-size:1.16rem;margin:34px 0 10px}
+.prose > p:first-of-type{font-size:1.08rem}
+.callout{margin:34px 0;padding:22px 26px;background:var(--paper);
+  border-left:3px solid var(--amber);border-radius:var(--r-sm)}
+.callout p{margin:0;color:var(--ink)}
+.postcta{margin-top:52px;padding:30px 32px;background:var(--ink-navy);color:#fff;
+  border-radius:var(--r-lg);box-shadow:var(--shadow-navy);
+  display:flex;flex-wrap:wrap;gap:16px;align-items:center}
+.postcta p{flex:1 1 300px;margin:0;color:var(--on-navy);font-size:.98rem}
+.postcta p strong{color:#fff}
+
+/* ============================================================================
    PROSE (legal pages, long copy)
    ========================================================================== */
 .prose{max-width:70ch}

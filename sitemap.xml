@@ -9,13 +9,13 @@
   <url>
     <loc>https://taloninsights.co.uk/about</loc>
     <lastmod>2026-08-21</lastmod>
-    <changefreq>yearly</changefreq>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://taloninsights.co.uk/accessibility</loc>
     <lastmod>2026-08-21</lastmod>
-    <changefreq>yearly</changefreq>
+    <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
@@ -23,6 +23,24 @@
     <lastmod>2026-08-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://taloninsights.co.uk/blog</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://taloninsights.co.uk/blog/monte-carlo-marketing</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://taloninsights.co.uk/blog/spreadsheet-to-software</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://taloninsights.co.uk/contact</loc>
@@ -57,7 +75,7 @@
   <url>
     <loc>https://taloninsights.co.uk/privacy</loc>
     <lastmod>2026-08-21</lastmod>
-    <changefreq>yearly</changefreq>
+    <changefreq>monthly</changefreq>
     <priority>0.2</priority>
   </url>
   <url>
@@ -87,7 +105,7 @@
   <url>
     <loc>https://taloninsights.co.uk/terms</loc>
     <lastmod>2026-08-21</lastmod>
-    <changefreq>yearly</changefreq>
+    <changefreq>monthly</changefreq>
     <priority>0.2</priority>
   </url>
   <url>

@@ -31,7 +31,7 @@ snippets = {p.stem: p.read_text(encoding="utf-8").strip()
 def expand(text):
     return re.sub(r"\{\{SNIP:([a-z-]+)\}\}",
                   lambda m: snippets[m.group(1)], text)
-pages = sorted((SRC / "pages").glob("*.html"))
+pages = sorted((SRC / "pages").rglob("*.html"))
 if not pages:
     sys.exit("no page sources found")
 
@@ -46,6 +46,7 @@ for src in pages:
 
     path = meta["path"]
     out = ROOT / ("index.html" if path == "/" else path.strip("/") + ".html")
+    out.parent.mkdir(parents=True, exist_ok=True)
 
     schema = ""
     if meta.get("crumb"):
