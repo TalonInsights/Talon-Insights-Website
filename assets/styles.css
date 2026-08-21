@@ -433,6 +433,9 @@ strong{font-weight:600}
 .shot b{font:600 1.05rem var(--ff-d);color:var(--ink)}
 .shot small{font-size:var(--fs-sm);max-width:36ch}
 
+.case-img{width:100%;height:auto;border:1px solid var(--rule);border-radius:var(--r-lg);
+  box-shadow:var(--shadow-2);background:#fff}
+
 .outcome{margin-top:var(--s5);padding:18px 22px;background:#fff;border-left:3px solid var(--amber);
   border-radius:var(--r-sm);font-size:.95rem;color:var(--slate);box-shadow:var(--shadow-1)}
 .outcome strong{color:var(--ink)}

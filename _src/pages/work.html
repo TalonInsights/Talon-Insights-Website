@@ -34,16 +34,15 @@
         <div class="outcome"><strong>Outcome — to be added.</strong> One measurable result and one approved client quote will do more work than everything else on this page.</div>
       </div>
       <div>
-        <div class="shot" role="img" aria-label="Placeholder for a screenshot of the production scheduler">
-          <b>Scheduler screenshot goes here</b>
-          <small>Export at 1600&times;1000, WebP. The drag-and-drop board with a breach flagged is the money shot.</small>
-        </div>
+        <img class="case-img" src="/assets/dj-scheduler.webp" width="1600" height="636" loading="lazy"
+             alt="The production scheduler built for David Jackson &amp; Son: nine jobs planned across colour-coded stages on a drag-and-drop timeline, with deadlines flagged and zero past deadline.">
         <div class="detailbox" style="margin-top:24px">
           <p class="db-h">Engineering detail</p>
           <ul class="ticks">
             <li>Eight production stages, drag-and-drop rescheduling, automatic breach detection against stage deadlines.</li>
             <li>Migrated from <code>localStorage</code> to a <code>Supabase</code> backend — the plan survives the browser and is shared by everyone.</li>
-            <li>Authentication, so the factory floor and the office see what each needs.</li>
+            <li>Sign-in protected by two-factor authentication, so the plan and the customer names behind it stay private.</li>
+            <li>Autosave on every change, with one-click backup and restore — nobody loses an afternoon's planning to a closed tab.</li>
             <li>GitHub &rarr; <code>Vercel</code> pipeline: every change reviewable, every change reversible.</li>
           </ul>
         </div>
