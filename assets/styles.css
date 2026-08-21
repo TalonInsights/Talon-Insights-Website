@@ -290,15 +290,24 @@ strong{font-weight:600}
 /* ============================================================================
    EDITORIAL ROWS  (numbered list — the anti-card-grid)
    ========================================================================== */
+/* Numbered editorial rows: index + dash left, title over description right.
+   On hover the dash reaches toward the title and the title steps aside —
+   the same gesture as the flight path. */
 .rows{border-top:1px solid var(--rule)}
-.rows>li{display:grid;grid-template-columns:64px 1fr;gap:var(--s3) var(--s5);
-  padding:30px 0 28px;border-bottom:1px solid var(--rule);align-items:start;
-  transition:background .2s var(--ease)}
-@media(min-width:860px){.rows>li{grid-template-columns:84px 300px 1fr}}
-.rows .no{font:600 .95rem/1.7 var(--ff-d);letter-spacing:.06em;color:var(--cobalt)}
-.rows h3{font-size:var(--fs-h4)}
-.rows p{color:var(--slate);margin:0;font-size:.98rem}
-@media(max-width:859px){.rows p{grid-column:2}}
+.rows>li{position:relative;display:grid;grid-template-columns:64px 1fr;
+  padding:24px 0 22px;border-bottom:1px solid var(--rule)}
+@media(min-width:860px){.rows>li{grid-template-columns:92px 1fr}}
+.rows .no{grid-row:1/3;display:flex;align-items:flex-start;gap:10px;
+  font:600 .92rem/1.9 var(--ff-d);letter-spacing:.08em;color:var(--cobalt)}
+.rows .no::after{content:"";height:1px;width:16px;background:var(--rule);
+  margin-top:.95em;transition:width .3s var(--ease),background .3s var(--ease)}
+.rows h3{font-size:var(--fs-h4);transition:transform .3s var(--ease)}
+.rows p{grid-column:2;color:var(--slate);margin:5px 0 0;font-size:.98rem;max-width:58ch}
+@media(hover:hover){
+  .rows>li:hover .no::after{width:48px;background:var(--amber)}
+  .rows>li:hover h3{transform:translateX(6px)}
+}
+@media(max-width:859px){.rows .no::after{display:none}}
 
 /* ============================================================================
    SERVICE CARDS (home) + SERVICE PAGES
