@@ -120,7 +120,7 @@
       </ul>
     </div>
 
-    <form class="form" id="enquiry" action="__FORM_ENDPOINT__" method="post" novalidate>
+    <form class="form" id="enquiry" action="https://formspree.io/f/xrpzjjzg" method="post" novalidate>
       <h2>Send me a quick message</h2>
       <div class="field">
         <label for="f-name">Your name</label>
@@ -154,6 +154,7 @@
         <label for="f-loc">Where are you? <span class="hint">(optional)</span></label>
         <input id="f-loc" name="location" type="text" autocomplete="address-level2" placeholder="Town or postcode">
       </div>
+      <input type="hidden" name="_subject" value="New enquiry from taloninsights.co.uk">
       <div class="sr-only" aria-hidden="true">
         <label for="f-hp">Leave this blank</label>
         <input id="f-hp" name="website_url" type="text" tabindex="-1" autocomplete="off">
