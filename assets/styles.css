@@ -585,6 +585,15 @@ strong{font-weight:600}
 .ba input[type=range]:focus-visible ~ .ba-handle{outline:3px solid var(--cobalt);outline-offset:3px}
 .ba-caption{margin-top:14px;font-size:var(--fs-sm);color:var(--slate)}
 
+/* work-in-progress status pill */
+.status{display:inline-flex;align-items:center;gap:9px;margin:16px 0 0;
+  padding:8px 15px;border-radius:var(--r-pill);
+  background:#FFF6E6;border:1px solid #F0D49A;color:#7A4B06;
+  font:600 var(--fs-sm)/1 var(--ff-d);letter-spacing:.03em}
+.status::before{content:"";width:7px;height:7px;border-radius:50%;
+  background:var(--amber);box-shadow:0 0 0 3px rgba(245,166,35,.25)}
+.on-navy .status{background:rgba(245,166,35,.12);border-color:rgba(245,166,35,.35);color:#F7C877}
+
 /* work index cards */
 .workcard{display:block;background:#fff;border:1px solid var(--rule);border-radius:var(--r-lg);
   padding:34px 32px;text-decoration:none;color:inherit;height:100%;
