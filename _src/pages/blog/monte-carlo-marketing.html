@@ -1,15 +1,15 @@
-<!--META {"path": "/blog/monte-carlo-marketing", "title": "Monte Carlo Testing for Marketing Decisions", "desc": "How simulating a marketing decision ten million times gives you a range of outcomes instead of one hopeful number — and when it is worth doing for an SME.", "crumb": "Monte Carlo marketing testing", "nav": "/blog"} -->
+<!--META {"path": "/blog/monte-carlo-marketing", "title": "Monte Carlo Testing for Marketing Decisions", "desc": "From a PESTLE scan of several hundred factors to ten million simulations: how scenario modelling gives you a range of outcomes instead of one hopeful number.", "crumb": "Monte Carlo marketing testing", "nav": "/blog"} -->
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"BlogPosting",
  "headline":"Monte Carlo testing for marketing decisions",
- "description":"How simulating a marketing decision ten million times gives you a range of outcomes instead of one hopeful number — and when it is worth doing for an SME.",
+ "description":"From a PESTLE scan of several hundred factors to ten million simulations: how scenario modelling gives a range of outcomes instead of one hopeful number.",
  "datePublished":"2026-08-21","dateModified":"2026-08-21",
  "author":{"@id":"https://taloninsights.co.uk/#talon"},
  "publisher":{"@id":"https://taloninsights.co.uk/#business"},
  "mainEntityOfPage":{"@type":"WebPage","@id":"https://taloninsights.co.uk/blog/monte-carlo-marketing"},
  "image":"https://taloninsights.co.uk/assets/og-image.jpg",
  "articleSection":"Research & strategy",
- "keywords":"Monte Carlo simulation, marketing testing, scenario modelling, SME strategy, West Midlands"}
+ "keywords":"Monte Carlo simulation, PESTLE analysis, scenario modelling, sensitivity analysis, marketing testing, SME strategy, West Midlands"}
 </script>
 
 <section class="page-hero">
@@ -18,11 +18,11 @@
     <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span>/</span><a href="/blog">Blog</a><span>/</span><span aria-current="page">Monte Carlo marketing testing</span></nav>
     <h1>Monte Carlo testing for marketing decisions<span class="dot">.</span></h1>
     <p class="lead">
-      Most marketing decisions get made on a single number in a spreadsheet. That number
-      is always wrong. Here's the method for finding out how wrong it might be — before
-      you spend the money.
+      Most decisions get made on a single number in a spreadsheet. That number is always
+      wrong. Here's the method for finding out how wrong it might be — a PESTLE scan of
+      several hundred factors, bounded, then simulated millions of times.
     </p>
-    <p class="postmeta">21 August 2026 &middot; 9 min read &middot; Research &amp; strategy</p>
+    <p class="postmeta">21 August 2026 &middot; 12 min read &middot; Research &amp; strategy</p>
   </div>
 </section>
 
@@ -106,6 +106,48 @@
       with a probability attached and a note saying which assumption to watch.</p>
     </div>
 
+    <h2>Scaling up: when three variables become several hundred</h2>
+    <p>
+      The example above has three inputs, which is enough to show the mechanics and far
+      too few for a real decision. A turnaround, a market entry, a major capital
+      commitment — these don't hang on three numbers. They hang on dozens of forces
+      pulling in different directions, most of which nobody has written down.
+    </p>
+    <p>
+      So the first stage isn't modelling at all. It's a structured sweep to make sure
+      nothing important has been missed, and <strong>PESTLE</strong> is the framework
+      that does it — forcing you through six categories rather than listing whatever
+      comes to mind:
+    </p>
+    <ul>
+      <li><strong>Political</strong> — policy shifts, procurement rules, local authority direction.</li>
+      <li><strong>Economic</strong> — rates, inflation, wage pressure, customer spending power.</li>
+      <li><strong>Social</strong> — demographics, behaviour change, what buyers now expect as standard.</li>
+      <li><strong>Technological</strong> — substitutes, automation, the tooling your competitors are adopting.</li>
+      <li><strong>Legal</strong> — regulation, compliance cost, licensing, liability.</li>
+      <li><strong>Environmental</strong> — energy cost, materials, seasonality, weather exposure.</li>
+    </ul>
+    <p>
+      Worked properly, that scan produces <strong>several hundred individual factors</strong>
+      on a large engagement. Most will turn out not to matter. That's fine — the point of
+      listing them is that you cannot dismiss a factor you never identified, and the
+      expensive surprises are almost always in the category nobody thought to check.
+    </p>
+    <p>
+      Each surviving factor then gets bounded: a plausible range, and a sense of how likely
+      the middle is compared with the extremes. Some interact, so those relationships get
+      encoded too — if energy cost spikes, certain other assumptions move with it rather
+      than independently.
+    </p>
+
+    <div class="callout">
+      <p><strong>This is why the iteration count gets large.</strong> With three variables,
+      a few thousand runs settle the answer. With several hundred interacting ones, the
+      distribution keeps shifting until you've run it millions of times — ten million on
+      the biggest model I've built. It isn't showing off; it's the number needed before
+      the shape stops moving.</p>
+    </div>
+
     <h2>Sensitivity: the part that changes what you do</h2>
     <p>
       Once you have the simulation, you can hold each input still and see how much the
@@ -146,10 +188,15 @@
 
     <h2>What it looks like as a deliverable</h2>
     <p>
-      I've built this for a national marketplace weighing a turnaround decision — ten
-      million simulated scenarios behind a single recommendation. What the client
-      received wasn't the model. It was a decision document: what to do, what it costs,
-      what could go wrong, and which assumptions to keep an eye on.
+      On the largest model I've built — a turnaround decision run over ten million
+      simulated scenarios — the client never received the model itself. They received a
+      decision document: what to do, what it costs, what could go wrong, and which of
+      the several hundred scanned factors were the ones actually worth watching.
+    </p>
+    <p>
+      That reduction is the real work. Going from a PESTLE scan of a few hundred factors
+      to a shortlist a busy owner can hold in their head is what separates a model from
+      a decision, and it's the step most analyses skip.
     </p>
     <p>
       That distinction matters. A model nobody can act on is an expensive spreadsheet.
