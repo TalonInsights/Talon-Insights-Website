@@ -440,6 +440,29 @@ strong{font-weight:600}
   border-radius:var(--r-sm);font-size:.95rem;color:var(--slate);box-shadow:var(--shadow-1)}
 .outcome strong{color:var(--ink)}
 
+/* Before / after comparison slider — no dependencies. A full-surface range
+   input drives the divider; drag, click or arrow keys all work. */
+.ba{position:relative;border:1px solid var(--rule);border-radius:var(--r-lg);
+  overflow:clip;box-shadow:var(--shadow-2);--pos:50%}
+.ba img{display:block;width:100%;height:auto;user-select:none;pointer-events:none}
+.ba .ba-before{position:absolute;inset:0;clip-path:inset(0 calc(100% - var(--pos)) 0 0)}
+.ba .ba-divider{position:absolute;top:0;bottom:0;left:var(--pos);width:2px;
+  background:#fff;transform:translateX(-1px);box-shadow:0 0 0 1px rgba(11,31,58,.25);pointer-events:none}
+.ba .ba-handle{position:absolute;top:50%;left:var(--pos);transform:translate(-50%,-50%);
+  width:44px;height:44px;border-radius:50%;background:#fff;box-shadow:var(--shadow-2);
+  display:grid;place-items:center;pointer-events:none}
+.ba .ba-handle svg{width:22px;height:22px;color:var(--ink-navy)}
+.ba .ba-tag{position:absolute;top:14px;padding:7px 14px;border-radius:var(--r-pill);
+  font:600 var(--fs-sm)/1 var(--ff-d);letter-spacing:.1em;text-transform:uppercase;pointer-events:none}
+.ba .ba-tag--before{left:14px;background:rgba(8,23,41,.72);color:#fff;
+  opacity:calc((var(--posn) - 12) / 10)}
+.ba .ba-tag--after{right:14px;background:var(--amber);color:var(--ink-navy);
+  opacity:calc((88 - var(--posn)) / 10)}
+.ba input[type=range]{position:absolute;inset:0;width:100%;height:100%;margin:0;
+  opacity:0;cursor:ew-resize;-webkit-appearance:none;appearance:none}
+.ba input[type=range]:focus-visible ~ .ba-handle{outline:3px solid var(--cobalt);outline-offset:3px}
+.ba-caption{margin-top:14px;font-size:var(--fs-sm);color:var(--slate)}
+
 /* work index cards */
 .workcard{display:block;background:#fff;border:1px solid var(--rule);border-radius:var(--r-lg);
   padding:34px 32px;text-decoration:none;color:inherit;height:100%;

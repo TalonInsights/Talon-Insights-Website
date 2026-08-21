@@ -118,6 +118,18 @@
     hero.addEventListener("pointerleave", function () { tilt.style.transform = ""; });
   }
 
+  /* ---- before/after sliders ---- */
+  document.querySelectorAll(".ba").forEach(function (ba) {
+    var r = ba.querySelector("input[type=range]");
+    if (!r) { return; }
+    function set() {
+      ba.style.setProperty("--pos", r.value + "%");
+      ba.style.setProperty("--posn", r.value);
+    }
+    r.addEventListener("input", set);
+    set();
+  });
+
   /* ---- enquiry form (contact page only) --------------------------------
      Client-side validation, honeypot, and a hard refusal to submit while the
      endpoint is still a placeholder — an enquiry must never be silently lost. */
