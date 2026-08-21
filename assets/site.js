@@ -295,7 +295,7 @@
     }
     if (document.getElementById("f-hp").value) { return; } /* bot */
     if (!CONFIGURED) {
-      say("warn", "This form is not connected to an inbox yet. Please email __EMAIL__ or call __PHONE__ instead — sorry about that.");
+      say("warn", "This form is not connected to an inbox yet. Please email taloninsights@gmail.com or call 07742 082423 instead — sorry about that.");
       return;
     }
     var btn = form.querySelector("button[type=submit]");
@@ -308,7 +308,7 @@
         say("ok", "Thanks — that's with me. I'll reply within one working day.");
       })
       .catch(function () {
-        say("err", "Something went wrong sending that. Please email __EMAIL__ or call __PHONE__ instead.");
+        say("err", "Something went wrong sending that. Please email taloninsights@gmail.com or call 07742 082423 instead.");
       })
       .finally(function () { btn.disabled = false; });
   });
