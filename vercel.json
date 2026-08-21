@@ -51,6 +51,11 @@
       "source": "/services",
       "destination": "/#services",
       "permanent": true
+    },
+    {
+      "source": "/pricing",
+      "destination": "/founding-projects",
+      "permanent": true
     }
   ]
 }
