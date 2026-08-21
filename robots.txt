@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: __SITE_URL__/sitemap.xml
+Sitemap: https://taloninsights.co.uk/sitemap.xml

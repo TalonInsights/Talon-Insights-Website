@@ -35,7 +35,7 @@ Vercel project: talon-insights-website (TalonInsights team). Pushes to
 
 `vercel.json` sends **`X-Robots-Tag: noindex, nofollow`** on every response,
 deliberately: the pages still contain `__PHONE__`, `__EMAIL__` and
-`__SITE_URL__` placeholders and must not reach Google in that state.
+`https://taloninsights.co.uk` placeholders and must not reach Google in that state.
 Search the repo for `__` to find every token. When all are filled:
 
 1. Remove the X-Robots-Tag block from `vercel.json`.

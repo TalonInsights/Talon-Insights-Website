@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>__SITE_URL__/</loc></url>
-  <url><loc>__SITE_URL__/about</loc></url>
-  <url><loc>__SITE_URL__/accessibility</loc></url>
-  <url><loc>__SITE_URL__/approach</loc></url>
-  <url><loc>__SITE_URL__/contact</loc></url>
-  <url><loc>__SITE_URL__/custom-software</loc></url>
-  <url><loc>__SITE_URL__/groundwork</loc></url>
-  <url><loc>__SITE_URL__/pricing</loc></url>
-  <url><loc>__SITE_URL__/privacy</loc></url>
-  <url><loc>__SITE_URL__/research</loc></url>
-  <url><loc>__SITE_URL__/seo</loc></url>
-  <url><loc>__SITE_URL__/services</loc></url>
-  <url><loc>__SITE_URL__/terms</loc></url>
-  <url><loc>__SITE_URL__/web-design</loc></url>
-  <url><loc>__SITE_URL__/work</loc></url>
+  <url><loc>https://taloninsights.co.uk/</loc></url>
+  <url><loc>https://taloninsights.co.uk/about</loc></url>
+  <url><loc>https://taloninsights.co.uk/accessibility</loc></url>
+  <url><loc>https://taloninsights.co.uk/approach</loc></url>
+  <url><loc>https://taloninsights.co.uk/contact</loc></url>
+  <url><loc>https://taloninsights.co.uk/custom-software</loc></url>
+  <url><loc>https://taloninsights.co.uk/groundwork</loc></url>
+  <url><loc>https://taloninsights.co.uk/pricing</loc></url>
+  <url><loc>https://taloninsights.co.uk/privacy</loc></url>
+  <url><loc>https://taloninsights.co.uk/research</loc></url>
+  <url><loc>https://taloninsights.co.uk/seo</loc></url>
+  <url><loc>https://taloninsights.co.uk/services</loc></url>
+  <url><loc>https://taloninsights.co.uk/terms</loc></url>
+  <url><loc>https://taloninsights.co.uk/web-design</loc></url>
+  <url><loc>https://taloninsights.co.uk/work</loc></url>
 </urlset>

@@ -50,9 +50,9 @@ for src in pages:
     schema = ""
     if meta.get("crumb"):
         crumbs = [{"@type": "ListItem", "position": 1, "name": "Home",
-                   "item": "__SITE_URL__/"},
+                   "item": "https://taloninsights.co.uk/"},
                   {"@type": "ListItem", "position": 2, "name": meta["crumb"],
-                   "item": "__SITE_URL__" + path}]
+                   "item": "https://taloninsights.co.uk" + path}]
         schema = ('<script type="application/ld+json">'
                   + json.dumps({"@context": "https://schema.org",
                                 "@type": "BreadcrumbList",
