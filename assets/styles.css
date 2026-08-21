@@ -36,7 +36,7 @@
 
   --fs-hero:clamp(2.6rem,1.4rem + 5vw,4.4rem);
   --fs-h1:clamp(2.3rem,1.5rem + 3.2vw,3.4rem);
-  --fs-h2:clamp(1.9rem,1.4rem + 2vw,2.6rem);
+  --fs-h2:clamp(1.95rem,1.4rem + 2.2vw,2.8rem);
   --fs-h3:clamp(1.35rem,1.15rem + .8vw,1.7rem);
   --fs-h4:1.22rem;
   --fs-lead:clamp(1.08rem,1rem + .35vw,1.3rem);
@@ -57,7 +57,7 @@ body{
 img,svg,video{max-width:100%;height:auto;display:block}
 h1,h2,h3,h4{font-family:var(--ff-d);margin:0;text-wrap:balance;color:var(--ink)}
 h1{font-size:var(--fs-h1);font-weight:700;letter-spacing:-.025em;line-height:1.04}
-h2{font-size:var(--fs-h2);font-weight:600;letter-spacing:-.02em;line-height:1.08}
+h2{font-size:var(--fs-h2);font-weight:700;letter-spacing:-.028em;line-height:1.06}
 h3{font-size:var(--fs-h3);font-weight:600;letter-spacing:-.01em;line-height:1.2}
 h4{font-size:var(--fs-h4);font-weight:600;line-height:1.3}
 p{margin:0 0 var(--s3)}
@@ -84,7 +84,7 @@ strong{font-weight:600}
 .on-navy p{color:var(--on-navy)}
 .on-white{background:var(--white)}
 .measure{max-width:62ch}
-.lead{font-size:var(--fs-lead);line-height:1.6;color:var(--slate);text-wrap:pretty}
+.lead{font-size:var(--fs-lead);line-height:1.55;color:#46505F;text-wrap:pretty}
 .on-navy .lead{color:var(--on-navy)}
 
 .grid{display:grid;gap:var(--s4)}
@@ -93,7 +93,7 @@ strong{font-weight:600}
 
 /* Eyebrow — the logo's flanked-rule motif. Left-aligned: rule trails right.  */
 .eyebrow{display:flex;align-items:center;gap:14px;margin:0 0 18px;
-  font:600 var(--fs-sm)/1.4 var(--ff-b);letter-spacing:.16em;text-transform:uppercase;color:var(--cobalt-deep)}
+  font:500 .82rem/1.4 var(--ff-d);letter-spacing:.22em;text-transform:uppercase;color:var(--cobalt-deep)}
 .eyebrow::after{content:"";flex:1;max-width:120px;height:1px;background:currentColor;opacity:.35}
 .eyebrow--mid{justify-content:center}
 .eyebrow--mid::before{content:"";width:34px;height:1px;background:currentColor;opacity:.35}
@@ -115,7 +115,7 @@ strong{font-weight:600}
 /* Buttons carry the logo's angular geometry: opposite corners sharp,
    and the cut corners swap sides on hover. */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;
-  font:600 1rem/1 var(--ff-b);padding:16px 26px;
+  font:600 .98rem/1 var(--ff-d);letter-spacing:.015em;padding:16px 26px;
   border-radius:16px 4px 16px 4px;
   border:1px solid transparent;text-decoration:none;cursor:pointer;white-space:nowrap;
   transition:background .15s var(--ease),border-color .15s var(--ease),color .15s var(--ease),
@@ -137,11 +137,11 @@ strong{font-weight:600}
 .btn--lg{padding:19px 32px;font-size:1.05rem}
 
 /* Arrow text-link */
-.alink{display:inline-flex;align-items:center;gap:8px;font-weight:600;text-decoration:none;
+.alink{display:inline-flex;align-items:center;gap:8px;font:600 .98rem/1.4 var(--ff-d);text-decoration:none;
   color:var(--cobalt-deep);padding-block:4px;min-height:24px}
 .alink svg{width:17px;height:17px;transition:transform .2s var(--ease)}
 .alink:hover svg{transform:translateX(4px)}
-.on-navy .alink{color:#fff}
+.on-navy .alink,.detailbox .alink{color:#fff}
 
 /* ============================================================================
    HEADER
@@ -160,9 +160,10 @@ strong{font-weight:600}
 .nav{display:none}
 .head-cta{display:none;padding:13px 22px;font-size:.93rem}
 @media(min-width:1040px){
-  .nav{display:flex;align-items:center;gap:34px}
-  .nav a{color:var(--on-navy);text-decoration:none;font:500 .93rem/1 var(--ff-b);
-    padding:14px 0;border-bottom:2px solid transparent;transition:color .15s var(--ease)}
+  .nav{display:flex;align-items:center;gap:27px}
+  .nav a{color:var(--on-navy);text-decoration:none;font:500 .95rem/1 var(--ff-d);
+    letter-spacing:.01em;padding:14px 0;border-bottom:2px solid transparent;
+    transition:color .15s var(--ease)}
   .nav a:hover{color:#fff}
   .nav a[aria-current="page"]{color:#fff;border-bottom-color:var(--amber)}
   .head-cta{display:inline-flex}
@@ -175,7 +176,7 @@ strong{font-weight:600}
 .mnav{display:none;position:fixed;inset:80px 0 auto;z-index:190;background:var(--navy-900);
   border-bottom:1px solid var(--rule-dark);padding:var(--s3) 0 var(--s5);box-shadow:var(--shadow-navy)}
 .mnav[data-open="true"]{display:block}
-.mnav a{display:block;color:#fff;text-decoration:none;font:500 1.05rem/1 var(--ff-b);
+.mnav a{display:block;color:#fff;text-decoration:none;font:500 1.05rem/1 var(--ff-d);
   padding:17px var(--gutter);border-bottom:1px solid var(--rule-dark)}
 .mnav a[aria-current="page"]{color:var(--amber)}
 .mnav .btn{margin:var(--s4) var(--gutter) 0;width:calc(100% - 2*var(--gutter))}
@@ -359,7 +360,7 @@ strong{font-weight:600}
 .stats>div:nth-child(odd){border-right-width:1px}
 .stats>div:nth-child(-n+2){border-bottom-width:1px}
 .stats .n{font:700 clamp(2.2rem,2rem + 1.4vw,3rem)/1 var(--ff-d);letter-spacing:-.03em;color:#fff}
-.stats .l{margin-top:10px;font:500 var(--fs-sm)/1.5 var(--ff-b);letter-spacing:.07em;
+.stats .l{margin-top:10px;font:500 var(--fs-sm)/1.5 var(--ff-d);letter-spacing:.09em;
   text-transform:uppercase;color:var(--on-navy-dim)}
 
 /* ============================================================================
