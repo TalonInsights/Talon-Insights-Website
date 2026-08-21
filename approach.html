@@ -48,13 +48,34 @@
     </a>
     <nav class="nav" aria-label="Primary">
       <a href="/">Home</a>
-      <a href="/services">Services</a>
+
+      <div class="navdrop">
+        <button type="button" class="navdrop-t" aria-expanded="false"
+                aria-controls="dd-services">Services <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="navdrop-m" id="dd-services">
+          <a href="/services"><b>All services</b><i>The four things, side by side</i></a>
+          <a href="/custom-software"><b>Custom software</b><i>Internal tools, from &pound;6,000</i></a>
+          <a href="/web-design"><b>Bespoke websites</b><i>From &pound;1,500, fixed price</i></a>
+          <a href="/seo"><b>Local SEO</b><i>From &pound;300 a month</i></a>
+          <a href="/research"><b>Research &amp; strategy</b><i>From &pound;1,200</i></a>
+        </div>
+      </div>
+
       <a href="/approach" aria-current="page">Approach</a>
       <a href="/work">Work</a>
-      <a href="/groundwork">Groundwork</a>
-      <a href="/pricing">Pricing</a>
-      <a href="/about">About</a>
+
+      <div class="navdrop">
+        <button type="button" class="navdrop-t" aria-expanded="false"
+                aria-controls="dd-more">More <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="navdrop-m" id="dd-more">
+          <a href="/groundwork"><b>The Groundwork Visit</b><i>How every job starts</i></a>
+          <a href="/pricing"><b>Pricing</b><i>Published, so you can rule me out</i></a>
+          <a href="/about"><b>About</b><i>Who you'd actually be hiring</i></a>
+          <a href="/contact"><b>Contact</b><i>Reply within one working day</i></a>
+        </div>
+      </div>
     </nav>
+
     <a class="btn btn--amber head-cta" href="/contact">Book a Groundwork Visit</a>
     <button class="burger" type="button" aria-expanded="false" aria-controls="mnav">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" stroke-linecap="round"/></svg>
@@ -63,13 +84,35 @@
   </div>
   <nav class="mnav" id="mnav" data-open="false" aria-label="Primary, mobile">
     <a href="/">Home</a>
-    <a href="/services">Services</a>
+
+    <div class="mgroup">
+      <button type="button" class="mgroup-t" aria-expanded="false" aria-controls="mg-services">
+        Services <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="mgroup-m" id="mg-services">
+        <a href="/services">All services</a>
+        <a href="/custom-software">Custom software</a>
+        <a href="/web-design">Bespoke websites</a>
+        <a href="/seo">Local SEO</a>
+        <a href="/research">Research &amp; strategy</a>
+      </div>
+    </div>
+
     <a href="/approach" aria-current="page">Approach</a>
     <a href="/work">Work</a>
-    <a href="/groundwork">Groundwork</a>
-    <a href="/pricing">Pricing</a>
-    <a href="/about">About</a>
-    <a href="/contact">Contact</a>
+
+    <div class="mgroup">
+      <button type="button" class="mgroup-t" aria-expanded="false" aria-controls="mg-more">
+        More <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="mgroup-m" id="mg-more">
+        <a href="/groundwork">The Groundwork Visit</a>
+        <a href="/pricing">Pricing</a>
+        <a href="/about">About</a>
+        <a href="/contact">Contact</a>
+      </div>
+    </div>
+
     <a class="btn btn--amber" href="/contact">Book a Groundwork Visit</a>
   </nav>
 </header>

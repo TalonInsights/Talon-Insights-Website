@@ -33,6 +33,69 @@
     });
   }
 
+  /* ---- desktop nav dropdowns: hover, click, keyboard ---- */
+  var drops = document.querySelectorAll(".navdrop");
+  function closeDrops(except) {
+    drops.forEach(function (d) {
+      if (d === except) { return; }
+      d.setAttribute("data-open", "false");
+      d.querySelector(".navdrop-t").setAttribute("aria-expanded", "false");
+    });
+  }
+  drops.forEach(function (d) {
+    var t = d.querySelector(".navdrop-t");
+    var hoverable = window.matchMedia("(hover: hover)").matches;
+    function set(open) {
+      d.setAttribute("data-open", String(open));
+      t.setAttribute("aria-expanded", String(open));
+      if (open) { closeDrops(d); }
+    }
+    t.addEventListener("click", function (e) {
+      e.stopPropagation();
+      set(d.getAttribute("data-open") !== "true");
+    });
+    if (hoverable) {
+      var timer;
+      d.addEventListener("pointerenter", function () { clearTimeout(timer); set(true); });
+      d.addEventListener("pointerleave", function () {
+        timer = setTimeout(function () { set(false); }, 140);
+      });
+    }
+    d.addEventListener("focusout", function (e) {
+      if (!d.contains(e.relatedTarget)) { set(false); }
+    });
+  });
+  if (drops.length) {
+    document.addEventListener("keydown", function (e) {
+      if (e.key !== "Escape") { return; }
+      var open = document.querySelector('.navdrop[data-open="true"]');
+      if (open) { open.querySelector(".navdrop-t").focus(); closeDrops(null); }
+    });
+    document.addEventListener("click", function () { closeDrops(null); });
+  }
+
+  /* ---- mobile nav accordion groups ---- */
+  document.querySelectorAll(".mgroup").forEach(function (g) {
+    var t = g.querySelector(".mgroup-t");
+    var m = g.querySelector(".mgroup-m");
+    t.addEventListener("click", function () {
+      var open = g.getAttribute("data-open") === "true";
+      g.setAttribute("data-open", String(!open));
+      t.setAttribute("aria-expanded", String(!open));
+      if (reduce) { m.style.height = open ? "0px" : "auto"; return; }
+      if (open) {
+        m.style.height = m.scrollHeight + "px";
+        requestAnimationFrame(function () { m.style.height = "0px"; });
+      } else {
+        m.style.height = "0px";
+        requestAnimationFrame(function () { m.style.height = m.scrollHeight + "px"; });
+        m.addEventListener("transitionend", function te() {
+          m.style.height = "auto"; m.removeEventListener("transitionend", te);
+        });
+      }
+    });
+  });
+
   /* ---- flight paths: measure, then draw when visible ---- */
   var fps = document.querySelectorAll(".flightpath");
   fps.forEach(function (svg) {

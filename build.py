@@ -73,6 +73,11 @@ for src in pages:
     html = re.sub(r"\{\{CUR:([^}]*)\}\}",
                   lambda mm: ' aria-current="page"' if mm.group(1) == meta.get("nav", path) else "",
                   html)
+    # {{SEC:/a|/b}} — marks a dropdown trigger current when the page sits under it
+    html = re.sub(r"\{\{SEC:([^}]*)\}\}",
+                  lambda mm: ' data-current="true"'
+                  if meta.get("nav", path) in mm.group(1).split("|") else "",
+                  html)
 
     out.write_text(html, encoding="utf-8", newline="\n")
     written.append(out.name)
