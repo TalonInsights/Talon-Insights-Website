@@ -28,6 +28,24 @@ layout = (SRC / "layout.html").read_text(encoding="utf-8")
 snippets = {p.stem: p.read_text(encoding="utf-8").strip()
             for p in (SRC / "snippets").glob("*.html")}
 
+def strip_comments(html):
+    """Remove HTML comments from published output.
+
+    Source files carry build notes - unwritten testimonials, credentials not
+    yet in place, outstanding client figures. Those are for us, not for anyone
+    who opens view-source on a live page. Script and style blocks are stashed
+    first so nothing inside them is touched.
+    """
+    keep = []
+
+    def stash(m):
+        keep.append(m.group(0))
+        return "@@KEEP%d@@" % (len(keep) - 1)
+
+    html = re.sub(r"<(script|style)\b.*?</\1>", stash, html, flags=re.S | re.I)
+    html = re.sub(r"<!--.*?-->", "", html, flags=re.S)
+    html = re.sub(r"@@KEEP(\d+)@@", lambda m: keep[int(m.group(1))], html)
+    return re.sub(r"\n[ \t]*\n[ \t]*\n+", "\n\n", html)
 def expand(text):
     return re.sub(r"\{\{SNIP:([a-z-]+)\}\}",
                   lambda m: snippets[m.group(1)], text)
@@ -80,6 +98,7 @@ for src in pages:
                   if meta.get("nav", path) in mm.group(1).split("|") else "",
                   html)
 
+    html = strip_comments(html)
     out.write_text(html, encoding="utf-8", newline="\n")
     written.append(out.name)
 
