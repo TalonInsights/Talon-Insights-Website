@@ -96,13 +96,26 @@
     fps.forEach(function (s) { fio.observe(s); });
   }
 
-  /* ---- hero falcon parallax (very subtle) ---- */
+  /* ---- hero falcon: scroll parallax + pointer tilt ---- */
   var art = document.querySelector(".hero-falcon .art");
   if (art && !reduce) {
     window.addEventListener("scroll", function () {
       var y = Math.min(window.scrollY, 900);
       art.style.transform = "translateX(1%) translateY(" + y * 0.06 + "px)";
     }, { passive: true });
+  }
+  var tilt = document.querySelector(".hero-falcon .tilt");
+  var hero = document.querySelector(".hero");
+  if (tilt && hero && !reduce && window.matchMedia("(pointer: fine)").matches) {
+    hero.addEventListener("pointermove", function (e) {
+      var r = hero.getBoundingClientRect();
+      var x = (e.clientX - r.left) / r.width - 0.5;
+      var y = (e.clientY - r.top) / r.height - 0.5;
+      tilt.style.transform =
+        "perspective(1100px) rotateY(" + (x * 7).toFixed(2) + "deg)" +
+        " rotateX(" + (-y * 5).toFixed(2) + "deg)";
+    });
+    hero.addEventListener("pointerleave", function () { tilt.style.transform = ""; });
   }
 
   /* ---- enquiry form (contact page only) --------------------------------

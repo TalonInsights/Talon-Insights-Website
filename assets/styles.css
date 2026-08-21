@@ -202,20 +202,50 @@ strong{font-weight:600}
 .hero-trust span{display:inline-flex;align-items:center;gap:9px}
 .hero-trust .tick{width:14px;height:14px;color:#6E9BFF}
 
-/* The falcon */
+/* The falcon — layered: cobalt feather sweeps in, the bird lands on it,
+   the eye ignites, a sheen crosses the mark, then it settles into a slow
+   float with a pointer-tracked tilt. All of it opt-out via reduced-motion. */
 .hero-falcon{position:relative;display:none;pointer-events:none}
 @media(min-width:980px){.hero-falcon{display:block}}
 .hero-falcon .art{position:relative;width:min(43vw,600px);margin-left:auto;transform:translateX(1%)}
-.hero-falcon img{width:100%;
-  filter:drop-shadow(0 30px 60px rgba(0,0,0,.35));
+.hero-falcon .float{animation:falconFloat 9s ease-in-out 2.6s infinite}
+.hero-falcon .tilt{position:relative;aspect-ratio:900/748;
+  transform-style:preserve-3d;transition:transform .22s ease-out;
+  filter:drop-shadow(0 30px 60px rgba(0,0,0,.35))}
+.hero-falcon .tilt img{position:absolute;inset:0;width:100%;
   -webkit-mask-image:linear-gradient(200deg,#000 62%,transparent 96%);
           mask-image:linear-gradient(200deg,#000 62%,transparent 96%)}
-.hero-falcon .eye{ /* amber glow precisely on the falcon's eye: 79% / 28.5% */
-  content:"";position:absolute;left:79%;top:28.5%;width:22%;aspect-ratio:1;
+.hero-falcon .l-feather{animation:featherIn .8s var(--ease) .15s both}
+.hero-falcon .l-bird{animation:birdIn .9s var(--ease) .35s both}
+@keyframes featherIn{
+  from{opacity:0;transform:translate(-38px,56px) rotate(-12deg)}
+  to{opacity:1;transform:none}}
+@keyframes birdIn{
+  from{opacity:0;transform:translateY(26px) scale(.96)}
+  to{opacity:1;transform:none}}
+@keyframes falconFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+
+/* sheen: a light band that sweeps once across the bird's own silhouette */
+.hero-falcon .sheen{position:absolute;inset:0;
+  -webkit-mask-image:url("/assets/falcon-bird.png");mask-image:url("/assets/falcon-bird.png");
+  -webkit-mask-size:100% 100%;mask-size:100% 100%;
+  background:linear-gradient(115deg,transparent 40%,rgba(255,255,255,.55) 50%,rgba(180,205,255,.25) 54%,transparent 62%);
+  background-size:260% 100%;background-repeat:no-repeat;
+  background-position:180% 0;
+  animation:sheenSweep 1.2s ease-out 1.35s both}
+@keyframes sheenSweep{from{background-position:180% 0}to{background-position:-120% 0}}
+.hero:hover .sheen{animation:sheenSweep 1.2s ease-out}
+
+/* eye: ignition flare, then the resting pulse takes over */
+.hero-falcon .eye{position:absolute;left:79%;top:28.5%;width:22%;aspect-ratio:1;
   transform:translate(-50%,-50%);border-radius:50%;
   background:radial-gradient(circle,rgba(245,166,35,.85) 0%,rgba(245,166,35,.25) 34%,transparent 70%);
   mix-blend-mode:screen;filter:blur(2px);
-  animation:eyePulse 5.5s ease-in-out infinite}
+  animation:eyeIgnite .9s var(--ease) 1.05s both,eyePulse 5.5s ease-in-out 2.6s infinite}
+@keyframes eyeIgnite{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(.35)}
+  55%{opacity:1;transform:translate(-50%,-50%) scale(1.45)}
+  100%{opacity:.55;transform:translate(-50%,-50%) scale(1)}}
 @keyframes eyePulse{0%,100%{opacity:.55}50%{opacity:1}}
 .hero-fp{position:absolute;inset:auto 0 12% 0;z-index:1;opacity:.6;pointer-events:none}
 
@@ -521,5 +551,6 @@ strong{font-weight:600}
   .reveal{opacity:1;transform:none}
   .flightpath .fp-line{stroke-dashoffset:0}.flightpath .fp-tip{opacity:1}
   .hero-falcon .eye{animation:none;opacity:.8}
+  .hero-falcon .sheen{animation:none;opacity:0}
 }
 @media print{.site-head,.mnav,.hero-fp,.foot-word{display:none}body{background:#fff}}
