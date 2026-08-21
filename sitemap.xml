@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>__SITE_URL__/</loc></url>
+  <url><loc>__SITE_URL__/about</loc></url>
+  <url><loc>__SITE_URL__/accessibility</loc></url>
+  <url><loc>__SITE_URL__/contact</loc></url>
+  <url><loc>__SITE_URL__/custom-software</loc></url>
+  <url><loc>__SITE_URL__/groundwork</loc></url>
+  <url><loc>__SITE_URL__/pricing</loc></url>
+  <url><loc>__SITE_URL__/privacy</loc></url>
+  <url><loc>__SITE_URL__/research</loc></url>
+  <url><loc>__SITE_URL__/seo</loc></url>
+  <url><loc>__SITE_URL__/services</loc></url>
+  <url><loc>__SITE_URL__/terms</loc></url>
+  <url><loc>__SITE_URL__/web-design</loc></url>
+  <url><loc>__SITE_URL__/work</loc></url>
+</urlset>

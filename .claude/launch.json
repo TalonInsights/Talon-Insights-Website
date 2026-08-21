@@ -4,7 +4,9 @@
     {
       "name": "talon-insights",
       "runtimeExecutable": "python",
-      "runtimeArgs": ["-m", "http.server", "4173"],
+      "runtimeArgs": [
+        ".claude/serve.py"
+      ],
       "port": 4173
     }
   ]

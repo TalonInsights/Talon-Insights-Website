@@ -1,0 +1,128 @@
+<!--META {"path": "/work", "title": "Case Studies | Talon Insights", "desc": "Real work for real West Midlands businesses: a production scheduler in a working factory, a 3D engine-bay configurator, a ten-million-iteration turnaround model.", "crumb": "Work", "nav": "/work"} -->
+<section class="page-hero">
+  <img class="mini-falcon" src="/assets/falcon.png" alt="" width="860" height="717" aria-hidden="true">
+  <div class="wrap">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span>/</span><span aria-current="page">Work</span></nav>
+    <h1>Three clients. Real artefacts<span class="dot">.</span></h1>
+    <p class="lead">
+      Three engagements documented properly beats ten described vaguely. Everything below
+      shipped, and everything below can be shown working.
+    </p>
+  </div>
+</section>
+
+<!-- ============================ DAVID JACKSON & SON ============================ -->
+<section class="sec" id="david-jackson" data-reveal>
+  <div class="wrap">
+    <p class="eyebrow">Case study 01 — Manufacturing</p>
+    <div class="case">
+      <div>
+        <h2>David Jackson &amp; Son<span class="dot">.</span></h2>
+        <div class="tags" style="margin-top:18px"><span class="tag">Website rebuild</span><span class="tag">Production scheduler</span><span class="tag">Strategy deck</span></div>
+        <h3 style="margin:26px 0 10px">The situation</h3>
+        <p style="color:var(--slate)">A Shropshire joinery firm where production was planned on paper and in people's heads, and the website no longer reflected what the business had become. Both needed doing — by someone who would still be there afterwards.</p>
+        <h3 style="margin:26px 0 10px">What I built</h3>
+        <ul class="ticks">
+          <li>A rebuilt website, designed and written from scratch.</li>
+          <li>An eight-stage drag-and-drop production scheduler with automatic breach detection, used to plan real jobs on the factory floor.</li>
+          <li>A written strategy deck taking the findings to the people who make the decisions.</li>
+        </ul>
+        <h3 style="margin:26px 0 10px">How it was run</h3>
+        <p style="color:var(--slate)">Scoped in writing before a line of code. Delivered in milestones against fixed dates. Handed over with the client owning the domain, the code and the content outright.</p>
+        <!-- Replace with the real measured outcome + approved quote when the
+             client provides them. Do not invent either. -->
+        <div class="outcome"><strong>Outcome — to be added.</strong> One measurable result and one approved client quote will do more work than everything else on this page.</div>
+      </div>
+      <div>
+        <div class="shot" role="img" aria-label="Placeholder for a screenshot of the production scheduler">
+          <b>Scheduler screenshot goes here</b>
+          <small>Export at 1600&times;1000, WebP. The drag-and-drop board with a breach flagged is the money shot.</small>
+        </div>
+        <div class="detailbox" style="margin-top:24px">
+          <p class="db-h">Engineering detail</p>
+          <ul class="ticks">
+            <li>Eight production stages, drag-and-drop rescheduling, automatic breach detection against stage deadlines.</li>
+            <li>Migrated from <code>localStorage</code> to a <code>Neon Postgres</code> backend — the plan survives the browser and is shared by everyone.</li>
+            <li>Authentication, so the factory floor and the office see what each needs.</li>
+            <li>GitHub &rarr; <code>Vercel</code> pipeline: every change reviewable, every change reversible.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ WULFTEK ============================ -->
+<section class="sec on-white" id="wulftek" data-reveal>
+  <div class="wrap">
+    <p class="eyebrow">Case study 02 — Automotive</p>
+    <div class="case">
+      <div>
+        <h2>WulfTek Tuning<span class="dot">.</span></h2>
+        <div class="tags" style="margin-top:18px"><span class="tag">Website</span><span class="tag">3D configurator</span><span class="tag">Three.js</span></div>
+        <h3 style="margin:26px 0 10px">The situation</h3>
+        <p style="color:var(--slate)">A performance tuning business whose product is invisible until the bonnet opens. A brochure site would have said "trust us"; the business needed the website itself to demonstrate the standard of the work.</p>
+        <h3 style="margin:26px 0 10px">What I built</h3>
+        <ul class="ticks">
+          <li>A Three.js interactive engine-bay renderer — the customer's own engine bay, explorable in the browser.</li>
+          <li>Vehicle-registration lookup wired to the renderer, so entering a plate configures the view.</li>
+          <li>A fallback chain for when the lookup comes back empty — the page still works when the data doesn't.</li>
+        </ul>
+        <div class="outcome"><strong>Full write-up in progress.</strong> Outcome figures and the client's own words to follow — nothing gets published here that the client hasn't approved.</div>
+      </div>
+      <div>
+        <div class="shot" role="img" aria-label="Placeholder for a capture of the 3D engine bay renderer">
+          <b>Renderer capture goes here</b>
+          <small>A short screen recording exported as poster + MP4 beats a still for this one.</small>
+        </div>
+        <div class="detailbox" style="margin-top:24px">
+          <p class="db-h">Engineering detail</p>
+          <ul class="ticks">
+            <li><code>Three.js</code> scene tuned for mid-range phones — the audience checks sites from the driver's seat.</li>
+            <li>Registration lookup with a graceful degradation chain: live data &rarr; cached &rarr; generic model.</li>
+            <li>Interactive moment used where it earns its place — the rest of the site stays fast and plain.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ ALIVE NETWORK ============================ -->
+<section class="sec" id="alive-network" data-reveal>
+  <div class="wrap">
+    <p class="eyebrow">Case study 03 — Marketplace / strategy</p>
+    <div class="case">
+      <div>
+        <h2>Alive Network<span class="dot">.</span></h2>
+        <div class="tags" style="margin-top:18px"><span class="tag">Monte Carlo modelling</span><span class="tag">Strategy deck</span><span class="tag">Analytics</span></div>
+        <h3 style="margin:26px 0 10px">The situation</h3>
+        <p style="color:var(--slate)">A national entertainment marketplace weighing a turnaround decision — the kind of call that deserves better evidence than opinion.</p>
+        <h3 style="margin:26px 0 10px">What I built</h3>
+        <ul class="ticks">
+          <li>A Monte Carlo turnaround model run over ten million iterations.</li>
+          <li>A twenty-two slide strategy deck translating the distribution into decisions the business could actually take.</li>
+        </ul>
+        <div class="outcome"><strong>Full write-up in progress.</strong> Outcome and client quote to follow, with their approval.</div>
+      </div>
+      <div>
+        <div class="detailbox">
+          <p class="db-h">Engineering detail</p>
+          <ul class="ticks">
+            <li>Ten million simulated scenarios — the recommendation ships with a probability distribution, not a single hopeful number.</li>
+            <li>Sensitivity analysis showing which assumptions actually move the answer.</li>
+            <li>Presented as a decision document, not a data dump: what to do, what it costs, what could go wrong.</li>
+          </ul>
+        </div>
+        <div class="shot" style="margin-top:24px;aspect-ratio:16/9" role="img" aria-label="Placeholder for a slide from the strategy deck">
+          <b>Deck slide goes here</b>
+          <small>One anonymised slide from the 22 — enough to show the standard without disclosing the client's numbers.</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials land here once clients have approved them in writing. -->
+
+{{SNIP:cta}}
