@@ -8,6 +8,8 @@ if (q.get("w")) { f.style.width = q.get("w")+"px"; f.style.height = (q.get("h")|
 f.src = q.get("p") || "/";
 f.onload = () => { f.contentDocument.documentElement.style.scrollBehavior="auto";
   f.contentWindow.scrollTo(0, +(q.get("y")||0));
+  const sel = q.get("click");
+  if (sel) { setTimeout(()=>{ const el = f.contentDocument.querySelector(sel); if (el) el.click(); }, 500); }
   // let reveal animations fire for the scrolled-to region
   setTimeout(()=>{ f.contentWindow.dispatchEvent(new Event("scroll")); }, 200); };
 </script>

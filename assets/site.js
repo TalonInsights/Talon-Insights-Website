@@ -118,6 +118,136 @@
     hero.addEventListener("pointerleave", function () { tilt.style.transform = ""; });
   }
 
+  /* ---- scroll progress: the flight path as a reading indicator ---- */
+  var prog = document.querySelector(".progress i");
+  if (prog) {
+    var ticking = false;
+    function drawProgress() {
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      prog.style.width = (max > 0 ? (window.scrollY / max) * 100 : 0) + "%";
+      ticking = false;
+    }
+    window.addEventListener("scroll", function () {
+      if (!ticking) { ticking = true; requestAnimationFrame(drawProgress); }
+    }, { passive: true });
+    drawProgress();
+  }
+
+  /* ---- back to top ---- */
+  var toTop = document.querySelector(".totop");
+  if (toTop) {
+    window.addEventListener("scroll", function () {
+      toTop.setAttribute("data-show", String(window.scrollY > window.innerHeight));
+    }, { passive: true });
+    toTop.addEventListener("click", function () {
+      window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
+    });
+  }
+
+  /* ---- lightbox: click any case image to enlarge ---- */
+  var lb = document.getElementById("lightbox");
+  if (lb) {
+    var lbImg = lb.querySelector("img");
+    var lbCap = lb.querySelector(".lb-cap");
+    var lastFocus = null;
+
+    function openLB(src, alt) {
+      lastFocus = document.activeElement;
+      lbImg.src = src;
+      lbImg.alt = alt || "";
+      lbCap.textContent = alt || "";
+      lb.setAttribute("data-open", "true");
+      document.body.style.overflow = "hidden";
+      lb.querySelector(".lb-close").focus();
+    }
+    function closeLB() {
+      lb.setAttribute("data-open", "false");
+      document.body.style.overflow = "";
+      if (lastFocus) { lastFocus.focus(); }
+    }
+
+    document.querySelectorAll(".case-img").forEach(function (img) {
+      /* wrap so a hover cue can sit over the image */
+      var fig = document.createElement("span");
+      fig.className = "figzoom";
+      img.parentNode.insertBefore(fig, img);
+      fig.appendChild(img);
+      fig.insertAdjacentHTML("beforeend",
+        '<span class="zoomcue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
+        'stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5M11 8v6M8 11h6" ' +
+        'stroke-linecap="round"/></svg>Click to enlarge</span>');
+
+      img.setAttribute("role", "button");
+      img.setAttribute("tabindex", "0");
+      img.addEventListener("click", function () { openLB(img.currentSrc || img.src, img.alt); });
+      img.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); img.click(); }
+      });
+    });
+
+    lb.addEventListener("click", function (e) {
+      if (e.target === lb || e.target === lbImg || e.target.closest(".lb-close")) { closeLB(); }
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && lb.getAttribute("data-open") === "true") { closeLB(); }
+    });
+  }
+
+  /* ---- cursor spotlight on service cards ---- */
+  if (!reduce && window.matchMedia("(pointer: fine)").matches) {
+    document.querySelectorAll(".svc").forEach(function (card) {
+      card.addEventListener("pointermove", function (e) {
+        var r = card.getBoundingClientRect();
+        card.style.setProperty("--mx", (e.clientX - r.left) + "px");
+        card.style.setProperty("--my", (e.clientY - r.top) + "px");
+      });
+    });
+
+    /* ---- magnetic pull on primary CTAs (deliberately slight) ---- */
+    document.querySelectorAll(".btn--amber, .btn--primary").forEach(function (btn) {
+      btn.addEventListener("pointermove", function (e) {
+        var r = btn.getBoundingClientRect();
+        var dx = (e.clientX - (r.left + r.width / 2)) / r.width;
+        var dy = (e.clientY - (r.top + r.height / 2)) / r.height;
+        btn.style.transform = "translate(" + (dx * 7).toFixed(1) + "px," +
+          (dy * 5 - 1).toFixed(1) + "px)";
+      });
+      btn.addEventListener("pointerleave", function () { btn.style.transform = ""; });
+    });
+  }
+
+  /* ---- smooth accordion (progressive: <details> still works without JS) ---- */
+  if (!reduce) {
+    document.querySelectorAll(".faq details").forEach(function (d) {
+      var summary = d.querySelector("summary");
+      if (!summary) { return; }
+      var wrap = document.createElement("div");
+      wrap.className = "faq-body";
+      while (summary.nextSibling) { wrap.appendChild(summary.nextSibling); }
+      d.appendChild(wrap);
+
+      summary.addEventListener("click", function (e) {
+        e.preventDefault();
+        if (d.open) {
+          wrap.style.height = wrap.scrollHeight + "px";
+          requestAnimationFrame(function () { wrap.style.height = "0px"; });
+          wrap.addEventListener("transitionend", function te() {
+            d.open = false; wrap.style.height = "";
+            wrap.removeEventListener("transitionend", te);
+          });
+        } else {
+          d.open = true;
+          wrap.style.height = "0px";
+          requestAnimationFrame(function () { wrap.style.height = wrap.scrollHeight + "px"; });
+          wrap.addEventListener("transitionend", function te() {
+            wrap.style.height = "auto";
+            wrap.removeEventListener("transitionend", te);
+          });
+        }
+      });
+    });
+  }
+
   /* ---- before/after sliders ---- */
   document.querySelectorAll(".ba").forEach(function (ba) {
     var r = ba.querySelector("input[type=range]");
