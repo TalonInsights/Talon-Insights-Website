@@ -15,12 +15,17 @@ Each page source starts with a META comment:
 path "/" maps to index.html; everything else to <name>.html (served under
 clean URLs by vercel.json). A BreadcrumbList is generated for every page with
 a "crumb". Page-specific JSON-LD can simply be included in the page body.
+
+sitemap.xml is generated from the same pass, so it cannot drift out of step
+with the pages. Anything whose META declares noindex is left out of it.
 """
-import json, re, sys
+import json, re, subprocess, sys
+from datetime import date
 from pathlib import Path
 
 ROOT = Path(__file__).parent
 SRC = ROOT / "_src"
+SITE = "https://taloninsights.co.uk"
 
 layout = (SRC / "layout.html").read_text(encoding="utf-8")
 
@@ -49,11 +54,47 @@ def strip_comments(html):
 def expand(text):
     return re.sub(r"\{\{SNIP:([a-z-]+)\}\}",
                   lambda m: snippets[m.group(1)], text)
+def last_modified(sources):
+    """Map each page source to the date it last changed, for sitemap lastmod.
+
+    One pass over git history rather than a call per file. Files with
+    uncommitted changes are dated today, because a file edited but not yet
+    committed did change today - the previous commit date would be a lie.
+    Anything git cannot account for falls back to today as well, so a checkout
+    without history still produces a valid sitemap.
+    """
+    today = date.today().isoformat()
+    try:
+        log = subprocess.run(["git", "log", "--format=%cs", "--name-only",
+                              "--no-renames"], cwd=ROOT, capture_output=True,
+                             text=True, check=True).stdout
+        status = subprocess.run(["git", "status", "--porcelain"], cwd=ROOT,
+                                capture_output=True, text=True,
+                                check=True).stdout
+    except (OSError, subprocess.SubprocessError):
+        return {src: today for src in sources}
+
+    committed, stamp = {}, None
+    for line in log.splitlines():          # newest commit first
+        if re.fullmatch(r"\d{4}-\d{2}-\d{2}", line):
+            stamp = line
+        elif line and stamp:
+            committed.setdefault(line, stamp)
+
+    dirty = {line[3:].strip().strip('"') for line in status.splitlines()
+             if len(line) > 3}
+
+    dates = {}
+    for src in sources:
+        rel = src.relative_to(ROOT).as_posix()
+        dates[src] = today if rel in dirty else committed.get(rel, today)
+    return dates
+
 pages = sorted((SRC / "pages").rglob("*.html"))
 if not pages:
     sys.exit("no page sources found")
 
-written = []
+written, indexable = [], []
 for src in pages:
     raw = src.read_text(encoding="utf-8")
     m = re.match(r"\s*<!--META\s*(\{.*?\})\s*-->\s*", raw, re.S)
@@ -101,5 +142,24 @@ for src in pages:
     html = strip_comments(html)
     out.write_text(html, encoding="utf-8", newline="\n")
     written.append(out.name)
+    if "noindex" not in meta.get("robots", ""):
+        indexable.append((path, src))
+
+# sitemap: loc and lastmod only. Google ignores priority and changefreq, and a
+# field nobody reads is a field that quietly goes stale.
+modified = last_modified([src for _, src in indexable])
+lines = ['<?xml version="1.0" encoding="UTF-8"?>',
+         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
+for path, src in sorted(indexable):
+    lines += ["  <url>",
+              f"    <loc>{SITE}{path}</loc>",
+              f"    <lastmod>{modified[src]}</lastmod>",
+              "  </url>"]
+lines.append("</urlset>")
+(ROOT / "sitemap.xml").write_text("\n".join(lines) + "\n",
+                                  encoding="utf-8", newline="\n")
 
 print(f"built {len(written)} pages: " + ", ".join(written))
+print(f"sitemap: {len(indexable)} urls"
+      + (f" ({len(written) - len(indexable)} excluded as noindex)"
+         if len(written) != len(indexable) else ""))
