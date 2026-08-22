@@ -168,7 +168,7 @@
       <div class="form-head">
         <p class="eyebrow">Quick message</p>
         <h2>Tell me what you need</h2>
-        <p>Two fields, then send. Everything else just helps me turn up prepared.</p>
+        <p>A few quick details and I can turn up to the first conversation already knowing what we are talking about.</p>
       </div>
 
       <div class="form-body">
@@ -192,7 +192,7 @@
         </div>
 
         <fieldset class="field">
-          <legend>What do you need? <span class="hint">optional</span></legend>
+          <legend>What do you need? <i class="req" aria-hidden="true">required</i></legend>
           <div class="choices">
             <label class="choice"><input type="checkbox" name="need" value="Website"><span>Website</span></label>
             <label class="choice"><input type="checkbox" name="need" value="Software"><span>Software</span></label>
@@ -200,22 +200,31 @@
             <label class="choice"><input type="checkbox" name="need" value="Research"><span>Research</span></label>
             <label class="choice"><input type="checkbox" name="need" value="Not sure"><span>Not sure yet</span></label>
           </div>
+          <span class="err" id="e-need" role="alert"></span>
         </fieldset>
 
         <div class="form-row">
           <div class="field">
-            <label for="f-loc">Where are you? <span class="hint">optional</span></label>
-            <input id="f-loc" name="location" type="text" autocomplete="address-level2" placeholder="Town or postcode">
+            <label for="f-loc">Where are you? <i class="req" aria-hidden="true">required</i></label>
+            <input id="f-loc" name="location" type="text" autocomplete="address-level2" placeholder="Town or postcode" required>
+            <span class="err" id="e-loc" role="alert"></span>
           </div>
           <div class="field">
-            <label for="f-when">When suits? <span class="hint">optional</span></label>
-            <input id="f-when" name="timing" type="text" placeholder="e.g. next couple of weeks">
+            <label for="f-when">When suits? <i class="req" aria-hidden="true">required</i></label>
+            <input id="f-when" name="timing" type="text" placeholder="e.g. next couple of weeks" required>
+            <span class="err" id="e-when" role="alert"></span>
           </div>
         </div>
 
         <div class="field">
           <label for="f-msg">Anything else? <span class="hint">optional</span></label>
           <textarea id="f-msg" name="message" rows="4" placeholder="A sentence or two about the job is plenty."></textarea>
+        </div>
+
+        <div class="field consent">
+          <input id="f-consent" name="consent" type="checkbox" value="Agreed" required>
+          <label for="f-consent">I am happy for these details to be used to answer my enquiry.</label>
+          <span class="err" id="e-consent" role="alert"></span>
         </div>
       </div>
 

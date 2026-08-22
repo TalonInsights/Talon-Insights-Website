@@ -343,6 +343,10 @@
     e.preventDefault();
     var name = document.getElementById("f-name");
     var contact = document.getElementById("f-contact");
+    var loc = document.getElementById("f-loc");
+    var when = document.getElementById("f-when");
+    var consent = document.getElementById("f-consent");
+    var needs = form.querySelectorAll("input[name=need]");
     var ok = true;
     ok = setError(name, document.getElementById("e-name"),
       name.value.trim() ? "" : "Please tell me your name.") && ok;
@@ -351,6 +355,16 @@
     var tel = /^[0-9+()\s-]{9,}$/.test(v);
     ok = setError(contact, document.getElementById("e-contact"),
       (mail || tel) ? "" : "Please leave an email address or a phone number so I can reply.") && ok;
+    var picked = false, i;
+    for (i = 0; i < needs.length; i++) { if (needs[i].checked) { picked = true; } }
+    ok = setError(needs[0], document.getElementById("e-need"),
+      picked ? "" : "Pick at least one — “Not sure yet” is a perfectly good answer.") && ok;
+    ok = setError(loc, document.getElementById("e-loc"),
+      loc.value.trim() ? "" : "Roughly where are you? A town is enough.") && ok;
+    ok = setError(when, document.getElementById("e-when"),
+      when.value.trim() ? "" : "Roughly when were you thinking?") && ok;
+    ok = setError(consent, document.getElementById("e-consent"),
+      consent.checked ? "" : "Please tick this so I know I can reply to you.") && ok;
     if (!ok) {
       say("err", "Please check the highlighted fields.");
       form.querySelector("[aria-invalid='true']").focus();

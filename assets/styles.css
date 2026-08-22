@@ -685,6 +685,12 @@ strong{font-weight:600}
 .choice input:checked+span{background:var(--ink-navy);border-color:var(--ink-navy);color:#fff}
 .choice input:focus-visible+span{outline:3px solid var(--cobalt);outline-offset:2px}
 
+.consent{display:grid;grid-template-columns:auto 1fr;gap:0 11px;align-items:start}
+.consent input{width:19px;height:19px;margin:1px 0 0;accent-color:var(--ink-navy);cursor:pointer}
+.consent label{margin:0;font:400 .88rem/1.5 var(--ff-b);color:var(--slate);cursor:pointer}
+.consent .err{grid-column:2}
+.consent input:focus-visible{outline:3px solid var(--cobalt);outline-offset:2px}
+
 .form-foot{padding:6px clamp(22px,3vw,38px) clamp(24px,3vw,34px);
   border-top:1px solid var(--rule);margin-top:10px;padding-top:22px}
 .form-foot .btn{width:100%}
@@ -748,8 +754,9 @@ strong{font-weight:600}
 .postcta{margin-top:52px;padding:30px 32px;background:var(--ink-navy);color:#fff;
   border-radius:var(--r-lg);box-shadow:var(--shadow-navy);
   display:flex;flex-wrap:wrap;gap:16px;align-items:center}
-.postcta p{flex:1 1 300px;margin:0;color:var(--on-navy);font-size:.98rem}
-.postcta p strong{color:#fff}
+.postcta p,.prose .postcta p{flex:1 1 300px;margin:0;color:var(--on-navy);font-size:.98rem}
+.postcta p strong,.prose .postcta p strong{color:#fff}
+.postcta-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
 
 /* ============================================================================
    PROSE (legal pages, long copy)
