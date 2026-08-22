@@ -22,7 +22,7 @@ with the pages. Anything whose META declares noindex is left out of it.
 import json, re, subprocess, sys
 
 import ogcards
-from datetime import date
+from datetime import date, timedelta
 from pathlib import Path
 
 ROOT = Path(__file__).parent
@@ -192,6 +192,24 @@ for path, src in sorted(indexable):
 lines.append("</urlset>")
 (ROOT / "sitemap.xml").write_text("\n".join(lines) + "\n",
                                   encoding="utf-8", newline="\n")
+
+# security.txt (RFC 9116). Expires is a required field, and the whole point
+# of it is that nobody trusts stale contact details - so it is generated with
+# a rolling date rather than typed once and left to rot.
+expires = date.today().replace(year=date.today().year + 1) - timedelta(days=30)
+lines = [
+    "# Found a security problem with this site? Please tell me.",
+    "# One person, so expect a human reply rather than a ticket number.",
+    "",
+    "Contact: mailto:taloninsights@gmail.com",
+    f"Expires: {expires.isoformat()}T00:00:00.000Z",
+    "Preferred-Languages: en",
+    f"Canonical: {SITE}/.well-known/security.txt",
+]
+sec = ROOT / ".well-known" / "security.txt"
+sec.parent.mkdir(parents=True, exist_ok=True)
+sec.write_text("\n".join(lines) + "\n",
+               encoding="utf-8", newline="\n")
 
 print(f"built {len(written)} pages: " + ", ".join(written))
 print(f"og cards: {len(cards)}" if cards else "og cards: skipped (Pillow not installed)")
