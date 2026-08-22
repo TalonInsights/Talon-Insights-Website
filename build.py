@@ -20,6 +20,8 @@ sitemap.xml is generated from the same pass, so it cannot drift out of step
 with the pages. Anything whose META declares noindex is left out of it.
 """
 import json, re, subprocess, sys
+
+import ogcards
 from datetime import date
 from pathlib import Path
 
@@ -51,6 +53,16 @@ def strip_comments(html):
     html = re.sub(r"<!--.*?-->", "", html, flags=re.S)
     html = re.sub(r"@@KEEP(\d+)@@", lambda m: keep[int(m.group(1))], html)
     return re.sub(r"\n[ \t]*\n[ \t]*\n+", "\n\n", html)
+def esc(text):
+    """Escape bare ampersands for use in an attribute or title.
+
+    Page titles legitimately contain "Telford & Shropshire". Dropped into a
+    content attribute unescaped that is invalid HTML. Entities already in the
+    source are left alone, so &mdash; does not become &amp;mdash;.
+    """
+    return re.sub(r"&(?![a-zA-Z][a-zA-Z0-9]*;|#[0-9]+;|#x[0-9a-fA-F]+;)", "&amp;", text)
+
+
 def expand(text):
     return re.sub(r"\{\{SNIP:([a-z-]+)\}\}",
                   lambda m: snippets[m.group(1)], text)
@@ -94,7 +106,7 @@ pages = sorted((SRC / "pages").rglob("*.html"))
 if not pages:
     sys.exit("no page sources found")
 
-written, indexable = [], []
+written, indexable, cards = [], [], []
 for src in pages:
     raw = src.read_text(encoding="utf-8")
     m = re.match(r"\s*<!--META\s*(\{.*?\})\s*-->\s*", raw, re.S)
@@ -121,13 +133,35 @@ for src in pages:
                   + "</script>")
 
     html = layout
-    html = html.replace("{{TITLE}}", meta["title"])
-    html = html.replace("{{DESC}}", meta["desc"])
+    html = html.replace("{{TITLE}}", esc(meta["title"]))
+    html = html.replace("{{DESC}}", esc(meta["desc"]))
     html = html.replace("{{PATH}}", "/" if path == "/" else path)
     html = html.replace("{{SCHEMA}}", schema)
     if meta.get("robots"):
         html = html.replace('<meta name="robots" content="index,follow">',
                             '<meta name="robots" content="%s">' % meta["robots"])
+    # Open Graph card. The headline is the META "og" where one is given,
+    # otherwise the title with the brand suffix taken off. The eyebrow comes
+    # from the section rather than the crumb, so it says something the
+    # headline does not.
+    slug = "home" if path == "/" else path.strip("/").replace("/", "-")
+    card = ROOT / "assets" / "og" / (slug + ".jpg")
+    headline = meta.get("og") or re.sub(r"\s*\|\s*Talon Insights\s*$", "",
+                                        meta["title"]).strip()
+    if path.startswith("/blog/"):
+        eyebrow = "Article"
+    elif path == "/work":
+        eyebrow = "Case study"
+    else:
+        eyebrow = meta.get("crumb")
+    if ogcards.render(card, headline, eyebrow):
+        cards.append(slug)
+        og_url = "/assets/og/" + slug + ".jpg"
+    else:
+        og_url = "/assets/og-image.jpg"
+    html = html.replace("{{OG}}", og_url)
+    html = html.replace("{{OGALT}}", esc("Talon Insights &mdash; " + headline))
+
     html = html.replace("{{BODY}}", body.rstrip())
     # nav current-page markers
     html = re.sub(r"\{\{CUR:([^}]*)\}\}",
@@ -160,6 +194,7 @@ lines.append("</urlset>")
                                   encoding="utf-8", newline="\n")
 
 print(f"built {len(written)} pages: " + ", ".join(written))
+print(f"og cards: {len(cards)}" if cards else "og cards: skipped (Pillow not installed)")
 print(f"sitemap: {len(indexable)} urls"
       + (f" ({len(written) - len(indexable)} excluded as noindex)"
          if len(written) != len(indexable) else ""))
