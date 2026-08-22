@@ -362,7 +362,7 @@
     ok = setError(loc, document.getElementById("e-loc"),
       loc.value.trim() ? "" : "Roughly where are you? A town is enough.") && ok;
     ok = setError(when, document.getElementById("e-when"),
-      when.value.trim() ? "" : "Roughly when were you thinking?") && ok;
+      when.value.trim() ? "" : "When were you thinking?") && ok;
     ok = setError(consent, document.getElementById("e-consent"),
       consent.checked ? "" : "Please tick this so I know I can reply to you.") && ok;
     if (!ok) {
