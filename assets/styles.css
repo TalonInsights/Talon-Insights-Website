@@ -220,7 +220,13 @@ strong{font-weight:600}
 .hero-falcon .tilt{position:relative;aspect-ratio:900/748;
   transform-style:preserve-3d;transition:transform .22s ease-out;
   filter:drop-shadow(0 30px 60px rgba(0,0,0,.35))}
-.hero-falcon .tilt img{position:absolute;inset:0;width:100%;
+/* The mark is inline SVG traced from the original raster - crisp at any
+   pixel density, 7KB against the 126KB of layered WebP it replaces, and
+   every shape is addressable: the feather draws itself in, the sweep clips
+   to the bird's real silhouette, and the eye glow sits on the actual eye
+   geometry instead of coordinates measured off a bitmap. Same choreography
+   and timings as before; only the medium changed. */
+.hero-falcon .falcon-svg{position:absolute;inset:0;width:100%;height:100%;
   -webkit-mask-image:linear-gradient(200deg,#000 62%,transparent 96%);
           mask-image:linear-gradient(200deg,#000 62%,transparent 96%)}
 .hero-falcon .l-feather{animation:featherIn .8s var(--ease) .15s both}
@@ -233,27 +239,27 @@ strong{font-weight:600}
   to{opacity:1;transform:none}}
 @keyframes falconFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
 
-/* sheen: a light band that sweeps once across the bird's own silhouette */
-.hero-falcon .sheen{position:absolute;inset:0;
-  -webkit-mask-image:url("/assets/falcon-bird.webp");mask-image:url("/assets/falcon-bird.webp");
-  -webkit-mask-size:100% 100%;mask-size:100% 100%;
-  background:linear-gradient(115deg,transparent 40%,rgba(255,255,255,.55) 50%,rgba(180,205,255,.25) 54%,transparent 62%);
-  background-size:260% 100%;background-repeat:no-repeat;
-  background-position:180% 0;
-  animation:sheenSweep 1.2s ease-out 1.35s both}
-@keyframes sheenSweep{from{background-position:180% 0}to{background-position:-120% 0}}
-.hero:hover .sheen{animation:sheenSweep 1.2s ease-out}
+/* feather: a pen-stroke draws the outline, then the fill catches up and
+   the stroke steps aside */
+.falcon-svg .feather-stroke{stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;
+  animation:featherDraw .95s var(--ease) .15s both,featherStrokeOut .35s linear 1.15s both}
+.falcon-svg .feather-fill{opacity:0;animation:featherFillIn .5s var(--ease) .72s both}
+@keyframes featherDraw{to{stroke-dashoffset:0}}
+@keyframes featherFillIn{to{opacity:1}}
+@keyframes featherStrokeOut{to{stroke-opacity:0}}
 
-/* eye: ignition flare, then the resting pulse takes over */
-.hero-falcon .eye{position:absolute;left:79%;top:28.5%;width:22%;aspect-ratio:1;
-  transform:translate(-50%,-50%);border-radius:50%;
-  background:radial-gradient(circle,rgba(245,166,35,.85) 0%,rgba(245,166,35,.25) 34%,transparent 70%);
-  mix-blend-mode:screen;filter:blur(2px);
+/* sweep: one pass of light inside the bird's own path */
+.falcon-sweep .sweep-rect{animation:sweepAcross 1.2s ease-out 1.35s both}
+@keyframes sweepAcross{from{transform:translateX(0)}to{transform:translateX(2150px)}}
+.hero:hover .falcon-sweep .sweep-rect{animation:sweepAcross 1.2s ease-out}
+
+/* eye: ignition flare on the real geometry, then the resting pulse */
+.falcon-eye{transform-box:fill-box;transform-origin:center;mix-blend-mode:screen;
   animation:eyeIgnite .9s var(--ease) 1.05s both,eyePulse 5.5s ease-in-out 2.6s infinite}
 @keyframes eyeIgnite{
-  0%{opacity:0;transform:translate(-50%,-50%) scale(.35)}
-  55%{opacity:1;transform:translate(-50%,-50%) scale(1.45)}
-  100%{opacity:.55;transform:translate(-50%,-50%) scale(1)}}
+  0%{opacity:0;transform:scale(.35)}
+  55%{opacity:1;transform:scale(1.45)}
+  100%{opacity:.55;transform:scale(1)}}
 @keyframes eyePulse{0%,100%{opacity:.55}50%{opacity:1}}
 .hero-fp{position:absolute;inset:auto 0 12% 0;z-index:1;opacity:.6;pointer-events:none}
 
@@ -890,8 +896,11 @@ strong{font-weight:600}
     transition-duration:.001ms!important;scroll-behavior:auto!important}
   .reveal{opacity:1;transform:none}
   .flightpath .fp-line{stroke-dashoffset:0}.flightpath .fp-tip{opacity:1}
-  .hero-falcon .eye{animation:none;opacity:.8}
-  .hero-falcon .sheen{animation:none;opacity:0}
+  .falcon-svg *{animation:none!important}
+  .falcon-svg .feather-fill{opacity:1}
+  .falcon-svg .feather-stroke{stroke-opacity:0}
+  .falcon-svg .falcon-eye{opacity:.7}
+  .falcon-sweep{display:none}
   .case-img:hover{transform:none}
   .faq-body{transition:none}
   .svc::after{display:none}
@@ -900,3 +909,188 @@ strong{font-weight:600}
   .photo:hover,.photo:hover img{transform:none}
 }
 @media print{.site-head,.mnav,.hero-fp,.foot-word{display:none}body{background:#fff}}
+
+/* ============================================================================
+   SEO PAGE - THE X-RAY
+   A live replica of the homepage that flips between what a visitor sees and
+   what Google reads. Every value in it is really in the page it depicts;
+   the exhibit would be worthless the moment it exaggerated.
+   ========================================================================== */
+.xray{margin-top:clamp(30px,4vw,48px)}
+.xr-frame{background:var(--ink-navy);border:1px solid rgba(255,255,255,.09);
+  border-radius:var(--r-lg);overflow:clip;box-shadow:var(--shadow-navy)}
+
+.xr-chrome{display:flex;align-items:center;gap:14px;padding:11px 16px;
+  background:rgba(0,0,0,.28);border-bottom:1px solid rgba(255,255,255,.07)}
+.xr-dots{display:flex;gap:6px}
+.xr-dots i{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.16)}
+.xr-url{font:500 .8rem/1 var(--ff-b);color:var(--on-navy-dim);letter-spacing:.02em;
+  background:rgba(255,255,255,.07);border-radius:var(--r-pill);padding:7px 14px}
+.xr-toggle{margin-left:auto;display:inline-flex;align-items:center;gap:10px;
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.22);
+  border-radius:var(--r-pill);padding:6px 7px 6px 14px;cursor:pointer;
+  color:var(--on-navy);font:600 .76rem/1 var(--ff-d);letter-spacing:.04em}
+.xr-toggle b{font-weight:600;min-width:86px;text-align:left}
+.xr-knob{width:36px;height:20px;border-radius:var(--r-pill);position:relative;
+  background:rgba(255,255,255,.18);transition:background .25s var(--ease)}
+.xr-knob::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;
+  border-radius:50%;background:#fff;transition:transform .25s var(--ease)}
+.xray.is-on .xr-knob{background:var(--amber)}
+.xray.is-on .xr-knob::after{transform:translateX(16px)}
+.xr-toggle:focus-visible{outline:3px solid var(--cobalt);outline-offset:2px}
+
+/* the head markup, disclosed */
+.xr-meta{display:grid;grid-template-rows:0fr;transition:grid-template-rows .5s var(--ease);
+  background:#071527;border-bottom:1px solid rgba(255,255,255,.07)}
+.xr-meta>div{overflow:hidden;position:relative;min-width:0}
+.xray.is-on .xr-meta{grid-template-rows:1fr}
+.xr-meta code{display:block;font:400 .74rem/1.6 ui-monospace,Menlo,Consolas,monospace;
+  color:rgba(255,255,255,.5);padding:0 52px 0 18px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.xr-meta code:first-child{padding-top:13px}
+.xr-meta code:nth-of-type(3){padding-bottom:13px}
+.xr-meta em{font-style:normal;color:#F7C877}
+
+/* the replica: everything in em so one clamp scales the whole page */
+.xr-page{background:var(--paper);padding:1.4em 1.6em 1.6em;
+  font-size:clamp(8.5px,.55vw + 5.6px,12px);position:relative}
+.xr-nav{display:flex;align-items:center;gap:1.4em;background:var(--ink-navy);
+  border-radius:.5em .5em 0 0;padding:.9em 1.2em;margin-bottom:2px}
+.xr-brand{display:flex;align-items:center;gap:.6em;color:#fff;
+  font:700 .95em/1 var(--ff-d);letter-spacing:.12em}
+.xr-brand img{width:2em;height:auto}
+.xr-links{display:flex;gap:1.2em;margin-left:auto}
+.xr-links i{font:500 .85em/1 var(--ff-b);font-style:normal;color:var(--on-navy-dim)}
+.xr-cta{background:var(--amber);color:var(--ink-navy);font:700 .8em/1 var(--ff-d);
+  padding:.7em 1.1em;border-radius:var(--r-pill)}
+/* the replica hero is navy because the real one is - and the white mark
+   only exists against that ground */
+.xr-hero{position:relative;background:var(--ink-navy);border-radius:0 0 .5em .5em;
+  padding:1.3em 1.6em 1.5em;margin-bottom:1.6em;overflow:clip}
+.xr-falcon{position:absolute;right:.9em;top:50%;transform:translateY(-46%);
+  width:14em;height:auto;pointer-events:none;transition:opacity .45s var(--ease)}
+.xray.is-on .xr-falcon{opacity:.3}
+@media(max-width:759px){.xr-falcon{width:10em;right:-.6em}}
+.xr-kicker{font:600 .72em/1 var(--ff-d);letter-spacing:.22em;text-transform:uppercase;
+  color:#7FA6FF;margin:0 0 .9em}
+.xr-h1{position:relative;display:inline-block;font:700 2.5em/1.12 var(--ff-d);
+  letter-spacing:-.02em;color:#fff;margin:0;padding-right:2.4em;max-width:15em}
+.xr-h1 span{color:var(--amber)}
+.xr-lead{color:var(--on-navy-dim);font:400 1em/1.5 var(--ff-b);margin:.8em 0 1.1em;max-width:30em}
+.xr-btns{display:flex;gap:.8em;margin:0}
+.xr-b1,.xr-b2{font:600 .85em/1 var(--ff-d);padding:.9em 1.3em;border-radius:var(--r-pill)}
+.xr-b1{background:var(--amber);color:var(--ink-navy)}
+.xr-b2{border:1px solid rgba(255,255,255,.28);color:#fff;background:transparent}
+
+.xr-row{display:grid;gap:1.4em;align-items:stretch}
+@media(min-width:760px){.xr-row{grid-template-columns:1.1fr 1fr}}
+.xr-photo{position:relative;margin:0;border-radius:.6em;overflow:clip;
+  border:1px solid var(--rule);background:#fff;min-height:11em}
+.xr-photo img{display:block;width:100%;height:100%;object-fit:cover;
+  transition:opacity .45s var(--ease)}
+.xr-photo-data{position:absolute;inset:0;padding:1.2em 3em 1.2em 1.2em;display:flex;
+  flex-direction:column;gap:.7em;justify-content:center;background:var(--paper);
+  border:2px dashed #C3CCD7;border-radius:.6em;
+  opacity:0;transition:opacity .45s var(--ease)}
+.xr-photo-data code{font:500 .82em/1.5 ui-monospace,Menlo,Consolas,monospace;
+  color:var(--slate);overflow-wrap:anywhere}
+.xr-photo-data .xr-file{color:var(--cobalt-deep);font-weight:600}
+.xray.is-on .xr-photo img{opacity:.08}
+.xray.is-on .xr-photo-data{opacity:1}
+
+.xr-side{display:flex;flex-direction:column;gap:1.4em;min-width:0}
+.xr-card{position:relative;background:#fff;border:1px solid var(--rule);
+  border-radius:.6em;padding:1.2em 3em 1.2em 1.2em;flex:1}
+.xr-schema{transition:border-color .4s var(--ease),box-shadow .4s var(--ease)}
+.xr-biz{display:flex;flex-direction:column;gap:.35em;transition:opacity .4s var(--ease)}
+.xr-biz b{font:700 1em/1.3 var(--ff-d);color:var(--ink)}
+.xr-biz span{font:400 .85em/1.5 var(--ff-b);color:var(--slate)}
+.xr-json{position:absolute;inset:1.2em 3em 1.2em 1.2em;opacity:0;
+  transition:opacity .4s var(--ease)}
+.xray.is-on .xr-biz{opacity:0}
+.xray.is-on .xr-json{opacity:1}
+.xr-schema code{font:400 .82em/1.7 ui-monospace,Menlo,Consolas,monospace;color:var(--slate)}
+.xr-schema em{font-style:normal;color:var(--cobalt-deep);font-weight:600}
+.xray.is-on .xr-schema{border-color:var(--amber);box-shadow:0 0 0 3px rgba(245,166,35,.15)}
+.xr-card-h{font:600 .72em/1 var(--ff-d);letter-spacing:.16em;text-transform:uppercase;
+  color:var(--slate);margin:0 0 .8em}
+.xr-anchors p{font:400 .95em/1.7 var(--ff-b);color:var(--ink);margin:0}
+.xr-a{color:var(--cobalt-deep);border-bottom:1px solid rgba(37,99,235,.35);position:relative}
+.xr-a code{display:none;font:500 .78em/1 ui-monospace,Menlo,Consolas,monospace;
+  color:var(--amber-deep);margin-left:.4em}
+.xray.is-on .xr-a code{display:inline}
+
+/* tags + pins */
+.xr-tag{position:absolute;top:-.5em;right:0;font:700 .55em/1 ui-monospace,Menlo,monospace;
+  letter-spacing:.08em;color:var(--amber-deep);background:#FFF6E6;border:1px solid #F0D49A;
+  border-radius:.35em;padding:.45em .6em;opacity:0;transform:translateY(4px);
+  transition:opacity .4s var(--ease),transform .4s var(--ease)}
+.xr-tag--wide{top:-1em;right:1.2em}
+.xray.is-on .xr-tag{opacity:1;transform:none}
+.xr-pin{position:absolute;top:.8em;right:.8em;width:24px;height:24px;border-radius:50%;
+  border:0;background:var(--amber);color:var(--ink-navy);font:700 12px/1 var(--ff-d);
+  cursor:pointer;box-shadow:0 0 0 4px rgba(245,166,35,.22);
+  transition:transform .2s var(--ease),box-shadow .2s var(--ease)}
+.xr-pin:hover{transform:scale(1.12)}
+.xr-pin:focus-visible{outline:3px solid var(--cobalt);outline-offset:2px}
+.xr-pin[aria-expanded="true"]{background:var(--ink-navy);color:var(--amber);
+  box-shadow:0 0 0 4px rgba(11,31,58,.18)}
+.xr-meta .xr-pin{top:50%;transform:translateY(-50%);right:14px}
+.xr-meta .xr-pin:hover{transform:translateY(-50%) scale(1.12)}
+.xr-h1 .xr-pin{top:.1em;right:0}
+
+/* the explanation card */
+.xr-notes{margin-top:18px;min-height:118px}
+.xr-note{background:#fff;border:1px solid var(--rule);border-left:3px solid var(--amber);
+  border-radius:var(--r-lg);padding:20px 24px;box-shadow:var(--shadow-1)}
+.xr-note h3{font-size:1.02rem;margin:0 0 7px}
+.xr-note p{color:var(--slate);font-size:.95rem;margin:0;max-width:74ch}
+.xr-note code{font:500 .82em/1 ui-monospace,Menlo,Consolas,monospace;color:var(--amber-deep);
+  background:#FFF6E6;border-radius:4px;padding:2px 6px;white-space:nowrap}
+.xr-note kbd{font:600 .85em/1 ui-monospace,monospace;border:1px solid var(--rule);
+  border-bottom-width:2px;border-radius:4px;padding:1px 5px;background:var(--paper)}
+.sec-head kbd{font:600 .85em/1 ui-monospace,monospace;border:1px solid var(--rule);
+  border-bottom-width:2px;border-radius:4px;padding:1px 5px;background:#fff}
+
+@media(max-width:560px){
+  .xr-links{display:none}
+  .xr-dots{display:none}
+  .xr-url{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;text-align:left}
+  .xr-toggle b{display:none}
+  .xr-toggle{padding:6px 7px}
+  .xr-meta code{padding-right:44px}
+}
+@media(prefers-reduced-motion:reduce){
+  .xray *,.xray *::after{transition:none!important}
+}
+
+/* ============================================================================
+   SEO PAGE - THE SAMPLE REPORT
+   The deliverables list, shown as the document that proves it happened.
+   One line is deliberately flat and flagged: the honesty is the product.
+   ========================================================================== */
+.report{background:#fff;border:1px solid var(--rule);border-radius:var(--r-lg);
+  overflow:clip;box-shadow:var(--shadow-2);position:relative}
+.report::before{content:"";position:absolute;inset:0 0 auto;height:3px;
+  background:linear-gradient(90deg,var(--amber),var(--cobalt))}
+.rp-head{display:flex;flex-wrap:wrap;gap:4px 18px;align-items:baseline;
+  padding:20px 26px 16px;border-bottom:1px solid var(--rule)}
+.rp-title{font:700 .82rem/1 ui-monospace,Menlo,Consolas,monospace;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--ink)}
+.rp-sub{font:400 .78rem/1.4 var(--ff-b);color:var(--slate)}
+.rp-list{list-style:none;margin:0;padding:0}
+.rp-list li{display:grid;grid-template-columns:150px 1fr 34px;gap:16px;
+  align-items:start;padding:15px 26px;border-bottom:1px solid var(--rule)}
+.rp-list li:last-child{border-bottom:none}
+.rp-what{font:600 .85rem/1.5 var(--ff-d);color:var(--ink)}
+.rp-did{font:400 .9rem/1.55 var(--ff-b);color:var(--slate)}
+.rp-ok{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;
+  background:#E8F0FE;color:var(--cobalt-deep);font-size:.8rem;justify-self:end}
+.rp-ok--flag{background:#FFF6E6;color:var(--amber-deep)}
+.rp-flag{background:#FFFDF7}
+.rp-foot{padding:15px 26px;background:var(--paper);border-top:1px solid var(--rule);
+  font:500 .84rem/1.5 var(--ff-b);color:var(--ink)}
+@media(max-width:640px){
+  .rp-list li{grid-template-columns:1fr 34px}
+  .rp-did{grid-column:1/-1}
+}

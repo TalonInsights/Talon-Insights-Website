@@ -323,6 +323,37 @@
     set();
   });
 
+  /* ---- SEO x-ray: flip the homepage replica to what Google reads ---- */
+  var xray = document.getElementById("seo-xray");
+  if (xray) {
+    var xtog = xray.querySelector(".xr-toggle");
+    var xlabel = xtog.querySelector("b");
+    function xset(on) {
+      xray.classList.toggle("is-on", on);
+      xtog.setAttribute("aria-pressed", on ? "true" : "false");
+      xlabel.textContent = on ? "Googlebot view" : "Visitor view";
+      xray.querySelector(".xr-meta").setAttribute("aria-hidden", on ? "false" : "true");
+    }
+    xtog.addEventListener("click", function () {
+      xset(!xray.classList.contains("is-on"));
+    });
+    var xnotes = [].slice.call(xray.querySelectorAll(".xr-note"));
+    var xpins = [].slice.call(xray.querySelectorAll(".xr-pin"));
+    xpins.forEach(function (pin) {
+      pin.setAttribute("aria-expanded", "false");
+      pin.addEventListener("click", function () {
+        var id = pin.getAttribute("data-note");
+        xset(true); /* the pins annotate the Googlebot layer, so reveal it */
+        xpins.forEach(function (p) {
+          p.setAttribute("aria-expanded", p === pin ? "true" : "false");
+        });
+        xnotes.forEach(function (n) {
+          n.hidden = n.getAttribute("data-note") !== id;
+        });
+      });
+    });
+  }
+
   /* ---- enquiry form (contact page only) --------------------------------
      Client-side validation, honeypot, and a hard refusal to submit while the
      endpoint is still a placeholder — an enquiry must never be silently lost. */
