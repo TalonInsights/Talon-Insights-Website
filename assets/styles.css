@@ -384,6 +384,30 @@ strong{font-weight:600}
 /* ============================================================================
    SERVICE CARDS (home) + SERVICE PAGES
    ========================================================================== */
+/* Outcomes are parallel, not sequential, so they carry no rank - a reader
+   handed 01-05 goes looking for an order that is not there. A short amber
+   rule marks each instead, and two columns keep the block clearly distinct
+   from the numbered lists above and below it. */
+.outcomes{list-style:none;margin:0;padding:0;display:grid;
+  border-top:1px solid var(--rule)}
+.outcomes>li{padding:26px 0 24px;border-bottom:1px solid var(--rule)}
+@media(min-width:820px){
+  .outcomes{grid-template-columns:1fr 1fr;column-gap:clamp(40px,5vw,72px)}
+  .outcomes>li:last-child{grid-column:1/-1}
+}
+.outcomes .bar{display:block;width:26px;height:3px;border-radius:2px;
+  background:var(--amber);margin-bottom:15px;transition:width .3s var(--ease)}
+.outcomes h3{font-size:var(--fs-h4);margin:0}
+.outcomes p{color:var(--slate);margin:7px 0 0;font-size:.98rem;max-width:54ch}
+.outcomes a{color:var(--cobalt-deep)}
+@media(hover:hover){.outcomes>li:hover .bar{width:46px}}
+
+/* The list of things that go wrong, marked as such. A cross reads as a
+   fault at a glance, where 01-06 reads as an agenda. */
+.rows--fail .no{font-size:1.05rem;color:var(--slate)}
+.rows--fail .no::before{content:"\2715";line-height:1.6}
+@media(hover:hover){.rows--fail>li:hover h3{transform:none}}
+
 .svc{position:relative;background:#fff;border:1px solid var(--rule);border-radius:var(--r-lg);
   padding:34px 30px 30px;display:flex;flex-direction:column;min-height:100%;
   text-decoration:none;color:inherit;overflow:clip;
