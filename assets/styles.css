@@ -109,6 +109,8 @@ strong{font-weight:600}
 .on-navy .secnum{-webkit-text-stroke:1px rgba(255,255,255,.12)}
 
 .sec-head{margin-bottom:clamp(40px,4vw,64px)}
+.sec-head--mid{text-align:center;margin-inline:auto}
+.sec-head--mid h2{text-wrap:balance}
 .sec-head .lead{margin-top:14px}
 
 /* ---------- buttons ---------- */
