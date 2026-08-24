@@ -436,9 +436,9 @@
           + "% of futures pay back inside two years.";
       }
       document.getElementById("mc-detail").innerHTML =
-        "Median payback <b>" + med + " months</b>; the middle 80% of futures land between <b>"
-        + p10 + "</b> and <b>" + p90 + " months</b>. Not one number \u2014 a distribution "
-        + "with probabilities attached, which is the point.";
+        "In the typical story it takes <b>" + med + " months</b> to earn the money back. "
+        + "In 8 out of 10 stories it lands between <b>" + p10 + "</b> and <b>" + p90
+        + " months</b>. That\u2019s the value of the method: not one number, but the odds.";
 
       /* sensitivity: which input actually moves the answer */
       var rs = [

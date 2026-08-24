@@ -819,12 +819,8 @@ strong{font-weight:600}
 .site-foot a:hover{color:#fff;text-decoration:underline}
 .site-foot p{color:var(--on-navy);font-size:.95rem}
 .foot-base{display:flex;flex-wrap:wrap;gap:var(--s3) var(--s5);justify-content:space-between;
-  padding-block:var(--s4) 120px;border-top:1px solid var(--rule-dark);
+  padding-block:var(--s4) var(--s5);border-top:1px solid var(--rule-dark);
   font-size:var(--fs-sm);color:var(--on-navy-dim)}
-.foot-word{position:absolute;left:0;right:0;bottom:-.24em;z-index:1;pointer-events:none;user-select:none;
-  font:700 clamp(90px,17vw,240px)/1 var(--ff-d);letter-spacing:.06em;text-align:center;
-  color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.06);white-space:nowrap}
-
 /* ============================================================================
    SCROLL PROGRESS — the flight path, doubling as a reading indicator
    ========================================================================== */
@@ -908,7 +904,7 @@ strong{font-weight:600}
   .photo,.photo img,.photo::before,.photo figcaption{transition:none}
   .photo:hover,.photo:hover img{transform:none}
 }
-@media print{.site-head,.mnav,.hero-fp,.foot-word{display:none}body{background:#fff}}
+@media print{.site-head,.mnav,.hero-fp{display:none}body{background:#fff}}
 
 /* ============================================================================
    SEO PAGE - THE X-RAY

@@ -168,20 +168,23 @@
       <p class="eyebrow">A live model</p>
       <h2>This page is running the numbers right now<span class="dot">.</span></h2>
       <p class="lead">
-        A worked example, computed in your browser as you read: an invented print firm
-        weighing a &pound;48,000 wide-format setup against carrying on outsourcing. Three
-        uncertain inputs, fifty thousand simulated futures. Drag the demand slider and
-        watch a maybe become an answer.
+        Here's the idea in one line: instead of guessing one number, a computer plays the
+        next few years out <b>fifty thousand times</b>, each time with slightly different
+        luck, and then counts how the stories end. Below, a deliberately tiny worked
+        example &mdash; an invented print firm deciding whether a &pound;48,000 machine
+        would pay for itself. <b>A real engagement weighs hundreds of factors; this demo
+        uses three</b>, so you can watch it think. Drag the slider and see the answer change.
       </p>
     </div>
 
     <div class="mc" id="mc">
       <div class="mc-grid">
         <div class="mc-left">
-          <p class="mc-brief"><b>The question.</b> Wrekin Print outsources large-format
-            jobs at thin margin. The machine would capture that margin &mdash; if enough
-            work exists. Nobody knows next year's demand to the pound, so every input is
-            a range, not a guess:</p>
+          <p class="mc-brief"><b>The question.</b> Wrekin Print currently pays someone
+            else to do its large-format printing. Buying the machine keeps that money
+            in-house &mdash; if enough work comes through the door. Nobody can know next
+            year exactly, so each ingredient goes in as a <b>range</b> &mdash; worst
+            case, most likely, best case &mdash; instead of a single guess:</p>
           <ul class="mc-ins">
             <li><code>jobs / month</code><span>triangular( 8, <b data-mode>14</b>, 26 )</span></li>
             <li><code>margin uplift / job</code><span>triangular( &pound;75, &pound;135, &pound;215 )</span></li>
@@ -213,10 +216,11 @@
     </div>
 
     <p class="mc-foot measure">
-      This demo distils the method to three inputs so you can see it think. A real
-      engagement starts far wider &mdash; a PESTLE sweep of several hundred factors,
-      explained below &mdash; and models growth and seasonality rather than a flat month.
-      The full method, as run on a genuine engagement, is written up in
+      To be clear about scale: this toy weighs <b>three</b> factors. A real engagement
+      starts with a structured sweep of everything that could move the outcome &mdash;
+      typically <b>several hundred factors</b>, from interest rates to local competitors
+      &mdash; and models growth and seasons rather than a flat month. How that works on a
+      genuine engagement is written up in
       <a href="/blog/monte-carlo-marketing">the Monte Carlo guide</a>.
     </p>
   </div>
@@ -337,7 +341,6 @@
       </p>
     </div>
   </div>
-  <div class="foot-word" aria-hidden="true">TALON</div>
 </footer>
 
 <div class="progress" aria-hidden="true"><i></i></div>
