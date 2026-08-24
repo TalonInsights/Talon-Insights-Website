@@ -1081,9 +1081,9 @@ strong{font-weight:600}
 .ops.ops--max{position:fixed;inset:0;z-index:80;border-radius:0;margin:0;
   overflow:auto}
 .ops-top{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;
-  justify-content:space-between;padding:14px 18px;
+  justify-content:center;padding:14px 18px;
   background:rgba(0,0,0,.28);border-bottom:1px solid rgba(255,255,255,.07)}
-.ops-presets{display:flex;flex-wrap:wrap;gap:7px}
+.ops-presets{display:flex;flex-wrap:wrap;gap:7px;justify-content:center}
 .ops-preset{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18);
   border-radius:var(--r-pill);padding:7px 13px;cursor:pointer;
   color:var(--on-navy);font:600 .74rem/1 var(--ff-d);letter-spacing:.02em;
@@ -1100,10 +1100,11 @@ strong{font-weight:600}
 .ops-act--amber{background:var(--amber);border-color:var(--amber);color:var(--ink-navy)}
 .ops-act--amber:hover{background:var(--amber-deep)}
 .ops-caption{font:400 .88rem/1.55 var(--ff-b);color:var(--on-navy);
-  margin:0;padding:13px 18px 0}
+  margin:0 auto;padding:14px 18px 0;max-width:76ch;text-align:center}
 .ops-caption b{color:#F7C877}
 
-.ops-add{display:flex;flex-wrap:wrap;gap:10px;align-items:end;padding:12px 18px 0}
+.ops-add{display:flex;flex-wrap:wrap;gap:10px;align-items:end;padding:14px 18px 0;justify-content:center}
+.ops-add[hidden]{display:none}   /* an author display rule outranks the hidden attribute */
 .ops-add input[type=text]{flex:1 1 160px;background:rgba(255,255,255,.08);
   border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:9px 12px;
   color:#fff;font:500 .84rem/1 var(--ff-b)}
