@@ -323,6 +323,108 @@
     set();
   });
 
+  /* ---- the design machine (web design page) --------------------------
+     Three research briefs, one artifact. A brief is data; the render is a
+     pure function of it. Which is the section's whole argument. */
+  var dz = document.getElementById("wd-dz");
+  if (dz) {
+    var BRIEFS = [
+      { name: "Damp specialist",
+        sum: "Buyers 55+ &middot; arrive by recommendation &middot; the fear is mess",
+        v: { zI: "#2E2A25", zA: "#B4622D", zP: "#FAF6F0", zS: "1.08" },
+        kick: "Marches Damp &amp; Timber &middot; est. 1998",
+        h: "Damp coming through? We&rsquo;ll find where &mdash; and fix it tidily.",
+        sub: "Surveyed by the owner, not a salesman. Dust sheets as standard.",
+        cta: "Book the owner&rsquo;s visit",
+        proof: { chips: ["Trade-body registered", "25 years local", "Owner answers the phone"] },
+        log: [
+          ["demographics", "Base type up, contrast up &mdash; 55+ eyes reading on phones."],
+          ["customer language", "&ldquo;Damp coming through&rdquo;, never &ldquo;moisture ingress&rdquo; &mdash; the headline is the phone call."],
+          ["objections", "&ldquo;Tidily&rdquo; and dust sheets lead, because mess is the fear that loses the job."],
+          ["competitor scan", "Every rival is blue and corporate &mdash; clay and cream owns the local results page."]
+        ] },
+      { name: "Wedding florist",
+        sum: "Couples 25&ndash;35 &middot; found on Instagram &middot; browsing at 11pm on a phone",
+        v: { zI: "#43333B", zA: "#C26A77", zP: "#FBF4F2", zS: ".97" },
+        kick: "Foxglove &amp; Fern &middot; seasonal flowers",
+        h: "Flowers that feel like the two of you.",
+        sub: "Grown close to home, arranged the week of the day.",
+        cta: "Check your date",
+        proof: { gallery: true },
+        log: [
+          ["demographics", "Thumb-first layout, gallery before words &mdash; the decision happens at 11pm on a phone."],
+          ["route to market", "Instagram sends them, so the page continues the grid rather than opening a brochure."],
+          ["customer language", "&ldquo;Your date&rdquo;, &ldquo;the day&rdquo; &mdash; the words couples actually use."],
+          ["objections", "Price anxiety is quiet but real &mdash; &ldquo;from&rdquo; ranges appear before they must ask."]
+        ] },
+      { name: "Commercial cleaning",
+        sum: "Facilities managers &middot; procurement-led &middot; risk is the whole conversation",
+        v: { zI: "#16232E", zA: "#145C8E", zP: "#F4F6F8", zS: ".93" },
+        kick: "Bridgnorth Contract Cleaning &middot; B2B",
+        h: "Compliance-clean. Audit-ready. Every visit logged.",
+        sub: "Method statements, vetted staff and a named account manager.",
+        cta: "Request the compliance pack",
+        proof: { chips: ["Insured &pound;10m", "Staff vetted &amp; uniformed", "RAMS on request"] },
+        log: [
+          ["demographics", "Denser layout, smaller type &mdash; read at a desk, printed for a tender file."],
+          ["route to market", "Procurement finds them: documents beat photographs here."],
+          ["customer language", "&ldquo;RAMS&rdquo;, &ldquo;audit-ready&rdquo; &mdash; jargon is correct for once; these buyers speak it."],
+          ["competitor scan", "And here blue IS the right call &mdash; the research says corporate, so corporate it is."]
+        ] }
+    ];
+
+    var tabs = dz.querySelector(".dz-briefs");
+    var mini = dz.querySelector(".dz-mini");
+    var log = dz.querySelector(".dz-log");
+
+    BRIEFS.forEach(function (b, i) {
+      var t = document.createElement("button");
+      t.type = "button";
+      t.className = "dz-tab";
+      t.setAttribute("role", "tab");
+      t.setAttribute("aria-selected", i === 0 ? "true" : "false");
+      t.tabIndex = i === 0 ? 0 : -1;
+      t.innerHTML = "<b>" + b.name + "</b><span>" + b.sum + "</span>";
+      t.addEventListener("click", function () { show(i); });
+      tabs.appendChild(t);
+    });
+    tabs.addEventListener("keydown", function (e) {
+      if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") { return; }
+      e.preventDefault();
+      var all = [].slice.call(tabs.children);
+      var cur = all.indexOf(document.activeElement);
+      var next = (cur + (e.key === "ArrowRight" ? 1 : all.length - 1)) % all.length;
+      all[next].focus();
+      show(next);
+    });
+
+    function show(i) {
+      var b = BRIEFS[i];
+      [].forEach.call(tabs.children, function (t, k) {
+        t.setAttribute("aria-selected", k === i ? "true" : "false");
+        t.tabIndex = k === i ? 0 : -1;
+      });
+      Object.keys(b.v).forEach(function (k) {
+        mini.style.setProperty("--" + k, b.v[k]);
+      });
+      var proof = b.proof.gallery
+        ? '<div class="dz-gallery"><i></i><i></i><i></i></div>'
+        : '<ul class="dz-proof"><li>' + b.proof.chips.join("</li><li>") + "</li></ul>";
+      mini.innerHTML = '<p class="dz-kick">' + b.kick + '</p>'
+        + '<p class="dz-h">' + b.h + '</p>'
+        + '<p class="dz-sub">' + b.sub + '</p>'
+        + '<span class="dz-cta">' + b.cta + "</span>" + proof;
+      log.innerHTML = "<h3>What the research changed</h3><ul>"
+        + b.log.map(function (l) {
+            return '<li><span class="dz-src">' + l[0] + "</span><p>" + l[1] + "</p></li>";
+          }).join("") + "</ul>";
+      mini.classList.remove("switching");
+      void mini.offsetWidth;
+      mini.classList.add("switching");
+    }
+    show(0);
+  }
+
   /* ---- feature deck (web design page) --------------------------------
      Scroll-snap carries the carousel; buttons, dots and arrow keys are
      conveniences layered on native scrolling. Each slide's demo is wired
