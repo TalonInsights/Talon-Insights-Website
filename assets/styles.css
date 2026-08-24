@@ -1180,3 +1180,146 @@ strong{font-weight:600}
 .mod-tag::before{content:"/ "}
 .mod h3{font-size:1.05rem;margin:0 0 7px}
 .mod p{color:var(--slate);font-size:.95rem;margin:0}
+
+/* ============================================================================
+   WEB DESIGN PAGE - THE DECK
+   A stepping carousel of live capability demos. Scroll-snap does the layout
+   work; the buttons and dots are conveniences on top of native scrolling, so
+   swipe, trackpad, arrows and keyboard all work by default.
+   ========================================================================== */
+.deck{margin-top:clamp(30px,4vw,48px)}
+.deck-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;
+  scroll-behavior:smooth;border-radius:var(--r-lg);
+  scrollbar-width:none;-ms-overflow-style:none}
+.deck-track::-webkit-scrollbar{display:none}
+.deck-track:focus-visible{outline:3px solid var(--cobalt);outline-offset:3px}
+@media(prefers-reduced-motion:reduce){.deck-track{scroll-behavior:auto}}
+
+.deck-slide{flex:0 0 100%;scroll-snap-align:start;display:grid;gap:0;
+  background:#fff;border:1px solid var(--rule);border-radius:var(--r-lg);
+  overflow:clip;margin-right:16px}
+@media(min-width:880px){.deck-slide{grid-template-columns:1.15fr 1fr}}
+.dk-demo{background:var(--ink-navy);padding:clamp(22px,3vw,38px);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:18px;min-height:320px}
+.dk-copy{padding:clamp(22px,3vw,34px)}
+.dk-copy h3{font-size:1.15rem;margin:0 0 10px}
+.dk-copy p{color:var(--slate);font-size:.96rem;margin:0}
+
+.deck-nav{display:flex;align-items:center;justify-content:center;gap:18px;
+  margin-top:16px}
+.deck-btn{width:42px;height:42px;border-radius:50%;border:1px solid var(--rule);
+  background:#fff;color:var(--ink);font-size:1.1rem;cursor:pointer;
+  transition:border-color .2s var(--ease),transform .2s var(--ease)}
+.deck-btn:hover{border-color:var(--cobalt);transform:translateY(-1px)}
+.deck-btn:focus-visible{outline:3px solid var(--cobalt);outline-offset:2px}
+.deck-dots{display:flex;gap:8px}
+.deck-dots button{width:9px;height:9px;border-radius:50%;border:0;cursor:pointer;
+  background:#C3CCD7;padding:0;transition:all .2s var(--ease)}
+.deck-dots button[aria-current="true"]{background:var(--amber);width:24px;border-radius:5px}
+.deck-dots button:focus-visible{outline:3px solid var(--cobalt);outline-offset:2px}
+
+/* slide 1 - staged entrance */
+.dk-mini{background:linear-gradient(160deg,#132B4F,#0B1F3A);border:1px solid
+  rgba(255,255,255,.1);border-radius:12px;padding:26px 28px;max-width:360px;width:100%}
+.dk-kicker{font:600 .62rem/1 var(--ff-d);letter-spacing:.2em;text-transform:uppercase;
+  color:#7FA6FF;margin:0 0 12px}
+.dk-h{font:700 1.35rem/1.2 var(--ff-d);letter-spacing:-.01em;color:#fff;margin:0}
+.dk-h span{color:var(--amber)}
+.dk-sub{font:400 .85rem/1.5 var(--ff-b);color:var(--on-navy-dim);margin:10px 0 16px}
+.dk-btn{display:inline-block;background:var(--amber);color:var(--ink-navy);
+  font:700 .8rem/1 var(--ff-d);padding:11px 18px;border-radius:var(--r-pill)}
+.dk-stagey>*{opacity:0}
+.dk-stagey.is-play>*{animation:dkIn .55s var(--ease) both}
+.dk-stagey.is-play>:nth-child(1){animation-delay:.1s}
+.dk-stagey.is-play>:nth-child(2){animation-delay:.32s}
+.dk-stagey.is-play>:nth-child(3){animation-delay:.58s}
+.dk-stagey.is-play>:nth-child(4){animation-delay:.82s}
+@keyframes dkIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.dk-replay{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.25);
+  border-radius:var(--r-pill);color:var(--on-navy);padding:8px 16px;cursor:pointer;
+  font:600 .76rem/1 var(--ff-d)}
+.dk-replay:hover{background:rgba(255,255,255,.15)}
+.dk-replay:focus-visible{outline:3px solid var(--cobalt);outline-offset:2px}
+@media(prefers-reduced-motion:reduce){
+  .dk-stagey>*{opacity:1;animation:none!important}}
+
+/* slide 2 - micro-interactions */
+.dk-micro{display:flex;flex-direction:column;align-items:center;gap:22px}
+.dk-mag{background:var(--amber);color:var(--ink-navy);border:0;cursor:pointer;
+  font:700 .85rem/1 var(--ff-d);padding:14px 24px;border-radius:var(--r-pill);
+  transition:transform .18s var(--ease);will-change:transform}
+.dk-ink{color:#9FBEF5;font:600 .9rem/1.4 var(--ff-d);text-decoration:none;
+  background:linear-gradient(currentColor,currentColor) bottom left/0% 2px no-repeat;
+  transition:background-size .35s var(--ease);padding-bottom:3px}
+.dk-ink:hover,.dk-ink:focus-visible{background-size:100% 2px;color:#C4D9FF}
+.dk-tilt{background:#fff;border-radius:12px;padding:18px 24px;text-align:center;
+  transition:transform .15s ease-out;transform-style:preserve-3d;cursor:default}
+.dk-tilt b{display:block;font:700 1.5rem/1 var(--ff-d);color:var(--ink)}
+.dk-tilt b small{font-size:.85rem;color:var(--slate)}
+.dk-tilt span{display:block;font:500 .72rem/1.4 var(--ff-b);color:var(--slate);margin-top:6px}
+
+/* slide 3 - open-now badge */
+.dk-open{background:#fff;border-radius:12px;padding:24px 30px;min-width:270px;text-align:left}
+.dk-shop{font:700 .95rem/1.3 var(--ff-d);color:var(--ink);margin:0 0 10px}
+.dk-state{display:flex;align-items:center;gap:9px;font:700 1.1rem/1 var(--ff-d);
+  color:var(--ink);margin:0}
+.dk-dot{width:11px;height:11px;border-radius:50%;background:#1C6B4B;
+  box-shadow:0 0 0 4px rgba(28,107,75,.18)}
+.dk-open.shut .dk-dot{background:#B3261E;box-shadow:0 0 0 4px rgba(179,38,30,.15)}
+.dk-when{font:500 .82rem/1.5 var(--ff-b);color:var(--slate);margin:8px 0 0}
+
+/* slide 4 - tokens */
+.dk-theme{display:flex;flex-direction:column;align-items:center;gap:18px;width:100%}
+.dk-brandcard{background:var(--tP);border-radius:12px;padding:24px 28px;max-width:330px;
+  width:100%;transition:background .35s var(--ease)}
+.dk-brandcard .dk-shop{color:var(--tA);transition:color .35s var(--ease)}
+.dk-tag{font:700 1.25rem/1.25 var(--ff-d);letter-spacing:-.01em;color:var(--tA);
+  margin:0 0 16px;transition:color .35s var(--ease)}
+.dk-tag span{color:var(--tB);transition:color .35s var(--ease)}
+.dk-cta{display:inline-block;background:var(--tB);color:var(--tP);
+  font:700 .8rem/1 var(--ff-d);padding:11px 18px;border-radius:var(--r-pill);
+  transition:background .35s var(--ease),color .35s var(--ease)}
+.dk-swatches{display:flex;gap:12px}
+.dk-swatches button{width:34px;height:34px;border-radius:50%;cursor:pointer;
+  border:2px solid rgba(255,255,255,.4);transition:transform .2s var(--ease)}
+.dk-swatches button:hover{transform:scale(1.12)}
+.dk-swatches button:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+
+/* slide 5 - focus design */
+.dk-focus{display:flex;flex-direction:column;gap:14px;width:100%;max-width:300px}
+.dk-hint{font:500 .8rem/1.4 var(--ff-b);color:var(--on-navy-dim);margin:0;text-align:center}
+.dk-hint kbd{font:600 .85em/1 ui-monospace,monospace;border:1px solid rgba(255,255,255,.35);
+  border-bottom-width:2px;border-radius:4px;padding:1px 6px;color:#fff}
+.dk-focus input{background:#fff;border:1.5px solid transparent;border-radius:9px;
+  padding:12px 14px;font:500 .88rem/1 var(--ff-b);width:100%}
+.dk-focus-row{display:flex;gap:10px}
+.dk-f1,.dk-f2{flex:1;border-radius:var(--r-pill);padding:12px 10px;cursor:pointer;
+  font:700 .8rem/1 var(--ff-d)}
+.dk-f1{background:var(--amber);border:0;color:var(--ink-navy)}
+.dk-f2{background:transparent;border:1px solid rgba(255,255,255,.35);color:#fff}
+.dk-focus :focus-visible{outline:3px solid var(--amber);outline-offset:3px;
+  box-shadow:0 0 0 6px rgba(245,166,35,.25);border-radius:9px}
+
+/* ============================================================================
+   WEB DESIGN PAGE - THE DECODE
+   Evidence on the left, the design decision it produces on the right. The
+   research names are mono chips because they are inputs, not headings.
+   ========================================================================== */
+.decode{display:flex;flex-direction:column;gap:12px}
+.dec-row{display:grid;gap:8px 20px;background:#fff;border:1px solid var(--rule);
+  border-radius:var(--r-lg);padding:18px 22px;
+  transition:border-color .2s var(--ease)}
+@media(min-width:700px){.dec-row{grid-template-columns:132px 1fr}}
+.dec-row:hover{border-color:#C7D2E0}
+.dec-src{font:500 .68rem/1.5 ui-monospace,Menlo,Consolas,monospace;
+  letter-spacing:.04em;text-transform:uppercase;color:var(--cobalt-deep);
+  background:#EEF3FB;border:1px solid #D6E0F0;border-radius:5px;
+  padding:5px 8px;align-self:start;justify-self:start;white-space:nowrap}
+.dec-in{font:400 .92rem/1.5 var(--ff-b);color:var(--slate);margin:0;font-style:italic}
+.dec-in::before{content:"\201C"}
+.dec-in::after{content:"\201D"}
+.dec-out{font:500 .94rem/1.55 var(--ff-b);color:var(--ink);margin:7px 0 0;
+  padding-left:18px;position:relative}
+.dec-out::before{content:"\2192";position:absolute;left:0;color:var(--amber-deep);
+  font-weight:700}

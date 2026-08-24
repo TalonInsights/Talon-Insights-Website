@@ -323,6 +323,131 @@
     set();
   });
 
+  /* ---- feature deck (web design page) --------------------------------
+     Scroll-snap carries the carousel; buttons, dots and arrow keys are
+     conveniences layered on native scrolling. Each slide's demo is wired
+     here, guarded so a missing slide costs nothing. */
+  var deck = document.getElementById("wd-deck");
+  if (deck) {
+    var track = deck.querySelector(".deck-track");
+    var slides = [].slice.call(track.children);
+    var dots = deck.querySelector(".deck-dots");
+    slides.forEach(function (sl, i) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.setAttribute("aria-label", "Go to demonstration " + (i + 1));
+      if (i === 0) { b.setAttribute("aria-current", "true"); }
+      b.addEventListener("click", function () {
+        track.scrollTo({ left: sl.offsetLeft, behavior: reduce ? "auto" : "smooth" });
+      });
+      dots.appendChild(b);
+    });
+    var watcher = new IntersectionObserver(function (es) {
+      es.forEach(function (en) {
+        if (en.isIntersecting) {
+          var i = slides.indexOf(en.target);
+          [].forEach.call(dots.children, function (d, k) {
+            if (k === i) { d.setAttribute("aria-current", "true"); }
+            else { d.removeAttribute("aria-current"); }
+          });
+        }
+      });
+    }, { root: track, threshold: 0.6 });
+    slides.forEach(function (sl) { watcher.observe(sl); });
+
+    [].forEach.call(deck.querySelectorAll(".deck-btn"), function (b) {
+      b.addEventListener("click", function () {
+        track.scrollBy({ left: track.clientWidth * +b.getAttribute("data-dir"),
+                         behavior: reduce ? "auto" : "smooth" });
+      });
+    });
+    track.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
+        e.preventDefault();
+        track.scrollBy({ left: track.clientWidth * (e.key === "ArrowRight" ? 1 : -1),
+                         behavior: reduce ? "auto" : "smooth" });
+      }
+    });
+
+    /* slide 1: replay the staged entrance */
+    var stagey = deck.querySelector(".dk-stagey");
+    var replay = deck.querySelector(".dk-replay");
+    if (replay) {
+      replay.addEventListener("click", function () {
+        stagey.classList.remove("is-play");
+        void stagey.offsetWidth;             /* reflow restarts the animations */
+        stagey.classList.add("is-play");
+      });
+    }
+
+    /* slide 2: magnetic button + pointer tilt */
+    var mag = deck.querySelector(".dk-mag");
+    if (mag && !reduce) {
+      mag.addEventListener("pointermove", function (e) {
+        var r = mag.getBoundingClientRect();
+        mag.style.transform = "translate("
+          + (e.clientX - r.left - r.width / 2) * 0.25 + "px,"
+          + (e.clientY - r.top - r.height / 2) * 0.35 + "px)";
+      });
+      mag.addEventListener("pointerleave", function () { mag.style.transform = ""; });
+    }
+    var tiltCard = deck.querySelector(".dk-tilt");
+    if (tiltCard && !reduce) {
+      tiltCard.addEventListener("pointermove", function (e) {
+        var r = tiltCard.getBoundingClientRect();
+        var x = (e.clientX - r.left) / r.width - 0.5;
+        var y = (e.clientY - r.top) / r.height - 0.5;
+        tiltCard.style.transform = "perspective(500px) rotateY(" + (x * 14).toFixed(1)
+          + "deg) rotateX(" + (-y * 12).toFixed(1) + "deg)";
+      });
+      tiltCard.addEventListener("pointerleave", function () { tiltCard.style.transform = ""; });
+    }
+
+    /* slide 3: the badge reads the visitor's clock against trading hours */
+    var openEl = document.getElementById("dk-open");
+    if (openEl) {
+      var HOURS = { 1: [7, 15], 2: [7, 15], 3: [7, 15], 4: [7, 15], 5: [7, 15], 6: [7, 15] };
+      var DAYN = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+      var two = function (n) { return (n < 10 ? "0" : "") + n; };
+      var tick = function () {
+        var now = new Date();
+        var d = now.getDay(), mins = now.getHours() * 60 + now.getMinutes();
+        var h = HOURS[d];
+        var state = openEl.querySelector(".dk-state b");
+        var when = openEl.querySelector(".dk-when");
+        if (h && mins >= h[0] * 60 && mins < h[1] * 60) {
+          var left = h[1] * 60 - mins;
+          openEl.classList.remove("shut");
+          state.textContent = "Open now";
+          when.textContent = "Closes " + two(h[1]) + ":00 \u2014 in "
+            + (left >= 60 ? Math.floor(left / 60) + "h " : "") + (left % 60) + "m";
+        } else {
+          var day = d, hop = 0;
+          while (hop < 8 && (!HOURS[day] || (hop === 0 && mins >= HOURS[day][1] * 60))) {
+            day = (day + 1) % 7; hop++;
+          }
+          openEl.classList.add("shut");
+          state.textContent = "Closed";
+          when.textContent = "Opens " + (hop === 0 ? "today" : DAYN[day]) + " at "
+            + two(HOURS[day][0]) + ":00";
+        }
+      };
+      tick();
+      setInterval(tick, 30000);
+    }
+
+    /* slide 4: swap the example's tokens */
+    [].forEach.call(deck.querySelectorAll(".dk-swatches button"), function (b) {
+      b.addEventListener("click", function () {
+        var t = b.getAttribute("data-t").split(",");
+        var th = deck.querySelector(".dk-theme");
+        th.style.setProperty("--tA", t[0]);
+        th.style.setProperty("--tB", t[1]);
+        th.style.setProperty("--tP", t[2]);
+      });
+    });
+  }
+
   /* ---- mini scheduler: the board that argues back (custom software) ----
      A deliberately tiny model of the real tool's one idea: state, rules,
      and a sentence the moment a rule is broken. Two ways to move a job -
