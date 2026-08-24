@@ -111,6 +111,12 @@ strong{font-weight:600}
 .sec-head{margin-bottom:clamp(40px,4vw,64px)}
 .sec-head--mid{text-align:center;margin-inline:auto}
 .sec-head--mid h2{text-wrap:balance}
+/* For heads sitting over a full-bleed object, where a 62ch column reads as
+   a narrow stack marooned above something much wider. The heading still
+   balances; the lead gets a wider but still readable line. */
+.sec-head--wide{max-width:none}
+.sec-head--wide h2{max-width:22ch;margin-inline:auto}
+.sec-head--wide .lead{max-width:104ch;margin-inline:auto}
 .sec-head .lead{margin-top:14px}
 
 /* ---------- buttons ---------- */
