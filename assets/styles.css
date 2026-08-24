@@ -1075,11 +1075,18 @@ strong{font-weight:600}
    against capacity. Deadlines, skills and absences all argue back through
    one issues panel. State drives every render; the DOM is never the truth.
    ========================================================================== */
-.ops{margin-top:clamp(30px,4vw,48px);background:var(--ink-navy);
+/* The planner breaks the 1200px measure: it is a grid of five days across
+   four resources, and the extra width buys real column space rather than
+   decoration. Escapes the wrap by pulling back to the viewport edges, with
+   a small margin so it still reads as an object on the page. */
+.ops{margin-left:calc(50% - 50vw + var(--gutter));
+  margin-right:calc(50% - 50vw + var(--gutter));
+  max-width:calc(100vw - var(--gutter) * 2);
+  margin-top:clamp(30px,4vw,48px);background:var(--ink-navy);
   border:1px solid rgba(255,255,255,.09);border-radius:var(--r-lg);
   box-shadow:var(--shadow-navy);overflow:clip;display:flex;flex-direction:column}
-.ops.ops--max{position:fixed;inset:0;z-index:80;border-radius:0;margin:0;
-  overflow:auto}
+.ops.ops--max{position:fixed;inset:0;z-index:80;border-radius:0;
+  margin:0;max-width:none;overflow:auto}
 .ops-top{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;
   justify-content:center;padding:14px 18px;
   background:rgba(0,0,0,.28);border-bottom:1px solid rgba(255,255,255,.07)}
