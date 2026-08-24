@@ -495,9 +495,9 @@ strong{font-weight:600}
   justify-content:space-between;background:var(--paper);border:1px solid var(--rule);
   border-left:3px solid var(--cobalt);border-radius:var(--r-lg);
   padding:clamp(26px,3vw,38px)}
-.pricebar > div{flex:1 1 420px}
+.pricebar > div{flex:1 1 520px;min-width:0}
 .pricebar h2{font-size:clamp(1.35rem,1.1rem + 1vw,1.7rem)}
-.pricebar p{margin:12px 0 0;color:var(--slate);font-size:.97rem;max-width:62ch}
+.pricebar p{margin:12px 0 0;color:var(--slate);font-size:.97rem;max-width:none}
 .pricebar .btn{flex:0 0 auto}
 
 /* discovery-call bar */
