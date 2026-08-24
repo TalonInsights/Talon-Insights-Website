@@ -717,6 +717,30 @@
     });
   }
 
+  /* ---- homepage vignettes: play once on reveal, replay on hover ------ */
+  var vigs = document.getElementById("vigs");
+  if (vigs && "IntersectionObserver" in window) {
+    var vio = new IntersectionObserver(function (es) {
+      es.forEach(function (en) {
+        if (en.isIntersecting) {
+          en.target.classList.add("go");
+          vio.unobserve(en.target);
+        }
+      });
+    }, { threshold: 0.45 });
+    [].forEach.call(vigs.children, function (tile) {
+      vio.observe(tile);
+      tile.addEventListener("mouseenter", function () {
+        if (reduce) { return; }
+        tile.classList.remove("go");
+        void tile.offsetWidth;
+        tile.classList.add("go");
+      });
+    });
+  } else if (vigs) {
+    [].forEach.call(vigs.children, function (t) { t.classList.add("go"); });
+  }
+
   /* ---- resource planner (custom software page) ------------------------
      A small but real planning tool: people and machines as rows, days as
      columns, jobs as hour-blocks planned against capacity. Deadlines,
