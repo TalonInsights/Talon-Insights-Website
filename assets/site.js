@@ -741,6 +741,37 @@
     [].forEach.call(vigs.children, function (t) { t.classList.add("go"); });
   }
 
+  /* ---- capability index (custom software page) ------------------------
+     An expander rather than a grid, because the entries run from one line
+     to a paragraph and equal-height cards cannot absorb that. Rows stay
+     uniform when closed, so nothing depends on how much there is to say.
+     The hidden attribute is removed on open and restored on close, so the
+     panel is genuinely out of the tree for assistive tech, not just short. */
+  var ix = document.getElementById("ix");
+  if (ix) {
+    var heads = [].slice.call(ix.querySelectorAll(".ix-head"));
+    heads.forEach(function (h) {
+      var item = h.parentNode;
+      var body = item.querySelector(".ix-body");
+      if (h.getAttribute("aria-expanded") === "true") { item.classList.add("open"); }
+      h.addEventListener("click", function () {
+        var open = h.getAttribute("aria-expanded") === "true";
+        if (open) {
+          h.setAttribute("aria-expanded", "false");
+          item.classList.remove("open");
+          setTimeout(function () {
+            if (h.getAttribute("aria-expanded") === "false") { body.hidden = true; }
+          }, reduce ? 0 : 320);
+        } else {
+          body.hidden = false;
+          void body.offsetWidth;               /* let the row height animate from 0 */
+          h.setAttribute("aria-expanded", "true");
+          item.classList.add("open");
+        }
+      });
+    });
+  }
+
   /* ---- resource planner (custom software page) ------------------------
      A small but real planning tool: people and machines as rows, days as
      columns, jobs as hour-blocks planned against capacity. Deadlines,

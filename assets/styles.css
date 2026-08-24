@@ -1196,26 +1196,6 @@ strong{font-weight:600}
 }
 
 /* ============================================================================
-   CUSTOM SOFTWARE PAGE - BUILD CARDS
-   The what-I-build list as modules rather than a ranked queue: these are
-   parallel capabilities, and the mono tag names each one the way the codebase
-   would.
-   ========================================================================== */
-.mods{display:grid;gap:14px}
-@media(min-width:900px){.mods{grid-template-columns:1fr 1fr}
-  .mod--wide{grid-column:1/-1}}
-.mod{background:#fff;border:1px solid var(--rule);border-radius:var(--r-lg);
-  padding:22px 24px 20px;transition:border-color .2s var(--ease),
-  transform .2s var(--ease),box-shadow .2s var(--ease)}
-.mod:hover{border-color:#C7D2E0;transform:translateY(-2px);box-shadow:var(--shadow-1)}
-.mod-tag{display:inline-block;font:500 .72rem/1 ui-monospace,Menlo,Consolas,monospace;
-  color:var(--cobalt-deep);background:#EEF3FB;border:1px solid #D6E0F0;
-  border-radius:5px;padding:5px 8px;margin-bottom:12px}
-.mod-tag::before{content:"/ "}
-.mod h3{font-size:1.05rem;margin:0 0 7px}
-.mod p{color:var(--slate);font-size:.95rem;margin:0}
-
-/* ============================================================================
    WEB DESIGN PAGE - THE DECK
    A stepping carousel of live capability demos. Scroll-snap does the layout
    work; the buttons and dots are conveniences on top of native scrolling, so
@@ -1656,3 +1636,63 @@ strong{font-weight:600}
 .evid li code{font-size:.86em}
 .evid .alink{margin-top:18px}
 .spec-more{margin:22px 0 0}
+
+/* ============================================================================
+   CUSTOM SOFTWARE PAGE - THE CAPABILITY INDEX
+   The build list as an expander rather than cards. The copy runs from 119 to
+   352 characters, a three-fold spread that wrecks any equal-height grid: rows
+   are uniform when closed, so the layout no longer depends on how much there
+   is to say. Dense and quiet on purpose - the planner above is the loud part.
+   ========================================================================== */
+.ix{list-style:none;margin:clamp(28px,3.5vw,44px) 0 0;padding:0;
+  border-top:1px solid var(--rule)}
+.ix-item{border-bottom:1px solid var(--rule)}
+.ix-head{display:grid;grid-template-columns:104px 1fr auto;gap:4px 20px;
+  align-items:center;width:100%;background:none;border:0;cursor:pointer;
+  padding:17px 4px;text-align:left;font:inherit;
+  transition:background .18s var(--ease)}
+.ix-head:hover{background:rgba(37,99,235,.035)}
+.ix-head:focus-visible{outline:3px solid var(--cobalt);outline-offset:-3px;border-radius:6px}
+.ix-tag{font:500 .7rem/1 ui-monospace,Menlo,Consolas,monospace;
+  color:var(--cobalt-deep);background:#EEF3FB;border:1px solid #D6E0F0;
+  border-radius:5px;padding:5px 7px;justify-self:start;white-space:nowrap}
+.ix-tag::before{content:"/ "}
+.ix-name{font:600 1.02rem/1.35 var(--ff-d);color:var(--ink);letter-spacing:-.005em}
+.ix-line{grid-column:2;color:var(--slate);font-size:.92rem;line-height:1.5}
+.ix-mark{grid-row:1/3;grid-column:3;width:26px;height:26px;border-radius:50%;
+  border:1px solid var(--rule);position:relative;flex:none;
+  transition:border-color .2s var(--ease),background .2s var(--ease),
+  transform .25s var(--ease)}
+.ix-mark::before,.ix-mark::after{content:"";position:absolute;inset:50% 6px auto;
+  height:1.5px;background:var(--slate);border-radius:1px;transform:translateY(-50%)}
+.ix-mark::after{transform:translateY(-50%) rotate(90deg);
+  transition:transform .25s var(--ease),opacity .2s var(--ease)}
+.ix-head:hover .ix-mark{border-color:var(--cobalt)}
+.ix-head[aria-expanded="true"] .ix-mark{background:var(--ink-navy);border-color:var(--ink-navy)}
+.ix-head[aria-expanded="true"] .ix-mark::before,
+.ix-head[aria-expanded="true"] .ix-mark::after{background:#fff}
+.ix-head[aria-expanded="true"] .ix-mark::after{transform:translateY(-50%) rotate(0deg);opacity:0}
+
+/* the panel animates on grid-template-rows, which unlike height does not
+   need a measured pixel value and so survives a resize mid-transition */
+.ix-body{display:grid;grid-template-rows:0fr;
+  transition:grid-template-rows .32s var(--ease)}
+.ix-body[hidden]{display:none}   /* author display beats the hidden attribute */
+.ix-body>*{overflow:hidden;min-height:0}
+.ix-item.open .ix-body{grid-template-rows:1fr}
+.ix-body p{color:var(--slate);font-size:.96rem;line-height:1.65;
+  margin:0;padding:0 4px 4px 124px;max-width:86ch}
+.ix-body .alink{margin:14px 0 20px 124px}
+.ix-item.open .ix-body p{padding-bottom:18px}
+
+@media(max-width:640px){
+  .ix-head{grid-template-columns:1fr auto;gap:6px 14px}
+  .ix-tag{grid-column:1;grid-row:1}
+  .ix-name{grid-column:1;grid-row:2}
+  .ix-line{grid-column:1;grid-row:3}
+  .ix-mark{grid-row:1/4}
+  .ix-body p,.ix-body .alink{padding-left:0;margin-left:0}
+}
+@media(prefers-reduced-motion:reduce){
+  .ix-body{transition:none}.ix-mark,.ix-mark::after{transition:none}
+}
