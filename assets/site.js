@@ -323,6 +323,173 @@
     set();
   });
 
+  /* ---- live Monte Carlo (research page) -------------------------------
+     A real simulation, seeded so identical inputs give identical answers.
+     Fifty thousand trials of a hire-vs-buy decision: each draws demand,
+     margin and upkeep from triangular distributions and computes months to
+     pay back the machine. The histogram animates in batches so the visitor
+     watches the distribution form; the verdict is a sentence, because the
+     product of this service is an answer, not a chart. */
+  var mc = document.getElementById("mc");
+  if (mc) {
+    var COST = 48000, OUT_MARGIN = 45, N = 50000, CAP = 60;
+    var canvas = document.getElementById("mc-hist");
+    var ctx = canvas.getContext("2d");
+    var slider = document.getElementById("mc-demand");
+    var paybacks, draws, run = 0;
+
+    function rng(seed) {                       /* mulberry32 */
+      return function () {
+        seed |= 0; seed = seed + 0x6D2B79F5 | 0;
+        var t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+        t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+        return ((t ^ t >>> 14) >>> 0) / 4294967296;
+      };
+    }
+    function tri(u, a, m, b) {                 /* inverse-CDF triangular */
+      var f = (m - a) / (b - a);
+      return u < f ? a + Math.sqrt(u * f) * (b - a)
+                   : b - Math.sqrt((1 - u) * (1 - f)) * (b - a);
+    }
+    function quantile(sorted, q) {
+      return sorted[Math.min(sorted.length - 1, Math.floor(q * sorted.length))];
+    }
+    function pearson(xs, ys) {
+      var n = xs.length, sx = 0, sy = 0, sxy = 0, sx2 = 0, sy2 = 0, i;
+      for (i = 0; i < n; i++) {
+        sx += xs[i]; sy += ys[i]; sxy += xs[i] * ys[i];
+        sx2 += xs[i] * xs[i]; sy2 += ys[i] * ys[i];
+      }
+      var d = Math.sqrt((n * sx2 - sx * sx) * (n * sy2 - sy * sy));
+      return d === 0 ? 0 : (n * sxy - sx * sy) / d;
+    }
+
+    function simulate(mode) {
+      var rand = rng(0xC0FFEE + mode);         /* seeded: same slider, same answer */
+      paybacks = new Float64Array(N);
+      draws = { demand: new Float64Array(N), margin: new Float64Array(N),
+                upkeep: new Float64Array(N) };
+      for (var i = 0; i < N; i++) {
+        var dJobs = tri(rand(), 8, mode, 26);
+        var dMarg = tri(rand(), 120, 180, 260) - OUT_MARGIN;
+        var dKeep = tri(rand(), 300, 800, 2400) / 12;
+        draws.demand[i] = dJobs; draws.margin[i] = dMarg; draws.upkeep[i] = dKeep;
+        var gain = dJobs * dMarg - dKeep;
+        paybacks[i] = Math.min(COST / gain, CAP);
+      }
+    }
+
+    function draw(upTo) {
+      var dpr = window.devicePixelRatio || 1;
+      var w = canvas.clientWidth, h = canvas.clientHeight;
+      if (canvas.width !== w * dpr) { canvas.width = w * dpr; canvas.height = h * dpr; }
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, w, h);
+      var BINS = 48, counts = new Array(BINS + 1).fill(0), i;
+      for (i = 0; i < upTo; i++) {
+        counts[Math.min(BINS, Math.floor(paybacks[i]))]++;
+      }
+      var max = Math.max.apply(null, counts) || 1;
+      var pad = { l: 10, r: 10, t: 14, b: 22 };
+      var bw = (w - pad.l - pad.r) / (BINS + 1);
+      /* faint gridlines every 12 months */
+      ctx.strokeStyle = "rgba(255,255,255,.08)"; ctx.lineWidth = 1;
+      ctx.fillStyle = "rgba(255,255,255,.45)";
+      ctx.font = "10px ui-monospace,Menlo,monospace"; ctx.textAlign = "center";
+      for (i = 12; i <= BINS; i += 12) {
+        var gx = pad.l + i * bw;
+        ctx.beginPath(); ctx.moveTo(gx, pad.t); ctx.lineTo(gx, h - pad.b); ctx.stroke();
+        ctx.fillText(i + "mo", gx, h - 8);
+      }
+      for (i = 0; i <= BINS; i++) {
+        if (!counts[i]) { continue; }
+        var bh = (h - pad.t - pad.b) * counts[i] / max;
+        ctx.fillStyle = i < 24 ? "#F5A623" : "rgba(255,255,255,.34)";
+        ctx.fillRect(pad.l + i * bw + 1, h - pad.b - bh, Math.max(bw - 2, 1), bh);
+      }
+      /* the two-year line the verdict hangs on */
+      var lx = pad.l + 24 * bw;
+      ctx.strokeStyle = "rgba(255,255,255,.55)"; ctx.setLineDash([4, 4]);
+      ctx.beginPath(); ctx.moveTo(lx, pad.t - 4); ctx.lineTo(lx, h - pad.b); ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.fillStyle = "rgba(255,255,255,.75)"; ctx.textAlign = "left";
+      ctx.fillText("2 years", lx + 5, pad.t + 4);
+    }
+
+    function verdict() {
+      var sorted = Float64Array.from(paybacks).sort();
+      var within = 0, i;
+      for (i = 0; i < N; i++) { if (paybacks[i] <= 24) { within++; } }
+      var p24 = Math.round(100 * within / N);
+      var med = Math.round(quantile(sorted, 0.5));
+      var p10 = Math.round(quantile(sorted, 0.1));
+      var p90 = Math.round(quantile(sorted, 0.9));
+      var call = document.getElementById("mc-call");
+      if (p24 >= 70) {
+        call.innerHTML = "The model says <em>buy it</em> \u2014 " + p24
+          + "% of futures pay it back inside two years.";
+      } else if (p24 >= 45) {
+        call.innerHTML = "The model says <em>genuinely marginal</em> \u2014 " + p24
+          + "% of futures clear two years. This is where the research money goes next.";
+      } else {
+        call.innerHTML = "The model says <em>keep outsourcing</em> \u2014 only " + p24
+          + "% of futures pay back inside two years.";
+      }
+      document.getElementById("mc-detail").innerHTML =
+        "Median payback <b>" + med + " months</b>; the middle 80% of futures land between <b>"
+        + p10 + "</b> and <b>" + p90 + " months</b>. Not one number \u2014 a distribution "
+        + "with probabilities attached, which is the point.";
+
+      /* sensitivity: which input actually moves the answer */
+      var rs = [
+        ["Jobs per month", Math.abs(pearson(draws.demand, paybacks))],
+        ["Margin per job", Math.abs(pearson(draws.margin, paybacks))],
+        ["Upkeep costs", Math.abs(pearson(draws.upkeep, paybacks))]
+      ].sort(function (a, b) { return b[1] - a[1]; });
+      var top = rs[0][1] || 1;
+      document.getElementById("mc-bars").innerHTML = rs.map(function (r) {
+        return '<div class="mc-bar"><span>' + r[0] + '</span><i style="width:'
+          + Math.round(100 * r[1] / top) + '%"></i><b>r=' + r[1].toFixed(2) + "</b></div>";
+      }).join("");
+      var ratio = (rs[0][1] / Math.max(rs[2][1], 0.01)).toFixed(0);
+      document.getElementById("mc-read").innerHTML =
+        "<b>" + rs[0][0] + "</b> carries roughly " + ratio + "\u00D7 the weight of "
+        + rs[2][0].toLowerCase() + " \u2014 so before anyone spends \u00A348,000, the "
+        + "research budget goes into pinning down " + rs[0][0].toLowerCase()
+        + ", not a maintenance appraisal.";
+    }
+
+    function runSim() {
+      var mode = +slider.value;
+      var stamp = ++run;                      /* invalidates any older animation */
+      document.getElementById("mc-demand-v").textContent = mode;
+      mc.querySelector("[data-mode]").textContent = mode;
+      simulate(mode);
+      var nEl = document.getElementById("mc-n");
+      if (reduce) {
+        draw(N); nEl.textContent = N.toLocaleString(); verdict(); return;
+      }
+      var shown = 0;
+      (function step() {
+        if (stamp !== run) { return; }
+        shown = Math.min(shown + 2500, N);
+        draw(shown);
+        nEl.textContent = shown.toLocaleString();
+        if (shown < N) { requestAnimationFrame(step); }
+        else { verdict(); }
+      })();
+    }
+
+    var mcT;
+    slider.addEventListener("input", function () {
+      clearTimeout(mcT); mcT = setTimeout(runSim, 120);
+    });
+    window.addEventListener("resize", function () {
+      if (paybacks) { draw(N); }
+    });
+    runSim();
+  }
+
   /* ---- the design machine (web design page) --------------------------
      Three research briefs, one artifact. A brief is data; the render is a
      pure function of it. Which is the section's whole argument. */

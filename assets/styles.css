@@ -1357,3 +1357,65 @@ strong{font-weight:600}
   text-transform:uppercase;color:var(--cobalt-deep);white-space:nowrap}
 .dz-log li p{grid-column:2;font:400 .92rem/1.55 var(--ff-b);color:var(--ink);margin:0}
 .dz-log li p::before{content:"\2192  ";color:var(--amber-deep);font-weight:700}
+
+/* ============================================================================
+   RESEARCH PAGE - THE LIVE MONTE CARLO
+   Fifty thousand futures, simulated in the visitor's browser. The histogram
+   is canvas; the verdict is a sentence, because the promise of the service is
+   an answer, not a chart.
+   ========================================================================== */
+.mc{margin-top:clamp(30px,4vw,48px);background:var(--ink-navy);
+  border:1px solid rgba(255,255,255,.09);border-radius:var(--r-lg);
+  box-shadow:var(--shadow-navy);padding:clamp(22px,3vw,36px);color:var(--on-navy)}
+.mc-grid{display:grid;gap:clamp(22px,3vw,40px)}
+@media(min-width:880px){.mc-grid{grid-template-columns:1fr 1.25fr}}
+.mc-brief{font:400 .92rem/1.6 var(--ff-b);color:var(--on-navy);margin:0 0 16px}
+.mc-brief b{color:#fff}
+.mc-ins{list-style:none;margin:0 0 20px;padding:14px 16px;
+  background:rgba(0,0,0,.25);border-radius:10px;
+  display:flex;flex-direction:column;gap:8px}
+.mc-ins li{display:flex;flex-wrap:wrap;gap:4px 14px;justify-content:space-between;
+  font:500 .78rem/1.5 ui-monospace,Menlo,Consolas,monospace}
+.mc-ins code{color:#7FA6FF}
+.mc-ins span{color:rgba(255,255,255,.75)}
+.mc-ins span b{color:#F7C877;font-weight:600}
+.mc-ctl label{display:block;font:600 .85rem/1.4 var(--ff-d);color:#fff;margin-bottom:8px}
+.mc-ctl label b{color:var(--amber)}
+.mc-ctl input[type=range]{width:100%;accent-color:var(--amber);cursor:pointer}
+.mc-ctl input[type=range]:focus-visible{outline:3px solid var(--cobalt);outline-offset:4px}
+.mc-ctl-note{display:block;font:400 .74rem/1.5 var(--ff-b);color:var(--on-navy-dim);margin-top:5px}
+.mc-count{font:500 .72rem/1 ui-monospace,Menlo,monospace;color:var(--on-navy-dim);
+  margin:18px 0 0}
+.mc-count b{color:#F7C877;font-weight:600}
+
+.mc-right{min-width:0}
+#mc-hist{display:block;width:100%;height:240px;border-radius:10px;
+  background:rgba(0,0,0,.25)}
+.mc-axis{font:500 .7rem/1 ui-monospace,Menlo,monospace;color:var(--on-navy-dim);
+  text-align:center;margin:8px 0 0}
+
+.mc-verdict{margin-top:clamp(20px,3vw,30px);padding-top:clamp(18px,2.5vw,26px);
+  border-top:1px solid rgba(255,255,255,.1)}
+.mc-call{font:700 clamp(1.15rem,1rem + .8vw,1.5rem)/1.3 var(--ff-d);
+  letter-spacing:-.01em;color:#fff;margin:0}
+.mc-call em{font-style:normal;color:var(--amber)}
+.mc-detail{font:400 .92rem/1.6 var(--ff-b);color:var(--on-navy-dim);margin:8px 0 0;max-width:74ch}
+.mc-detail b{color:var(--on-navy);font-weight:600}
+
+.mc-sens{margin-top:clamp(20px,3vw,28px);padding-top:clamp(18px,2.5vw,24px);
+  border-top:1px solid rgba(255,255,255,.1)}
+.mc-sens-h{font:600 .72rem/1 var(--ff-d);letter-spacing:.18em;text-transform:uppercase;
+  color:var(--on-navy-dim);margin:0 0 14px}
+.mc-bar{display:grid;grid-template-columns:150px 1fr 44px;gap:12px;align-items:center;
+  margin-bottom:9px}
+.mc-bar span{font:500 .78rem/1.4 var(--ff-b);color:var(--on-navy)}
+.mc-bar i{display:block;height:10px;border-radius:5px;background:var(--amber);
+  transform-origin:left;transition:width .5s var(--ease);min-width:2px}
+.mc-bar:not(:first-child) i{background:rgba(255,255,255,.35)}
+.mc-bar b{font:600 .74rem/1 ui-monospace,Menlo,monospace;color:var(--on-navy-dim);
+  text-align:right}
+.mc-read{font:400 .9rem/1.6 var(--ff-b);color:var(--on-navy);margin:14px 0 0;max-width:72ch}
+.mc-read b{color:#fff}
+@media(max-width:560px){.mc-bar{grid-template-columns:110px 1fr 40px}}
+
+.mc-foot{margin:26px auto 0;color:var(--slate);font-size:.95rem}

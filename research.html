@@ -162,6 +162,66 @@
   </div>
 </section>
 
+<section class="sec on-white" data-reveal>
+  <div class="wrap">
+    <div class="sec-head measure">
+      <p class="eyebrow">A live model</p>
+      <h2>This page is running the numbers right now<span class="dot">.</span></h2>
+      <p class="lead">
+        A worked example, computed in your browser as you read: an invented print firm
+        weighing a &pound;48,000 wide-format setup against carrying on outsourcing. Three
+        uncertain inputs, fifty thousand simulated futures. Drag the demand slider and
+        watch a maybe become an answer.
+      </p>
+    </div>
+
+    <div class="mc" id="mc">
+      <div class="mc-grid">
+        <div class="mc-left">
+          <p class="mc-brief"><b>The question.</b> Wrekin Print outsources large-format
+            jobs at thin margin. The machine would capture that margin &mdash; if enough
+            work exists. Nobody knows next year's demand to the pound, so every input is
+            a range, not a guess:</p>
+          <ul class="mc-ins">
+            <li><code>jobs / month</code><span>triangular( 8, <b data-mode>14</b>, 26 )</span></li>
+            <li><code>margin uplift / job</code><span>triangular( &pound;75, &pound;135, &pound;215 )</span></li>
+            <li><code>upkeep / year</code><span>triangular( &pound;300, &pound;800, &pound;2,400 )</span></li>
+          </ul>
+          <div class="mc-ctl">
+            <label for="mc-demand">Most likely jobs a month: <b id="mc-demand-v">14</b></label>
+            <input type="range" id="mc-demand" min="9" max="22" step="1" value="14">
+            <span class="mc-ctl-note">the number a demand survey would pin down</span>
+          </div>
+          <p class="mc-count" aria-hidden="true"><b id="mc-n">0</b> futures simulated</p>
+        </div>
+        <div class="mc-right">
+          <canvas id="mc-hist" aria-hidden="true"></canvas>
+          <p class="mc-axis" aria-hidden="true">months to pay back &pound;48,000 &rarr;</p>
+        </div>
+      </div>
+
+      <div class="mc-verdict" role="status" aria-live="polite">
+        <p class="mc-call" id="mc-call">&hellip;</p>
+        <p class="mc-detail" id="mc-detail"></p>
+      </div>
+
+      <div class="mc-sens">
+        <p class="mc-sens-h">What actually decides it</p>
+        <div id="mc-bars"></div>
+        <p class="mc-read" id="mc-read"></p>
+      </div>
+    </div>
+
+    <p class="mc-foot measure">
+      This demo distils the method to three inputs so you can see it think. A real
+      engagement starts far wider &mdash; a PESTLE sweep of several hundred factors,
+      explained below &mdash; and models growth and seasonality rather than a flat month.
+      The full method, as run on a genuine engagement, is written up in
+      <a href="/blog/monte-carlo-marketing">the Monte Carlo guide</a>.
+    </p>
+  </div>
+</section>
+
 <section class="sec on-navy" data-reveal>
   <div class="wrap grid g2" style="gap:clamp(48px,6vw,96px);align-items:start">
     <div>
