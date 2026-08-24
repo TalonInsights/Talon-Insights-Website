@@ -323,6 +323,165 @@
     set();
   });
 
+  /* ---- mini scheduler: the board that argues back (custom software) ----
+     A deliberately tiny model of the real tool's one idea: state, rules,
+     and a sentence the moment a rule is broken. Two ways to move a job -
+     pointer drag, or select-then-place, which also covers keyboard and
+     touch. Rendering rebuilds the board from state every time; the DOM is
+     never the source of truth. */
+  var sched = document.getElementById("sched");
+  if (sched) {
+    var DAY_N = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+    var DAY_S = ["Mon", "Tue", "Wed", "Thu", "Fri"];
+    var CAP = 2;
+    var SEED = [
+      { id: "a", name: "Oak staircase", stage: "machining", cls: "",        due: 2,    day: 0 },
+      { id: "b", name: "Sash windows",  stage: "assembly",  cls: "job--b",  due: 4,    day: 1 },
+      { id: "c", name: "Kitchen fit",   stage: "finishing", cls: "job--c",  due: null, day: 1 },
+      { id: "d", name: "Door set",      stage: "spraying",  cls: "job--d",  due: 3,    day: 2 }
+    ];
+    var board = sched.querySelector(".sched-board");
+    var status = sched.querySelector(".sched-status");
+    var jobs, selected = null;
+
+    function esc(t) { return t.replace(/&/g, "&amp;").replace(/</g, "&lt;"); }
+
+    function render() {
+      var html = "";
+      for (var d = 0; d < 5; d++) {
+        var here = jobs.filter(function (jb) { return jb.day === d; });
+        var over = here.length > CAP;
+        html += '<div class="sched-day' + (over ? " conflict" : "")
+              + '" data-day="' + d + '"><h3>' + DAY_S[d]
+              + '<span class="flag">over</span></h3><div class="sched-slots">';
+        here.forEach(function (jb) {
+          var late = jb.due !== null && jb.day > jb.due;
+          html += '<button type="button" class="job ' + jb.cls
+                + (late ? " late" : "") + '" data-job="' + jb.id
+                + '" aria-label="' + esc(jb.name) + ", " + jb.stage
+                + (jb.due !== null ? ", due " + DAY_N[jb.due] : "")
+                + (late ? ", LATE" : "") + '. Press to pick up.">'
+                + esc(jb.name) + "<small>" + jb.stage
+                + (jb.due !== null ? " &middot; due " + DAY_S[jb.due] : "")
+                + "</small></button>";
+        });
+        for (var g = here.length; g < CAP; g++) { html += '<div class="slot-ghost"></div>'; }
+        html += "</div></div>";
+      }
+      board.innerHTML = html;
+      verdict();
+    }
+
+    function verdict() {
+      var msgs = [], cls = "";
+      jobs.forEach(function (jb) {
+        if (jb.due !== null && jb.day > jb.due) {
+          msgs.push("<b>" + esc(jb.name) + "</b> now lands " + DAY_N[jb.day]
+                  + " but is due " + DAY_N[jb.due]
+                  + ". The real tool flags this the moment you let go &mdash; not on delivery day.");
+          cls = "bad";
+        }
+      });
+      for (var d = 0; d < 5; d++) {
+        var n = jobs.filter(function (jb) { return jb.day === d; }).length;
+        if (n > CAP) {
+          msgs.push("<b>" + DAY_N[d] + "</b> has " + n
+                  + " jobs and two benches. Something on that list isn't getting done.");
+          if (!cls) { cls = "warn"; }
+        }
+      }
+      if (!msgs.length) {
+        msgs.push(selected
+          ? "Now tap a day to move <b>" + esc(selected.name) + "</b>."
+          : "Four jobs, two benches a day, no conflicts. Try dragging <b>Oak staircase</b> to Thursday.");
+      }
+      status.className = "sched-status" + (cls ? " " + cls : "");
+      status.innerHTML = msgs.join(" ");
+      if (selected) {
+        [].forEach.call(board.querySelectorAll(".sched-day"), function (el) {
+          el.classList.add("target");
+        });
+        var el = board.querySelector('[data-job="' + selected.id + '"]');
+        if (el) { el.classList.add("sel"); }
+      }
+    }
+
+    function jobById(id) {
+      return jobs.filter(function (jb) { return jb.id === id; })[0];
+    }
+    function move(jb, day) { jb.day = day; selected = null; render(); }
+
+    /* select-then-place: click a job, click a day */
+    board.addEventListener("click", function (e) {
+      var jEl = e.target.closest(".job");
+      var dEl = e.target.closest(".sched-day");
+      if (jEl && !dragged) {
+        selected = (selected && selected.id === jEl.getAttribute("data-job"))
+          ? null : jobById(jEl.getAttribute("data-job"));
+        render();
+      } else if (dEl && selected) {
+        move(selected, +dEl.getAttribute("data-day"));
+      }
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && selected) { selected = null; render(); }
+    });
+
+    /* pointer drag: a fixed-position ghost follows the pointer; columns are
+       hit-tested underneath it */
+    var dragged = null, ghost = null, sx = 0, sy = 0;
+    board.addEventListener("pointerdown", function (e) {
+      var jEl = e.target.closest(".job");
+      if (!jEl) { return; }
+      dragged = null; sx = e.clientX; sy = e.clientY;
+      var id = jEl.getAttribute("data-job");
+      var onMove = function (ev) {
+        if (!dragged && Math.hypot(ev.clientX - sx, ev.clientY - sy) < 7) { return; }
+        if (!dragged) {
+          dragged = jobById(id);
+          ghost = jEl.cloneNode(true);
+          ghost.className += " job-drag";
+          document.body.appendChild(ghost);
+          jEl.classList.add("lift");
+        }
+        ghost.style.left = (ev.clientX - 70) + "px";
+        ghost.style.top = (ev.clientY - 24) + "px";
+        var under = document.elementFromPoint(ev.clientX, ev.clientY);
+        [].forEach.call(board.querySelectorAll(".sched-day"), function (el) {
+          el.classList.toggle("target", !!(under && el.contains(under)));
+        });
+      };
+      var onUp = function (ev) {
+        document.removeEventListener("pointermove", onMove);
+        document.removeEventListener("pointerup", onUp);
+        if (ghost) { ghost.remove(); ghost = null; }
+        if (dragged) {
+          var under = document.elementFromPoint(ev.clientX, ev.clientY);
+          var dEl = under && under.closest(".sched-day");
+          if (dEl) { move(dragged, +dEl.getAttribute("data-day")); }
+          else { render(); }
+          /* swallow the click that follows a drag */
+          setTimeout(function () { dragged = null; }, 0);
+        }
+      };
+      document.addEventListener("pointermove", onMove);
+      document.addEventListener("pointerup", onUp);
+    });
+
+    sched.querySelector(".sched-reset").addEventListener("click", function () {
+      init();
+    });
+    function init() {
+      jobs = SEED.map(function (jb) {
+        return { id: jb.id, name: jb.name, stage: jb.stage, cls: jb.cls,
+                 due: jb.due, day: jb.day };
+      });
+      selected = null;
+      render();
+    }
+    init();
+  }
+
   /* ---- SEO x-ray: flip the homepage replica to what Google reads ---- */
   var xray = document.getElementById("seo-xray");
   if (xray) {
