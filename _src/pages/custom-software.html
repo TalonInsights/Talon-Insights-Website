@@ -30,24 +30,55 @@
 <section class="sec on-white" data-reveal>
   <div class="wrap">
     <div class="sec-head measure">
-      <p class="eyebrow">Try it</p>
-      <h2>Software that argues back<span class="dot">.</span></h2>
+      <p class="eyebrow">Try it properly</p>
+      <h2>A working resource planner, in your browser<span class="dot">.</span></h2>
       <p class="lead">
-        The point of a scheduler isn't the grid &mdash; it's the argument. Below is a toy
-        week: five days, two benches, four jobs. Drag a job somewhere unwise (or tap a
-        job, then a day) and the board objects before the mistake reaches the workshop.
-        The real thing &mdash; eight stages, sign-in, autosave, a database &mdash; is
-        <a href="/work">in the case study</a>.
+        Four people and machines, a week of hours, deadlines, skills and sick days &mdash;
+        planned against capacity, with every problem called out in plain English the moment
+        you cause it. It's fully working: drag jobs, add your own, load the five scenarios,
+        take it full screen. Nothing is saved &mdash; refresh and it resets &mdash; because
+        this is a demonstration, not the product. The real builds get accounts, autosave
+        and a database, as the engineering section below explains.
       </p>
     </div>
 
-    <div class="sched" id="sched">
-      <div class="sched-top">
-        <span class="sched-title">Week 34 &middot; assembly bay &middot; capacity 2 jobs/day</span>
-        <button class="sched-reset" type="button">Reset the week</button>
+    <div class="ops" id="ops">
+      <div class="ops-top">
+        <div class="ops-presets" role="group" aria-label="Load a scenario"></div>
+        <div class="ops-actions">
+          <button class="ops-act" type="button" id="ops-add-toggle">+ Add a job</button>
+          <button class="ops-act" type="button" id="ops-reset">Reset</button>
+          <button class="ops-act ops-act--amber" type="button" id="ops-full">&#x26F6; Full screen</button>
+        </div>
       </div>
-      <div class="sched-board"></div>
-      <p class="sched-status" role="status" aria-live="polite"></p>
+      <p class="ops-caption" id="ops-caption"></p>
+      <form class="ops-add" id="ops-add" hidden>
+        <input type="text" id="ops-add-name" placeholder="Job name" aria-label="Job name" maxlength="28">
+        <label>Hours <input type="number" id="ops-add-hrs" min="1" max="16" value="4" aria-label="Hours"></label>
+        <label>Due <select id="ops-add-due" aria-label="Due day"></select></label>
+        <label>Needs <select id="ops-add-skill" aria-label="Skill needed">
+          <option value="">any hands</option><option value="saw">sawing</option>
+          <option value="cnc">CNC</option><option value="spray">spraying</option>
+          <option value="veneer">veneering</option><option value="fit">fitting</option>
+        </select></label>
+        <button type="submit" class="ops-act ops-act--amber">Add to backlog</button>
+      </form>
+      <div class="ops-scroll">
+        <div class="ops-grid" id="ops-grid"></div>
+      </div>
+      <div class="ops-tray" id="ops-tray"></div>
+      <div class="ops-issues" id="ops-issues" role="region" aria-live="polite" aria-label="Plan issues"></div>
+    </div>
+
+    <div class="ops-why measure">
+      <p><b>What a tool like this buys a business:</b> the week's hours are visible before
+        they're spent, a double-booking is impossible to miss, a sick day becomes a
+        redistribution problem instead of a panic, and Monday morning starts from one
+        screen instead of three phone calls. The planner is one shape of internal tool
+        &mdash; the module list below is the same thinking wearing five other jobs, from
+        quoting to bookings &mdash; and the honest version of this pitch is the demo above:
+        if it argues usefully with you here, imagine it knowing <em>your</em> jobs, your
+        people and your margins.</p>
     </div>
   </div>
 </section>
@@ -64,7 +95,7 @@
         <article class="mod">
           <span class="mod-tag">scheduling</span>
           <h3>Production planners &amp; schedulers</h3>
-          <p>Who's doing what, on which job, by when &mdash; with the conflicts and breaches surfaced before they bite. Like the eight-stage scheduler built for David Jackson &amp; Son; the board above is its five-second cousin.</p>
+          <p>Who's doing what, on which job, by when &mdash; with the conflicts and breaches surfaced before they bite. Like the eight-stage scheduler built for David Jackson &amp; Son; the planner above is a small cousin you can try.</p>
         </article>
         <article class="mod">
           <span class="mod-tag">quoting</span>
