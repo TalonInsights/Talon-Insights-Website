@@ -43,124 +43,104 @@
 
 <!-- ============ SOFTWARE ============ -->
 <section class="sec on-navy" data-reveal>
-  <div class="wrap grid g2" style="gap:clamp(48px,6vw,96px);align-items:start">
-    <div>
-      <p class="eyebrow">Custom software</p>
-      <h2>Watch the job before writing the tool<span class="dot">.</span></h2>
-      <p class="lead" style="margin-top:16px">
-        Internal tools fail when they encode how a manager thinks the work happens.
-        So the method starts on the floor: watching the real process, finding the one
-        workflow where software genuinely pays, and building only that.
-      </p>
-      <ul class="ticks" style="margin-top:24px">
-        <li><strong>Scope one workflow at a time.</strong> A small tool that gets used beats a platform that doesn't.</li>
-        <li><strong>Real infrastructure from day one.</strong> A Supabase database, authentication with roles, and a GitHub-to-Vercel pipeline — so every change is reviewable and reversible.</li>
-        <li><strong>Handover documentation as standard,</strong> written so another developer could take over.</li>
-      </ul>
-    </div>
-    <div class="detailbox">
-      <p class="db-h">Worked example — David Jackson &amp; Son</p>
-      <ul class="ticks">
-        <li>Eight-stage drag-and-drop production scheduler with automatic breach detection on stage deadlines.</li>
-        <li>Started life on <code>localStorage</code> to prove the workflow, then migrated to a <code>Supabase</code> backend once it earned the infrastructure — spend follows evidence, not hope.</li>
-        <li>Two-factor authentication, and autosave with backup and restore — a planning tool is only trusted if it never loses work.</li>
-        <li>Complete and fully functional; in handover with the client ahead of going live.</li>
-      </ul>
-      <a class="alink" style="margin-top:18px" href="/work#david-jackson">Full case study
-        {{SNIP:arrow}}</a>
-    </div>
+  <div class="wrap">
+      <div class="sec-head measure">
+        <p class="eyebrow">Custom software</p>
+        <h2>Watch the job before writing the tool<span class="dot">.</span></h2>
+        <p class="lead">Internal tools fail when they encode how a manager thinks the work happens. So the method starts on the floor: watching the real process, finding the one workflow where software genuinely pays, and building only that.</p>
+      </div>
+      <dl class="spec">
+        <div><dt>Scope one workflow at a time</dt><dd>A small tool that gets used beats a platform that doesn't.</dd></div>
+        <div><dt>Real infrastructure from day one</dt><dd>A Supabase database, authentication with roles, and a GitHub-to-Vercel pipeline — so every change is reviewable and reversible.</dd></div>
+        <div><dt>Handover documentation as standard</dt><dd>Written so another developer could take over.</dd></div>
+      </dl>
+      <div class="evid">
+        <p class="evid-h">Worked example — David Jackson &amp; Son</p>
+        <ul>
+          <li>Eight-stage drag-and-drop production scheduler with automatic breach detection on stage deadlines.</li>
+          <li>Started life on <code>localStorage</code> to prove the workflow, then migrated to a <code>Supabase</code> backend once it earned the infrastructure — spend follows evidence, not hope.</li>
+          <li>Two-factor authentication, and autosave with backup and restore — a planning tool is only trusted if it never loses work.</li>
+          <li>Complete and fully functional; in handover with the client ahead of going live.</li>
+        </ul>
+        <a class="alink" style="margin-top:18px" href="/work#david-jackson">Full case study {{SNIP:arrow}}</a>
+      </div>
   </div>
 </section>
 
 <!-- ============ WEBSITES ============ -->
 <section class="sec on-white" data-reveal>
-  <div class="wrap grid g2" style="gap:clamp(48px,6vw,96px);align-items:start">
-    <div>
-      <p class="eyebrow">Websites</p>
-      <h2>Words first, design second, speed always<span class="dot">.</span></h2>
-      <p class="lead" style="margin-top:16px">
-        A website is an argument for hiring you. The argument gets written before
-        anything gets designed — then the build's job is to deliver it fast, to
-        everyone, on anything.
-      </p>
-      <ul class="ticks" style="margin-top:24px">
-        <li><strong>Message before mockups.</strong> What you do, who it's for, why you — agreed in writing before design starts.</li>
-        <li><strong>Performance budgets, not promises:</strong> LCP under 2.5s, INP under 200ms, CLS under 0.1 — measured, not claimed.</li>
-        <li><strong>WCAG 2.2 AA accessibility as standard.</strong> A site some customers can't use is a site that doesn't work.</li>
-        <li><strong>Schema markup and SEO foundations wired in at build time,</strong> not bolted on later at extra cost.</li>
-      </ul>
-    </div>
-    <div class="detailbox">
-      <p class="db-h">Worked example — WulfTek Tuning</p>
-      <ul class="ticks">
-        <li>The whole hero reduced to one question and one input — a registration — wired to the DVLA vehicle API, so the visitor gets real numbers for their own car before anything is asked of them.</li>
-        <li>A graceful fallback for when the lookup returns nothing, so the page still works when the data doesn't.</li>
-        <li>The service line that mattered most — agricultural remapping — came out of the on-site visit, not the brief.</li>
-      </ul>
-      <a class="alink" style="margin-top:18px" href="/work#wulftek">Full case study
-        {{SNIP:arrow}}</a>
-    </div>
+  <div class="wrap">
+      <div class="sec-head measure">
+        <p class="eyebrow">Websites</p>
+        <h2>Words first, design second, speed always<span class="dot">.</span></h2>
+        <p class="lead">A website is an argument for hiring you. The argument gets written before anything gets designed — then the build's job is to deliver it fast, to everyone, on anything.</p>
+      </div>
+      <dl class="spec spec--rail">
+        <div><dt>Message before mockups</dt><dd>What you do, who it's for, why you — agreed in writing before design starts.</dd></div>
+        <div><dt>Performance budgets, not promises</dt><dd>LCP under 2.5s, INP under 200ms, CLS under 0.1 — measured, not claimed.</dd></div>
+        <div><dt>WCAG 2.2 AA accessibility as standard</dt><dd>A site some customers can't use is a site that doesn't work.</dd></div>
+        <div><dt>Schema markup and SEO foundations wired in at build time</dt><dd>Not bolted on later at extra cost.</dd></div>
+      </dl>
+      <div class="evid">
+        <p class="evid-h">Worked example — WulfTek Tuning</p>
+        <ul>
+          <li>The whole hero reduced to one question and one input — a registration — wired to the DVLA vehicle API, so the visitor gets real numbers for their own car before anything is asked of them.</li>
+          <li>A graceful fallback for when the lookup returns nothing, so the page still works when the data doesn't.</li>
+          <li>The service line that mattered most — agricultural remapping — came out of the on-site visit, not the brief.</li>
+        </ul>
+        <a class="alink" style="margin-top:18px" href="/work#wulftek">Full case study {{SNIP:arrow}}</a>
+      </div>
   </div>
 </section>
 
 <!-- ============ SEO ============ -->
 <section class="sec" data-reveal>
-  <div class="wrap grid g2" style="gap:clamp(48px,6vw,96px);align-items:start">
-    <div>
-      <p class="eyebrow">Local SEO</p>
-      <h2>Deliverables you can audit<span class="dot">.</span></h2>
-      <p class="lead" style="margin-top:16px">
-        SEO has a snake-oil problem, so the method is built to be checkable. Each tier
-        is a list of named deliverables done every month, and the monthly report shows
-        each one happened — alongside the numbers that matter: rankings, calls,
-        enquiries.
-      </p>
-      <ul class="ticks" style="margin-top:24px">
-        <li><strong>Google Business Profile first</strong> — the single biggest local-pack lever, and the cheapest.</li>
-        <li><strong>Citations with identical name, address and phone</strong> across the directories that actually count.</li>
-        <li><strong>Content aimed at what buyers type,</strong> not vanity keywords nobody searches.</li>
-        <li><strong>If it isn't working, the report says so.</strong> Three-month minimum, then monthly rolling — no lock-in.</li>
-      </ul>
-      <a class="alink" style="margin-top:22px" href="/seo">Tiers and pricing
-        {{SNIP:arrow}}</a>
-    </div>
-    <div class="detailbox">
-      <p class="db-h">What a monthly report contains</p>
-      <ul class="ticks">
-        <li>Rankings for the terms we agreed to chase, with movement.</li>
-        <li>Google Business Profile: calls, direction requests, website clicks.</li>
-        <li>The deliverables list, ticked off — or flagged, with the reason.</li>
-        <li>Plain-English commentary: what happened, what's next.</li>
-      </ul>
-    </div>
+  <div class="wrap">
+      <div class="sec-head measure">
+        <p class="eyebrow">Local SEO</p>
+        <h2>Deliverables you can audit<span class="dot">.</span></h2>
+        <p class="lead">SEO has a snake-oil problem, so the method is built to be checkable. Each tier is a list of named deliverables done every month, and the monthly report shows each one happened — alongside the numbers that matter: rankings, calls, enquiries.</p>
+      </div>
+      <dl class="spec">
+        <div><dt>Google Business Profile first</dt><dd>The single biggest local-pack lever, and the cheapest.</dd></div>
+        <div><dt>Citations with identical name, address and phone</dt><dd>Across the directories that actually count.</dd></div>
+        <div><dt>Content aimed at what buyers type</dt><dd>Not vanity keywords nobody searches.</dd></div>
+        <div><dt>If it isn't working, the report says so</dt><dd>Three-month minimum, then monthly rolling — no lock-in.</dd></div>
+      </dl>
+      <p class="spec-more"><a class="alink" style="margin-top:22px" href="/seo">Tiers and pricing {{SNIP:arrow}}</a></p>
+      <div class="evid">
+        <p class="evid-h">What a monthly report contains</p>
+        <ul>
+          <li>Rankings for the terms we agreed to chase, with movement.</li>
+          <li>Google Business Profile: calls, direction requests, website clicks.</li>
+          <li>The deliverables list, ticked off — or flagged, with the reason.</li>
+          <li>Plain-English commentary: what happened, what's next.</li>
+        </ul>
+      </div>
   </div>
 </section>
 
 <!-- ============ RESEARCH ============ -->
 <section class="sec on-navy" data-reveal>
-  <div class="wrap grid g2" style="gap:clamp(48px,6vw,96px);align-items:start">
-    <div>
-      <p class="eyebrow">Research &amp; strategy</p>
-      <h2>A question, a model, a decision<span class="dot">.</span></h2>
-      <p class="lead" style="margin-top:16px">
-        Research engagements start by pinning down the decision you actually need to
-        make — then build just enough evidence to make it confidently. The output is
-        never a data dump; it's a recommendation with the reasoning shown.
-      </p>
-      <ul class="ticks" style="margin-top:24px">
-        <li><strong>Define the question first.</strong> "Should we open the second unit?" is answerable; "do some market research" isn't.</li>
-        <li><strong>Model when it pays.</strong> Where a decision hangs on uncertainty, I build a real statistical model rather than guessing politely.</li>
-        <li><strong>Show the sensitivity.</strong> You see which assumptions actually move the answer — so you know what to watch.</li>
-      </ul>
-    </div>
-    <div class="detailbox">
-      <p class="db-h">What modelling actually buys you</p>
-      <ul class="ticks">
-        <li>A recommendation that ships with a probability distribution rather than a single hopeful number — you see the range of outcomes, not just the one somebody liked.</li>
-        <li>Sensitivity analysis identifying which assumptions actually move the answer, so you know what to watch.</li>
-        <li>Delivered as a decision document: what to do, what it costs, what could go wrong.</li>
-      </ul>
-    </div>
+  <div class="wrap">
+      <div class="sec-head measure">
+        <p class="eyebrow">Research &amp; strategy</p>
+        <h2>A question, a model, a decision<span class="dot">.</span></h2>
+        <p class="lead">Research engagements start by pinning down the decision you actually need to make — then build just enough evidence to make it confidently. The output is never a data dump; it's a recommendation with the reasoning shown.</p>
+      </div>
+      <dl class="spec spec--rail">
+        <div><dt>Define the question first</dt><dd>"Should we open the second unit?" is answerable; "do some market research" isn't.</dd></div>
+        <div><dt>Model when it pays</dt><dd>Where a decision hangs on uncertainty, I build a real statistical model rather than guessing politely.</dd></div>
+        <div><dt>Show the sensitivity</dt><dd>You see which assumptions actually move the answer — so you know what to watch.</dd></div>
+      </dl>
+      <div class="evid">
+        <p class="evid-h">What modelling actually buys you</p>
+        <ul>
+          <li>A recommendation that ships with a probability distribution rather than a single hopeful number — you see the range of outcomes, not just the one somebody liked.</li>
+          <li>Sensitivity analysis identifying which assumptions actually move the answer, so you know what to watch.</li>
+          <li>Delivered as a decision document: what to do, what it costs, what could go wrong.</li>
+        </ul>
+      </div>
   </div>
 </section>
 

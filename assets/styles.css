@@ -1589,3 +1589,69 @@ strong{font-weight:600}
 @media(prefers-reduced-motion:reduce){.fl-lamp{animation:none}}
 @media(max-width:560px){.faults li{grid-template-columns:auto 1fr}
   .fl-id{display:none}}
+
+/* ============================================================================
+   THE SPEC SHEET AND THE EVIDENCE BAND
+   Replaces the old claims-list-beside-a-floating-box, which could not be even:
+   a long list next to a short box always left a slab of dead space. Claims are
+   term/definition pairs, so they are a real <dl>; the evidence spans the full
+   column beneath rather than hovering beside. Nothing lopsided, better markup.
+   --------------------------------------------------------------------------
+   .spec         two-up grid of stacked label/body pairs - short definitions
+   .spec--rail   label rail beside the body column - long definitions
+   ========================================================================== */
+.spec{display:grid;gap:0;margin:clamp(28px,3.5vw,44px) 0 0;
+  border-top:1px solid var(--rule)}
+.spec>div{padding:20px 0 19px;border-bottom:1px solid var(--rule);min-width:0}
+.spec dt{font:600 1.02rem/1.35 var(--ff-d);letter-spacing:-.005em;color:var(--ink);
+  margin:0 0 6px;position:relative}
+.spec dd{margin:0;color:var(--slate);font-size:.96rem;line-height:1.6;max-width:64ch}
+.spec dd code{font-size:.86em}
+.on-navy .spec{border-top-color:var(--rule-dark)}
+.on-navy .spec>div{border-bottom-color:var(--rule-dark)}
+.on-navy .spec dt{color:#fff}
+.on-navy .spec dd{color:var(--on-navy-dim)}
+
+/* the term gets a short accent rule, so the column reads as a datasheet
+   rather than a stack of headings */
+.spec dt::before{content:"";position:absolute;left:0;top:-20px;width:22px;height:2px;
+  border-radius:1px;background:var(--amber);opacity:.85}
+.spec>div:first-child dt::before,.spec--rail>div:first-child dt::before{top:-21px}
+
+@media(min-width:820px){
+  .spec{grid-template-columns:1fr 1fr;column-gap:clamp(36px,4.5vw,72px)}
+  .spec>div{padding-right:8px}
+  /* an odd final row spans, so the grid never ends ragged */
+  .spec>div:last-child:nth-child(odd){grid-column:1/-1}
+  .spec--rail{grid-template-columns:1fr}
+  .spec--rail>div{display:grid;grid-template-columns:minmax(180px,258px) 1fr;
+    gap:4px clamp(28px,4vw,64px);align-items:start;padding-right:0}
+  .spec--rail dt{margin:0}
+  .spec--rail dt::before{top:-2px;left:-34px;width:22px}
+  .spec--rail dd{max-width:70ch}
+}
+.sp-plain dd{padding-left:0}
+
+/* ---------- the evidence band ---------- */
+.evid{margin-top:clamp(26px,3vw,40px);border-radius:var(--r-lg);
+  padding:clamp(20px,2.6vw,28px) clamp(20px,2.8vw,32px);
+  background:var(--paper);border:1px solid var(--rule);
+  border-left:3px solid var(--amber)}
+.on-navy .evid{background:rgba(255,255,255,.045);border-color:rgba(255,255,255,.1);
+  border-left-color:var(--amber)}
+.evid-h{font:600 .68rem/1 var(--ff-d);letter-spacing:.18em;text-transform:uppercase;
+  color:var(--slate);margin:0 0 16px}
+.on-navy .evid-h{color:#F7C877}
+.evid ul{list-style:none;margin:0;padding:0;display:grid;gap:14px clamp(28px,3.5vw,56px)}
+@media(min-width:760px){
+  .evid ul{grid-template-columns:repeat(3,1fr)}
+  .evid--wide ul{grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+}
+.evid li{position:relative;padding-left:20px;color:var(--slate);
+  font-size:.93rem;line-height:1.6}
+.on-navy .evid li{color:var(--on-navy)}
+.evid li::before{content:"";position:absolute;left:0;top:.58em;width:7px;height:7px;
+  border-radius:2px;background:var(--amber);opacity:.9}
+.evid li code{font-size:.86em}
+.evid .alink{margin-top:18px}
+.spec-more{margin:22px 0 0}
