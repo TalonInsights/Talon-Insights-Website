@@ -154,13 +154,41 @@
       <p class="eyebrow">Show, don't tell</p>
       <h2>Most SEO is invisible. So here's an X-ray<span class="dot">.</span></h2>
       <p class="lead">
-        This is this website's own homepage &mdash; not a mock-up, the live values. Flip it to
-        Googlebot view to see the layer search engines actually read, then press
-        <kbd>Ctrl</kbd>+<kbd>U</kbd> on the real thing: every word below is genuinely in the page.
+        Every value below is lifted straight from this site's own homepage &mdash; the real
+        title tag, the real alt text, the real schema &mdash; laid out as a simplified sketch
+        rather than the page's exact design. Flip it to Googlebot view to see the layer
+        search engines actually read, then press <kbd>Ctrl</kbd>+<kbd>U</kbd> on the real
+        thing: every word is genuinely in the page.
       </p>
     </div>
 
     <div class="xray" id="seo-xray">
+      <div class="xr-notes">
+        <article class="xr-note" data-note="0">
+          <h3>Five of the levers, pinned to where they live</h3>
+          <p>Flip the switch, or press any numbered pin. Nothing here is staged for the demo &mdash; each pin explains a decision that is live on this site right now, and tells you how to check it.</p>
+        </article>
+        <article class="xr-note" data-note="1" hidden>
+          <h3>The search snippet is authored, not scraped</h3>
+          <p>The blue link in a Google result is written here &mdash; a 51-character title so it never truncates, a description that ends on the call to action, and a canonical address so ranking signals never split between duplicate URLs. Every page carries its own, plus its own social preview card. <code>verify: Ctrl+U &rarr; line 6</code></p>
+        </article>
+        <article class="xr-note" data-note="2" hidden>
+          <h3>One H1, and it says what the page is for</h3>
+          <p>Exactly one H1 per page, and the outline beneath it steps H2 &rarr; H3 without ever skipping a level &mdash; so a crawler reads the page the way you'd read a contents list. Headings carry the words buyers type, not slogans that only make sense after you've bought. <code>verify: 22 pages, one H1 each</code></p>
+        </article>
+        <article class="xr-note" data-note="3" hidden>
+          <h3>A photo labelled to be found</h3>
+          <p>The filename is a search phrase in its own right &mdash; who, trade, town. The alt text describes what is honestly in the frame, which serves screen-reader users and image search with the same sentence. And the dimensions are declared in the markup, so the page never shifts while it loads &mdash; a Core Web Vitals signal Google measures directly. The falcon, by contrast, carries <code>alt=""</code> &mdash; it is decoration, and an empty alt is how you tell a screen reader to skip it. Labelling everything is as wrong as labelling nothing. <code>verify: right-click either image &rarr; inspect</code></p>
+        </article>
+        <article class="xr-note" data-note="4" hidden>
+          <h3>Structured data: who, what, where</h3>
+          <p>A machine-readable block that stops Google guessing: the business is a <code>ProfessionalService</code>, here are its services, and <code>areaServed</code> names the exact towns it wants to rank in. A <code>Person</code> entity ties the founder to the firm, and the Business Profile points back here &mdash; each corroborating the other. <code>verify: search "schema validator" &rarr; paste the URL</code></p>
+        </article>
+        <article class="xr-note" data-note="5" hidden>
+          <h3>Links that say where they go</h3>
+          <p>Every internal link's anchor text describes its destination &mdash; "web design in Telford", never "click here" &mdash; so each link passes meaning as well as visitors. Breadcrumbs on every page ship with matching <code>BreadcrumbList</code> schema, which is why search results for this site can show a trail instead of a bare URL. <code>verify: any page &rarr; the breadcrumb line</code></p>
+        </article>
+      </div>
       <div class="xr-frame">
         <div class="xr-chrome">
           <span class="xr-dots" aria-hidden="true"><i></i><i></i><i></i></span>
@@ -221,7 +249,7 @@
               </div>
               <div class="xr-card xr-anchors">
                 <p class="xr-card-h" aria-hidden="true">In the copy</p>
-                <p>There are dedicated pages for <span class="xr-a">web design in Telford<code>/web-design-telford</code></span> and <span class="xr-a">the production scheduler<code>/work</code></span> &mdash; run alongside <span class="xr-a">local SEO<code>/seo</code></span>.</p>
+                <p>There are dedicated pages for <span class="xr-a">web design in Shrewsbury<code>/web-design-shrewsbury</code></span> and <span class="xr-a">market research &amp; strategy<code>/research</code></span> &mdash; and every service points at <span class="xr-a">the free Groundwork Visit<code>/groundwork</code></span>.</p>
                 <button class="xr-pin" type="button" data-note="5" aria-label="Explain internal links">5</button>
               </div>
             </div>
@@ -229,32 +257,6 @@
         </div>
       </div>
 
-      <div class="xr-notes">
-        <article class="xr-note" data-note="0">
-          <h3>Five of the levers, pinned to where they live</h3>
-          <p>Flip the switch, or press any numbered pin. Nothing here is staged for the demo &mdash; each pin explains a decision that is live on this site right now, and tells you how to check it.</p>
-        </article>
-        <article class="xr-note" data-note="1" hidden>
-          <h3>The search snippet is authored, not scraped</h3>
-          <p>The blue link in a Google result is written here &mdash; a 51-character title so it never truncates, a description that ends on the call to action, and a canonical address so ranking signals never split between duplicate URLs. Every page carries its own, plus its own social preview card. <code>verify: Ctrl+U &rarr; line 6</code></p>
-        </article>
-        <article class="xr-note" data-note="2" hidden>
-          <h3>One H1, and it says what the page is for</h3>
-          <p>Exactly one H1 per page, and the outline beneath it steps H2 &rarr; H3 without ever skipping a level &mdash; so a crawler reads the page the way you'd read a contents list. Headings carry the words buyers type, not slogans that only make sense after you've bought. <code>verify: 22 pages, one H1 each</code></p>
-        </article>
-        <article class="xr-note" data-note="3" hidden>
-          <h3>A photo labelled to be found</h3>
-          <p>The filename is a search phrase in its own right &mdash; who, trade, town. The alt text describes what is honestly in the frame, which serves screen-reader users and image search with the same sentence. And the dimensions are declared in the markup, so the page never shifts while it loads &mdash; a Core Web Vitals signal Google measures directly. The falcon, by contrast, carries <code>alt=""</code> &mdash; it is decoration, and an empty alt is how you tell a screen reader to skip it. Labelling everything is as wrong as labelling nothing. <code>verify: right-click either image &rarr; inspect</code></p>
-        </article>
-        <article class="xr-note" data-note="4" hidden>
-          <h3>Structured data: who, what, where</h3>
-          <p>A machine-readable block that stops Google guessing: the business is a <code>ProfessionalService</code>, here are its services, and <code>areaServed</code> names the exact towns it wants to rank in. A <code>Person</code> entity ties the founder to the firm, and the Business Profile points back here &mdash; each corroborating the other. <code>verify: search "schema validator" &rarr; paste the URL</code></p>
-        </article>
-        <article class="xr-note" data-note="5" hidden>
-          <h3>Links that say where they go</h3>
-          <p>Every internal link's anchor text describes its destination &mdash; "web design in Telford", never "click here" &mdash; so each link passes meaning as well as visitors. Breadcrumbs on every page ship with matching <code>BreadcrumbList</code> schema, which is why search results for this site can show a trail instead of a bare URL. <code>verify: any page &rarr; the breadcrumb line</code></p>
-        </article>
-      </div>
     </div>
   </div>
 </section>
@@ -275,9 +277,9 @@
         <ul class="rp-list">
           <li><span class="rp-what">Google Business Profile</span><span class="rp-did">3 posts published &middot; 2 reviews won and replied to &middot; categories pruned to match services</span><span class="rp-ok" aria-label="delivered">&#10003;</span></li>
           <li><span class="rp-what">Local citations</span><span class="rp-did">Yell and FreeIndex corrected &mdash; name, address and phone now identical across all 14 listings</span><span class="rp-ok" aria-label="delivered">&#10003;</span></li>
-          <li><span class="rp-what">On-page work</span><span class="rp-did">Kitchens page rewritten around "bespoke kitchens Telford" &mdash; the phrase buyers type, not the trade term</span><span class="rp-ok" aria-label="delivered">&#10003;</span></li>
+          <li><span class="rp-what">On-page work</span><span class="rp-did">Call-out page rewritten around "emergency electrician Telford" &mdash; the phrase people type at 11pm, not the trade term</span><span class="rp-ok" aria-label="delivered">&#10003;</span></li>
           <li><span class="rp-what">Technical</span><span class="rp-did">Schema errors 3 &rarr; 0 &middot; largest page now loads in 2.1s on a mid-range phone</span><span class="rp-ok" aria-label="delivered">&#10003;</span></li>
-          <li class="rp-flag"><span class="rp-what">Rankings</span><span class="rp-did">"joinery Telford" 31 &rarr; 9. "kitchens Shropshire" flat for a second month &mdash; flagged, and next month's plan changes because of it</span><span class="rp-ok rp-ok--flag" aria-label="flagged">&#9888;</span></li>
+          <li class="rp-flag"><span class="rp-what">Rankings</span><span class="rp-did">"electrician Telford" 31 &rarr; 9. "rewires Shropshire" flat for a second month &mdash; flagged, and next month's plan changes because of it</span><span class="rp-ok rp-ok--flag" aria-label="flagged">&#9888;</span></li>
         </ul>
         <footer class="rp-foot">The flat number stays in the report. That's the difference between reporting and marketing.</footer>
       </div>

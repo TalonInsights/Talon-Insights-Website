@@ -509,6 +509,12 @@
         xnotes.forEach(function (n) {
           n.hidden = n.getAttribute("data-note") !== id;
         });
+        /* the card sits above the exhibit; a pin low on the frame would
+           otherwise update it out of view */
+        var shown = xray.querySelector(".xr-note:not([hidden])");
+        if (shown && shown.getBoundingClientRect().top < 0) {
+          shown.scrollIntoView({ block: "nearest", behavior: reduce ? "auto" : "smooth" });
+        }
       });
     });
   }

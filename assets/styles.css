@@ -1040,7 +1040,7 @@ strong{font-weight:600}
 .xr-h1 .xr-pin{top:.1em;right:0}
 
 /* the explanation card */
-.xr-notes{margin-top:18px;min-height:118px}
+.xr-notes{margin:0 0 18px;min-height:118px}
 .xr-note{background:#fff;border:1px solid var(--rule);border-left:3px solid var(--amber);
   border-radius:var(--r-lg);padding:20px 24px;box-shadow:var(--shadow-1)}
 .xr-note h3{font-size:1.02rem;margin:0 0 7px}
