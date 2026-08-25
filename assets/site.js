@@ -1219,3 +1219,40 @@
       .finally(function () { btn.disabled = false; });
   });
 })();
+
+/* ---- groundwork: the document that writes itself ------------------------ */
+(function () {
+  "use strict";
+  var doc = document.querySelector(".gw-doc");
+  if (!doc) { return; }
+  var reduce = window.matchMedia &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var steps = document.querySelectorAll(".gw-step");
+  /* Lines are visible by default. Only hide them when we know we can bring
+     them back — the same contract as the reveal system above. */
+  if (reduce || !steps.length || !("IntersectionObserver" in window)) { return; }
+  doc.classList.add("gw-js");
+
+  function write(n) {
+    var batch = doc.querySelectorAll('[data-s="' + n + '"]:not(.is-writ)');
+    batch.forEach(function (el, i) {
+      el.style.transitionDelay = (i * 110) + "ms";
+      el.classList.add("is-writ");
+    });
+  }
+  /* Failsafe: if nothing has intersected within 2.5s, write everything. */
+  var fired = false;
+  window.setTimeout(function () {
+    if (!fired) { write(1); write(2); write(3); }
+  }, 2500);
+
+  var io = new IntersectionObserver(function (entries) {
+    fired = true;
+    entries.forEach(function (en) {
+      if (!en.isIntersecting) { return; }
+      write(en.target.getAttribute("data-step"));
+      io.unobserve(en.target);
+    });
+  }, { threshold: 0.35, rootMargin: "0px 0px -10% 0px" });
+  steps.forEach(function (s) { io.observe(s); });
+})();

@@ -12,6 +12,7 @@
   --cobalt-deep:#1E40AF;
   --amber:#F5A623;
   --amber-deep:#DE8F0D;
+  --amber-text:#B45309;   /* accessible amber for text on light (4.6:1 on white) */
   --paper:#F7F8FA;
   --white:#FFFFFF;
   --slate:#49535F;
@@ -678,7 +679,7 @@ strong{font-weight:600}
   font:600 .88rem/1.4 var(--ff-b);color:var(--ink);margin-bottom:8px}
 .field .hint{font:400 .78rem/1 var(--ff-b);color:#8A94A2;letter-spacing:.02em}
 .field .req{font:600 .64rem/1 var(--ff-d);font-style:normal;letter-spacing:.1em;
-  text-transform:uppercase;color:var(--amber-deep);
+  text-transform:uppercase;color:var(--amber-text);
   background:#FFF6E6;border-radius:var(--r-pill);padding:4px 8px}
 .field input,.field textarea{width:100%;font:400 .98rem/1.5 var(--ff-b);color:var(--ink);
   background:#FBFCFD;border:1.5px solid #DDE3EB;border-radius:10px;padding:12px 16px;
@@ -997,12 +998,12 @@ strong{font-weight:600}
 .xr-anchors p{font:400 .95em/1.7 var(--ff-b);color:var(--ink);margin:0}
 .xr-a{color:var(--cobalt-deep);border-bottom:1px solid rgba(37,99,235,.35);position:relative}
 .xr-a code{display:none;font:500 .78em/1 ui-monospace,Menlo,Consolas,monospace;
-  color:var(--amber-deep);margin-left:.4em}
+  color:var(--amber-text);margin-left:.4em}
 .xray.is-on .xr-a code{display:inline}
 
 /* tags + pins */
 .xr-tag{position:absolute;top:-.5em;right:0;font:700 .55em/1 ui-monospace,Menlo,monospace;
-  letter-spacing:.08em;color:var(--amber-deep);background:#FFF6E6;border:1px solid #F0D49A;
+  letter-spacing:.08em;color:var(--amber-text);background:#FFF6E6;border:1px solid #F0D49A;
   border-radius:.35em;padding:.45em .6em;opacity:0;transform:translateY(4px);
   transition:opacity .4s var(--ease),transform .4s var(--ease)}
 .xr-tag--wide{top:-1em;right:1.2em}
@@ -1025,7 +1026,7 @@ strong{font-weight:600}
   border-radius:var(--r-lg);padding:20px 24px;box-shadow:var(--shadow-1)}
 .xr-note h3{font-size:1.02rem;margin:0 0 8px}
 .xr-note p{color:var(--slate);font-size:.95rem;margin:0;max-width:74ch}
-.xr-note code{font:500 .82em/1 ui-monospace,Menlo,Consolas,monospace;color:var(--amber-deep);
+.xr-note code{font:500 .82em/1 ui-monospace,Menlo,Consolas,monospace;color:var(--amber-text);
   background:#FFF6E6;border-radius:4px;padding:2px 8px;white-space:nowrap}
 .xr-note kbd{font:600 .85em/1 ui-monospace,monospace;border:1px solid var(--rule);
   border-bottom-width:2px;border-radius:4px;padding:1px 4px;background:var(--paper)}
@@ -1066,7 +1067,7 @@ strong{font-weight:600}
 .rp-did{font:400 .9rem/1.55 var(--ff-b);color:var(--slate)}
 .rp-ok{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;
   background:#E8F0FE;color:var(--cobalt-deep);font-size:.8rem;justify-self:end}
-.rp-ok--flag{background:#FFF6E6;color:var(--amber-deep)}
+.rp-ok--flag{background:#FFF6E6;color:var(--amber-text)}
 .rp-flag{background:#FFFDF7}
 .rp-foot{padding:16px 24px;background:var(--paper);border-top:1px solid var(--rule);
   font:500 .84rem/1.5 var(--ff-b);color:var(--ink)}
@@ -1383,7 +1384,7 @@ strong{font-weight:600}
 .dz-src{font:500 .66rem/1.6 ui-monospace,Menlo,Consolas,monospace;letter-spacing:.04em;
   text-transform:uppercase;color:var(--cobalt-deep);white-space:nowrap}
 .dz-log li p{grid-column:2;font:400 .92rem/1.55 var(--ff-b);color:var(--ink);margin:0}
-.dz-log li p::before{content:"\2192  ";color:var(--amber-deep);font-weight:700}
+.dz-log li p::before{content:"\2192  ";color:var(--amber-text);font-weight:700}
 
 /* ============================================================================
    RESEARCH PAGE - THE LIVE MONTE CARLO
@@ -1698,3 +1699,107 @@ strong{font-weight:600}
 @media(prefers-reduced-motion:reduce){
   .ix-body{transition:none}.ix-mark,.ix-mark::after{transition:none}
 }
+
+/* ============================================================================
+   GROUNDWORK — the visit that writes its own document
+   ========================================================================== */
+.gw-callnote{margin:var(--s4) 0 0;font-size:.97rem;color:var(--slate)}
+.gw-callnote strong{color:var(--ink)}
+
+.gw-flow{display:grid;gap:var(--s6)}
+@media(min-width:980px){
+  .gw-flow{grid-template-columns:1fr minmax(360px,440px);gap:clamp(48px,6vw,96px);align-items:start}
+  .gw-doc-col{position:sticky;top:96px}
+}
+.gw-step{padding-block:clamp(32px,9vh,96px);border-top:1px solid var(--rule)}
+.gw-step:first-child{border-top:0;padding-top:var(--s3)}
+.gw-step:last-child{padding-bottom:var(--s3)}
+.gw-step .no{display:block;font:600 .92rem/1 var(--ff-d);letter-spacing:.08em;color:var(--cobalt);margin-bottom:var(--s3)}
+.gw-step h3{font-size:var(--fs-h3);margin-bottom:12px}
+.gw-step p{color:var(--slate);max-width:52ch}
+
+.gw-doc{background:#fff;border:1px solid var(--rule);border-radius:var(--r-lg);
+  box-shadow:var(--shadow-2);padding:clamp(24px,3vw,40px)}
+.gw-doc-head{display:flex;align-items:baseline;justify-content:space-between;gap:var(--s3);
+  border-bottom:2px solid var(--ink-navy);padding-bottom:12px;margin-bottom:var(--s4)}
+.gw-doc-head .wm{font:700 .72rem/1 var(--ff-d);letter-spacing:.18em;color:var(--ink-navy)}
+.gw-doc-head .wm em{font-style:normal;color:var(--amber-text)}
+.gw-doc-head .pg{font:400 .7rem/1 var(--ff-b);letter-spacing:.06em;text-transform:uppercase;color:var(--slate)}
+.gw-doc h4{font:600 1.14rem/1.3 var(--ff-d);letter-spacing:-.01em;margin:0 0 4px}
+.gw-doc .sub{font:400 .8rem/1.5 var(--ff-b);color:var(--slate);margin:0 0 var(--s2)}
+.gw-sect{font:600 .7rem/1.4 var(--ff-d);letter-spacing:.12em;text-transform:uppercase;
+  color:var(--cobalt);margin:var(--s4) 0 var(--s2)}
+.gw-doc .gw-w{font:400 .88rem/1.55 var(--ff-b);color:var(--ink);margin:0 0 var(--s2)}
+.gw-price{display:flex;align-items:center;gap:12px;margin:12px 0 var(--s2);
+  font:700 1.35rem/1 var(--ff-d);color:var(--ink-navy)}
+.gw-redact{display:inline-block;width:84px;height:.85em;border-radius:3px;background:var(--ink-navy)}
+.gw-price .fx{font:600 .68rem/1 var(--ff-d);letter-spacing:.12em;text-transform:uppercase;
+  color:#fff;background:var(--ink-navy);border-radius:var(--r-pill);padding:6px 12px}
+.gw-doc .gw-note{font-size:.78rem;color:var(--slate)}
+.gw-cap{margin-top:var(--s3);font:400 .85rem/1.5 var(--ff-b);color:var(--slate)}
+
+/* the writing effect — lines are visible by default; JS opts in, so no-JS
+   and reduced-motion readers always get the finished document */
+.gw-js .gw-w,.gw-js .gw-sect{opacity:0;transform:translateY(6px);
+  transition:opacity .5s var(--ease),transform .5s var(--ease)}
+.gw-js .gw-w.is-writ,.gw-js .gw-sect.is-writ{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){
+  .gw-js .gw-w,.gw-js .gw-sect{opacity:1;transform:none;transition:none}}
+
+/* breath line — one sentence, a viewport's worth of quiet */
+.breath{padding-block:clamp(96px,16vh,176px)}
+.breath .wrap{text-align:center}
+.breath p{margin:0 auto;max-width:24ch;text-wrap:balance;
+  font:600 var(--fs-h1)/1.15 var(--ff-d);letter-spacing:-.02em;color:#fff}
+.breath em{font-style:normal;color:var(--amber)}
+.breath--hang{padding-bottom:clamp(160px,22vh,256px)}
+
+/* the stat card straddling the navy/white seam */
+.gw-hang{padding-top:0}
+.gw-statcard{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--s5) var(--s4);
+  background:#fff;border:1px solid var(--rule);border-radius:var(--r-lg);
+  box-shadow:var(--shadow-navy);padding:clamp(24px,3.5vw,48px);
+  margin-top:calc(-1 * clamp(80px,11vh,128px));position:relative}
+@media(min-width:860px){.gw-statcard{grid-template-columns:repeat(4,1fr)}}
+.gw-stat::before{content:"";display:block;width:22px;height:2px;background:var(--amber);margin-bottom:12px}
+.gw-stat .n{display:block;font:600 clamp(1.7rem,1.3rem + 1.5vw,2.4rem)/1.1 var(--ff-d);
+  letter-spacing:-.01em;color:var(--ink-navy)}
+.gw-stat .l{display:block;margin-top:var(--s2);font:600 .72rem/1.45 var(--ff-b);
+  letter-spacing:.1em;text-transform:uppercase;color:var(--slate)}
+.gw-costhead{margin-top:clamp(64px,9vw,112px)}
+.gw-hr{border:0;border-top:1px solid var(--rule);margin:clamp(64px,9vw,112px) 0}
+/* compact document on short viewports, so the sticky page never clips */
+@media(min-width:980px) and (max-height:840px){
+  .gw-doc-col{top:64px}
+  .gw-doc{padding:20px 24px}
+  .gw-doc .gw-w{font-size:.84rem;margin-bottom:4px}
+  .gw-sect{margin-top:16px}
+  .gw-doc h4{font-size:1.05rem}
+}
+/* the document as an artefact: layered sheets, atmosphere, stamp, marginalia */
+@media(min-width:980px){
+  .gw-doc-col::before{content:"";position:absolute;inset:-40px -40px 48px -40px;z-index:-1;
+    background:radial-gradient(380px 300px at 18% 10%,rgba(37,99,235,.09),transparent 58%),
+               radial-gradient(360px 280px at 82% 82%,rgba(245,166,35,.11),transparent 58%)}
+}
+.gw-doc{position:relative;box-shadow:var(--shadow-navy)}
+.gw-doc::before{content:"";position:absolute;top:12px;left:12px;right:-12px;bottom:-12px;
+  background:#fff;border:1px solid var(--rule);border-radius:var(--r-lg);
+  box-shadow:var(--shadow-1);z-index:-1}
+.gw-stamp{position:absolute;top:42%;left:50%;transform:translate(-50%,-50%) rotate(-12deg);
+  font:700 clamp(1.6rem,2vw,2.1rem)/1 var(--ff-d);letter-spacing:.3em;text-transform:uppercase;
+  color:rgba(222,143,13,.16);border:3px solid rgba(222,143,13,.16);border-radius:var(--r-sm);
+  padding:var(--s2) var(--s3) var(--s2) calc(var(--s3) + .3em);pointer-events:none;user-select:none}
+.gw-hl{background:linear-gradient(transparent 52%,rgba(245,166,35,.32) 52%)}
+.gw-fig{display:block;width:100%;height:auto;margin:var(--s2) 0 var(--s3)}
+.gw-fig .fig-box rect{fill:none;stroke:var(--ink-navy);stroke-width:1.3}
+.gw-fig .fig-bar rect{fill:var(--deep-navy)}
+.gw-fig .fig-arrow path{fill:none;stroke:var(--slate);stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round}
+.gw-fig .fig-line{stroke:var(--rule);stroke-width:1.5}
+.gw-fig .fig-dot circle{fill:#fff;stroke:var(--ink-navy);stroke-width:1.5}
+.gw-fig .fig-dot .is-amber{fill:var(--amber);stroke:var(--amber-deep)}
+.gw-fig .fig-label text{font:500 10px var(--ff-b);fill:var(--slate)}
+.gw-fig .fig-box + .fig-label text,.gw-fig g.fig-label text{text-anchor:middle}
+.gw-fig g.fig-label text[x="2"]{text-anchor:start}
+.gw-fig .fig-mark path,.gw-fig .fig-mark ellipse{fill:none;stroke:var(--amber-text);stroke-width:1.3}
+.gw-fig .fig-mark text{font:italic 500 10px var(--ff-b);fill:var(--amber-text);text-anchor:middle}
