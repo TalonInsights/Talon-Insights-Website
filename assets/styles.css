@@ -1769,16 +1769,17 @@ strong{font-weight:600}
 .breath--hang{padding-bottom:clamp(160px,22vh,256px)}
 
 /* the stat card straddling the navy/white seam */
-.gw-hang{padding-top:0}
-.gw-statcard{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--s5) var(--s4);
+.gw-hang,.hang{padding-top:0}
+.hang.sec--tight{padding-top:0}
+.gw-statcard,.statcard{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--s5) var(--s4);
   background:#fff;border:1px solid var(--rule);border-radius:var(--r-lg);
   box-shadow:var(--shadow-navy);padding:clamp(24px,3.5vw,48px);
   margin-top:calc(-1 * clamp(80px,11vh,128px));position:relative}
-@media(min-width:860px){.gw-statcard{grid-template-columns:repeat(4,1fr)}}
-.gw-stat::before{content:"";display:block;width:22px;height:2px;background:var(--amber);margin-bottom:12px}
-.gw-stat .n{display:block;font:600 clamp(1.7rem,1.3rem + 1.5vw,2.4rem)/1.1 var(--ff-d);
+@media(min-width:860px){.gw-statcard,.statcard{grid-template-columns:repeat(4,1fr)}}
+.gw-stat::before,.stat::before{content:"";display:block;width:22px;height:2px;background:var(--amber);margin-bottom:12px}
+.gw-stat .n,.stat .n{display:block;font-variant-numeric:tabular-nums;font:600 clamp(1.7rem,1.3rem + 1.5vw,2.4rem)/1.1 var(--ff-d);
   letter-spacing:-.01em;color:var(--ink-navy)}
-.gw-stat .l{display:block;margin-top:var(--s2);font:600 .72rem/1.45 var(--ff-b);
+.gw-stat .l,.stat .l{display:block;margin-top:var(--s2);font:600 .72rem/1.45 var(--ff-b);
   letter-spacing:.1em;text-transform:uppercase;color:var(--slate)}
 .gw-costhead{margin-top:clamp(64px,9vw,112px)}
 .gw-hr{border:0;border-top:1px solid var(--rule);margin:clamp(64px,9vw,112px) 0}
@@ -1817,3 +1818,39 @@ strong{font-weight:600}
 .gw-fig g.fig-label text[x="2"]{text-anchor:start}
 .gw-fig .fig-mark path,.gw-fig .fig-mark ellipse{fill:none;stroke:var(--amber-text);stroke-width:1.3}
 .gw-fig .fig-mark text{font:italic 500 10px var(--ff-b);fill:var(--amber-text);text-anchor:middle}
+
+/* ============================================================================
+   HOMEPAGE — animate to explain
+   ========================================================================== */
+/* the process draws itself: steps arrive in order, an amber line completes
+   each one. Motion is opt-in; without it the steps simply stand complete. */
+@media(prefers-reduced-motion:no-preference){
+  .reveal .steps .step{opacity:0;transform:translateY(10px)}
+  .reveal.is-in .steps .step{opacity:1;transform:none;
+    transition:opacity .55s var(--ease),transform .55s var(--ease)}
+  .reveal .steps .step::after{content:"";position:absolute;top:-2px;left:0;right:0;height:2px;
+    background:var(--amber);transform:scaleX(0);transform-origin:left}
+  .reveal.is-in .steps .step::after{transform:scaleX(1);transition:transform .6s var(--ease)}
+  .reveal.is-in .steps .step:nth-child(2),.reveal.is-in .steps .step:nth-child(2)::after{transition-delay:.18s}
+  .reveal.is-in .steps .step:nth-child(3),.reveal.is-in .steps .step:nth-child(3)::after{transition-delay:.36s}
+  .reveal.is-in .steps .step:nth-child(4),.reveal.is-in .steps .step:nth-child(4)::after{transition-delay:.54s}
+  .reveal.is-in .steps .step:nth-child(5),.reveal.is-in .steps .step:nth-child(5)::after{transition-delay:.72s}
+  /* service cards take the stage one at a time */
+  .reveal .svc{opacity:0;transform:translateY(10px)}
+  .reveal.is-in .svc{opacity:1;transform:none;
+    transition:opacity .5s var(--ease),transform .5s var(--ease),border-color .15s var(--ease),box-shadow .15s var(--ease)}
+  .reveal.is-in .svc:nth-child(2){transition-delay:.12s}
+  .reveal.is-in .svc:nth-child(3){transition-delay:.24s}
+  .reveal.is-in .svc:nth-child(4){transition-delay:.36s}
+}
+/* spec sheet on navy grounds */
+.on-navy .spec dt{color:#fff}
+.on-navy .spec dd{color:var(--on-navy)}
+/* the vignette mock labels itself honestly */
+.vg-mock{position:absolute;top:8px;right:8px;font:600 .58rem/1 var(--ff-d);
+  letter-spacing:.14em;text-transform:uppercase;color:var(--slate);
+  border:1px solid var(--rule);border-radius:var(--r-pill);padding:4px 8px;background:#fff}
+/* CTA band hosts the closing ember surface */
+.cta-band{position:relative;overflow:clip}
+.cta-band>.wrap{position:relative;z-index:2}
+.cta-band .falcon-peek{z-index:1}
