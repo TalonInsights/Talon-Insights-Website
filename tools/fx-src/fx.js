@@ -62,7 +62,7 @@ function mount(el) {
       el, meshGradientFragmentShader, meshUniforms(colors, opts),
       undefined, speed, 0,
       /* render sharp on large hi-DPI monitors: allow up to ~4K x 1.5 */
-      1.5, 3840 * 2160 * 1.5
+      2, 3840 * 2160 * 2
     );
   } catch (e) {
     return null; /* no WebGL: the CSS background stands in */
