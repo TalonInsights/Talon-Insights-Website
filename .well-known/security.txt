@@ -2,6 +2,6 @@
 # One person, so expect a human reply rather than a ticket number.
 
 Contact: mailto:taloninsights@gmail.com
-Expires: 2027-07-26T00:00:00.000Z
+Expires: 2027-07-27T00:00:00.000Z
 Preferred-Languages: en
 Canonical: https://taloninsights.co.uk/.well-known/security.txt

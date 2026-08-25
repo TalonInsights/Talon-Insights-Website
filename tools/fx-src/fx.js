@@ -60,7 +60,9 @@ function mount(el) {
   try {
     return new ShaderMount(
       el, meshGradientFragmentShader, meshUniforms(colors, opts),
-      undefined, speed
+      undefined, speed, 0,
+      /* render sharp on large hi-DPI monitors: allow up to ~4K x 1.5 */
+      1.5, 3840 * 2160 * 1.5
     );
   } catch (e) {
     return null; /* no WebGL: the CSS background stands in */
