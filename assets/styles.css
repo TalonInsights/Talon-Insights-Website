@@ -1854,3 +1854,59 @@ strong{font-weight:600}
 .cta-band{position:relative;overflow:clip}
 .cta-band>.wrap{position:relative;z-index:2}
 .cta-band .falcon-peek{z-index:1}
+
+/* screenshot marginalia: the same dashed-amber annotation language as the
+   specimen document, drawn over the real product */
+.annotfig{position:relative;margin:0}
+.annotfig .ring{position:absolute;left:var(--x);top:var(--y);width:var(--w);height:var(--h);
+  transform:translate(-50%,-50%);border:1.5px dashed var(--amber-text);border-radius:50%;
+  pointer-events:none}
+.annotcap{display:flex;flex-wrap:wrap;gap:8px 24px;margin-top:12px}
+.annotcap span{display:flex;align-items:center;gap:8px;font:500 .85rem/1.5 var(--ff-b);color:var(--slate)}
+.annotcap span::before{content:"";flex:none;width:9px;height:9px;
+  border:1.5px dashed var(--amber-text);border-radius:50%}
+@media(max-width:700px){.annotfig .ring{display:none}}
+@media(prefers-reduced-motion:no-preference){
+  .reveal .annotfig .ring{opacity:0;transform:translate(-50%,-50%) scale(.55)}
+  .reveal.is-in .annotfig .ring{opacity:1;transform:translate(-50%,-50%) scale(1);
+    transition:opacity .5s var(--ease) .5s,transform .5s var(--ease) .5s}
+  .reveal.is-in .annotfig .ring:nth-of-type(2){transition-delay:.75s}
+  /* the fault board runs its self-test: rows power on in order, the OK lamp lands last */
+  .reveal .faults li{opacity:0;transform:translateX(-8px)}
+  .reveal.is-in .faults li{opacity:1;transform:none;transition:opacity .4s var(--ease),transform .4s var(--ease)}
+  .reveal.is-in .faults li:nth-child(2){transition-delay:.1s}
+  .reveal.is-in .faults li:nth-child(3){transition-delay:.2s}
+  .reveal.is-in .faults li:nth-child(4){transition-delay:.3s}
+  .reveal.is-in .faults li:nth-child(5){transition-delay:.4s}
+  .reveal.is-in .faults li:nth-child(6){transition-delay:.5s}
+  .reveal.is-in .faults li:nth-child(7){transition-delay:.65s}
+  .reveal.is-in .fl-ok .fl-lamp{animation:okPop .55s var(--ease) 1s backwards}
+}
+@keyframes okPop{0%{transform:scale(.3);opacity:0}55%{transform:scale(1.5)}100%{transform:scale(1);opacity:1}}
+
+/* the miniature specimen — a thumbnail of the groundwork document */
+.minidoc{position:relative;flex:none;width:170px;background:#fff;border:1px solid var(--rule);
+  border-radius:var(--r-sm);box-shadow:var(--shadow-2);padding:14px 16px;
+  display:flex;flex-direction:column;gap:7px;
+  transition:transform .3s var(--ease),box-shadow .3s var(--ease)}
+.minidoc:hover{transform:translateY(-3px) rotate(-.5deg);box-shadow:var(--shadow-navy)}
+.minidoc::before{content:"";position:absolute;top:6px;left:6px;right:-6px;bottom:-6px;
+  background:#fff;border:1px solid var(--rule);border-radius:var(--r-sm);z-index:-1}
+.md-stamp{position:absolute;top:46%;left:50%;transform:translate(-50%,-50%) rotate(-12deg);
+  font:700 .62rem/1 var(--ff-d);letter-spacing:.24em;text-transform:uppercase;
+  color:rgba(222,143,13,.2);border:2px solid rgba(222,143,13,.2);border-radius:4px;
+  padding:3px 6px 3px 8px;pointer-events:none}
+.md-head{display:flex;justify-content:space-between;align-items:baseline;
+  border-bottom:1.5px solid var(--ink-navy);padding-bottom:6px}
+.md-head b{font:700 .5rem/1 var(--ff-d);letter-spacing:.16em;color:var(--ink-navy)}
+.md-head i{font:400 .42rem/1 var(--ff-b);letter-spacing:.08em;text-transform:uppercase;
+  font-style:normal;color:var(--slate)}
+.md-line{display:block;height:4px;width:var(--w);border-radius:2px;background:var(--grid,#E7ECF3);
+  background:#E7ECF3}
+.md-line--hl{background:rgba(245,166,35,.45)}
+.md-sect{font:600 .4rem/1 var(--ff-d);letter-spacing:.12em;text-transform:uppercase;color:var(--cobalt);margin-top:3px}
+.md-price{display:flex;align-items:center;gap:5px}
+.md-price b{font:700 .72rem/1 var(--ff-d);color:var(--ink-navy)}
+.md-price s{display:inline-block;width:30px;height:7px;border-radius:2px;background:var(--ink-navy);text-decoration:none}
+.md-price em{font:600 .38rem/1 var(--ff-d);letter-spacing:.1em;text-transform:uppercase;
+  font-style:normal;color:#fff;background:var(--ink-navy);border-radius:var(--r-pill);padding:3px 6px}
