@@ -4,6 +4,17 @@
    one amber element per viewport, no exceptions.
    ========================================================================== */
 
+@font-face{
+  font-family:"Space Grotesk";
+  src:url("/assets/fonts/space-grotesk-var.woff2") format("woff2");
+  font-weight:300 700;font-style:normal;font-display:swap;
+}
+@font-face{
+  font-family:"Inter";
+  src:url("/assets/fonts/inter-var.woff2") format("woff2");
+  font-weight:100 900;font-style:normal;font-display:swap;
+}
+
 :root{
   --ink-navy:#0B1F3A;
   --navy-900:#081729;          /* darker floor for footer / hero depth */
