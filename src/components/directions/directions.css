@@ -377,3 +377,16 @@
 }
 .fgal-close:hover { border-color: var(--color-amber); }
 .fgal-close svg { width: 18px; height: 18px; }
+
+/* the portal: the enlarged design becomes a live page at 1:1 (27 Aug) */
+.fgal-portal {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  z-index: 305; /* above the enlarged card (300), under the close control (310) */
+  background: #12100d;
+  border: 1px solid rgb(245 247 249 / 0.14);
+  border-radius: 2px;
+  overflow: hidden;
+}

@@ -1,7 +1,11 @@
 "use client";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { Suspense, lazy, useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, MotionConfig } from "framer-motion";
 import { DirectionFire, DirectionHeritage, DirectionArchitectural } from "./comps";
+
+// The Fire's interactable hero page carries three.js — loaded only when a
+// design actually opens, never in the homepage bundle.
+const FireHero = lazy(() => import("./FireHero"));
 
 /* B5 — the Directions folder (island). Mechanics adapted from the 21st
    "Interactive Folder Gallery" (owner-supplied, §7 import #5): closed-stack
@@ -61,6 +65,7 @@ export default function FolderGallery() {
   const [cardW, setCardW] = useState(0);
   const [expanded, setExpanded] = useState<number | null>(null);
   const [returning, setReturning] = useState<number | null>(null);
+  const [portal, setPortal] = useState(false);
   const [target, setTarget] = useState<ExpandTarget>({ x: 0, y: 0, scale: 1 });
 
   const rootRef = useRef<HTMLDivElement>(null);
@@ -113,10 +118,15 @@ export default function FolderGallery() {
       scale: targetW / width,
     });
     setReturning(null);
+    setPortal(false);
     setExpanded(index);
+    // the portal normally mounts when the spring settles; this backstop
+    // covers environments where rAF starves and the spring never completes
+    window.setTimeout(() => setPortal(true), 700);
   }, []);
 
   const collapse = useCallback(() => {
+    setPortal(false);
     setReturning(expanded);
     setExpanded(null);
     const card = expanded !== null ? cardRefs.current[expanded] : null;
@@ -204,6 +214,7 @@ export default function FolderGallery() {
                 }}
                 onAnimationComplete={() => {
                   if (returning === i && expanded !== i) setReturning(null);
+                  if (expanded === i) setPortal(true);
                 }}
                 animate={
                   mounted
@@ -292,6 +303,21 @@ export default function FolderGallery() {
                 onClick={collapse}
                 aria-hidden="true"
               />
+              {expanded === 0 && portal && (
+                <motion.div
+                  key="portal"
+                  className="fgal-portal"
+                  style={{ width: cardW * target.scale, height: cardW * target.scale * 0.625 }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.18 }}
+                >
+                  <Suspense fallback={null}>
+                    <FireHero />
+                  </Suspense>
+                </motion.div>
+              )}
               <motion.button
                 key="close"
                 ref={closeButtonRef}
