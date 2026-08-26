@@ -47,9 +47,10 @@ npm run map        # regenerate src/data/map-dots.json (network; result is commi
   once, ≤1600ms; owner's 26-Aug directive supersedes v3.5's static map).
   Nothing loops or idles.
 - **IO/rAF fallbacks are load-bearing.** Reveals arm only below the fold and
-  a 2.5s failsafe shows everything; the coverflow settle has a 400ms
-  jump-to-target backstop; the map has an IO watchdog and a travel-phase
-  rAF backstop that land its final state. Browsers that don't composite
+  a 2.5s failsafe shows everything; the map has an IO watchdog and a
+  travel-phase rAF backstop that land its final state. (The folder gallery's
+  springs are framer-driven and resume with tab visibility - no backstop
+  needed, worst case is a mid-pose frame on return.) Browsers that don't composite
   (embedded panes, background tabs) never fire IO or rAF — don't remove
   these.
 - **Gated content ships absent, never faked** (§8): the B4 workshop photo,
