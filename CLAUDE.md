@@ -41,7 +41,9 @@ npm run map        # regenerate src/data/map-dots.json (network; result is commi
   through the CSSOM (React style props / `el.style`), which CSP allows.
 - **B5's folder gallery** (26 Aug, owner-supplied 21st import) replaced the
   coverflow: the three Wrekin Forge comps live in a folder — click to open,
-  drag a card down (or Escape / the hint button) to close. Its chrome was
+  drag a card down (or Escape / the hint button) to close; tapping an open
+  design enlarges it to 3/4 of the screen over a flat ink scrim and back
+  (Escape collapses first, closes second). Its chrome was
   stripped to tokens; the comps render live inside the cards, never as
   screenshots, and the Unsplash defaults were discarded (CSP allows only
   self-hosted images anyway).
