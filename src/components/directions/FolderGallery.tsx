@@ -1,25 +1,24 @@
 "use client";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { motion, MotionConfig } from "framer-motion";
+import { AnimatePresence, motion, MotionConfig } from "framer-motion";
 import { DirectionFire, DirectionHeritage, DirectionArchitectural } from "./comps";
 
-/* B5 — the Directions folder (island), replacing the coverflow stage at the
-   owner's instruction (26 Aug 2026). Mechanics adapted from the 21st
-   "Interactive Folder Gallery" (owner-supplied, §7 import #5 — one
-   dependency, framer-motion, inside the two-dependency rule): the
-   closed-stack folder, the hover fan, click-to-open, and drag-any-card-down
-   -to-close with snap-to-origin all keep its behaviour. Its chrome did not
-   survive the import: gradients, glassmorphism, drop shadows, arbitrary
-   hex values and Unsplash defaults are gone — surfaces are ink-ground
-   overlays and hairlines from the token system, and the "photos" are the
-   three live Wrekin Forge comps (coded mini-layouts, never screenshots),
-   which stay exempt from the tokens as always.
+/* B5 — the Directions folder (island). Mechanics adapted from the 21st
+   "Interactive Folder Gallery" (owner-supplied, §7 import #5): closed-stack
+   folder, hover fan, click-to-open, drag-any-card-down-to-close.
 
-   Motion is user-initiated only — outside the page's three-moment budget.
-   MotionConfig honours prefers-reduced-motion. SSR emits no style
-   attributes (the hashed CSP forbids them): the closed pose lives in
-   nth-child CSS, and framer only starts driving the CSSOM after mount —
-   keep the two poses in step. */
+   27 Aug addition (owner's instruction): with the folder open, selecting a
+   design expands it to the centre of the screen at three-quarters of the
+   viewport, animating out of its fan position and back into it on close
+   (tap, scrim, the ✕, or Escape). While a design is expanded the page
+   scroll locks, the other two dim beneath a flat ink scrim — no blur, no
+   glassmorphism — and focus moves to the close control and back.
+
+   Import chrome did not survive: surfaces are ink-ground tokens, and the
+   "photos" are the three live Wrekin Forge comps, never screenshots.
+   Motion is user-initiated only. MotionConfig honours reduced motion. SSR
+   emits no style attributes (hashed CSP): the closed pose lives in
+   nth-child CSS and framer drives the CSSOM only after mount. */
 
 const DIRECTIONS = [
   {
@@ -40,68 +39,123 @@ const DIRECTIONS = [
 ] as const;
 
 const FOLDER_NAME = "WREKIN FORGE · THREE DIRECTIONS";
-const DRAG_HINT = "DRAG A DESIGN DOWN TO CLOSE — OR PRESS ESCAPE";
+const DRAG_HINT = "SELECT A DESIGN TO ENLARGE IT · DRAG ONE DOWN TO CLOSE — OR PRESS ESCAPE";
+const OPEN_SPREAD = 1.06; // fan offset per step, as a fraction of card width
+const EXPAND_FRACTION = 0.75; // the enlarged design fills 3/4 of the screen
 
 // Closed pose — mirrored as nth-child CSS in directions.css.
 const closedPose = (offset: number, hover: boolean, index: number) => ({
-  y: hover ? offset * -10 - 28 : offset * -6,
   x: hover ? offset * 40 : offset * 6,
+  y: hover ? offset * -10 - 28 : offset * -6,
   rotate: hover ? offset * 5 : offset * 2.5,
   scale: 1 - Math.abs(offset) * 0.03,
   zIndex: 10 + index,
 });
 
-const openPose = (offset: number, mobile: boolean) => ({
-  y: -60,
-  x: `${offset * (mobile ? 70 : 106)}%`,
-  rotate: 0,
-  scale: 1.02,
-  zIndex: 50,
-});
+type ExpandTarget = { x: number; y: number; scale: number };
 
 export default function FolderGallery() {
   const [mounted, setMounted] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [hoverFolder, setHoverFolder] = useState(false);
-  const [mobile, setMobile] = useState(false);
+  const [cardW, setCardW] = useState(0);
+  const [expanded, setExpanded] = useState<number | null>(null);
+  const [returning, setReturning] = useState<number | null>(null);
+  const [target, setTarget] = useState<ExpandTarget>({ x: 0, y: 0, scale: 1 });
+
+  const rootRef = useRef<HTMLDivElement>(null);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const folderButtonRef = useRef<HTMLButtonElement>(null);
   const hintButtonRef = useRef<HTMLButtonElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     setMounted(true);
-    const mq = window.matchMedia("(max-width: 767.98px)");
-    setMobile(mq.matches);
-    const onChange = () => setMobile(mq.matches);
-    mq.addEventListener("change", onChange);
-    return () => mq.removeEventListener("change", onChange);
+    const card = cardRefs.current[1];
+    if (!card) return;
+    const measure = () => setCardW(card.offsetWidth);
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(card);
+    return () => ro.disconnect();
   }, []);
 
-  const close = useCallback(() => {
+  const closeFolder = useCallback(() => {
     setIsOpen(false);
     setHoverFolder(false);
+    setExpanded(null);
     folderButtonRef.current?.focus({ preventScroll: true });
   }, []);
 
-  const open = useCallback(() => {
+  const openFolder = useCallback(() => {
     setIsOpen(true);
     setHoverFolder(false);
   }, []);
 
-  // Escape closes; focus moves to the hint (the only visible control while
-  // open) and returns to the folder on close.
+  /* Expand: the enlarged pose is computed from the card slot's live
+     viewport position, so the animation genuinely departs from — and
+     returns to — where the design sits in the fan. Scroll is locked while
+     expanded, so the measurement holds. */
+  const expand = useCallback((index: number) => {
+    const root = rootRef.current;
+    const card = cardRefs.current[index];
+    if (!root || !card) return;
+    const rect = root.getBoundingClientRect();
+    const width = card.offsetWidth;
+    const baseCx = rect.left + rect.width / 2;
+    const baseCy = rect.bottom - 56 - (width * 0.625) / 2;
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    const targetW = Math.min(vw * EXPAND_FRACTION, vh * EXPAND_FRACTION * 1.6);
+    setTarget({
+      x: vw / 2 - baseCx,
+      y: vh / 2 - baseCy,
+      scale: targetW / width,
+    });
+    setReturning(null);
+    setExpanded(index);
+  }, []);
+
+  const collapse = useCallback(() => {
+    setReturning(expanded);
+    setExpanded(null);
+    const card = expanded !== null ? cardRefs.current[expanded] : null;
+    card?.focus({ preventScroll: true });
+  }, [expanded]);
+
+  // Escape: an expanded design collapses first; a second press closes the
+  // folder. Focus follows: close control while expanded, card on return,
+  // folder button when shut.
   useEffect(() => {
     if (!isOpen) return;
-    hintButtonRef.current?.focus({ preventScroll: true });
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") close();
+      if (event.key !== "Escape") return;
+      if (expanded !== null) collapse();
+      else closeFolder();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [isOpen, close]);
+  }, [isOpen, expanded, collapse, closeFolder]);
+
+  // Focus the hint when the folder first opens — not on a collapse, where
+  // collapse() has already handed focus back to the returning card.
+  useEffect(() => {
+    if (isOpen) hintButtonRef.current?.focus({ preventScroll: true });
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (expanded === null) return;
+    closeButtonRef.current?.focus({ preventScroll: true });
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = previous; };
+  }, [expanded]);
+
+  const openX = (offset: number) => offset * OPEN_SPREAD * cardW;
 
   return (
     <MotionConfig reducedMotion="user" transition={{ type: "spring", stiffness: 350, damping: 30 }}>
-      <div className="fgal">
+      <div ref={rootRef} className="fgal">
         {/* the folder's back panel and tab — a surface, not a gradient */}
         <motion.div
           className="fgal-back"
@@ -116,27 +170,59 @@ export default function FolderGallery() {
         <div className="fgal-cards">
           {DIRECTIONS.map((direction, i) => {
             const offset = i - 1;
+            const isExpanded = expanded === i;
+            const selectable = isOpen && expanded === null;
             return (
               <motion.div
                 key={direction.key}
-                role="group"
-                aria-label={direction.aria}
+                ref={(node) => { cardRefs.current[i] = node; }}
+                role={selectable || isExpanded ? "button" : "group"}
+                aria-label={
+                  isExpanded
+                    ? `${direction.aria} Enlarged — select, press Escape, or use the close control to return it.`
+                    : selectable
+                      ? `${direction.aria} Select to enlarge.`
+                      : direction.aria
+                }
                 aria-hidden={!isOpen && i !== 1}
-                className={`fgal-card${isOpen ? " is-open" : ""}`}
-                drag={isOpen}
+                tabIndex={selectable || isExpanded ? 0 : -1}
+                className={`fgal-card${selectable ? " is-open" : ""}${isExpanded ? " is-expanded" : ""}`}
+                drag={selectable}
                 dragSnapToOrigin
                 onDragEnd={(_event, info) => {
-                  if (info.offset.y > 100 && isOpen) close();
+                  if (info.offset.y > 100 && selectable) closeFolder();
+                }}
+                onTap={() => {
+                  if (isExpanded) collapse();
+                  else if (selectable) expand(i);
+                }}
+                onKeyDown={(event) => {
+                  if (event.key !== "Enter" && event.key !== " ") return;
+                  event.preventDefault();
+                  if (isExpanded) collapse();
+                  else if (selectable) expand(i);
+                }}
+                onAnimationComplete={() => {
+                  if (returning === i && expanded !== i) setReturning(null);
                 }}
                 animate={
                   mounted
-                    ? isOpen
-                      ? openPose(offset, mobile)
-                      : closedPose(offset, hoverFolder, i)
+                    ? isExpanded
+                      ? { x: target.x, y: target.y, rotate: 0, scale: target.scale, zIndex: 300 }
+                      : isOpen
+                        ? {
+                            x: openX(offset),
+                            y: -60,
+                            rotate: 0,
+                            scale: 1.02,
+                            // a returning card rides above the fading scrim
+                            zIndex: returning === i ? 160 : 50,
+                          }
+                        : closedPose(offset, hoverFolder, i)
                     : undefined
                 }
-                whileHover={isOpen ? { scale: 1.06, zIndex: 100 } : undefined}
-                whileDrag={isOpen ? { scale: 1.1, rotate: 3, zIndex: 150 } : undefined}
+                whileHover={selectable ? { scale: 1.06, zIndex: 100 } : undefined}
+                whileDrag={selectable ? { scale: 1.1, rotate: 3, zIndex: 150 } : undefined}
               >
                 <direction.Comp />
               </motion.div>
@@ -144,7 +230,9 @@ export default function FolderGallery() {
           })}
         </div>
 
-        {/* the folder front — a real button, since it is the toggle */}
+        {/* the folder front — a real button, since it is the toggle.
+           transformPerspective carries the hover tilt so no CSS perspective
+           sits on an ancestor (it would trap the fixed scrim). */}
         <motion.button
           ref={folderButtonRef}
           type="button"
@@ -156,6 +244,7 @@ export default function FolderGallery() {
               ? {
                   opacity: isOpen ? 0 : 1,
                   rotateX: hoverFolder && !isOpen ? -14 : 0,
+                  transformPerspective: 1000,
                   y: hoverFolder && !isOpen ? 8 : 0,
                 }
               : undefined
@@ -166,7 +255,7 @@ export default function FolderGallery() {
           onMouseLeave={() => setHoverFolder(false)}
           onFocus={() => setHoverFolder(true)}
           onBlur={() => setHoverFolder(false)}
-          onClick={open}
+          onClick={openFolder}
         >
           <span className="fgal-plate t-micro">{FOLDER_NAME}</span>
         </motion.button>
@@ -176,13 +265,52 @@ export default function FolderGallery() {
           ref={hintButtonRef}
           type="button"
           className="fgal-hint t-micro"
-          animate={mounted ? { opacity: isOpen ? 1 : 0, y: isOpen ? 0 : 24 } : undefined}
-          style={mounted ? { pointerEvents: isOpen ? "auto" : "none" } : undefined}
-          tabIndex={isOpen ? 0 : -1}
-          onClick={close}
+          animate={
+            mounted
+              ? { opacity: isOpen && expanded === null ? 1 : 0, y: isOpen ? 0 : 24 }
+              : undefined
+          }
+          style={mounted ? { pointerEvents: isOpen && expanded === null ? "auto" : "none" } : undefined}
+          tabIndex={isOpen && expanded === null ? 0 : -1}
+          onClick={closeFolder}
         >
           {DRAG_HINT}
         </motion.button>
+
+        {/* the expanded view's scrim and close control — flat ink, fixed to
+           the viewport, above the header */}
+        <AnimatePresence>
+          {expanded !== null && (
+            <>
+              <motion.div
+                key="scrim"
+                className="fgal-scrim"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                onClick={collapse}
+                aria-hidden="true"
+              />
+              <motion.button
+                key="close"
+                ref={closeButtonRef}
+                type="button"
+                className="fgal-close"
+                aria-label="Close the enlarged design"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                onClick={collapse}
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+                  <path d="M6 6l12 12M18 6L6 18" strokeLinecap="round" />
+                </svg>
+              </motion.button>
+            </>
+          )}
+        </AnimatePresence>
       </div>
     </MotionConfig>
   );

@@ -225,7 +225,9 @@
   position: relative;
   width: 100%;
   height: calc(var(--g-card) * 0.625 + 210px); /* reserved — zero layout shift */
-  perspective: 1200px;
+  /* no perspective here: it would become the containing block for the
+     fixed scrim/close overlay; the folder-front tilt carries its own
+     transformPerspective instead */
 }
 @media (max-width: 767.98px) {
   .fgal { --g-card: 64vw; }
@@ -347,3 +349,31 @@
   transition: border-color 180ms var(--ease);
 }
 .fgal-hint:hover { border-color: var(--color-amber); }
+
+/* ---------- the enlarged design (27 Aug) ---------- */
+.fgal-card.is-expanded { cursor: pointer; }
+.fgal-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 150; /* above the header (100), below the enlarged card (300) */
+  background: rgb(6 14 28 / 0.85); /* flat ink — no blur, no glass */
+  cursor: pointer;
+}
+.fgal-close {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 310;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgb(245 247 249 / 0.3);
+  background: transparent;
+  color: rgb(245 247 249 / 0.85);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: border-color 180ms var(--ease);
+}
+.fgal-close:hover { border-color: var(--color-amber); }
+.fgal-close svg { width: 18px; height: 18px; }
