@@ -1,0 +1,175 @@
+---
+// B8 — Pricing (id="pricing"). No featured column, no shadow, no toggle —
+// the 21st pricing imports carried exactly that chrome, so per §7's own
+// rules (strip-list = their whole structure, >2 dependencies) the 4→2→1
+// column collapse is hand-rolled. Prices are mono, 1.5rem, tabular.
+
+const plans = [
+  {
+    name: "Websites",
+    label: "FROM",
+    price: "£3,000",
+    per: "",
+    features: [
+      "Designed with you, from real visits",
+      "Directions before code",
+      "The Word Survey included",
+      "You own domain, code and content",
+    ],
+    struck: "Templates and page builders",
+  },
+  {
+    name: "Custom software",
+    label: "FROM",
+    price: "£6,000",
+    per: "",
+    features: [
+      "Built round your actual workflow",
+      "Real database, proper sign-in",
+      "Warranty after launch",
+    ],
+    struck: "Licences you rent forever",
+  },
+  {
+    name: "Local SEO",
+    label: "FROM",
+    price: "£450",
+    per: "/mo",
+    features: [
+      "Google Business Profile done right",
+      "Local citations and content",
+      "Honest monthly reporting",
+    ],
+    struck: "Lock-in contracts",
+  },
+  {
+    name: "Research & strategy",
+    label: "PRICED",
+    price: "Per job",
+    per: "",
+    features: [
+      "Competitor and market analysis",
+      "Modelling with stated assumptions",
+      "Written up to act on",
+    ],
+    struck: "Opinion dressed as data",
+  },
+];
+---
+
+<section class="pricing g-white" id="pricing">
+  <div class="wrap">
+    <p class="t-micro eyebrow">PRICING</p>
+    <h2 class="t-h2">This is what the process&nbsp;costs.</h2>
+    <p class="lede">
+      Visits, directions, iteration — and a site nobody else could have. Your exact number
+      is fixed in writing.
+    </p>
+
+    <div class="plans" data-rv>
+      {plans.map((plan) => (
+        <div class="plan">
+          <h3 class="plan-name">{plan.name}</h3>
+          <p class="plan-price">
+            <span class="t-micro price-label">{plan.label}</span>
+            <span class="price">{plan.price}</span>
+            {plan.per && <span class="per">{plan.per}</span>}
+          </p>
+          <ul class="plan-features">
+            {plan.features.map((f) => (
+              <li>{f}</li>
+            ))}
+            <li class="struck">{plan.struck}</li>
+          </ul>
+        </div>
+      ))}
+    </div>
+
+    <div class="notes" data-rv>
+      <p>
+        Starting points. Your number is fixed in writing after the first visits, and it
+        doesn’t move without a written variation.
+      </p>
+      <p>
+        New ideas during the build are welcome — that’s the point of the open line. Anything
+        that changes the shape of the job goes through a written variation, so the number
+        never moves quietly.
+      </p>
+      <p>
+        I’m taking a small number of projects at a founding rate — same scope, same standard,
+        in exchange for a written case study.
+        <a class="link" href="/founding-projects">How founding projects work →</a>
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .pricing {
+    border-top: var(--hairline);
+    padding-block: 96px;
+  }
+
+  .plans {
+    margin-top: 48px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border: var(--hairline);
+    border-radius: var(--radius);
+  }
+  .plan { padding: 28px 24px; }
+  .plan + .plan { border-left: var(--hairline); }
+
+  .plan-name { font-size: 1.125rem; font-weight: 500; }
+  .plan-price {
+    margin-top: 16px;
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+  .price-label { color: var(--color-graphite); }
+  .price {
+    font-family: var(--font-mono);
+    font-size: 1.5rem;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.01em;
+    color: var(--color-ink);
+  }
+  .per { font-family: var(--font-mono); font-size: 0.8125rem; color: var(--color-graphite); }
+
+  .plan-features {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: var(--hairline);
+    list-style: none;
+    padding-left: 0;
+    display: grid;
+    gap: 10px;
+    font-size: 0.9375rem;
+    color: var(--color-graphite);
+  }
+  .struck { text-decoration: line-through; color: var(--struck); }
+
+  .notes {
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: var(--hairline);
+    display: grid;
+    gap: 12px;
+  }
+  .notes p { color: var(--color-graphite); font-size: 0.9375rem; max-width: 52em; }
+  .notes .link { margin-left: 8px; }
+
+  /* I2 mechanics: the 4→2→1 collapse. */
+  @media (max-width: 1023.98px) {
+    .plans { grid-template-columns: 1fr 1fr; }
+    .plan + .plan { border-left: 0; }
+    .plan:nth-child(2n) { border-left: var(--hairline); }
+    .plan:nth-child(n + 3) { border-top: var(--hairline); }
+  }
+  @media (max-width: 639.98px) {
+    .plans { grid-template-columns: 1fr; }
+    .plan:nth-child(2n) { border-left: 0; }
+    .plan:nth-child(n + 2) { border-top: var(--hairline); }
+  }
+</style>

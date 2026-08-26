@@ -1,0 +1,119 @@
+---
+// B7 — Process (id="process"). Bars are signature #3: they draw on first
+// scroll-in (threshold .3, once — armed by the site script in Base).
+// Orientation mechanics from 21st import I1 (originui stepper, §7): the
+// data-orientation attribute pattern switches horizontal ≥1024px to vertical
+// below; all of its styling and icons were stripped on arrival.
+
+const steps = [
+  { num: "01", name: "A CALL", body: "Fifteen minutes to see whether it’s worth going further.", chip: "FREE", amber: false },
+  { num: "02", name: "TIME ON SITE", body: "I spend time where you work, at your events, with your customers — and write down how you work and the words they use.", chip: "FREE", amber: false },
+  { num: "03", name: "DIRECTIONS", body: "Two or three real design directions. You pick, and you pull them apart.", chip: "YOU CHOOSE", amber: true },
+  { num: "04", name: "BUILD", body: "Milestones against real dates, with the line open for ideas throughout.", chip: "OPEN LINE", amber: false },
+  { num: "05", name: "YOURS", body: "Domain, code and content are yours on full payment, plus a warranty period.", chip: "YOU OWN IT", amber: true },
+];
+---
+
+<section class="process g-white" id="process">
+  <div class="wrap">
+    <h2 class="t-h2">Five steps — and you know the price before the build&nbsp;starts.</h2>
+
+    <ol class="steps" data-process data-orientation="horizontal">
+      {steps.map((step) => (
+        <li class="step">
+          <span class="track" aria-hidden="true">
+            <span class="fill"></span>
+          </span>
+          <p class="t-mono step-name"><b>{step.num}</b> {step.name}</p>
+          <p class="step-body">{step.body}</p>
+          <span class={`chip t-micro ${step.amber ? "chip-amber" : ""}`}>{step.chip}</span>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .process {
+    border-top: var(--hairline);
+    padding-block: 96px;
+  }
+
+  .steps {
+    margin-top: 48px;
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 32px;
+  }
+  .step { position: relative; }
+
+  .step-name { margin-top: 16px; color: var(--color-graphite); }
+  .step-name b { color: var(--color-ink); font-weight: 700; }
+  .step-body { margin-top: 8px; font-size: 0.9375rem; color: var(--color-graphite); }
+
+  .chip {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 3px 8px;
+    border: var(--hairline);
+    border-radius: 2px;
+    color: var(--color-graphite);
+  }
+  /* Amber: the two process chips — choice and ownership (§2). */
+  .chip-amber {
+    color: var(--color-amber);
+    border-color: rgb(232 163 61 / 0.4);
+  }
+
+  /* The drawing bars. At rest (no JS, reduced motion) they stand complete. */
+  .track {
+    display: block;
+    background: rgb(90 102 117 / 0.16);
+    overflow: hidden;
+  }
+  .fill {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: var(--color-cobalt);
+  }
+  :global(.pb-armed) .fill { transform: scaleX(0); }
+  :global(.pb-armed.pb-draw) .fill {
+    transform: scaleX(1);
+    transition: transform 450ms var(--ease);
+  }
+  /* 60ms stagger, mirroring the hero draw (style attributes are off-limits
+     under the hashed CSP, so the delays live here). */
+  .step:nth-child(2) .fill { transition-delay: 60ms; }
+  .step:nth-child(3) .fill { transition-delay: 120ms; }
+  .step:nth-child(4) .fill { transition-delay: 180ms; }
+  .step:nth-child(5) .fill { transition-delay: 240ms; }
+
+  /* Horizontal ≥1024: five across, 10px tracks drawing left→right. */
+  [data-orientation="horizontal"] { grid-template-columns: repeat(5, 1fr); }
+  [data-orientation="horizontal"] .track { height: 10px; border-radius: 2px; }
+  [data-orientation="horizontal"] .fill { transform-origin: left; border-radius: 2px; }
+
+  /* Below 1024 the same markup runs vertical: 8px-wide tracks. */
+  @media (max-width: 1023.98px) {
+    [data-orientation="horizontal"] { grid-template-columns: 1fr; gap: 24px; }
+    [data-orientation="horizontal"] .step {
+      padding-left: 24px;
+      max-width: 34em;
+    }
+    [data-orientation="horizontal"] .track {
+      position: absolute;
+      left: 0;
+      top: 4px;
+      bottom: 4px;
+      width: 8px;
+      height: auto;
+      border-radius: 2px;
+    }
+    [data-orientation="horizontal"] .fill { transform-origin: top; }
+    :global(.pb-armed) .fill { transform: scaleY(0); }
+    :global(.pb-armed.pb-draw) .fill { transform: scaleY(1); }
+    [data-orientation="horizontal"] .step-name { margin-top: 0; }
+  }
+</style>

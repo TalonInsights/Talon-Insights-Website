@@ -1,0 +1,88 @@
+---
+// B11 — Close (id="book"). Ink ground, centred, 150px padding.
+import BookingForm from "./BookingForm";
+---
+
+<section class="close g-ink" id="book">
+  <div class="wrap close-inner">
+    <img class="close-mark" src="/images/mark.webp" alt="" width="158" height="132" />
+    <h2 class="t-h2">Book a visit — I’ll come to&nbsp;you.</h2>
+    <p class="lede close-lede">
+      No jargon, no pressure, and whatever we find is yours to keep — whether or not
+      we go ahead.
+    </p>
+
+    <div class="close-form">
+      <BookingForm client:idle />
+    </div>
+
+    <p class="close-call">
+      Or call <a class="tel" href="tel:+447742082423">07742 082423</a>
+      <span class="t-micro call-note">REPLY WITHIN ONE WORKING DAY</span>
+    </p>
+  </div>
+</section>
+
+<style>
+  .close { padding-block: 150px; text-align: center; }
+  .close-inner { display: flex; flex-direction: column; align-items: center; }
+  .close-mark { width: 44px; height: auto; margin-bottom: 24px; }
+  .close-lede { margin-top: 8px; max-width: 34em; }
+
+  .close-form { width: 100%; max-width: 640px; margin-top: 48px; text-align: left; }
+
+  /* Form styling lives here (global within the section) because the island
+     renders markup only — mechanics in BookingForm.tsx, skin from tokens. */
+  .close-form :global(.bform-grid) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .close-form :global(.bfield) { display: flex; flex-direction: column; gap: 6px; }
+  .close-form :global(.bloc) {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: rgb(245 247 249 / 0.65);
+    text-align: left;
+  }
+  .close-form :global(input) {
+    background: rgb(245 247 249 / 0.06);
+    border: var(--hairline-dark);
+    border-radius: 2px;
+    padding: 12px 14px;
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    color: var(--color-sheet);
+    transition: border-color 180ms var(--ease);
+  }
+  .close-form :global(input:hover) { border-color: rgb(245 247 249 / 0.3); }
+  .close-form :global(input[aria-invalid="true"]) { border-color: var(--color-breach); }
+  .close-form :global(.berr) {
+    margin-top: 8px;
+    font-size: 0.875rem;
+    text-align: left;
+    color: #E38B7B; /* breach, lifted for contrast on ink */
+  }
+  .close-form :global(.bfield .berr) { margin-top: 0; }
+  .close-form :global(.bform-submit) { margin-top: 24px; }
+  .close-form :global(.form-success) {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    letter-spacing: 0.04em;
+    color: var(--color-amber); /* success state — not part of the at-rest amber budget */
+    text-align: center;
+    padding-block: 32px;
+  }
+
+  .close-call { margin-top: 40px; display: flex; flex-wrap: wrap; align-items: baseline; justify-content: center; gap: 8px 16px; }
+  .tel { color: var(--color-sheet); text-decoration: none; font-weight: 500; }
+  .tel:hover { text-decoration: underline; }
+  .call-note { color: rgb(245 247 249 / 0.45); }
+
+  @media (max-width: 639.98px) {
+    .close { padding-block: 96px; }
+    .close-form :global(.bform-grid) { grid-template-columns: 1fr; }
+  }
+</style>

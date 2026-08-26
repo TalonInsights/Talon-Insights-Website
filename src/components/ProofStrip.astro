@@ -1,0 +1,33 @@
+---
+// B2 — Proof strip. The PM credential deliberately does not appear here
+// (vetted out — it lives in B9).
+---
+
+<section class="proof g-white" aria-label="Clients">
+  <div class="wrap proof-row">
+    <span class="t-micro dim">DELIVERED FOR</span>
+    <span class="client">David Jackson &amp; Son</span>
+    <span class="client">WulfTek Tuning</span>
+    <span class="t-micro dim tail">ONE PERSON, START TO FINISH</span>
+  </div>
+</section>
+
+<style>
+  .proof {
+    border-top: var(--hairline);
+    border-bottom: var(--hairline);
+    padding-block: 26px;
+  }
+  .proof-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 16px 40px;
+  }
+  .dim { color: var(--color-graphite); }
+  .client { font-size: 1.125rem; font-weight: 500; color: var(--color-ink); }
+  .tail { margin-left: auto; }
+  @media (max-width: 639.98px) {
+    .tail { margin-left: 0; }
+  }
+</style>

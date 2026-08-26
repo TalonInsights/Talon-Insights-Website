@@ -1,0 +1,184 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   TALON INSIGHTS — theme
+   Tokens per Master Build §2. Every colour, radius, shadow and ease on the
+   site resolves to one of these. A needed value becomes a token first.
+   Fonts: Diatype is the licensed target; until purchased these two lines
+   carry the Google fallbacks (§1) — the swap is editing the two families.
+   ========================================================================== */
+@theme {
+  --color-ink:      #0B1F3A;  /* text, dark grounds */
+  --color-sheet:    #F5F7F9;  /* page ground — cool, never warm */
+  --color-white:    #FFFFFF;  /* panels */
+  --color-graphite: #5A6675;  /* secondary text */
+  --color-cobalt:   #1D4ED8;  /* links, bars, focus, base marker */
+  --color-amber:    #E8A33D;  /* RESTRICTED: choice + ownership marks only */
+  --color-breach:   #C2412D;  /* scheduler demo UI only */
+  --font-sans: "ABC Diatype", "Instrument Sans", system-ui, sans-serif;
+  --font-mono: "ABC Diatype Mono", "Martian Mono", ui-monospace, monospace;
+  --radius: 4px;
+  --shadow-card: 0 1px 2px rgb(11 31 58 / .05), 0 8px 24px rgb(11 31 58 / .06);
+  --ease: cubic-bezier(.22,.61,.36,1);
+}
+
+/* Derived (§2): hairlines on light and on ink */
+:root {
+  --hairline: 1px solid rgb(90 102 117 / 0.16);
+  --hairline-dark: 1px solid rgb(245 247 249 / 0.14);
+  --on-ink-body: rgb(245 247 249 / 0.65);
+  --struck: rgb(90 102 117 / 0.55);
+}
+
+/* ---------- base ---------- */
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  background: var(--color-sheet);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  font-weight: 400;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection { background: var(--color-cobalt); color: var(--color-white); }
+
+/* Quality floor: every interactive element keyboard-reachable with a
+   visible cobalt focus ring. */
+:focus-visible {
+  outline: 2px solid var(--color-cobalt);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ---------- typography roles (§3) ---------- */
+.t-display {
+  font-size: clamp(2.75rem, 6vw, 4.5rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.08;
+}
+.t-h2 {
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+}
+.t-h3 { font-size: 1.375rem; font-weight: 500; line-height: 1.3; }
+.t-body { font-size: 1.0625rem; font-weight: 400; line-height: 1.65; max-width: 34em; }
+.t-mono {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+.t-micro {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Space above any heading ≈ 2× the space below it (§3). Blocks set their own
+   figures on the scale; these are the safety defaults. */
+.t-h2 { margin-bottom: 16px; }
+.eyebrow { display: block; color: var(--color-graphite); margin-bottom: 16px; }
+.lede { color: var(--color-graphite); font-size: 1.0625rem; max-width: 36em; }
+
+/* ---------- grounds ---------- */
+.g-sheet { background: var(--color-sheet); }
+.g-white { background: var(--color-white); }
+.g-ink   { background: var(--color-ink); }
+
+/* Dark-ground type rules (§3): body drops to 350 (variable axis clamps to
+   its floor where 350 is unavailable), colours lift. */
+.g-ink { color: var(--on-ink-body); }
+.g-ink p, .g-ink li { font-weight: 350; }
+.g-ink h1, .g-ink h2, .g-ink h3 { color: var(--color-sheet); }
+.g-ink .eyebrow, .g-ink .lede { color: var(--on-ink-body); }
+
+/* ---------- layout (§4) ---------- */
+.wrap { max-width: 1180px; margin-inline: auto; padding-inline: 24px; }
+
+.hairline-t { border-top: var(--hairline); }
+.hairline-b { border-bottom: var(--hairline); }
+
+/* ---------- links & buttons ---------- */
+a { color: inherit; }
+.link {
+  color: var(--color-cobalt);
+  text-decoration: none;
+  transition: color 180ms var(--ease);
+}
+.link:hover { color: var(--color-ink); }
+.g-ink .link { color: var(--color-sheet); }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: var(--radius);
+  padding: 12px 24px;
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+.btn-primary {
+  background: var(--color-cobalt);
+  color: var(--color-white);
+  transition: background-color 180ms var(--ease);
+}
+.btn-primary:hover { background: var(--color-ink); }
+.g-ink .btn-primary:hover { background: #2563EB; }
+.btn-ghost {
+  background: transparent;
+  color: var(--color-ink);
+  border: var(--hairline);
+  transition: border-color 180ms var(--ease);
+}
+.btn-ghost:hover { border-color: var(--color-ink); }
+
+/* ---------- motion (§5) ---------- */
+/* Reveals: opacity + 14px translateY, 500ms, once. The site script applies
+   .rv only to [data-rv] elements still below the fold when it runs, so
+   nothing is ever hidden without JS, above the fold, or under reduced
+   motion — and the CSP stays free of inline script. */
+[data-rv].rv {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 500ms var(--ease), transform 500ms var(--ease);
+}
+[data-rv].rv.is-in { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  [data-rv].rv { opacity: 1; transform: none; }
+}
+
+/* ---------- utilities ---------- */
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+.nowrap-sentence { display: inline-block; }

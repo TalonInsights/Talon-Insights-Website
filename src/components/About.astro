@@ -1,0 +1,61 @@
+---
+// B9 — About (id="about"). ASSET P1 (the client-meeting photograph) is
+// status 🔶: its own prep order starts with the client's consent, which the
+// owner has not yet confirmed — so the block ships text-only, mirroring
+// B4's absent state. When cleared: grid 7/5, photo right at
+// /images/talon-client-meeting.webp (≤180kb, cropped in from the left,
+// notebook barcode retouched), 4px radius, hairline, no shadow.
+// Alt: "Talon Herring in conversation with a client, notebook open."
+
+const rows = [
+  { key: "QUALIFICATION", value: "Level 4 Associate Project Manager, with Distinction" },
+  { key: "TRACK RECORD", value: "Four years running projects where scope and deadlines are not negotiable" },
+  { key: "DELIVERY", value: "Full-stack — Supabase, Stripe, Three.js, shipped through GitHub and Vercel" },
+  { key: "STRUCTURE", value: "One person, start to finish — no handoffs, no account managers" },
+];
+---
+
+<section class="about g-sheet" id="about">
+  <div class="wrap">
+    <p class="t-micro eyebrow">WHO YOU’D BE HIRING</p>
+    <h2 class="t-h2">The engineer who runs the&nbsp;job.</h2>
+
+    <p class="t-body about-body" data-rv>
+      Most developers can’t run a project to time and budget. Most project managers
+      can’t build. I do both — and it’s just me, which is the point: the person you meet on
+      site is the person who designs, builds, and answers the phone.
+    </p>
+
+    <div class="cred-rows" data-rv>
+      {rows.map((row) => (
+        <div class="cred-row">
+          <span class="t-micro cred-key">{row.key}</span>
+          <span class="cred-value">{row.value}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .about { padding-block: 120px; }
+  .about-body { margin-top: 32px; }
+
+  .cred-rows { margin-top: 48px; max-width: 640px; }
+  .cred-row {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: 16px;
+    align-items: baseline;
+    padding-block: 16px;
+    border-top: var(--hairline);
+  }
+  .cred-row:last-child { border-bottom: var(--hairline); }
+  .cred-key { color: var(--color-graphite); }
+  .cred-value { color: var(--color-ink); }
+
+  @media (max-width: 639.98px) {
+    .about { padding-block: 96px; }
+    .cred-row { grid-template-columns: 1fr; gap: 4px; }
+  }
+</style>

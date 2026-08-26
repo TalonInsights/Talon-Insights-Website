@@ -1,0 +1,78 @@
+---
+// B4 — The method (centrepiece). ASSET P2 (workshop photograph) is pending,
+// so per its defined absent state the block ships text-only at full width —
+// never a stock or AI placeholder. When P2 lands: grid 7/5, photo right,
+// 4px radius, hairline, no shadow; photo stacks above text <900px.
+// The Harry Jackson pull quote (Q1) is omitted entirely until the real line
+// exists — never a paraphrase, never a placeholder (§6/B4).
+
+const rows = [
+  { key: "ON SITE", value: "Time where you work, at your events, with your customers" },
+  { key: "THE WORD SURVEY", value: "The phrases your customers use that nobody’s competing for" },
+  { key: "DIRECTIONS FIRST", value: "Real options before any code — chosen by you" },
+  { key: "OPEN LINE", value: "Message me during the build; ideas fold in as they come" },
+];
+---
+
+<section class="method g-sheet" id="method">
+  <div class="wrap">
+    <p class="t-micro eyebrow">HOW THE DIFFERENCE GETS FOUND</p>
+    <h2 class="t-h2 method-h2">A brief tells you what a business does. Not why anyone chooses&nbsp;them.</h2>
+
+    <div class="method-body" data-rv>
+      <p>
+        So before I design anything, I turn up. I’ve stood in David Jackson’s workshop watching
+        timber become something that ends up in listed buildings. I’ve been to events with
+        WulfTek to hear what their customers actually say about them — not what the website says.
+      </p>
+      <p>
+        That’s where the difference lives, and it never comes out in a questionnaire. It comes
+        out on the third visit, in something said offhand.
+      </p>
+      <p>
+        Then we design from that. You see real directions before any code, you tell me what’s
+        wrong with them, and you can message me the moment you have a better idea — all the way
+        through. It’s just me, so there’s nobody in between.
+      </p>
+    </div>
+
+    <div class="method-rows" data-rv>
+      {rows.map((row) => (
+        <div class="method-row">
+          <span class="t-micro row-key">{row.key}</span>
+          <span class="row-value">{row.value}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .method { padding-block: 120px; }
+  .method-h2 { max-width: 18em; }
+
+  .method-body { margin-top: 32px; }
+  .method-body p {
+    max-width: 34em;
+    margin-bottom: 16px;
+  }
+  .method-body p:last-child { margin-bottom: 0; }
+
+  .method-rows { margin-top: 48px; max-width: 640px; }
+  .method-row {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: 16px;
+    align-items: baseline;
+    padding-block: 16px;
+    border-top: var(--hairline);
+  }
+  .method-row:last-child { border-bottom: var(--hairline); }
+  .row-key { color: var(--color-graphite); }
+  .row-value { color: var(--color-ink); }
+
+  @media (max-width: 639.98px) {
+    .method { padding-block: 96px; }
+    .method-row { grid-template-columns: 1fr; gap: 4px; }
+  }
+</style>

@@ -1,0 +1,193 @@
+---
+// B1 — Hero. The plan panel is hand-built (signature #1, §7: never imported).
+// Bars draw on load: 450ms each, 60ms stagger, markers at +550ms — the whole
+// moment lands inside 700ms and runs once. Reduced motion gets final frames.
+
+const rows = [
+  { num: "01", label: "VISITS", left: 0, width: 12, marker: null },
+  { num: "02", label: "WHAT I FOUND", left: 12, width: 14, marker: null },
+  { num: "03", label: "DIRECTIONS", left: 26, width: 13, marker: { shape: "diamond", at: 41, text: "YOU CHOOSE" } },
+  { num: "04", label: "BUILD", left: 39, width: 44, marker: null },
+  { num: "05", label: "YOURS", left: 83, width: 12, marker: { shape: "dot", at: 97, text: "YOU OWN IT" } },
+];
+---
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <p class="t-micro eyebrow">BESPOKE WEBSITES &amp; SOFTWARE · TELFORD</p>
+      <h1 class="t-display">You’re a&nbsp;specialist.<br />Your website&nbsp;isn’t.</h1>
+      <p class="standfirst">
+        <span class="nowrap-sentence">The reason people choose you already exists.</span>
+        <span class="nowrap-sentence">It’s just not on the page.</span>
+      </p>
+      <div class="ctas">
+        <a class="btn btn-primary" href="#method">See how I work</a>
+        <a class="btn btn-ghost" href="#work">See the work</a>
+      </div>
+    </div>
+
+    <div class="plan-panel" role="img" aria-label="Delivery plan: five stages — visits, what I found, directions where you choose, build, and yours, where you own it. Fixed price, written scope, you own everything.">
+      <div class="plan-head">
+        <span class="t-micro">DELIVERY PLAN</span>
+        <span class="t-micro plan-rev">REV A</span>
+      </div>
+      {/* Bar geometry lives in the stylesheet, not style attributes — the
+          hashed CSP forbids markup-level inline styles. The nth-child rules
+          below mirror this table. */}
+      <div class="plan-rows" aria-hidden="true">
+        {rows.map((row) => (
+          <div class="plan-row">
+            <span class="plan-label t-micro"><b>{row.num}</b> {row.label}</span>
+            <span class="plan-track">
+              <span class="plan-bar"></span>
+              {row.marker && (
+                <span
+                  class={`plan-marker ${row.marker.shape === "dot" ? "is-dot" : "is-diamond"} ${row.marker.at > 90 ? "label-left" : ""}`}
+                >
+                  <i class="marker-shape"></i>
+                  <span class="marker-text">{row.marker.text}</span>
+                </span>
+              )}
+            </span>
+          </div>
+        ))}
+      </div>
+      <div class="plan-foot">
+        <span class="t-micro">FIXED PRICE · WRITTEN SCOPE · YOU OWN EVERYTHING</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* The only gradient on the site (§2): sheet → white vertical wash. */
+  .hero {
+    background: linear-gradient(180deg, var(--color-sheet) 0%, var(--color-white) 100%);
+    padding-top: clamp(64px, 10vw, 128px);
+    padding-bottom: clamp(48px, 7vw, 80px);
+  }
+  .hero-grid { display: grid; grid-template-columns: 1fr; gap: 48px; align-items: center; }
+  @media (min-width: 1024px) {
+    .hero-grid { grid-template-columns: 5fr 7fr; gap: 72px; }
+  }
+
+  /* The H1 must break exactly once, after "specialist." — at every
+     breakpoint (§6/B1). The display clamp alone can't promise that inside
+     the 5-column, so the size is additionally capped against the column
+     width; the cap is sized so the longer first line always fits. */
+  .hero-copy { container-type: inline-size; }
+  .hero-copy h1 { font-size: min(clamp(2.75rem, 6vw, 4.5rem), 9.2cqw); }
+
+  .eyebrow { margin-bottom: 24px; }
+  .standfirst {
+    color: var(--color-graphite);
+    font-size: 1.1875rem;
+    line-height: 1.55;
+    margin-top: 24px;
+    max-width: 30em;
+  }
+  .ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+
+  /* ---------- the plan panel ---------- */
+  .plan-panel {
+    background: var(--color-white);
+    border: var(--hairline);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-card);
+    padding: 28px;
+  }
+  .plan-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-bottom: 12px;
+    border-bottom: var(--hairline);
+  }
+  .plan-rev { color: var(--color-graphite); }
+
+  .plan-rows { display: grid; gap: 13px; padding-block: 16px; }
+  .plan-row {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    align-items: center;
+    gap: 16px;
+    min-height: 18px;
+  }
+  .plan-label { color: var(--color-graphite); white-space: nowrap; }
+  .plan-label b { color: var(--color-ink); font-weight: 700; }
+
+  .plan-track { position: relative; height: 10px; }
+  .plan-bar {
+    position: absolute;
+    top: 0;
+    height: 10px;
+    border-radius: 2px;
+    background: var(--color-cobalt);
+    transform-origin: left;
+    animation: plan-draw 450ms var(--ease) both;
+  }
+  /* The delivery-plan geometry (§6/B1): left offset, width, draw stagger. */
+  .plan-row:nth-child(1) .plan-bar { left: 0;   width: 12%; animation-delay: 0ms; }
+  .plan-row:nth-child(2) .plan-bar { left: 12%; width: 14%; animation-delay: 60ms; }
+  .plan-row:nth-child(3) .plan-bar { left: 26%; width: 13%; animation-delay: 120ms; }
+  .plan-row:nth-child(4) .plan-bar { left: 39%; width: 44%; animation-delay: 180ms; }
+  .plan-row:nth-child(5) .plan-bar { left: 83%; width: 12%; animation-delay: 240ms; }
+  .plan-row:nth-child(3) .plan-marker { left: 41%; }
+  .plan-row:nth-child(5) .plan-marker { left: 97%; }
+  @keyframes plan-draw {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+  }
+
+  /* Amber, appearances 1 and 2 of six (§2): the choice and ownership marks.
+     The SHAPE centres on the stated %, and the label flows beside it — the
+     group is never centred as a whole, or the shape drifts off its mark. */
+  .plan-marker {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    animation: marker-in 150ms var(--ease) 550ms both;
+  }
+  @keyframes marker-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  .marker-shape {
+    display: block;
+    width: 9px;
+    height: 9px;
+    background: var(--color-amber);
+    flex: none;
+    margin-left: -4.5px; /* centre the shape on the marker's % */
+  }
+  .is-diamond .marker-shape { transform: rotate(45deg); }
+  .is-dot .marker-shape { border-radius: 50%; }
+  .marker-text {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    color: var(--color-graphite);
+    white-space: nowrap;
+    /* a label that crosses a bar stays legible */
+    background: rgb(255 255 255 / 0.9);
+    padding: 1px 4px;
+    border-radius: 2px;
+  }
+  /* Near the track's right edge the label reads leftward instead. */
+  .label-left { flex-direction: row-reverse; transform: translate(-100%, -50%); }
+  .label-left .marker-shape { margin-left: 0; margin-right: -4.5px; }
+
+  .plan-foot { padding-top: 12px; border-top: var(--hairline); }
+  .plan-foot .t-micro { color: var(--color-graphite); }
+
+  @media (max-width: 519.98px) {
+    .marker-text { display: none; }
+    .plan-row { grid-template-columns: 118px 1fr; gap: 12px; }
+    .plan-label { white-space: normal; line-height: 1.3; }
+    .plan-panel { padding: 20px; }
+  }
+</style>

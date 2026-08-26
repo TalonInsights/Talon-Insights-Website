@@ -1,0 +1,156 @@
+---
+// B5 — Services: hierarchy, not a grid. The lead panel and strip are
+// hand-built (§7); only the Directions demo inside carries import mechanics.
+import DirectionsDemo from "./directions/DirectionsDemo";
+
+const strip = [
+  { num: "02", name: "CUSTOM SOFTWARE", body: "Internal tools built round how you actually run the job.", price: "From £6,000" },
+  { num: "03", name: "LOCAL SEO", body: "Found by people nearby who are ready to buy.", price: "From £450/mo" },
+  { num: "04", name: "RESEARCH & STRATEGY", body: "Analysis you can act on — and defend.", price: "Per engagement" },
+];
+---
+
+<section class="services g-white" id="services">
+  <div class="wrap">
+    <p class="t-micro eyebrow">WHAT I DO</p>
+    <h2 class="t-h2">One thing above all. Three more, done&nbsp;properly.</h2>
+
+    <div class="lead-panel" data-rv>
+      <div class="lead-head">
+        <span class="t-mono">01 / WEBSITES</span>
+        <span class="t-mono lead-price">FROM £3,000</span>
+      </div>
+      <div class="lead-body">
+        <div class="lead-copy">
+          <h3 class="t-h3">Designed with you, not presented to&nbsp;you.</h3>
+          <p class="t-body">
+            You see two or three real directions before a line of code is written — not one
+            mockup to approve at the end. You tell me what’s wrong with them. That’s where the
+            site starts to become yours. Then it gets built, and the line stays open the whole
+            way: if you have a better idea in week three, I want to hear it.
+          </p>
+          <div class="word-survey">
+            <p class="t-micro ws-label">INCLUDED — THE WORD SURVEY</p>
+            <p class="t-body">
+              Every site is built from the words your customers actually use — including the
+              ones nobody in your area is competing for. Found on the visits, listed in your
+              written scope, and built into the page from day one.
+            </p>
+          </div>
+          <div class="lead-foot">
+            <span class="t-micro">OUTCOME</span>
+            <strong>A site nobody else could have</strong>
+            <a class="link" href="#work">See the work →</a>
+          </div>
+        </div>
+
+        <div class="lead-demo">
+          <DirectionsDemo client:idle />
+          <div class="demo-captions">
+            <p class="t-micro">SAME FORGE. THREE DIFFERENT COMPANIES. NONE OF THEM WRONG.</p>
+            <p class="t-micro">THE ONE THAT FEELS RIGHT IS THE ONE THAT GETS BUILT.</p>
+            <p class="t-micro">
+              <a class="caption-link" href="#work">WREKIN FORGE IS A DEMONSTRATION — DAVID JACKSON &amp; SON GOT THE REAL THING ↓</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="strip" data-rv>
+      {strip.map((s) => (
+        <div class="strip-item">
+          <p class="t-mono strip-name">{s.num} / {s.name}</p>
+          <p class="strip-body">{s.body}</p>
+          <p class="t-mono strip-price">{s.price}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .services {
+    border-top: var(--hairline);
+    padding-block: 96px;
+  }
+
+  /* ---------- lead panel: full width, white, hairline, no shadow ---------- */
+  .lead-panel {
+    margin-top: 48px;
+    background: var(--color-white);
+    border: var(--hairline);
+    border-radius: var(--radius);
+  }
+  .lead-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    padding: 20px 28px;
+    border-bottom: var(--hairline);
+  }
+  .lead-price { color: var(--color-graphite); }
+
+  .lead-body {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 48px;
+    padding: 28px;
+  }
+  @media (min-width: 900px) {
+    .lead-body { grid-template-columns: 7fr 5fr; }
+  }
+
+  .lead-copy .t-h3 { margin-bottom: 12px; }
+  .word-survey {
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: var(--hairline);
+  }
+  .ws-label { color: var(--color-graphite); margin-bottom: 8px; }
+  .lead-foot {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: var(--hairline);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 8px 16px;
+  }
+  .lead-foot .t-micro { color: var(--color-graphite); }
+  .lead-foot strong { font-weight: 500; }
+  .lead-foot .link { margin-left: auto; }
+
+  .demo-captions {
+    margin-top: 16px;
+    display: grid;
+    gap: 6px;
+  }
+  .demo-captions .t-micro { color: var(--color-graphite); }
+  .caption-link {
+    color: var(--color-graphite);
+    text-decoration: none;
+    transition: color 180ms var(--ease);
+  }
+  .caption-link:hover { color: var(--color-cobalt); }
+
+  /* ---------- subordinate strip: dividers, no cards, no borders ---------- */
+  .strip {
+    margin-top: 48px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .strip-item { padding: 8px 32px; }
+  .strip-item:first-child { padding-left: 0; }
+  .strip-item + .strip-item { border-left: var(--hairline); }
+  .strip-name { color: var(--color-ink); }
+  .strip-body { color: var(--color-graphite); font-size: 0.9375rem; margin-top: 8px; max-width: 26em; }
+  .strip-price { color: var(--color-graphite); margin-top: 12px; }
+
+  @media (max-width: 767.98px) {
+    .strip { grid-template-columns: 1fr; }
+    .strip-item { padding: 20px 0; }
+    .strip-item + .strip-item { border-left: 0; border-top: var(--hairline); }
+  }
+</style>

@@ -1,0 +1,115 @@
+---
+import "../styles/theme.css";
+
+interface Props {
+  title: string;
+  description: string;
+}
+const { title, description } = Astro.props;
+
+// §1: Instrument Sans + Martian Mono are the licensed-Diatype fallbacks.
+// Oswald + Fraunces exist solely for the Wrekin Forge direction comps, which
+// render their own type by design (§6/B5).
+const fontsHref =
+  "https://fonts.googleapis.com/css2" +
+  "?family=Instrument+Sans:ital,wght@0,400..700;1,400..700" +
+  "&family=Martian+Mono:wght@400..700" +
+  "&family=Oswald:wght@500;600" +
+  "&family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600" +
+  "&display=swap";
+---
+
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href="https://taloninsights.co.uk/" />
+    <meta name="theme-color" content="#0B1F3A" />
+    <meta name="color-scheme" content="light" />
+    <meta name="author" content="Talon Herring" />
+    <meta name="google-site-verification" content="2SyksDOt0vYVoEiM5YYcrNkn3MnqeEzlxkikjGohcOU" />
+
+    <meta property="og:site_name" content="Talon Insights" />
+    <meta property="og:locale" content="en_GB" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://taloninsights.co.uk/" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href={fontsHref} />
+  </head>
+  <body>
+    <slot />
+
+    <script>
+      // §5 — the page's quiet motion layer. Two rules govern everything here:
+      // reveals run once, and reduced-motion gets final frames with nothing
+      // animated. Elements above the fold when this runs are never hidden.
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      if (!reduce && "IntersectionObserver" in window) {
+        // Scroll reveals: opacity + 14px, threshold .15, once.
+        const reveals = Array.from(document.querySelectorAll("[data-rv]"));
+        const fold = window.innerHeight * 0.9;
+        const armed = [];
+        let anyFired = false;
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (!entry.isIntersecting) continue;
+              anyFired = true;
+              entry.target.classList.add("is-in");
+              io.unobserve(entry.target);
+            }
+          },
+          { threshold: 0.15 },
+        );
+        for (const el of reveals) {
+          if (el.getBoundingClientRect().top <= fold) continue;
+          el.classList.add("rv");
+          armed.push(el);
+          io.observe(el);
+        }
+
+        // Orchestrated moment 2 of 2: the process bars draw on first
+        // scroll-in (threshold .3), once. Armed only here so no-JS and
+        // reduced-motion render the bars complete.
+        const process = document.querySelector("[data-process]");
+        if (process) {
+          process.classList.add("pb-armed");
+          const pio = new IntersectionObserver(
+            (entries) => {
+              for (const entry of entries) {
+                if (!entry.isIntersecting) continue;
+                anyFired = true;
+                process.classList.add("pb-draw");
+                pio.disconnect();
+              }
+            },
+            { threshold: 0.3 },
+          );
+          pio.observe(process);
+        }
+
+        // Failsafe: if the observers stay silent (a browser that never
+        // composites, an embedder that suspends IO), reveal everything at
+        // final state. Content must never be left invisible.
+        window.setTimeout(() => {
+          if (anyFired) return;
+          io.disconnect();
+          for (const el of armed) el.classList.add("is-in");
+          if (process) process.classList.add("pb-draw");
+        }, 2500);
+      }
+    </script>
+  </body>
+</html>

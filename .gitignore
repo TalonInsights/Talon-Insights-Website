@@ -1,11 +1,5 @@
 node_modules/
-.next/
 dist/
-build/
-.env
-.env.local
-.vercel
-Thumbs.db
-desktop.ini
-.DS_Store
-tools/node_modules/
+.astro/
+.vercel/
+*.log

@@ -1,0 +1,39 @@
+---
+// Footer (§6) — ink ground, 28px. The contact address is the domain one,
+// never the gmail address: that was a launch blocker, not a preference.
+---
+
+<footer class="foot g-ink">
+  <div class="wrap foot-row">
+    <p class="foot-left">© 2026 Talon Insights · Telford, Shropshire</p>
+    <p class="foot-right">
+      <a href="mailto:hello@taloninsights.co.uk">hello@taloninsights.co.uk</a>
+      <a href="/privacy">Privacy</a>
+      <a href="/accessibility">Accessibility</a>
+      <a href="/terms">Terms</a>
+    </p>
+  </div>
+</footer>
+
+<style>
+  .foot {
+    border-top: var(--hairline-dark);
+    padding-block: 28px;
+  }
+  .foot-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px 32px;
+    font-size: 0.875rem;
+  }
+  .foot-left { color: rgb(245 247 249 / 0.55); }
+  .foot-right { display: flex; flex-wrap: wrap; gap: 12px 24px; }
+  .foot-right a {
+    color: rgb(245 247 249 / 0.55);
+    text-decoration: none;
+    transition: color 180ms var(--ease);
+  }
+  .foot-right a:hover { color: var(--color-sheet); }
+</style>

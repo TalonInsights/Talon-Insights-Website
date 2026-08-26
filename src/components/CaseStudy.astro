@@ -1,0 +1,66 @@
+---
+// B6 — Case study + evidence (id="work").
+// Gated assets, absent by rule (§8) — no placeholders ever:
+//  · W1 WulfTek vignette: omitted entirely until WulfTek's explicit nod.
+//    Copy is final in the master build doc §6/B6; drop it in verbatim then.
+//  · V1 planner capture: omitted until the 8–12s recording exists
+//    (mono strip + bordered video + "Try the full demo" link when it lands).
+
+const movements = [
+  {
+    head: "What I found",
+    body: "Work of a standard that ends up in listed buildings — and a website that said “joinery services”. The gap between the two was the whole brief, and it only became visible in the workshop.",
+  },
+  {
+    head: "What it changed",
+    body: "The site had to lead with the making, not the categories: the work photographed in progress, and a configurator so a customer can see their own windows before ordering. That was one of the real directions Harry saw before any code existed — the same stage the demonstration above walks you through. He pulled it apart, and the site got better for it.",
+  },
+  {
+    head: "What got built",
+    body: "A twelve-page site designed from scratch, the configurator, and — because I was in there anyway — something else: production was planned on paper. So I built the planner too.",
+  },
+];
+---
+
+<section class="case g-sheet" id="work">
+  <div class="wrap">
+    <p class="t-micro eyebrow">SELECTED WORK</p>
+    <h2 class="t-h2">David Jackson &amp;&nbsp;Son</h2>
+    <p class="t-mono case-meta">MANUFACTURING · WEBSITE + INTERNAL TOOL + STRATEGY</p>
+
+    <div class="movements" data-rv>
+      {movements.map((m) => (
+        <div class="movement">
+          <h3 class="t-h3">{m.head}</h3>
+          <p>{m.body}</p>
+        </div>
+      ))}
+    </div>
+
+    <p class="case-link" data-rv>
+      <a class="link" href="/work/david-jackson-son">Read the full case study →</a>
+    </p>
+  </div>
+</section>
+
+<style>
+  .case { padding-block: 120px; }
+  .case-meta { color: var(--color-graphite); margin-top: 4px; }
+
+  .movements {
+    margin-top: 48px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 48px;
+  }
+  .movement .t-h3 { margin-bottom: 12px; }
+  .movement p { color: var(--color-graphite); font-size: 1rem; }
+
+  .case-link { margin-top: 48px; }
+
+  @media (max-width: 899.98px) {
+    .case { padding-block: 96px; }
+    .movements { grid-template-columns: 1fr; gap: 32px; }
+    .movement p { max-width: 34em; }
+  }
+</style>

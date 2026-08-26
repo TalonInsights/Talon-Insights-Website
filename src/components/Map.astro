@@ -1,0 +1,97 @@
+---
+// B10 — Coverage map. No client arcs, no project pins (v3.5): both clients
+// sit within 5km of base, which would read as "only ever worked in Telford".
+// The map's claim is coverage, not portfolio. Reinstate arcs only when
+// delivered work spans genuinely different towns.
+import CoverageMap from "./CoverageMap";
+---
+
+<section class="coverage g-white">
+  <div class="wrap coverage-grid">
+    <div class="coverage-copy">
+      <p class="t-micro eyebrow">WHERE I WORK</p>
+      <h2 class="t-h2">I come to&nbsp;you.</h2>
+      <p class="t-body">
+        Every job starts where you work, and it doesn’t stop after one visit. Telford,
+        Shrewsbury, Bridgnorth, Wolverhampton, Birmingham — inside the outer ring, the first
+        visit costs nothing.
+      </p>
+      <div class="legend">
+        <div class="legend-row">
+          <i class="swatch swatch-base" aria-hidden="true"></i>
+          <span class="t-micro">BASE — TELFORD</span>
+        </div>
+        <div class="legend-row">
+          <i class="swatch swatch-ring" aria-hidden="true"></i>
+          <span class="t-micro">30 / 60 MINUTE RINGS</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="coverage-canvas">
+      <CoverageMap client:idle />
+      <div class="map-caption">
+        <span class="t-micro">WEST MIDLANDS REGION · ONS BOUNDARY DATA</span>
+        <span class="t-micro">VISITS · NO CHARGE INSIDE THE RINGS</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .coverage {
+    border-top: var(--hairline);
+    padding-block: 96px;
+  }
+  .coverage-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+  @media (min-width: 900px) {
+    .coverage-grid { grid-template-columns: 5fr 7fr; gap: 64px; }
+  }
+
+  .coverage-copy .t-body { margin-top: 8px; }
+
+  .legend { margin-top: 32px; max-width: 340px; }
+  .legend-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-block: 12px;
+    border-top: var(--hairline);
+  }
+  .legend-row:last-child { border-bottom: var(--hairline); }
+  .legend-row .t-micro { color: var(--color-graphite); }
+  .swatch { flex: none; }
+  .swatch-base { width: 10px; height: 10px; background: var(--color-cobalt); }
+  .swatch-ring {
+    width: 18px;
+    height: 18px;
+    border: 1.4px dashed var(--color-cobalt);
+    border-radius: 50%;
+  }
+
+  /* Reserves the canvas's space pre-hydration — zero CLS. 640 / 679 is the
+     logical frame written by scripts/generate-map.py into map-dots.json;
+     update together if the map geometry ever changes. */
+  .coverage-canvas :global(canvas) {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 640 / 679;
+  }
+
+  .map-caption {
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: var(--hairline);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px 24px;
+  }
+  .map-caption .t-micro { color: var(--color-graphite); }
+</style>

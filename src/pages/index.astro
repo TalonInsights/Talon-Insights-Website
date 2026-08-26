@@ -1,0 +1,41 @@
+---
+// The homepage — Master Build v3.5, block by block:
+// Header · B1 Hero · B2 Proof · B3 Faults · B4 Method · B5 Services ·
+// B6 Case study · B7 Process · B8 Pricing · B9 About · B10 Map ·
+// B11 Close · Footer.
+import Base from "../layouts/Base.astro";
+import Header from "../components/Header.astro";
+import Hero from "../components/Hero.astro";
+import ProofStrip from "../components/ProofStrip.astro";
+import FaultList from "../components/FaultList.astro";
+import Method from "../components/Method.astro";
+import Services from "../components/Services.astro";
+import CaseStudy from "../components/CaseStudy.astro";
+import Process from "../components/Process.astro";
+import Pricing from "../components/Pricing.astro";
+import About from "../components/About.astro";
+import Map from "../components/Map.astro";
+import Close from "../components/Close.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<Base
+  title="Talon Insights — Websites & Software, Telford"
+  description="You're a specialist. Your website isn't. Websites and software built from repeated in-person visits to West Midlands businesses — designed with you, owned by you outright."
+>
+  <Header />
+  <main>
+    <Hero />
+    <ProofStrip />
+    <FaultList />
+    <Method />
+    <Services />
+    <CaseStudy />
+    <Process />
+    <Pricing />
+    <About />
+    <Map />
+    <Close />
+  </main>
+  <Footer />
+</Base>
