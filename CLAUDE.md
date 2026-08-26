@@ -22,8 +22,8 @@ npm run map        # regenerate src/data/map-dots.json (network; result is commi
 ## Rules that are easy to trip over
 
 - **Amber budget:** exactly six at-rest appearances of `--color-amber` —
-  hero ◆ + ●, the two process chips, the directions-artefact ◆ on the demo
-  frame, the fault-list payoff rule. The form success line is a transient
+  hero ◆ + ●, the two process chips, the directions-artefact ◆ in the
+  Directions band's eyebrow, the fault-list payoff rule. The form success line is a transient
   state, outside the count. The B10 map's markers use the separate
   `--color-amber-lift` token, exempted by the owner's 26-Aug B10 restyle
   directive (canvas + its legend swatches only).

@@ -212,12 +212,13 @@
 .comp-arch .arch-draw { width: 100%; height: auto; color: #161b22; }
 
 /* ==========================================================================
-   Demo shell — tabs, frame, stage, readout. This half IS on the site's
-   token system; only the comps above are exempt.
+   The Directions stage — full-bleed ink band (26 Aug restage directive).
+   This half IS on the site token system; only the comps above are exempt.
+   Dark-ground rules apply throughout.
    ========================================================================== */
 .ddemo { width: 100%; }
 
-.ddemo-tabs { display: flex; gap: 8px; margin-bottom: 12px; }
+.ddemo-tabs { display: flex; justify-content: center; gap: 8px; margin-bottom: 32px; }
 .ddemo-tab {
   width: 36px;
   height: 32px;
@@ -226,96 +227,97 @@
   font-family: var(--font-mono);
   font-size: 0.8125rem;
   letter-spacing: 0.04em;
-  color: var(--color-graphite);
-  background: var(--color-white);
-  border: var(--hairline);
+  color: rgb(245 247 249 / 0.6);
+  background: transparent;
+  border: 1px solid rgb(245 247 249 / 0.14);
   border-radius: 2px;
   cursor: pointer;
   transition: border-color 180ms var(--ease);
 }
-.ddemo-tab:hover { border-color: var(--color-ink); }
-.ddemo-tab[aria-selected="true"] { border-color: var(--color-ink); color: var(--color-ink); }
+.ddemo-tab:hover { border-color: var(--color-amber); }
+.ddemo-tab[aria-selected="true"] {
+  border-color: rgb(245 247 249 / 0.6);
+  color: var(--color-sheet);
+}
 
-.ddemo-frame {
-  background: var(--color-white);
-  border: var(--hairline);
-  border-radius: 2px; /* nested radius: inner = outer − padding (§2) */
-}
-.ddemo-frame-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 14px;
-  border-bottom: var(--hairline);
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--color-graphite);
-}
-.ddemo-artefact { display: inline-flex; align-items: center; gap: 8px; }
-.ddemo-artefact i {
-  width: 9px;
-  height: 9px;
-  flex: none;
-  background: var(--color-amber); /* the directions-artefact ◆ */
-  transform: rotate(45deg);
-}
-.ddemo-frame-brand { color: rgb(90 102 117 / 0.6); }
-
-.ddemo-stage {
-  container-type: inline-size;
+/* The stage. Centre comp ~62% of the viewport (86% on mobile), capped at
+   900px; its height is reserved here from first paint — zero layout shift.
+   The vw-based numbers are the pre-hydration approximation of the exact px
+   the island measures; they must stay in step with measure() in
+   DirectionsDemo.tsx. */
+.dstage {
+  --d-card: min(62vw, 900px);
+  /* one step: centre → edge-peek station (W/2 − peek + flankW/2) */
+  --d-pitch: calc(50vw + 0.2904 * var(--d-card));
   position: relative;
-  aspect-ratio: 16 / 9.6;
+  height: calc(var(--d-card) * 0.625);
   overflow: hidden;
-  perspective: 220cqw;
+  perspective: 1200px;
   touch-action: pan-y;
   cursor: grab;
-  background: var(--color-sheet);
 }
-.ddemo-stage:active { cursor: grabbing; }
+.dstage:active { cursor: grabbing; }
+@media (max-width: 767.98px) {
+  .dstage { --d-card: 86vw; }
+}
+
 .ddemo-card {
   position: absolute;
-  left: 13cqw;
+  left: 50%;
   top: 50%;
-  translate: 0 -50%;
-  width: 74cqw;
+  translate: -50% -50%;
+  width: var(--d-card);
+  aspect-ratio: 16 / 10;
+  border: 1px solid rgb(245 247 249 / 0.14);
+  border-radius: 2px;
+  overflow: hidden;
   will-change: transform;
+  backface-visibility: hidden;
 }
-/* The at-rest pose (HERITAGE centred, pos = 1) — must mirror paintCard() in
-   DirectionsDemo.tsx. It carries the pre-hydration frame; once interaction
-   starts, CSSOM inline styles from paintCard override these. */
+/* At-rest pose (HERITAGE centred, pos = 1) — must mirror paintCard() in
+   DirectionsDemo.tsx. Carries the pre-hydration frame; CSSOM inline styles
+   take over once the island paints. Flanks: scale .88, opacity .5, ≤8°
+   toward the centre. */
 .ddemo-card:nth-child(1) {
-  transform: translateX(-13cqw) translateZ(-6cqw) rotateY(8deg) scale(0.92);
-  opacity: 0.55;
+  transform: translateX(calc(-1 * var(--d-pitch))) rotateY(-8deg) scale(0.88);
+  opacity: 0.5;
   z-index: 8;
 }
 .ddemo-card:nth-child(2) { z-index: 10; }
 .ddemo-card:nth-child(3) {
-  transform: translateX(13cqw) translateZ(-6cqw) rotateY(-8deg) scale(0.92);
-  opacity: 0.55;
+  transform: translateX(var(--d-pitch)) rotateY(8deg) scale(0.88);
+  opacity: 0.5;
   z-index: 8;
 }
 
-/* Reduced motion: crossfade instead of 3D travel (§6/B5). */
-.ddemo-stage.is-fade .ddemo-card {
-  left: 13cqw;
-  transform: none !important;
-  opacity: 0;
-  transition: opacity 200ms var(--ease);
-  z-index: 1;
+.dstage-arrows {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 32px;
 }
-.ddemo-stage.is-fade .ddemo-card.is-active { opacity: 1; z-index: 2; }
+.dstage-arrow {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgb(245 247 249 / 0.3);
+  background: transparent;
+  color: rgb(245 247 249 / 0.85);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: border-color 180ms var(--ease);
+}
+.dstage-arrow:hover { border-color: var(--color-amber); }
+.dstage-arrow svg { width: 18px; height: 18px; }
 
 .ddemo-readout {
-  margin: 0;
-  padding: 10px 14px;
-  border-top: var(--hairline);
+  margin: 24px 0 0;
+  text-align: center;
   font-family: var(--font-mono);
   font-size: 0.6875rem;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   font-variant-numeric: tabular-nums;
-  color: var(--color-graphite);
+  color: rgb(245 247 249 / 0.6);
 }

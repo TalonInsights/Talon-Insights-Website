@@ -1,6 +1,8 @@
 ---
-// B5 — Services: hierarchy, not a grid. The lead panel and strip are
-// hand-built (§7); only the Directions demo inside carries import mechanics.
+// B5 — Services: hierarchy, not a grid. Restaged 26 Aug 2026 per the
+// owner's directive: lead panel (copy only) → full-bleed ink Directions
+// stage → the thin subordinate strip. The lead panel and strip are
+// hand-built (§7); only the stage inside carries import mechanics.
 import DirectionsDemo from "./directions/DirectionsDemo";
 
 const strip = [
@@ -21,42 +23,48 @@ const strip = [
         <span class="t-mono lead-price">FROM £3,000</span>
       </div>
       <div class="lead-body">
-        <div class="lead-copy">
-          <h3 class="t-h3">Designed with you, not presented to&nbsp;you.</h3>
+        <h3 class="t-h3">Designed with you, not presented to&nbsp;you.</h3>
+        <p class="t-body">
+          You see two or three real directions before a line of code is written — not one
+          mockup to approve at the end. You tell me what’s wrong with them. That’s where the
+          site starts to become yours. Then it gets built, and the line stays open the whole
+          way: if you have a better idea in week three, I want to hear it.
+        </p>
+        <div class="word-survey">
+          <p class="t-micro ws-label">INCLUDED — THE WORD SURVEY</p>
           <p class="t-body">
-            You see two or three real directions before a line of code is written — not one
-            mockup to approve at the end. You tell me what’s wrong with them. That’s where the
-            site starts to become yours. Then it gets built, and the line stays open the whole
-            way: if you have a better idea in week three, I want to hear it.
+            Every site is built from the words your customers actually use — including the
+            ones nobody in your area is competing for. Found on the visits, listed in your
+            written scope, and built into the page from day one.
           </p>
-          <div class="word-survey">
-            <p class="t-micro ws-label">INCLUDED — THE WORD SURVEY</p>
-            <p class="t-body">
-              Every site is built from the words your customers actually use — including the
-              ones nobody in your area is competing for. Found on the visits, listed in your
-              written scope, and built into the page from day one.
-            </p>
-          </div>
-          <div class="lead-foot">
-            <span class="t-micro">OUTCOME</span>
-            <strong>A site nobody else could have</strong>
-            <a class="link" href="#work">See the work →</a>
-          </div>
         </div>
-
-        <div class="lead-demo">
-          <DirectionsDemo client:idle />
-          <div class="demo-captions">
-            <p class="t-micro">SAME FORGE. THREE DIFFERENT COMPANIES. NONE OF THEM WRONG.</p>
-            <p class="t-micro">THE ONE THAT FEELS RIGHT IS THE ONE THAT GETS BUILT.</p>
-            <p class="t-micro">
-              <a class="caption-link" href="#work">WREKIN FORGE IS A DEMONSTRATION — DAVID JACKSON &amp; SON GOT THE REAL THING ↓</a>
-            </p>
-          </div>
+        <div class="lead-foot">
+          <span class="t-micro">OUTCOME</span>
+          <strong>A site nobody else could have</strong>
+          <a class="link" href="#work">See the work →</a>
         </div>
       </div>
     </div>
+  </div>
 
+  {/* The Directions stage — full-bleed, edge to edge, ink. The amber ◆ is
+      the directions-artefact mark, one of the page's six amber marks. */}
+  <div class="dband g-ink">
+    <p class="t-micro dband-eyebrow">
+      <i class="dband-diamond" aria-hidden="true"></i>
+      STEP 03 / DIRECTIONS · WREKIN FORGE
+    </p>
+    <DirectionsDemo client:idle />
+    <div class="demo-captions">
+      <p class="t-micro">SAME FORGE. THREE DIFFERENT COMPANIES. NONE OF THEM WRONG.</p>
+      <p class="t-micro">THE ONE THAT FEELS RIGHT IS THE ONE THAT GETS BUILT.</p>
+      <p class="t-micro">
+        <a class="caption-link" href="#work">WREKIN FORGE IS A DEMONSTRATION — DAVID JACKSON &amp; SON GOT THE REAL THING ↓</a>
+      </p>
+    </div>
+  </div>
+
+  <div class="wrap">
     <div class="strip" data-rv>
       {strip.map((s) => (
         <div class="strip-item">
@@ -75,7 +83,7 @@ const strip = [
     padding-block: 96px;
   }
 
-  /* ---------- lead panel: full width, white, hairline, no shadow ---------- */
+  /* ---------- lead panel: full width, copy only, no artefact ---------- */
   .lead-panel {
     margin-top: 48px;
     background: var(--color-white);
@@ -92,17 +100,10 @@ const strip = [
   }
   .lead-price { color: var(--color-graphite); }
 
-  .lead-body {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 48px;
-    padding: 28px;
-  }
-  @media (min-width: 900px) {
-    .lead-body { grid-template-columns: 7fr 5fr; }
-  }
-
-  .lead-copy .t-h3 { margin-bottom: 12px; }
+  /* Copy reflows to a comfortable measure — .t-body caps at 34em; the
+     panel never stretches its text across 1180px. */
+  .lead-body { padding: 28px; }
+  .lead-body .t-h3 { margin-bottom: 12px; }
   .word-survey {
     margin-top: 24px;
     padding-top: 24px;
@@ -122,22 +123,45 @@ const strip = [
   .lead-foot strong { font-weight: 500; }
   .lead-foot .link { margin-left: auto; }
 
-  .demo-captions {
-    margin-top: 16px;
-    display: grid;
-    gap: 6px;
+  /* ---------- the full-bleed ink band ---------- */
+  .dband {
+    margin-top: 64px;
+    padding-block: 96px;
   }
-  .demo-captions .t-micro { color: var(--color-graphite); }
+  .dband-eyebrow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    color: rgb(245 247 249 / 0.6);
+    margin-bottom: 40px;
+  }
+  .dband-diamond {
+    width: 9px;
+    height: 9px;
+    flex: none;
+    background: var(--color-amber);
+    transform: rotate(45deg);
+  }
+
+  .demo-captions {
+    margin-top: 40px;
+    display: grid;
+    gap: 8px;
+    text-align: center;
+    padding-inline: 24px;
+  }
+  .demo-captions .t-micro { color: rgb(245 247 249 / 0.6); }
   .caption-link {
-    color: var(--color-graphite);
+    color: rgb(245 247 249 / 0.6);
     text-decoration: none;
     transition: color 180ms var(--ease);
   }
-  .caption-link:hover { color: var(--color-cobalt); }
+  .caption-link:hover { color: var(--color-amber); }
 
   /* ---------- subordinate strip: dividers, no cards, no borders ---------- */
   .strip {
-    margin-top: 48px;
+    margin-top: 64px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
   }
@@ -149,7 +173,9 @@ const strip = [
   .strip-price { color: var(--color-graphite); margin-top: 12px; }
 
   @media (max-width: 767.98px) {
-    .strip { grid-template-columns: 1fr; }
+    .services { padding-block: 64px; }
+    .dband { padding-block: 64px; margin-top: 48px; }
+    .strip { grid-template-columns: 1fr; margin-top: 48px; }
     .strip-item { padding: 20px 0; }
     .strip-item + .strip-item { border-left: 0; border-top: var(--hairline); }
   }
