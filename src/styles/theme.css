@@ -9,14 +9,15 @@
    ========================================================================== */
 @theme {
   --color-ink:      #0B1F3A;  /* text, dark grounds */
+  --color-ink-deep: #060E1C;  /* the site's black: header, hero, proof strip */
   --color-sheet:    #F5F7F9;  /* page ground — cool, never warm */
   --color-white:    #FFFFFF;  /* panels */
   --color-graphite: #5A6675;  /* secondary text */
   --color-cobalt:   #1D4ED8;  /* links, bars, focus */
   --color-amber:    #E8A33D;  /* RESTRICTED: choice + ownership marks only */
   --color-breach:   #C2412D;  /* scheduler demo UI only */
-  /* Lifted variants for the B10 coverage map's ink ground (26 Aug restyle
-     directive) — the canvas dot field and its markers only. */
+  /* Lifted variants for dark grounds: the B10 map's field and markers, the
+     hero burst, and hover states on the dark header. */
   --color-cobalt-lift: #4D7CFF;
   --color-amber-lift:  #F0B455;
   --font-sans: "ABC Diatype", "Instrument Sans", system-ui, sans-serif;

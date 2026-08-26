@@ -41,14 +41,14 @@
 </section>
 
 <style>
-  /* Ground: the sheet→white wash carrying a soft burst in token blues —
-     the reference's yellowish burst, reregistered. */
+  /* Ground: ink-black (27 Aug — the darker undertone), the blue burst
+     glowing out of it. */
   .hero {
     position: relative;
     background:
-      radial-gradient(640px 420px at 50% 34%, rgb(77 124 255 / 0.16), transparent 70%),
-      radial-gradient(1000px 640px at 50% 26%, rgb(29 78 216 / 0.08), transparent 72%),
-      linear-gradient(180deg, var(--color-sheet) 0%, var(--color-white) 100%);
+      radial-gradient(640px 420px at 50% 34%, rgb(77 124 255 / 0.26), transparent 70%),
+      radial-gradient(1000px 640px at 50% 26%, rgb(29 78 216 / 0.16), transparent 72%),
+      var(--color-ink-deep);
     padding-top: clamp(96px, 14vh, 160px);
     padding-bottom: clamp(96px, 12vw, 176px);
     overflow: clip;
@@ -59,8 +59,8 @@
     position: absolute;
     inset: 0;
     background-image:
-      linear-gradient(rgb(90 102 117 / 0.10) 1px, transparent 1px),
-      linear-gradient(90deg, rgb(90 102 117 / 0.10) 1px, transparent 1px);
+      linear-gradient(rgb(245 247 249 / 0.055) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(245 247 249 / 0.055) 1px, transparent 1px);
     background-size: 56px 56px;
     -webkit-mask-image: radial-gradient(72% 82% at 50% 34%, #000 42%, transparent 78%);
     mask-image: radial-gradient(72% 82% at 50% 34%, #000 42%, transparent 78%);
@@ -84,20 +84,20 @@
     align-items: baseline;
     gap: 4px 12px;
     padding: 10px 20px;
-    border: var(--hairline);
+    border: 1px solid rgb(245 247 249 / 0.2);
     border-radius: 999px;
     text-decoration: none;
-    color: var(--color-graphite);
+    color: rgb(245 247 249 / 0.65);
     font-size: 0.875rem;
     transition: border-color 180ms var(--ease);
   }
-  .announce:hover { border-color: var(--color-graphite); }
+  .announce:hover { border-color: rgb(245 247 249 / 0.45); }
   .announce-more {
     display: inline-flex;
     align-items: center;
     gap: 6px;
     font-weight: 500;
-    color: var(--color-ink);
+    color: var(--color-sheet);
   }
   .announce-more svg { width: 15px; height: 15px; }
 
@@ -108,14 +108,16 @@
     margin-top: 32px;
     max-width: 16ch;
     font-size: min(clamp(2.75rem, 6vw, 4.5rem), 9.4cqw);
+    color: var(--color-sheet);
   }
 
   .standfirst {
     margin-top: 24px;
     max-width: 30em;
-    color: var(--color-graphite);
+    color: rgb(245 247 249 / 0.65);
     font-size: 1.1875rem;
     line-height: 1.55;
+    font-weight: 350;
   }
 
   .ctas {
@@ -125,9 +127,15 @@
     gap: 12px;
     margin-top: 32px;
   }
+  /* the ghost button, dark-ground variant */
+  .ctas .btn-ghost {
+    color: var(--color-sheet);
+    border-color: rgb(245 247 249 / 0.3);
+  }
+  .ctas .btn-ghost:hover { border-color: var(--color-sheet); }
 
   .hero-trust {
     margin-top: 40px;
-    color: var(--color-graphite);
+    color: rgb(245 247 249 / 0.45);
   }
 </style>

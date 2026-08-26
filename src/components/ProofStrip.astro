@@ -1,9 +1,11 @@
 ---
-// B2 — Proof strip. The PM credential deliberately does not appear here
-// (vetted out — it lives in B9).
+// B2 — Proof strip, on the dark opening passage (27 Aug): header, hero and
+// this strip share the ink-black ground, so the page opens dark and only
+// lightens after the fault list. The PM credential deliberately does not
+// appear here (vetted out — it lives in B9).
 ---
 
-<section class="proof g-white" aria-label="Clients">
+<section class="proof" aria-label="Clients">
   <div class="wrap proof-row">
     <span class="t-micro dim">DELIVERED FOR</span>
     <span class="client">David Jackson &amp; Son</span>
@@ -14,8 +16,9 @@
 
 <style>
   .proof {
-    border-top: var(--hairline);
-    border-bottom: var(--hairline);
+    background: var(--color-ink-deep);
+    border-top: var(--hairline-dark);
+    border-bottom: var(--hairline-dark);
     padding-block: 26px;
   }
   .proof-row {
@@ -24,8 +27,8 @@
     align-items: baseline;
     gap: 16px 40px;
   }
-  .dim { color: var(--color-graphite); }
-  .client { font-size: 1.125rem; font-weight: 500; color: var(--color-ink); }
+  .dim { color: rgb(245 247 249 / 0.45); }
+  .client { font-size: 1.125rem; font-weight: 500; color: var(--color-sheet); }
   .tail { margin-left: auto; }
   @media (max-width: 639.98px) {
     .tail { margin-left: 0; }
