@@ -33,7 +33,6 @@ const frag = `
   #define NUM_OCTAVES 5
   uniform vec3 color1;
   uniform vec3 color0;
-  uniform vec3 colorCore;
   uniform float time;
   varying vec2 vUv;
 
@@ -70,40 +69,46 @@ const frag = `
   }
 
   void main(){
-    // mirror v so the molten seam sits at the band's bottom edge on
-    // screen and the tongues lick upward (the composer pipeline flips v)
+    // mirror v (the composer pipeline flips it): vv = 0 at the band's
+    // bottom edge on screen
     float vv = 1.0 - vUv.y;
-    vec2 newUv = vec2(vUv.x, vv) + vec2(0.0, time*0.0004);
-    // anisotropic field: tongues repeat along the line and lick off it
-    vec2 p = vec2(newUv.x * 24.0, newUv.y * 10.0);
+    float x = vUv.x;
+
+    // the seam arcs: tips raised at either side, lowest dip at the
+    // midpoint (the canvas V axis runs opposite to intuition through the
+    // composer, so the curve is mirrored here and u measures screen-up
+    // height above the rope). Below the rope is empty.
+    float seam = 1.0 - (0.12 + 2.0 * (x - 0.5) * (x - 0.5));
+    float u = seam - vv;
+    if (u < 0.0) { discard; }
+
+    // noise rides in seam-space so the tongues hug the curve
+    float nu = u + time*0.0004;
+    vec2 p = vec2(x * 24.0, nu * 9.0);
     float n = fbm(p + fbm(p));
 
-    // the reference's cutout silhouettes, on a shortened reach so the
-    // tongues top out inside the band
-    float y = (1.0 - vv) * 1.18;
-    float shapeBack = (1.0 - y) + n*(1.0 - y);
-    float shapeFront = (1.08 - y) + n*(1.0 - y);
+    // the reference's cutout mechanic, verbatim in shape: flat bright body,
+    // darker rim band at the silhouette — bloom does the rest
+    float f = 1.0 - u * 3.0;
+    float shapeBack = f + n*f;
+    float shapeFront = (f + 0.08) + n*f;
     float aBack = setOpacity(shapeBack, shapeBack, shapeBack);
     float aFront = setOpacity(shapeFront, shapeFront, shapeFront) - aBack;
 
-    // interior shading: hot at the seam, dark ember at the tips, textured
-    // by the same noise — a flat fill blows out to white under bloom
-    float heat = pow(clamp(vv, 0.0, 1.0), 2.2);
-    vec3 deep = rgbcol(color1.r, color1.g, color1.b);
-    vec3 core = rgbcol(colorCore.r, colorCore.g, colorCore.b);
-    vec3 body = mix(deep, core, heat) * (0.62 + 0.5*n);
+    vec3 body = rgbcol(color1.r, color1.g, color1.b);
     vec3 rim = rgbcol(color0.r, color0.g, color0.b);
-
     vec3 col = aFront > 0.0 ? rim : body;
     float alpha = max(aBack, aFront > 0.0 ? 1.0 : 0.0);
+    if (alpha <= 0.0) { discard; }
     gl_FragColor = vec4(col, alpha);
   }
 `;
 
 const GROUND = 0x12100d; // the page's own dark, so the canvas has no edges
-const EMBER_DEEP: [number, number, number] = [186, 62, 16];
-const EMBER_CORE: [number, number, number] = [255, 150, 70];
-const EMBER_RIM: [number, number, number] = [255, 190, 120];
+// the reference's own palette — golden base, burnt border; bloom turns the
+// pair into the white-hot core and orange rim of the supplied render
+const FIRE_BASE: [number, number, number] = [201, 158, 72];
+const FIRE_BORDER: [number, number, number] = [74, 30, 0];
 
 function FireLine({ stokedRef }: { stokedRef: React.MutableRefObject<boolean> }) {
   const mountRef = useRef<HTMLDivElement | null>(null);
@@ -128,16 +133,15 @@ function FireLine({ stokedRef }: { stokedRef: React.MutableRefObject<boolean> })
     const composer = new EffectComposer(renderer);
     composer.addPass(new RenderPass(scene, camera));
     const bloomPass = new UnrealBloomPass(new THREE.Vector2(width, height), 1.5, 0.4, 0.85);
-    bloomPass.threshold = 0.5;
-    bloomPass.strength = 0.75;
-    bloomPass.radius = 0.5;
+    bloomPass.threshold = 0.22;
+    bloomPass.strength = 0.95;
+    bloomPass.radius = 0.55;
     composer.addPass(bloomPass);
 
     const uniforms = {
       time: { value: reduce ? 5200.0 : 0.0 },
-      color1: { value: new THREE.Vector3(...EMBER_DEEP) },
-      color0: { value: new THREE.Vector3(...EMBER_RIM) },
-      colorCore: { value: new THREE.Vector3(...EMBER_CORE) },
+      color1: { value: new THREE.Vector3(...FIRE_BASE) },
+      color0: { value: new THREE.Vector3(...FIRE_BORDER) },
     };
 
     const geometry = new THREE.PlaneGeometry(2, 2);
@@ -166,8 +170,8 @@ function FireLine({ stokedRef }: { stokedRef: React.MutableRefObject<boolean> })
     const tick = () => {
       if (!reduce) {
         // hovering the commission button stokes the seam
-        const targetSpeed = stokedRef.current ? 2.1 : 1;
-        const targetBloom = stokedRef.current ? 1.35 : 0.75;
+        const targetSpeed = stokedRef.current ? 2.2 : 1;
+        const targetBloom = stokedRef.current ? 1.6 : 0.95;
         speed += (targetSpeed - speed) * 0.06;
         bloomPass.strength += (targetBloom - bloomPass.strength) * 0.06;
         const now = (performance.now() - start) / 1000;
