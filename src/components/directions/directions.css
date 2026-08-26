@@ -212,112 +212,138 @@
 .comp-arch .arch-draw { width: 100%; height: auto; color: #161b22; }
 
 /* ==========================================================================
-   The Directions stage — full-bleed ink band (26 Aug restage directive).
+   The Directions folder (26 Aug replacement for the coverflow stage).
    This half IS on the site token system; only the comps above are exempt.
-   Dark-ground rules apply throughout.
+   Surfaces are ink-ground overlays and hairlines — no gradients, no
+   glassmorphism, no drop shadows. The closed card pose here must mirror
+   closedPose() in FolderGallery.tsx: it carries the pre-hydration frame
+   (the hashed CSP forbids SSR style attributes), and framer-motion takes
+   over through the CSSOM after mount.
    ========================================================================== */
-.ddemo { width: 100%; }
+.fgal {
+  --g-card: clamp(250px, 30vw, 380px);
+  position: relative;
+  width: 100%;
+  height: calc(var(--g-card) * 0.625 + 210px); /* reserved — zero layout shift */
+  perspective: 1200px;
+}
+@media (max-width: 767.98px) {
+  .fgal { --g-card: 64vw; }
+}
 
-.ddemo-tabs { display: flex; justify-content: center; gap: 8px; margin-bottom: 32px; }
-.ddemo-tab {
-  width: 36px;
-  height: 32px;
-  display: grid;
-  place-items: center;
-  font-family: var(--font-mono);
-  font-size: 0.8125rem;
-  letter-spacing: 0.04em;
-  color: rgb(245 247 249 / 0.6);
-  background: transparent;
-  border: 1px solid rgb(245 247 249 / 0.14);
-  border-radius: 2px;
+/* ---------- folder anatomy ---------- */
+.fgal-back {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  translate: -50% 0;
+  width: min(calc(var(--g-card) + 64px), 92vw);
+  height: 190px;
+  z-index: 5;
+}
+.fgal-tab {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 120px;
+  height: 34px;
+  background: rgb(245 247 249 / 0.05);
+  border: var(--hairline-dark);
+  border-bottom: 0;
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+.fgal-cavity {
+  position: absolute;
+  top: 32px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: color-mix(in srgb, var(--color-ink) 82%, black);
+  border: var(--hairline-dark);
+  border-radius: 0 var(--radius) var(--radius) var(--radius);
+}
+
+.fgal-front {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  translate: -50% 0;
+  width: min(calc(var(--g-card) + 96px), 94vw);
+  height: 168px;
+  z-index: 20;
+  /* opaque - the folder front hides the cards tucked inside it */
+  background: color-mix(in srgb, var(--color-ink) 92%, var(--color-sheet));
+  border: 1px solid rgb(245 247 249 / 0.18);
+  border-radius: var(--radius);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 28px;
   cursor: pointer;
+  transform-origin: bottom;
+  will-change: transform;
   transition: border-color 180ms var(--ease);
 }
-.ddemo-tab:hover { border-color: var(--color-amber); }
-.ddemo-tab[aria-selected="true"] {
-  border-color: rgb(245 247 249 / 0.6);
-  color: var(--color-sheet);
-}
-
-/* The stage. Centre comp ~62% of the viewport (86% on mobile), capped at
-   900px; its height is reserved here from first paint — zero layout shift.
-   The vw-based numbers are the pre-hydration approximation of the exact px
-   the island measures; they must stay in step with measure() in
-   DirectionsDemo.tsx. */
-.dstage {
-  --d-card: min(62vw, 900px);
-  /* one step: centre → edge-peek station (W/2 − peek + flankW/2) */
-  --d-pitch: calc(50vw + 0.2904 * var(--d-card));
-  position: relative;
-  height: calc(var(--d-card) * 0.625);
-  overflow: hidden;
-  perspective: 1200px;
-  touch-action: pan-y;
-  cursor: grab;
-}
-.dstage:active { cursor: grabbing; }
-@media (max-width: 767.98px) {
-  .dstage { --d-card: 86vw; }
-}
-
-.ddemo-card {
+.fgal-front:hover { border-color: rgb(245 247 249 / 0.35); }
+.fgal-front::before {
+  content: "";
   position: absolute;
+  top: 0;
+  left: 12px;
+  right: 12px;
+  height: 1px;
+  background: rgb(245 247 249 / 0.25);
+}
+.fgal-plate {
+  background: rgb(0 0 0 / 0.35);
+  border: var(--hairline-dark);
+  border-radius: 2px; /* nested radius: inner = outer − padding (§2) */
+  padding: 8px 14px;
+  color: rgb(245 247 249 / 0.85);
+}
+
+/* ---------- the three directions ---------- */
+.fgal-card {
+  position: absolute;
+  bottom: 56px;
   left: 50%;
-  top: 50%;
-  translate: -50% -50%;
-  width: var(--d-card);
-  aspect-ratio: 16 / 10;
+  translate: -50% 0;
+  width: var(--g-card);
   border: 1px solid rgb(245 247 249 / 0.14);
   border-radius: 2px;
   overflow: hidden;
   will-change: transform;
-  backface-visibility: hidden;
 }
-/* At-rest pose (HERITAGE centred, pos = 1) — must mirror paintCard() in
-   DirectionsDemo.tsx. Carries the pre-hydration frame; CSSOM inline styles
-   take over once the island paints. Flanks: scale .88, opacity .5, ≤8°
-   toward the centre. */
-.ddemo-card:nth-child(1) {
-  transform: translateX(calc(-1 * var(--d-pitch))) rotateY(-8deg) scale(0.88);
-  opacity: 0.5;
-  z-index: 8;
+.fgal-card.is-open { cursor: grab; }
+.fgal-card.is-open:active { cursor: grabbing; }
+/* Closed pose — must mirror closedPose() in FolderGallery.tsx. */
+.fgal-card:nth-child(1) {
+  transform: translate(-6px, 6px) rotate(-2.5deg) scale(0.97);
+  z-index: 10;
 }
-.ddemo-card:nth-child(2) { z-index: 10; }
-.ddemo-card:nth-child(3) {
-  transform: translateX(var(--d-pitch)) rotateY(8deg) scale(0.88);
-  opacity: 0.5;
-  z-index: 8;
+.fgal-card:nth-child(2) { z-index: 11; }
+.fgal-card:nth-child(3) {
+  transform: translate(6px, -6px) rotate(2.5deg) scale(0.97);
+  z-index: 12;
 }
 
-.dstage-arrows {
-  display: flex;
-  justify-content: center;
-  gap: 16px;
-  margin-top: 32px;
-}
-.dstage-arrow {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: 1px solid rgb(245 247 249 / 0.3);
+/* ---------- the closing hint (a real control) ---------- */
+.fgal-hint {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  translate: -50% 0;
+  z-index: 30;
+  max-width: 92vw;
+  padding: 10px 20px;
   background: transparent;
-  color: rgb(245 247 249 / 0.85);
-  display: grid;
-  place-items: center;
+  border: 1px solid rgb(245 247 249 / 0.14);
+  border-radius: 2px;
+  color: rgb(245 247 249 / 0.6);
+  text-align: center;
   cursor: pointer;
+  opacity: 0;            /* framer raises it while the folder is open */
+  pointer-events: none;
   transition: border-color 180ms var(--ease);
 }
-.dstage-arrow:hover { border-color: var(--color-amber); }
-.dstage-arrow svg { width: 18px; height: 18px; }
-
-.ddemo-readout {
-  margin: 24px 0 0;
-  text-align: center;
-  font-family: var(--font-mono);
-  font-size: 0.6875rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  font-variant-numeric: tabular-nums;
-  color: rgb(245 247 249 / 0.6);
-}
+.fgal-hint:hover { border-color: var(--color-amber); }

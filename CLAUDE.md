@@ -9,8 +9,10 @@ owner's instruction (recover anything via git history, pre-wipe).
 
 ## Stack and commands
 
-Astro 5 (static) + React 19 islands (exactly three: DirectionsDemo,
+Astro 5 (static) + React 19 islands (exactly three: FolderGallery,
 CoverageMap, BookingForm) + Tailwind v4 tokens in `src/styles/theme.css`.
+framer-motion powers only the FolderGallery (owner-approved 21st import #5,
+inside §7's two-dependency rule) — everything else stays library-free.
 Deploys GitHub → Vercel on push to main; `vercel.json` sets framework/build.
 
 ```bash
@@ -34,6 +36,12 @@ npm run map        # regenerate src/data/map-dots.json (network; result is commi
   neutralise `unsafe-inline` for styles. Static geometry lives in
   stylesheets (see the plan panel's nth-child rules); dynamic values go
   through the CSSOM (React style props / `el.style`), which CSP allows.
+- **B5's folder gallery** (26 Aug, owner-supplied 21st import) replaced the
+  coverflow: the three Wrekin Forge comps live in a folder — click to open,
+  drag a card down (or Escape / the hint button) to close. Its chrome was
+  stripped to tokens; the comps render live inside the cards, never as
+  screenshots, and the Unsplash defaults were discarded (CSP allows only
+  self-hosted images anyway).
 - **Motion budget: three orchestrated moments** — hero plan bars (load),
   process bars (scroll-in), and the B10 coverage-map travel (scroll-in,
   once, ≤1600ms; owner's 26-Aug directive supersedes v3.5's static map).

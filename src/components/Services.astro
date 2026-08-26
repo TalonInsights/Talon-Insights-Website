@@ -1,9 +1,11 @@
 ---
-// B5 — Services: hierarchy, not a grid. Restaged 26 Aug 2026 per the
-// owner's directive: lead panel (copy only) → full-bleed ink Directions
-// stage → the thin subordinate strip. The lead panel and strip are
-// hand-built (§7); only the stage inside carries import mechanics.
-import DirectionsDemo from "./directions/DirectionsDemo";
+// B5 — Services: hierarchy, not a grid. Restaged 26 Aug 2026: lead panel
+// (copy only) → full-bleed ink Directions band → the thin subordinate
+// strip. The band now holds the folder gallery (owner's instruction,
+// replacing the coverflow): the three comps live in a folder that opens on
+// click and closes on drag-down. The lead panel and strip are hand-built
+// (§7); only the folder inside carries import mechanics.
+import FolderGallery from "./directions/FolderGallery";
 
 const strip = [
   { num: "02", name: "CUSTOM SOFTWARE", body: "Internal tools built round how you actually run the job.", price: "From £6,000" },
@@ -54,7 +56,7 @@ const strip = [
       <i class="dband-diamond" aria-hidden="true"></i>
       STEP 03 / DIRECTIONS · WREKIN FORGE
     </p>
-    <DirectionsDemo client:idle />
+    <FolderGallery client:idle />
     <div class="demo-captions">
       <p class="t-micro">SAME FORGE. THREE DIFFERENT COMPANIES. NONE OF THEM WRONG.</p>
       <p class="t-micro">THE ONE THAT FEELS RIGHT IS THE ONE THAT GETS BUILT.</p>
@@ -127,6 +129,8 @@ const strip = [
   .dband {
     margin-top: 64px;
     padding-block: 96px;
+    /* dragged cards may travel past the viewport edge */
+    overflow-x: clip;
   }
   .dband-eyebrow {
     display: flex;
