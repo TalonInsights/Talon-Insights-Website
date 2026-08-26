@@ -4,8 +4,11 @@
 [docs/homepage-master-build-v3.5.md](docs/homepage-master-build-v3.5.md).**
 Where an instinct and that document disagree, the document wins; where it is
 silent, its §9 Never List decides. Read it before changing copy, colour,
-motion, or layout. The old Python-generated site was wiped 26 Aug 2026 at the
-owner's instruction (recover anything via git history, pre-wipe).
+motion, or layout — noting that the owner has since restyled B1 (centred
+hero, no plan panel), B5 (folder gallery) and B10 (travel map) by direct
+instruction, which supersedes the document for those blocks. The old
+Python-generated site was wiped 26 Aug 2026 at the owner's instruction
+(recover anything via git history, pre-wipe).
 
 ## Stack and commands
 
@@ -42,9 +45,9 @@ npm run map        # regenerate src/data/map-dots.json (network; result is commi
   stripped to tokens; the comps render live inside the cards, never as
   screenshots, and the Unsplash defaults were discarded (CSP allows only
   self-hosted images anyway).
-- **Motion budget: three orchestrated moments** — hero plan bars (load),
-  process bars (scroll-in), and the B10 coverage-map travel (scroll-in,
-  once, ≤1600ms; owner's 26-Aug directive supersedes v3.5's static map).
+- **Motion budget: two orchestrated moments** — process bars (scroll-in)
+  and the B10 coverage-map travel (scroll-in, once, ≤1600ms). The hero's
+  plan-bar draw retired with the panel (27 Aug); the hero is fully static.
   Nothing loops or idles.
 - **IO/rAF fallbacks are load-bearing.** Reveals arm only below the fold and
   a 2.5s failsafe shows everything; the map has an IO watchdog and a
