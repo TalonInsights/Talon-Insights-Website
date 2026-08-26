@@ -14,8 +14,10 @@ Python-generated site was wiped 26 Aug 2026 at the owner's instruction
 
 Astro 5 (static) + React 19 islands (exactly three: FolderGallery,
 CoverageMap, BookingForm) + Tailwind v4 tokens in `src/styles/theme.css`.
-framer-motion powers only the FolderGallery (owner-approved 21st import #5,
-inside §7's two-dependency rule) — everything else stays library-free.
+framer-motion powers only the FolderGallery (owner-approved 21st import #5)
+and three.js only the FIRE hero page behind Direction A (import #6,
+lazy-loaded chunk — never in the homepage bundle); everything else stays
+library-free.
 Deploys GitHub → Vercel on push to main; `vercel.json` sets framework/build.
 
 ```bash
