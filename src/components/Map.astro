@@ -1,20 +1,20 @@
 ---
-// B10 — Coverage map. No client arcs, no project pins (v3.5): both clients
-// sit within 5km of base, which would read as "only ever worked in Telford".
-// The map's claim is coverage, not portfolio. Reinstate arcs only when
-// delivered work spans genuinely different towns.
+// B10 — Coverage map, ink-ground restyle (26 Aug directive). Third dark
+// block on the page alongside faults and the close — accepted by design.
+// No client arcs, no project pins, no rings: the travel animation and the
+// copy speak of coverage only, never of delivered work or client locations.
 import CoverageMap from "./CoverageMap";
 ---
 
-<section class="coverage g-white">
+<section class="coverage g-ink">
   <div class="wrap coverage-grid">
     <div class="coverage-copy">
       <p class="t-micro eyebrow">WHERE I WORK</p>
       <h2 class="t-h2">I come to&nbsp;you.</h2>
       <p class="t-body">
         Every job starts where you work, and it doesn’t stop after one visit. Telford,
-        Shrewsbury, Bridgnorth, Wolverhampton, Birmingham — inside the outer ring, the first
-        visit costs nothing.
+        Shrewsbury, Bridgnorth, Wolverhampton, Birmingham — within an hour of Telford, the
+        first visit costs nothing.
       </p>
       <div class="legend">
         <div class="legend-row">
@@ -22,8 +22,8 @@ import CoverageMap from "./CoverageMap";
           <span class="t-micro">BASE — TELFORD</span>
         </div>
         <div class="legend-row">
-          <i class="swatch swatch-ring" aria-hidden="true"></i>
-          <span class="t-micro">30 / 60 MINUTE RINGS</span>
+          <i class="swatch swatch-city" aria-hidden="true"></i>
+          <span class="t-micro">WITHIN AN HOUR</span>
         </div>
       </div>
     </div>
@@ -32,7 +32,7 @@ import CoverageMap from "./CoverageMap";
       <CoverageMap client:idle />
       <div class="map-caption">
         <span class="t-micro">WEST MIDLANDS REGION · ONS BOUNDARY DATA</span>
-        <span class="t-micro">VISITS · NO CHARGE INSIDE THE RINGS</span>
+        <span class="t-micro">VISITS · NO CHARGE WITHIN AN HOUR OF TELFORD</span>
       </div>
     </div>
   </div>
@@ -40,8 +40,10 @@ import CoverageMap from "./CoverageMap";
 
 <style>
   .coverage {
-    border-top: var(--hairline);
     padding-block: 96px;
+    /* the close below is also ink — this seam keeps the two blocks read
+       as two */
+    border-bottom: var(--hairline-dark);
   }
   .coverage-grid {
     display: grid;
@@ -61,22 +63,23 @@ import CoverageMap from "./CoverageMap";
     align-items: center;
     gap: 12px;
     padding-block: 12px;
-    border-top: var(--hairline);
+    border-top: var(--hairline-dark);
   }
-  .legend-row:last-child { border-bottom: var(--hairline); }
-  .legend-row .t-micro { color: var(--color-graphite); }
+  .legend-row:last-child { border-bottom: var(--hairline-dark); }
+  .legend-row .t-micro { color: rgb(245 247 249 / 0.6); }
   .swatch { flex: none; }
-  .swatch-base { width: 10px; height: 10px; background: var(--color-cobalt); }
-  .swatch-ring {
-    width: 18px;
-    height: 18px;
-    border: 1.4px dashed var(--color-cobalt);
+  .swatch-base { width: 10px; height: 10px; background: var(--color-amber-lift); }
+  .swatch-city {
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
+    background: var(--color-amber-lift);
   }
 
   /* Reserves the canvas's space pre-hydration — zero CLS. 640 / 679 is the
      logical frame written by scripts/generate-map.py into map-dots.json;
-     update together if the map geometry ever changes. */
+     update together if the map geometry ever changes. Labels render on the
+     canvas itself, so nothing shifts when they arrive. */
   .coverage-canvas :global(canvas) {
     display: block;
     width: 100%;
@@ -87,11 +90,11 @@ import CoverageMap from "./CoverageMap";
   .map-caption {
     margin-top: 16px;
     padding-top: 12px;
-    border-top: var(--hairline);
+    border-top: var(--hairline-dark);
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     gap: 8px 24px;
   }
-  .map-caption .t-micro { color: var(--color-graphite); }
+  .map-caption .t-micro { color: rgb(245 247 249 / 0.6); }
 </style>

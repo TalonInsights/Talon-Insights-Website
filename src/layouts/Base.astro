@@ -80,9 +80,10 @@ const fontsHref =
           io.observe(el);
         }
 
-        // Orchestrated moment 2 of 2: the process bars draw on first
+        // Orchestrated moment 2 of 3: the process bars draw on first
         // scroll-in (threshold .3), once. Armed only here so no-JS and
-        // reduced-motion render the bars complete.
+        // reduced-motion render the bars complete. (Moments 1 and 3 — the
+        // hero plan bars and the coverage-map travel — manage themselves.)
         const process = document.querySelector("[data-process]");
         if (process) {
           process.classList.add("pb-armed");
