@@ -29,23 +29,26 @@
       <p class="t-micro hero-trust">FIXED PRICE · WRITTEN SCOPE · YOU OWN EVERYTHING</p>
     </div>
 
-    <!-- The showcase: real client work, angled off the page the way the
-         reference presents its product. The proof strip directly below
-         names the client. -->
-    <div class="hero-shot">
-      <div class="hero-shot-tilt">
-        <div class="hero-shot-skew">
-          <img
-            src="/images/work-wulftek-home.webp"
-            width="1910"
-            height="1026"
-            alt="The WulfTek Tuning homepage — a delivered client site: registration lookup hero with the line ‘What could your car actually do?’"
-            decoding="async"
-            fetchpriority="high"
-          />
-        </div>
-      </div>
     </div>
+  </div>
+
+  <!-- The showcase: real client work, angled off the page the way the
+       reference presents its product. It sits at SECTION level, outside
+       the width-capped wrap, so its absolute anchoring and sizing resolve
+       against the full-bleed hero. The proof strip directly below names
+       the client. -->
+  <div class="hero-shot">
+    <div class="hero-shot-tilt">
+      <div class="hero-shot-skew">
+        <img
+          src="/images/work-wulftek-home.webp"
+          width="1910"
+          height="1026"
+          alt="The WulfTek Tuning homepage — a delivered client site: registration lookup hero with the line ‘What could your car actually do?’"
+          decoding="async"
+          fetchpriority="high"
+        />
+      </div>
     </div>
   </div>
 </section>
@@ -86,26 +89,28 @@
     container-type: inline-size;
   }
 
-  /* ---------- split stage: copy left, panel right ---------- */
-  /* The text keeps prominence in its own column while the panel takes the
-     rest — bigger than the stacked layout allowed, and still rising from
-     just above the proof strip: the grid bottom-aligns the shot while the
-     copy centres against it. */
+  /* ---------- split stage: copy left, panel anchored bottom-right ---------- */
+  /* The panel is no longer a grid column — the wrap's width cap made it a
+     postage stamp on wide screens (owner: "way too small for a hero").
+     It is absolutely anchored to the section's bottom-right, sized against
+     the viewport with a reserve held for the copy, and the hero itself
+     carries real height; the copy centres in what remains. */
   .hero-grid {
-    display: grid;
-    grid-template-columns: minmax(400px, 5fr) 7fr;
-    align-items: stretch;
-    gap: clamp(24px, 4vw, 56px);
+    display: block;
   }
 
   .hero-copy {
     container-type: inline-size; /* the H1 sizes itself to this column */
+    position: relative;
+    z-index: 2; /* above the panel if they ever meet */
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     text-align: left;
     justify-content: center;
-    padding-bottom: clamp(16px, 4vh, 48px);
+    max-width: 560px;
+    min-height: clamp(620px, 84svh, 920px);
+    padding-bottom: clamp(24px, 6vh, 72px);
   }
 
   /* The H1 must break exactly once, after "specialist." — at every
@@ -156,18 +161,29 @@
      does not produce the same lean. The panel bleeds off the right edge
      under two mask fades: bottom (into the proof strip) and right. */
   .hero-shot {
-    align-self: end; /* rises from just above the proof strip */
-    min-width: 0;
-    /* the fold guard: the panel may grow until the strip would leave the
-       first screen, and the fade owns the crop line */
-    max-height: clamp(300px, calc(100svh - 320px), 700px);
+    position: absolute;
+    right: 0;
+    bottom: 0; /* rises from just above the proof strip */
+    /* as wide as the screen allows while holding a 660px reserve for the
+       copy column — on a large monitor this is roughly double the grid
+       column it replaces */
+    width: clamp(560px, calc(100% - 660px), 1400px);
     overflow: clip;
-    -webkit-mask-image: linear-gradient(180deg, #000 55%, transparent 98%);
-    mask-image: linear-gradient(180deg, #000 55%, transparent 98%);
+    /* two fades intersected: the bottom melts into the proof strip, and
+       the left melts into the hero so the panel has no hard entry edge
+       where it passes behind the copy */
+    -webkit-mask-image:
+      linear-gradient(180deg, #000 55%, transparent 98%),
+      linear-gradient(90deg, transparent 0%, #000 16%);
+    -webkit-mask-composite: source-in;
+    mask-image:
+      linear-gradient(180deg, #000 55%, transparent 98%),
+      linear-gradient(90deg, transparent 0%, #000 16%);
+    mask-composite: intersect;
   }
   .hero-shot-tilt {
     perspective: 1200px;
-    margin-right: clamp(-14rem, -12vw, -4rem);
+    margin-right: clamp(-16rem, -10vw, -4rem);
     -webkit-mask-image: linear-gradient(90deg, #000 55%, transparent 100%);
     mask-image: linear-gradient(90deg, #000 55%, transparent 100%);
   }
@@ -186,9 +202,13 @@
   /* Small screens: the projection reads as distortion at phone widths —
      the panel sits flat and full-width instead, bottom fade retained. */
   @media (max-width: 860px) {
-    .hero-grid { grid-template-columns: 1fr; }
-    .hero-copy { padding-bottom: 0; }
-    .hero-shot { margin-top: 32px; max-height: clamp(220px, 38vh, 420px); }
+    .hero-copy { min-height: 0; padding-bottom: 0; }
+    .hero-shot {
+      position: static;
+      width: auto;
+      margin: 32px 24px 0;
+      max-height: clamp(220px, 38vh, 420px);
+    }
     .hero-shot-tilt {
       margin-right: 0;
       -webkit-mask-image: none;
