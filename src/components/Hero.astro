@@ -12,8 +12,9 @@
 
 <section class="hero">
   <div class="wrap hero-inner">
+    <div class="hero-grid">
     <div class="hero-copy">
-      <h1 class="t-display">You’re a&nbsp;specialist.<br />Your website&nbsp;isn’t.</h1>
+      <h1 class="t-display"><span class="line">You’re a specialist.</span><span class="line">Your website isn’t.</span></h1>
 
       <p class="standfirst">
         <span class="nowrap-sentence">The reason people choose you already exists.</span>
@@ -45,6 +46,7 @@
         </div>
       </div>
     </div>
+    </div>
   </div>
 </section>
 
@@ -53,8 +55,8 @@
   .hero {
     position: relative;
     background:
-      radial-gradient(720px 460px at 50% 22%, rgb(77 124 255 / 0.24), transparent 70%),
-      radial-gradient(1100px 700px at 50% 18%, rgb(29 78 216 / 0.15), transparent 72%),
+      radial-gradient(720px 460px at 26% 34%, rgb(77 124 255 / 0.24), transparent 70%),
+      radial-gradient(1100px 700px at 36% 26%, rgb(29 78 216 / 0.15), transparent 72%),
       var(--color-ink-deep);
     /* The header is sticky and, over the hero, surface-less: the hero
        pulls itself up behind it so what shows through the transparency is
@@ -74,8 +76,8 @@
       linear-gradient(rgb(245 247 249 / 0.055) 1px, transparent 1px),
       linear-gradient(90deg, rgb(245 247 249 / 0.055) 1px, transparent 1px);
     background-size: 56px 56px;
-    -webkit-mask-image: radial-gradient(70% 64% at 50% 24%, #000 40%, transparent 78%);
-    mask-image: radial-gradient(70% 64% at 50% 24%, #000 40%, transparent 78%);
+    -webkit-mask-image: radial-gradient(70% 70% at 42% 34%, #000 40%, transparent 78%);
+    mask-image: radial-gradient(70% 70% at 42% 34%, #000 40%, transparent 78%);
     pointer-events: none;
   }
 
@@ -84,23 +86,39 @@
     container-type: inline-size;
   }
 
-  /* ---------- the copy block, centred to the reference's balance ---------- */
+  /* ---------- split stage: copy left, panel right ---------- */
+  /* The text keeps prominence in its own column while the panel takes the
+     rest — bigger than the stacked layout allowed, and still rising from
+     just above the proof strip: the grid bottom-aligns the shot while the
+     copy centres against it. */
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(400px, 5fr) 7fr;
+    align-items: stretch;
+    gap: clamp(24px, 4vw, 56px);
+  }
+
   .hero-copy {
+    container-type: inline-size; /* the H1 sizes itself to this column */
     display: flex;
     flex-direction: column;
-    align-items: center;
-    text-align: center;
-    max-width: 680px;
-    margin-inline: auto;
+    align-items: flex-start;
+    text-align: left;
+    justify-content: center;
+    padding-bottom: clamp(16px, 4vh, 48px);
   }
 
   /* The H1 must break exactly once, after "specialist." — at every
-     breakpoint. */
+     breakpoint: each line is a hard block that never wraps, and the size
+     is capped against the column so the longer line always fits. */
   .hero-copy h1 {
     margin-top: 0;
-    max-width: 16ch;
-    font-size: min(clamp(2.625rem, 5.2vw, 4.125rem), 9.4cqw);
+    font-size: min(clamp(2.375rem, 4.2vw, 3.75rem), 9.9cqw);
     color: var(--color-sheet);
+  }
+  .hero-copy h1 .line {
+    display: block;
+    white-space: nowrap;
   }
 
   .standfirst {
@@ -115,7 +133,6 @@
   .ctas {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
     gap: 12px;
     margin-top: 28px;
   }
@@ -139,23 +156,20 @@
      does not produce the same lean. The panel bleeds off the right edge
      under two mask fades: bottom (into the proof strip) and right. */
   .hero-shot {
-    margin-top: clamp(24px, 3.5vh, 44px);
-    margin-inline: auto;
-    max-width: 1280px;
-    /* sized so the proof strip lands above the fold on open: the panel
-       keeps its width and the fade owns the crop line */
-    max-height: clamp(240px, calc(100vh - 560px), 620px);
-    max-height: clamp(240px, calc(100svh - 560px), 620px);
+    align-self: end; /* rises from just above the proof strip */
+    min-width: 0;
+    /* the fold guard: the panel may grow until the strip would leave the
+       first screen, and the fade owns the crop line */
+    max-height: clamp(300px, calc(100svh - 320px), 700px);
     overflow: clip;
-    -webkit-mask-image: linear-gradient(180deg, #000 45%, transparent 96%);
-    mask-image: linear-gradient(180deg, #000 45%, transparent 96%);
+    -webkit-mask-image: linear-gradient(180deg, #000 55%, transparent 98%);
+    mask-image: linear-gradient(180deg, #000 55%, transparent 98%);
   }
   .hero-shot-tilt {
     perspective: 1200px;
-    margin-right: -14rem;
-    padding-left: 14rem;
-    -webkit-mask-image: linear-gradient(90deg, #000 50%, transparent 100%);
-    mask-image: linear-gradient(90deg, #000 50%, transparent 100%);
+    margin-right: clamp(-14rem, -12vw, -4rem);
+    -webkit-mask-image: linear-gradient(90deg, #000 55%, transparent 100%);
+    mask-image: linear-gradient(90deg, #000 55%, transparent 100%);
   }
   .hero-shot-skew { transform: rotateX(20deg); }
   .hero-shot-skew > div,
@@ -171,10 +185,12 @@
 
   /* Small screens: the projection reads as distortion at phone widths —
      the panel sits flat and full-width instead, bottom fade retained. */
-  @media (max-width: 720px) {
+  @media (max-width: 860px) {
+    .hero-grid { grid-template-columns: 1fr; }
+    .hero-copy { padding-bottom: 0; }
+    .hero-shot { margin-top: 32px; max-height: clamp(220px, 38vh, 420px); }
     .hero-shot-tilt {
       margin-right: 0;
-      padding-left: 0;
       -webkit-mask-image: none;
       mask-image: none;
     }

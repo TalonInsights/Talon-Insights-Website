@@ -21,6 +21,9 @@
   --color-cobalt-lift: #4D7CFF;
   --color-amber-lift:  #F0B455;
   --font-sans: "ABC Diatype", "Instrument Sans", system-ui, sans-serif;
+  /* the display voice (27 Aug, owner: headings were bland): a grotesque
+     with genuine character for headlines; body text stays on the sans */
+  --font-display: "Bricolage Grotesque", "Instrument Sans", system-ui, sans-serif;
   --font-mono: "ABC Diatype Mono", "Martian Mono", ui-monospace, monospace;
   --radius: 4px;
   --shadow-card: 0 1px 2px rgb(11 31 58 / .05), 0 8px 24px rgb(11 31 58 / .06);
@@ -61,18 +64,20 @@ body {
 
 /* ---------- typography roles (§3) ---------- */
 .t-display {
+  font-family: var(--font-display);
   font-size: clamp(2.75rem, 6vw, 4.5rem);
-  font-weight: 500;
-  letter-spacing: -0.02em;
-  line-height: 1.08;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
 }
 .t-h2 {
+  font-family: var(--font-display);
   font-size: clamp(2rem, 4vw, 2.75rem);
-  font-weight: 500;
-  letter-spacing: -0.015em;
+  font-weight: 600;
+  letter-spacing: -0.02em;
   line-height: 1.15;
 }
-.t-h3 { font-size: 1.375rem; font-weight: 500; line-height: 1.3; }
+.t-h3 { font-family: var(--font-display); font-size: 1.375rem; font-weight: 600; line-height: 1.3; }
 .t-body { font-size: 1.0625rem; font-weight: 400; line-height: 1.65; max-width: 34em; }
 .t-mono {
   font-family: var(--font-mono);
