@@ -140,7 +140,7 @@ const gateShader = {
       float u = seam - vv;
       // the designated fire range: a little under the rope, up to the
       // tongues' reach — feathered over ~0.02 so the cut doesn't alias
-      float keep = smoothstep(-0.05, -0.02, u) * (1.0 - smoothstep(0.36, 0.42, u));
+      float keep = smoothstep(-0.04, -0.015, u) * (1.0 - smoothstep(0.16, 0.21, u));
       keep *= smoothstep(0.0, 0.05, x) * smoothstep(1.0, 0.95, x);
       vec4 c = texture2D(tDiffuse, vUv);
       gl_FragColor = vec4(mix(ground, c.rgb, keep), 1.0);
