@@ -73,10 +73,11 @@
 
   <!-- The showcase: real client work, straight-on (27 Aug, owner's review:
        the Tailark projection made the capture read as texture - at hero
-       scale nothing on it was legible, and proof has to be readable).
-       It sits at SECTION level, outside the width-capped wrap, anchored
-       bottom-right and pushed past the viewport edge so it bleeds off the
-       right - the section's own overflow: clip does the crop. The proof
+       scale nothing on it was legible, and proof has to be readable), then
+       CENTRED (same review, next pass): the shot floats in the zone
+       bounded by the copy, the right edge, the nav band and the proof
+       strip, equidistant within each axis - a framed card, not a bleed.
+       It sits at SECTION level, outside the width-capped wrap. The proof
        strip directly below names the client. -->
   <div class="hero-shot">
     <img
@@ -208,46 +209,59 @@
   }
 
   /* ---------- the showcase shot ---------- */
-  /* Straight-on (27 Aug, owner's review - the projection retired: the 3D
-     tilt made the capture unreadable at hero scale, and a screenshot that
-     can't be read is texture, not proof). The panel sits flush above the
-     proof strip, bleeds off the right edge (negative right offset; the
-     section's overflow: clip crops it without widening the page), and
-     carries a crisp hairline frame with a soft shadow instead of the old
-     mask fades. */
+  /* Straight-on and CENTRED (27 Aug, owner's review, two passes: first the
+     projection retired - unreadable is texture, not proof - then the bleed:
+     the panel now sits equidistant from the copy and the right edge, and
+     from the nav band and the proof strip). The .hero-shot element is the
+     ZONE: it spans copy-edge to viewport-edge and nav to strip, and flex-
+     centres the framed capture inside a uniform padding. With the aspect
+     locked, the binding axis gets exactly the padding; the free axis
+     splits its slack symmetrically - both axes stay equidistant. */
   .hero-shot {
     position: absolute;
-    /* past the viewport edge: the right-hand sliver of the capture is
-       deliberately cropped by the section - the panel reads as continuing
-       off the page */
-    right: clamp(-180px, -6vw, -60px);
-    bottom: 0; /* lands on the proof strip's top hairline */
+    /* the copy's own left formula plus the wrap's 24px padding (the copy
+       lives inside .wrap; this zone is at section level) plus its 720px
+       column: the zone begins exactly where the text column ends - if any
+       of those constants change, this changes with them. The 1164 is the
+       copy's 1140 plus 24: its 50% resolves against the wrap-padded grid
+       (48px narrower than this section), so the section-level mirror
+       needs half that back on the constant to pick the same max() branch
+       at every width */
+    left: calc(max(24px, 50% - 1164px, min(5vw, 120px)) + 24px + 720px);
+    right: 0;
+    /* the header's 68px band only (the hero pulls itself up behind the
+       sticky header) - NOT the hero's breathing clamp: the gap to the nav
+       must measure the same as the gap to the strip, and any extra here
+       would sit on top of the shared padding below */
+    top: 68px;
+    bottom: 0; /* the strip's hairline is the zone's floor */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* the equidistance: one gap, all four sides */
+    padding: clamp(24px, 3vw, 56px);
+  }
+  .hero-shot img {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 12px;
+    border: 1px solid rgb(245 247 249 / 0.16);
+    box-shadow:
+      0 48px 110px -32px rgb(0 0 0 / 0.6),
+      0 16px 40px -16px rgb(0 0 0 / 0.5);
     /* held back until the laptop hands over, then expands out of the
        screen's position into its resting pose */
     opacity: 0;
     /* the fixed point of the expansion: solved so that at the starting
-       scale the panel's box coincides with the laptop display's landed
-       rect - the photo genuinely grows out of the screen. (Re-solved for
-       the straight panel from rects measured live at 1912×1080:
-       display 415×217 @ (1041,470), panel 1057×569 @ (955,446) —
-       s = 415/1057, O = (D − s·C)/(1 − s).) */
-    transform-origin: 13.4% 6.8%;
+       scale the capture's box coincides with the laptop display's landed
+       rect (O = (D − s·C)/(1 − s), rects measured live at 1912×1080
+       for the centred pose: display 415×217 @ (1041,470), capture
+       945×509 @ (896,287) - s = 415/945). */
+    transform-origin: 27.4% 63.9%;
     animation: shot-arrive 1500ms var(--ease) 4.15s forwards;
-    /* as wide as the screen allows while holding an 840px reserve for the
-       copy column and its breathing room */
-    width: clamp(600px, calc(100% - 840px), 1560px);
-  }
-  .hero-shot img {
-    display: block;
-    width: 100%;
-    height: auto;
-    /* right corners square: that edge is cropped by the viewport */
-    border-radius: 12px 0 0 12px;
-    border: 1px solid rgb(245 247 249 / 0.16);
-    border-right: 0;
-    box-shadow:
-      0 48px 110px -32px rgb(0 0 0 / 0.6),
-      0 16px 40px -16px rgb(0 0 0 / 0.5);
   }
 
   /* ---------- the overture ---------- */
@@ -438,7 +452,7 @@
      about the solved origin) and expands to rest, fading up fast so the
      growth is what reads, not the fade */
   @keyframes shot-arrive {
-    0%   { opacity: 0; scale: 0.393; }
+    0%   { opacity: 0; scale: 0.439; }
     15%  { opacity: 1; }
     100% { opacity: 1; scale: 1; }
   }
@@ -446,7 +460,7 @@
   /* No theatre for reduced motion: the panel is simply there. */
   @media (prefers-reduced-motion: reduce) {
     .hero-theatre { display: none; }
-    .hero-shot { opacity: 1; animation: none; }
+    .hero-shot img { opacity: 1; animation: none; }
   }
 
   /* Small screens: the projection reads as distortion at phone widths —
@@ -456,14 +470,14 @@
     .hero-theatre { display: none; }
     .hero-shot {
       position: static;
-      width: auto;
+      padding: 0;
       margin: 32px 24px 0;
-      opacity: 1;
-      animation: none;
     }
     .hero-shot img {
+      opacity: 1;
+      animation: none;
+      max-height: clamp(220px, 38vh, 420px);
       border-radius: 8px;
-      border-right: 1px solid rgb(245 247 249 / 0.16);
     }
   }
 </style>
