@@ -36,13 +36,12 @@
     </div>
   </div>
 
-  <!-- The overture (owner-supplied 21st import, restaged CSS-only): a 3D
-       laptop tumbles through its open-close pass, lands open facing the
-       viewer with the WulfTek page lit on its screen, then swells and
-       hands off to the real panel below, which expands into place. Pure
-       CSS keyframes, chained by delays; reduced motion skips straight to
-       the panel. -->
-  <div class="hero-theatre" aria-hidden="true">
+  <!-- The theatre (owner-supplied 21st import, restaged CSS-only; made a
+       TOY 28 Aug): the laptop rests open and lit so the headline owns the
+       first beat — click the machine and the site swells out of its
+       screen into the panel; click the panel and it returns. Keyboard
+       reachable; reduced motion shows the panel plainly instead. -->
+  <div class="hero-theatre" role="button" tabindex="0" aria-pressed="false" aria-label="Send the website out of the laptop">
     <div class="mb-frame">
       <div class="mb-inner">
         <div class="mb-screen">
@@ -241,6 +240,12 @@
     /* the equidistance: one gap, all four sides */
     padding: clamp(24px, 3vw, 56px);
   }
+  .hero-theatre:focus-visible,
+  .hero-shot img:focus-visible {
+    outline: 2px solid var(--color-cobalt-lift);
+    outline-offset: 6px;
+  }
+
   .hero-shot img {
     display: block;
     width: auto;
@@ -266,7 +271,24 @@
        the 1912×1080 solve (centre-origin parametrisation: displayC −
        panelC = (−119.9, 36.3), s = 0.4264). */
     transform-origin: 50% 50%;
-    animation: shot-arrive 1500ms var(--ease) 4.15s forwards;
+    cursor: pointer;
+  }
+
+  /* ---------- the toggle states (28 Aug) ---------- */
+  .hero.shot-out .hero-theatre {
+    animation: mb-exit 1100ms var(--ease) 150ms forwards;
+    pointer-events: none;
+  }
+  .hero.shot-out .hero-shot img {
+    animation: shot-arrive 1500ms var(--ease) forwards;
+    pointer-events: auto;
+  }
+  .hero.shot-in .hero-theatre {
+    animation: mb-return 900ms var(--ease) both;
+  }
+  .hero.shot-in .hero-shot img {
+    animation: shot-depart 900ms var(--ease) forwards;
+    pointer-events: none;
   }
 
   /* ---------- the overture ---------- */
@@ -284,12 +306,12 @@
     height: 96px;
     scale: 3.1;
     pointer-events: none;
-    /* a full beat of rest with the screen lit before the swell — the
-       owner wanted the switch-on to land before anything else moves.
-       And the swell waits 150ms past the panel's start (27 Aug): the
-       panel must be visible ON the screen's exact rect before the
-       laptop begins to move off it, or the handoff reads misaligned */
-    animation: mb-exit 1100ms var(--ease) 4.3s forwards;
+    /* 28 Aug (owner): the overture no longer auto-runs — the hero opens
+       STILL so the headline carries the first beat, and the laptop is
+       the toggle: click it and the handoff plays; click the panel and it
+       returns. No animation at rest. */
+    pointer-events: auto;
+    cursor: pointer;
   }
   .mb-frame {
     position: absolute;
@@ -300,8 +322,9 @@
     position: absolute;
     inset: 0;
     transform-style: preserve-3d;
-    transform: rotateX(-20deg) rotateY(180deg);
-    animation: mb-rotate 2.6s ease-in-out both;
+    /* resting pose IS the landed pose — the turn retired with the
+       auto-run (28 Aug); the machine simply sits open, facing out */
+    transform: rotateX(-20deg) rotateY(360deg);
   }
 
   /* screen half */
@@ -347,10 +370,8 @@
     width: 100%; height: 100%;
     object-fit: cover;
     object-position: top;
-    opacity: 0;
-    /* the screen waits for the turn to fully settle (2.6s), THEN switches
-       on — the hold follows the light, not leftover rotation */
-    animation: mb-content 500ms ease-out 2.65s forwards;
+    /* lit at rest — the invitation is a working screen */
+    opacity: 1;
   }
   .mb-glare {
     position: absolute;
@@ -441,14 +462,9 @@
      The screen switches on with the WulfTek page, and the swell hands
      over to the real panel. The import's flip/close/bounce keyframes are
      retired with the lid, deck, key and shadow animations they drove. */
-  @keyframes mb-rotate {
-    0%   { transform: rotateX(-20deg) rotateY(180deg); }
-    82%  { transform: rotateX(-20deg) rotateY(360deg); }
-    100% { transform: rotateX(-20deg) rotateY(360deg); }
-  }
-  @keyframes mb-content {
-    from { opacity: 0; }
-    to   { opacity: 1; }
+  @keyframes mb-return {
+    0%   { opacity: 0; scale: 4.1; }
+    100% { opacity: 1; scale: 3.1; }
   }
   /* the machine swells gently and dissolves AROUND the growing photo —
      it no longer needs to carry the expansion itself */
@@ -469,12 +485,17 @@
     8%   { opacity: 1; }
     100% { opacity: 1; transform: none; }
   }
+  @keyframes shot-depart {
+    0%   { opacity: 1; transform: none; }
+    88%  { opacity: 1; }
+    100% { opacity: 0; transform: translate(var(--ho-tx, -119.9px), var(--ho-ty, 36.3px)) perspective(1550px) rotateX(-20deg) scale(var(--ho-s, 0.4264)); }
+  }
 
   /* No theatre for reduced motion: the panel is simply there. */
   /* (the runtime handoff solver below skips those cases too) */
   @media (prefers-reduced-motion: reduce) {
     .hero-theatre { display: none; }
-    .hero-shot img { opacity: 1; animation: none; }
+    .hero-shot img { opacity: 1; animation: none !important; pointer-events: none; cursor: default; }
   }
 
   /* Small screens: the projection reads as distortion at phone widths —
@@ -539,9 +560,45 @@
     img.style.setProperty("--ho-s", s.toFixed(4));
   };
   solveHandoff();
-  /* layout can shift between parse and the 4.15s start (font swap, a
-     resize) — re-solve on both; once the animation has run, the vars are
-     inert and re-solving is harmless */
+  /* layout can shift before the toy is played (font swap, a resize) —
+     re-solve on both, and again on every play */
   document.fonts?.ready.then(solveHandoff);
   window.addEventListener("resize", solveHandoff);
+
+  /* The toggle (28 Aug, owner): click the laptop → the handoff plays;
+     click the panel → it returns. Same guards as the solver — stacked
+     layouts and reduced motion never wire up. */
+  const wireToggle = () => {
+    const hero = document.querySelector<HTMLElement>(".hero");
+    const theatre = document.querySelector<HTMLElement>(".hero-theatre");
+    const img = document.querySelector<HTMLImageElement>(".hero-shot img");
+    if (!hero || !theatre || !img) return;
+    if (matchMedia("(max-width: 860px)").matches) return;
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const out = () => {
+      solveHandoff(); // fresh geometry the moment it plays
+      hero.classList.remove("shot-in");
+      hero.classList.add("shot-out");
+      theatre.setAttribute("aria-pressed", "true");
+      img.setAttribute("role", "button");
+      img.setAttribute("tabindex", "0");
+      img.setAttribute("aria-label", "Return the website into the laptop");
+    };
+    const back = () => {
+      hero.classList.remove("shot-out");
+      hero.classList.add("shot-in");
+      theatre.setAttribute("aria-pressed", "false");
+      img.removeAttribute("role");
+      img.removeAttribute("tabindex");
+      img.removeAttribute("aria-label");
+    };
+    const key = (fn: () => void) => (e: KeyboardEvent) => {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); fn(); }
+    };
+    theatre.addEventListener("click", () => { if (!hero.classList.contains("shot-out")) out(); });
+    theatre.addEventListener("keydown", key(() => { if (!hero.classList.contains("shot-out")) out(); }));
+    img.addEventListener("click", () => { if (hero.classList.contains("shot-out")) back(); });
+    img.addEventListener("keydown", key(() => { if (hero.classList.contains("shot-out")) back(); }));
+  };
+  wireToggle();
 </script>
