@@ -45,7 +45,7 @@
           <div class="mb-screen-face">
             <div class="mb-camera"></div>
             <div class="mb-display">
-              <img src="/images/work-wulftek-home.webp" alt="" loading="eager" decoding="async" />
+              <img src="/images/work-wulftek-screen.webp" alt="" loading="eager" decoding="async" />
               <div class="mb-glare"></div>
             </div>
           </div>
@@ -221,7 +221,7 @@
        screen's position into its resting pose */
     opacity: 0;
     transform-origin: 62% 58%;
-    animation: shot-arrive 900ms var(--ease) 5.15s forwards;
+    animation: shot-arrive 1400ms var(--ease) 5.3s forwards;
     /* as wide as the screen allows while holding a 660px reserve for the
        copy column — on a large monitor this is roughly double the grid
        column it replaces */
@@ -281,7 +281,7 @@
     height: 96px;
     scale: 3.1;
     pointer-events: none;
-    animation: mb-exit 800ms var(--ease) 5.05s forwards;
+    animation: mb-exit 1250ms var(--ease) 5.05s forwards;
   }
   .mb-frame {
     position: absolute;
@@ -436,15 +436,14 @@
     25%  { transform: rotateX(-60deg) rotateY(150deg); }
     60%  { transform: rotateX(-20deg) rotateY(130deg); }
     65%  { transform: rotateX(-20deg) rotateY(120deg); }
-    /* the tail is the import's, VERBATIM: the pen's -20deg landing is its
-       face-on pose, screen up with the keyboard deck showing beneath —
-       flattening it further (tried at -6 and -12) hides the deck, turns
-       the machine into a bezelled tablet, and walks the pose through the
-       band where the deck's far key row peeks above the lid */
-    80%  { transform: rotateX(-20deg) rotateY(375deg); }
-    85%  { transform: rotateX(-20deg) rotateY(357deg); }
-    87%  { transform: rotateX(-20deg) rotateY(360deg); }
-    100% { transform: rotateX(-20deg) rotateY(360deg); }
+    /* the tail keeps the import's -20deg X (its face-on pose; shallower
+       hides the deck) but banks into the SHOWCASE PANEL'S OWN LEAN for
+       the landing — right side receding, a breath of clockwise tilt
+       echoing the panel's skew — so the handoff reads as one object */
+    80%  { transform: rotateX(-20deg) rotateY(375deg) rotateZ(0deg); }
+    85%  { transform: rotateX(-20deg) rotateY(357deg) rotateZ(0deg); }
+    87%  { transform: rotateX(-20deg) rotateY(360deg) rotateZ(0deg); }
+    100% { transform: rotateX(-17deg) rotateY(338deg) rotateZ(3deg); }
   }
   @keyframes mb-lid {
     0%   { transform: rotateX(0deg); background-position: left bottom; }
