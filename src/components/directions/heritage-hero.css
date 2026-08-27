@@ -36,10 +36,13 @@
   padding: 1.1cqw 2.2cqw;
   background: rgb(43 33 24 / 0.06);
   border-bottom: 1px solid rgb(43 33 24 / 0.14);
-  font-family: "Martian Mono", ui-monospace, monospace;
-  font-size: 1.25cqw;
-  letter-spacing: 0.08em;
-  color: rgb(43 33 24 / 0.55);
+  /* B's micro-type is the serif in small caps, not C's spaced mono — two
+     directions that share a label treatment read as one template repainted */
+  font-family: "Fraunces", Georgia, serif;
+  font-variant: small-caps;
+  font-size: 1.35cqw;
+  letter-spacing: 0.1em;
+  color: rgb(43 33 24 / 0.58);
 }
 .hh-dots { display: inline-flex; gap: 0.7cqw; }
 .hh-dots i {
@@ -58,11 +61,42 @@
   gap: 3cqw;
   padding: 2cqw 4cqw;
 }
-.hh-logo {
-  height: 3cqw;
-  width: auto;
-  display: block;
+.hh-mark {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5cqw;
   flex: none;
+}
+.hh-mark-name {
+  font-family: "Fraunces", Georgia, serif;
+  /* the largest optical size is the high-contrast cut — the Didone end of
+     Fraunces, which is the axis this direction is built on */
+  font-variation-settings: "opsz" 144, "SOFT" 0, "WONK" 0;
+  font-weight: 600;
+  font-size: 2.4cqw;
+  line-height: 1;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--hh-ink);
+}
+.hh-mark-rule {
+  display: block;
+  align-self: stretch;
+  height: 4px;
+  /* letterpress thick-thin rule */
+  background: linear-gradient(
+    rgb(43 33 24 / 0.55) 0 1.5px,
+    transparent 1.5px 3px,
+    rgb(43 33 24 / 0.3) 3px 4px
+  );
+}
+.hh-mark-sub {
+  font-family: "Fraunces", Georgia, serif;
+  font-variant: small-caps;
+  font-size: 1.05cqw;
+  letter-spacing: 0.26em;
+  color: rgb(43 33 24 / 0.6);
 }
 .hh-links { margin-left: auto; display: flex; gap: 2.6cqw; }
 .hh-links button {
@@ -108,19 +142,20 @@
 }
 .hh .hh-kicker {
   font-weight: 400;
-  font-family: "Martian Mono", ui-monospace, monospace;
-  font-size: 1.2cqw;
-  letter-spacing: 0.32em;
-  color: rgb(43 33 24 / 0.5);
+  font-family: "Fraunces", Georgia, serif;
+  font-variant: small-caps;
+  font-size: 1.5cqw;
+  letter-spacing: 0.24em;
+  color: rgb(43 33 24 / 0.55);
 }
 /* two classes on purpose: the portal mounts inside the homepage's .g-ink
    band, whose global heading/paragraph rules out-specify single classes
    (the fire page's hard-won lesson) */
 .hh .hh-display {
   color: var(--hh-ink);
-  margin-top: 1.2cqw;
+  margin-top: 0.9cqw;
   font-weight: 500;
-  font-size: 5.6cqw;
+  font-size: 5.1cqw;
   line-height: 1.06;
   letter-spacing: -0.01em;
   max-width: 30em;
@@ -132,8 +167,8 @@
 
 /* the gate: centre stage, drawing itself */
 .hh-gate {
-  margin-top: 2.2cqw;
-  width: 40cqw;
+  margin-top: 0.9cqw;
+  width: 30cqw;
   height: auto;
   color: var(--hh-ink);
 }
@@ -161,23 +196,25 @@
 
 .hh .hh-sub {
   font-weight: 400;
-  margin-top: 2cqw;
-  max-width: 34em;
+  margin-top: 0.9cqw;
+  /* wider measure: the stock sentence pushed this to a fourth line, and the
+     stage pays for extra lines by shrinking the gate */
+  max-width: 44em;
   font-family: "Fraunces", Georgia, serif;
-  font-size: 1.7cqw;
-  line-height: 1.6;
+  font-size: 1.55cqw;
+  line-height: 1.55;
   color: rgb(43 33 24 / 0.75);
 }
 
-.hh-ctas { display: flex; gap: 1.8cqw; margin-top: 2.4cqw; }
+.hh-ctas { display: flex; gap: 1.8cqw; margin-top: 1.2cqw; }
 .hh-primary {
   background: var(--hh-oxblood);
   border: 1px solid var(--hh-oxblood);
   border-radius: 2px;
-  padding: 1.3cqw 3.2cqw;
+  padding: 1.05cqw 3.2cqw;
   font-family: "Fraunces", Georgia, serif;
   font-weight: 500;
-  font-size: 1.7cqw;
+  font-size: 1.6cqw;
   letter-spacing: 0.04em;
   color: #F8F2E4;
   cursor: pointer;
@@ -188,10 +225,10 @@
   background: none;
   border: 1px solid rgb(43 33 24 / 0.35);
   border-radius: 2px;
-  padding: 1.3cqw 3.2cqw;
+  padding: 1.05cqw 3.2cqw;
   font-family: "Fraunces", Georgia, serif;
   font-weight: 500;
-  font-size: 1.7cqw;
+  font-size: 1.6cqw;
   letter-spacing: 0.04em;
   color: var(--hh-ink);
   cursor: pointer;
@@ -209,21 +246,33 @@
 
 .hh-specs {
   display: flex;
-  gap: 3.2cqw;
-  margin-top: 2.4cqw;
-  font-family: "Martian Mono", ui-monospace, monospace;
-  font-size: 1.1cqw;
-  letter-spacing: 0.2em;
-  color: rgb(43 33 24 / 0.45);
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.8cqw 3cqw;
+  margin-top: 1.2cqw;
+  font-family: "Fraunces", Georgia, serif;
+  font-variant: small-caps;
+  font-size: 1.35cqw;
+  letter-spacing: 0.14em;
+  color: rgb(43 33 24 / 0.5);
+}
+.hh .hh-creds {
+  font-weight: 400;
+  margin-top: 0.8cqw;
+  font-family: "Fraunces", Georgia, serif;
+  font-variant: small-caps;
+  font-size: 1.2cqw;
+  letter-spacing: 0.16em;
+  color: var(--hh-gold);
 }
 
 .hh .hh-foot {
   font-weight: 400;
   padding: 1.4cqw 4cqw;
   border-top: 1px solid rgb(43 33 24 / 0.14);
-  font-family: "Martian Mono", ui-monospace, monospace;
-  font-size: 1.05cqw;
-  letter-spacing: 0.14em;
+  font-family: "Fraunces", Georgia, serif;
+  font-size: 1.15cqw;
+  letter-spacing: 0.1em;
   text-align: center;
-  color: rgb(43 33 24 / 0.45);
+  color: rgb(43 33 24 / 0.55);
 }

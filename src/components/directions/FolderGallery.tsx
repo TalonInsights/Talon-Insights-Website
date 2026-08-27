@@ -11,6 +11,12 @@ const ArchHero = lazy(() => import("./ArchHero"));
 /* one interactable page per direction; index-aligned with DIRECTIONS */
 const PORTAL_PAGES = [FireHero, HeritageHero, ArchHero] as const;
 
+const DEEP_LINKS: Record<string, number> = {
+  "#fire": 0,
+  "#heritage": 1,
+  "#arch": 2,
+};
+
 /* B5 — the Directions folder (island). Mechanics adapted from the 21st
    "Interactive Folder Gallery" (owner-supplied, §7 import #5): closed-stack
    folder, hover fan, click-to-open, drag-any-card-down-to-close.
@@ -79,17 +85,18 @@ export default function FolderGallery() {
   const hintButtonRef = useRef<HTMLButtonElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
-  /* Deep link: #fire opens the folder with Direction A already enlarged.
-     The owner's iteration loop lives on that page, and driven browsers
-     cannot always perform the tap gestures — a URL that lands there
-     directly serves both. The expand pose is computed on the next frame,
-     once the fan has real geometry to measure. */
+  /* Deep links: #fire, #heritage and #arch open the folder with that
+     direction already enlarged. The owner's iteration loop lives on these
+     pages, and driven browsers cannot always perform the tap gestures — a
+     URL that lands there directly serves both. The expand pose is computed
+     on the next frame, once the fan has real geometry to measure. */
   useEffect(() => {
-    if (window.location.hash !== "#fire") return;
+    const target = DEEP_LINKS[window.location.hash];
+    if (target === undefined) return;
     setIsOpen(true);
     const t = window.setTimeout(() => {
       rootRef.current?.scrollIntoView({ block: "center", behavior: "instant" });
-      expand(0);
+      expand(target);
     }, 120);
     return () => window.clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps

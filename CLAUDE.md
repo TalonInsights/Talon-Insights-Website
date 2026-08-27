@@ -53,6 +53,27 @@ npm run map        # regenerate src/data/map-dots.json (network; result is commi
   stripped to tokens; the comps render live inside the cards, never as
   screenshots, and the Unsplash defaults were discarded (CSP allows only
   self-hosted images anyway).
+- **The Wrekin Forge directions must survive a tradesman reading them**
+  (27 Aug, owner's accuracy review). Every figure and standard on those
+  pages is checkable and was corrected once already: handrail 1 100 mm for
+  level guarding, BS 6180's 0.74/1.5 kN/m pair, `EN 1090-1 · EXC2 · UKCA`
+  (not "EN 1090 / CE" — UKCA is the GB regime), a stated substrate and
+  galvanising spec, ±1 mm on fabrication (a 0.5 mm claim loses to thermal
+  movement across a 3.2 m run). On the heritage page: *jointing*, not
+  joinery; MIG is what a smith avoids, not welding as such; listed-building
+  consent is the owner's application, so the forge supplies the drawings for
+  it. Never invent a number on these pages to make a layout feel precise.
+- **The three directions must differ below the paint.** Direction B carries
+  its own letterpress wordmark (no WF monogram — that mark is C's) and sets
+  its micro-type as serif small caps where C uses spaced mono. A direction
+  that shares an identity and a label treatment reads as one template
+  repainted, which is the opposite of what the folder demonstrates.
+  `#fire`, `#heritage` and `#arch` deep-link straight into each page.
+- **Each direction page is a fixed-height flex column.** Adding content does
+  not overflow it — it silently squashes the shrinkable children (the SVGs
+  letterbox, block content clips under `overflow: hidden`). After any content
+  change, set `flex-shrink: 0` on every stage child and check rendered
+  heights still equal natural heights.
 - **Motion budget: two orchestrated moments** — process bars (scroll-in)
   and the B10 coverage-map travel (scroll-in, once, ≤1600ms). The hero's
   plan-bar draw retired with the panel (27 Aug); the hero is fully static.

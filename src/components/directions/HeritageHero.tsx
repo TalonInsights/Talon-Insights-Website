@@ -28,13 +28,15 @@ export default function HeritageHero() {
       </div>
 
       <div className="hh-nav">
-        <img
-          className="hh-logo"
-          src="/images/wrekin-forge-lockup-dark.webp"
-          width={1406}
-          height={144}
-          alt="Wrekin Forge"
-        />
+        {/* the WF monogram belongs to Direction C: sharp, geometric, aerospace.
+            A direction that only repaints the identity isn't a direction, so
+            B carries a letterpress wordmark instead — no mark, Didone-weight
+            serif, thick-thin rule, provenance beneath. */}
+        <span className="hh-mark">
+          <span className="hh-mark-name">Wrekin Forge</span>
+          <span className="hh-mark-rule" aria-hidden="true" />
+          <span className="hh-mark-sub">Shropshire · est. 1998</span>
+        </span>
         <nav className="hh-links" aria-label="Wrekin Forge demonstration">
           <button type="button">Restoration</button>
           <button type="button">Conservation</button>
@@ -44,7 +46,7 @@ export default function HeritageHero() {
       </div>
 
       <div className="hh-stage">
-        <p className="hh-kicker">WREKIN FORGE · SHROPSHIRE · EST. 1998</p>
+        <p className="hh-kicker">Blacksmiths and metals conservators</p>
         <h2 className="hh-display">
           Ironwork for buildings <em>with&nbsp;history.</em>
         </h2>
@@ -72,6 +74,8 @@ export default function HeritageHero() {
         <p className="hh-sub">
           Gates, railings and balustrades restored, conserved and commissioned for
           listed buildings — matched to the original ironwork, joint for joint.
+          Reclaimed wrought where the original demands it; mild steel where it
+          doesn't.
         </p>
 
         <div className="hh-ctas">
@@ -79,11 +83,22 @@ export default function HeritageHero() {
           <button type="button" className="hh-ghost">Past commissions</button>
         </div>
 
+        {/* Corrected 27 Aug. Joinery is woodwork; the metalwork term is
+            jointing. "Wrought, not welded" reads as ignorance — fire welding
+            is one of the oldest operations in the smithy; what a heritage
+            smith avoids is MIG. And listed-building consent is the owner's
+            application to make: what the forge supplies is the drawings that
+            support it. */}
         <div className="hh-specs" aria-hidden="true">
-          <span>LISTED-BUILDING CONSENT</span>
-          <span>TRADITIONAL JOINERY</span>
-          <span>WROUGHT, NOT WELDED</span>
+          <span>Drawings for listed-building consent</span>
+          <span>Traditional jointing</span>
+          <span>Forged and riveted, not MIG&rsquo;d</span>
         </div>
+
+        {/* on listed work these outrank every claim above them */}
+        <p className="hh-creds">
+          SPAB member · ICON Conservation Register · Historic England guidance followed
+        </p>
       </div>
 
       <p className="hh-foot">

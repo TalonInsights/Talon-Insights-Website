@@ -78,19 +78,25 @@
   transition: color 180ms ease;
 }
 .ah-links button:hover { color: var(--ah-ink); }
-.ah-navcta {
-  background: var(--ah-ink);
-  border: 1px solid var(--ah-ink);
-  border-radius: 3px;
-  padding: 0.9cqw 2.2cqw;
+/* demoted from a filled button (27 Aug review): `Send your drawings` is the
+   page's only capture; the detail pack is a link that sits beside the nav */
+.ah-navlink {
+  background: none;
+  border: 0;
+  margin-left: 0.8cqw;
+  padding: 0.4cqw 0;
   font: inherit;
   font-weight: 500;
   font-size: 1.5cqw;
-  color: var(--ah-sheet);
+  letter-spacing: 0.02em;
+  color: var(--ah-blue);
+  text-decoration: underline;
+  text-underline-offset: 0.35em;
+  text-decoration-thickness: 1px;
   cursor: pointer;
-  transition: background-color 180ms ease;
+  transition: color 180ms ease;
 }
-.ah-navcta:hover { background: #2A3340; }
+.ah-navlink:hover { color: var(--ah-ink); }
 
 /* ---------- the stage ---------- */
 .ah-stage {
@@ -126,11 +132,19 @@
   color: var(--ah-blue);
 }
 
+/* drawing sheet: elevation left, schedule right */
+.ah-sheet {
+  display: flex;
+  align-items: center;
+  gap: 3cqw;
+  margin-top: 1.4cqw;
+}
+
 /* the elevation, plotting itself */
 .ah-draw {
-  margin-top: 1.6cqw;
-  width: 44cqw;
+  width: 42cqw;
   height: auto;
+  flex: none;
 }
 .ah-s {
   stroke-dasharray: 400;
@@ -138,7 +152,13 @@
   animation: ah-plot 1.4s ease-out forwards;
 }
 .ah-s2 { animation-delay: 0.5s; }
-.ah-s3 { animation-delay: 1s; }
+.ah-s3 {
+  animation-delay: 1s;
+  /* ~26 balusters end to end overrun the 400 default: a short dash would
+     leave the far end of the run permanently undrawn */
+  stroke-dasharray: 1100;
+  stroke-dashoffset: 1100;
+}
 .ah-s4 { animation-delay: 1.5s; animation-duration: 0.8s; }
 .ah-s5 { animation-delay: 1.7s; animation-duration: 0.6s; }
 .ah-dims {
@@ -154,18 +174,23 @@
 
 /* spec sheet row */
 .ah-specs {
-  margin: 1.8cqw 0 0;
-  display: flex;
-  gap: 0;
+  margin: 0;
+  width: 42cqw;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  /* the 1px gaps ARE the rules: the container paints the line colour behind
+     white cells, so both axes divide without eight border declarations */
+  gap: 1px;
   border: 1px solid rgb(22 27 34 / 0.16);
   border-radius: 3px;
-  background: rgb(255 255 255 / 0.75);
+  background: rgb(22 27 34 / 0.12);
+  overflow: hidden;
 }
 .ah-specs > div {
-  padding: 1cqw 2.2cqw;
+  padding: 0.75cqw 1.3cqw;
   text-align: left;
+  background: rgb(255 255 255 / 0.78);
 }
-.ah-specs > div + div { border-left: 1px solid rgb(22 27 34 / 0.12); }
 .ah-specs dt {
   font-family: "Martian Mono", ui-monospace, monospace;
   font-size: 0.95cqw;
@@ -175,16 +200,17 @@
 }
 .ah-specs dd {
   margin: 0.3cqw 0 0;
-  font-size: 1.4cqw;
+  font-size: 1.05cqw;
+  line-height: 1.32;
   font-weight: 500;
 }
 
-.ah-ctas { display: flex; gap: 1.6cqw; margin-top: 2.2cqw; }
+.ah-ctas { display: flex; gap: 1.6cqw; margin-top: 1.9cqw; }
 .ah-primary {
   background: var(--ah-blue);
   border: 1px solid var(--ah-blue);
   border-radius: 3px;
-  padding: 1.2cqw 3cqw;
+  padding: 1.05cqw 3cqw;
   font: inherit;
   font-weight: 500;
   font-size: 1.6cqw;
@@ -193,23 +219,9 @@
   transition: background-color 180ms ease;
 }
 .ah-primary:hover { background: #35619F; }
-.ah-ghost {
-  background: none;
-  border: 1px solid rgb(22 27 34 / 0.3);
-  border-radius: 3px;
-  padding: 1.2cqw 3cqw;
-  font: inherit;
-  font-weight: 500;
-  font-size: 1.6cqw;
-  color: var(--ah-ink);
-  cursor: pointer;
-  transition: border-color 180ms ease, color 180ms ease;
-}
-.ah-ghost:hover { border-color: var(--ah-blue); color: var(--ah-blue); }
 
 .ah-primary:focus-visible,
-.ah-ghost:focus-visible,
-.ah-navcta:focus-visible,
+.ah-navlink:focus-visible,
 .ah-links button:focus-visible {
   outline: 2px solid var(--ah-blue);
   outline-offset: 3px;
@@ -218,7 +230,7 @@
 .ah-chips {
   display: flex;
   gap: 1.2cqw;
-  margin-top: 2.2cqw;
+  margin-top: 1.8cqw;
 }
 .ah-chips span {
   font-family: "Martian Mono", ui-monospace, monospace;

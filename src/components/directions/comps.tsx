@@ -99,43 +99,45 @@ export function DirectionArchitectural() {
 }
 
 export function DirectionArchitecturalComp() {
+  // retired from the card, kept for history — but corrected with the live
+  // page on 27 Aug so no wrong claim can come back with it if it is restored
   return (
     <div className="comp comp-arch" aria-hidden="true">
       <div className="arch-bar">
         <span className="arch-mark"><i />Wrekin Forge</span>
-        <span className="arch-cert">EN 1090 / CE</span>
+        <span className="arch-cert">EN 1090-1 · EXC2 · UKCA</span>
       </div>
       <div className="arch-body">
         <div>
           <div className="arch-h">Balustrades, engineered to the millimetre.</div>
           <dl className="arch-specs">
+            <div className="arch-spec"><dt>Material</dt><dd>S275, galvanised</dd></div>
             <div className="arch-spec"><dt>Finish</dt><dd>RAL 7016 powder</dd></div>
-            <div className="arch-spec"><dt>Span</dt><dd>3 200 mm</dd></div>
+            <div className="arch-spec"><dt>Overall run</dt><dd>3 200 mm</dd></div>
             <div className="arch-spec"><dt>Fixing</dt><dd>M12 resin anchor</dd></div>
             <div className="arch-spec"><dt>Lead</dt><dd>6 weeks</dd></div>
           </dl>
         </div>
-        {/* staircase balustrade elevation with dimension ticks */}
-        <svg className="arch-draw" viewBox="0 0 150 108" fill="none">
-          <g stroke="#161B22" strokeWidth="1.1">
-            {/* stringer and treads */}
-            <path d="M10 96 H50 V82 H82 V68 H114 V54 H140" />
-            {/* balusters */}
-            <path d="M22 96 V64 M38 96 V56 M54 82 V48 M70 82 V40 M86 68 V33 M102 68 V25 M118 54 V17 M132 54 V11" strokeWidth="0.9" />
-            {/* handrail */}
-            <path d="M14 70 L140 5" strokeWidth="1.6" />
+        {/* level guarding run: posts at 1 200 centres, handrail at 1 100 */}
+        <svg className="arch-draw" viewBox="0 0 156 88" fill="none">
+          <g stroke="#161B22">
+            {/* floor line and posts */}
+            <path d="M4 65 H150 M10 65 V20 M58.75 65 V20 M107.5 65 V20 M140 65 V20" strokeWidth="1.1" />
+            {/* handrail and kick rail */}
+            <path d="M10 20 H140 M10 57 H140" strokeWidth="1.5" />
+            {/* infill at 110 mm centres */}
+            <path d="M14.47 57 V20 M18.94 57 V20 M23.41 57 V20 M27.88 57 V20 M32.34 57 V20 M36.81 57 V20 M41.28 57 V20 M45.75 57 V20 M50.22 57 V20 M54.69 57 V20 M63.63 57 V20 M68.09 57 V20 M72.56 57 V20 M77.03 57 V20 M81.5 57 V20 M85.97 57 V20 M90.44 57 V20 M94.91 57 V20 M99.38 57 V20 M103.84 57 V20 M112.78 57 V20 M117.25 57 V20 M121.72 57 V20 M126.19 57 V20 M130.66 57 V20 M135.13 57 V20" strokeWidth="0.7" />
           </g>
           <g stroke="#29508F" strokeWidth="0.7">
-            {/* dimension line + ticks */}
-            <path d="M10 103 H140" />
-            <path d="M10 100 V106 M140 100 V106" />
-            {/* rise annotation */}
-            <path d="M146 54 V96" />
-            <path d="M143 54 H149 M143 96 H149" />
+            {/* overall run */}
+            <path d="M10 76 H140 M10 73 V79 M140 73 V79 M10 66 V78 M140 66 V78" />
+            {/* handrail height, one bay at post centres */}
+            <path d="M147 20 V65 M144 20 H150 M144 65 H150 M10 10 H58.75 M10 7 V13 M58.75 7 V13 M10 19 V9 M58.75 19 V9" />
           </g>
           <g fill="#29508F" fontFamily="Martian Mono, ui-monospace, monospace" fontSize="5">
-            <text x="66" y="101" textAnchor="middle">3200</text>
-            <text x="148" y="78" textAnchor="middle" transform="rotate(90 148 78)">RISE 900</text>
+            <text x="75" y="84" textAnchor="middle">3200</text>
+            <text x="34.4" y="5.4" textAnchor="middle" fontSize="4">1200 C/C</text>
+            <text x="153" y="42.5" textAnchor="middle" fontSize="4" transform="rotate(90 153 42.5)">HANDRAIL 1100</text>
           </g>
         </svg>
       </div>
