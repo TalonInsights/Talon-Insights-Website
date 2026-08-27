@@ -7,12 +7,9 @@
 // services run as a strip along the band's foot. One dark stage, one
 // story: what I do, demonstrated live in the middle of it.
 import FolderGallery from "./directions/FolderGallery";
-
-const strip = [
-  { num: "02", name: "CUSTOM SOFTWARE", body: "Internal tools built round how you actually run the job.", price: "From £6,000" },
-  { num: "03", name: "LOCAL SEO", body: "Found by people nearby who are ready to buy.", price: "From £450/mo" },
-  { num: "04", name: "RESEARCH & STRATEGY", body: "Analysis you can act on — and defend.", price: "Per engagement" },
-];
+// The subordinate-services strip (02 CUSTOM SOFTWARE / 03 LOCAL SEO /
+// 04 RESEARCH & STRATEGY) was removed 27 Aug (owner) — the captions now
+// close the band. Git history keeps the strip if those offers return.
 ---
 
 <section class="services g-ink dband" id="services">
@@ -67,15 +64,6 @@ const strip = [
       </p>
     </div>
 
-    <div class="strip" data-rv>
-      {strip.map((s) => (
-        <div class="strip-item">
-          <p class="t-mono strip-name">{s.num} / {s.name}</p>
-          <p class="strip-body">{s.body}</p>
-          <p class="t-mono strip-price">{s.price}</p>
-        </div>
-      ))}
-    </div>
   </div>
 </section>
 
@@ -164,6 +152,9 @@ const strip = [
 
   .demo-captions {
     margin-top: 40px;
+    /* the captions close the band now the strip is gone — a touch of
+       foot-room so the last line doesn't sit on the section edge */
+    padding-bottom: 8px;
     display: grid;
     gap: 8px;
     text-align: center;
@@ -177,20 +168,6 @@ const strip = [
   }
   .caption-link:hover { color: var(--color-amber); }
 
-  /* ---------- subordinate strip on the band's foot ---------- */
-  .strip {
-    margin-top: 56px;
-    padding-top: 40px;
-    border-top: 1px solid rgb(245 247 249 / 0.14);
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-  }
-  .strip-item { padding: 8px 32px; }
-  .strip-item:first-child { padding-left: 0; }
-  .strip-item + .strip-item { border-left: 1px solid rgb(245 247 249 / 0.14); }
-  .strip-name { color: var(--color-sheet); }
-  .strip-body { color: rgb(245 247 249 / 0.62); font-size: 0.9375rem; margin-top: 8px; max-width: 26em; }
-  .strip-price { color: rgb(245 247 249 / 0.55); margin-top: 12px; }
 
   /* ---------- responsive ---------- */
   @media (max-width: 1100px) {
@@ -200,8 +177,5 @@ const strip = [
   }
   @media (max-width: 767.98px) {
     .services { padding-block: 64px; }
-    .strip { grid-template-columns: 1fr; margin-top: 48px; }
-    .strip-item { padding: 20px 0; }
-    .strip-item + .strip-item { border-left: 0; border-top: 1px solid rgb(245 247 249 / 0.14); }
   }
 </style>
