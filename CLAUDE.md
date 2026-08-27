@@ -95,9 +95,11 @@ npm run map        # regenerate src/data/map-dots.json (network; result is commi
   these.
 - **Gated content ships absent, never faked** (§8): the B4 workshop photo,
   Harry quote, WulfTek vignette (copy is final in the spec, gated on
-  consent), B9 photo (needs consent + crop + barcode retouch), and the
-  planner capture are all omitted until real. No placeholders, no stock, no
-  AI imagery, no paraphrased quotes.
+  consent), and the planner capture are all omitted until real. No
+  placeholders, no stock, no AI imagery, no paraphrased quotes. The B9
+  photo gate closed 27 Aug: the owner supplied his own portrait
+  (`talon-portrait.webp`, 640px native — replace under the same filename
+  if a sharper export arrives).
 - The Wrekin Forge comps (`src/components/directions/comps.tsx`) are exempt
   from the token system by design — that exemption extends no further.
 

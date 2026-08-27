@@ -1,61 +1,181 @@
 ---
-// B9 — About (id="about"). ASSET P1 (the client-meeting photograph) is
-// status 🔶: its own prep order starts with the client's consent, which the
-// owner has not yet confirmed — so the block ships text-only, mirroring
-// B4's absent state. When cleared: grid 7/5, photo right at
-// /images/talon-client-meeting.webp (≤180kb, cropped in from the left,
-// notebook barcode retouched), 4px radius, hairline, no shadow.
-// Alt: "Talon Herring in conversation with a client, notebook open."
+// B9 — About (id="about"), restaged 27 Aug (owner): the photograph lands —
+// owner-supplied portrait at the client table, notebook open, pen in hand
+// (this supersedes the P1 consent gate: it is the owner's own photo of
+// himself). The section joins the dark run with the method/case ground
+// language, and the credentials split into the two halves the owner
+// asked the block to carry: the skillset and the person. The PM
+// qualification appears without its grade (owner: pointless to a
+// visitor). Photo is 640px native — the owner's source; a sharper export
+// can replace it under the same filename.
 
-const rows = [
-  { key: "QUALIFICATION", value: "Level 4 Associate Project Manager, with Distinction" },
+const skillset = [
+  { key: "QUALIFICATION", value: "Qualified Associate Project Manager" },
   { key: "TRACK RECORD", value: "Four years running projects where scope and deadlines are not negotiable" },
   { key: "DELIVERY", value: "Full-stack — Supabase, Stripe, Three.js, shipped through GitHub and Vercel" },
+];
+
+const person = [
   { key: "STRUCTURE", value: "One person, start to finish — no handoffs, no account managers" },
+  { key: "ON SITE", value: "Notebook and pen before a laptop — the first visit is for listening" },
+  { key: "BASE", value: "Telford — everywhere on the map below is within an hour" },
 ];
 ---
 
-<section class="about g-sheet" id="about">
-  <div class="wrap">
-    <p class="t-micro eyebrow">WHO YOU’D BE HIRING</p>
-    <h2 class="t-h2">The engineer who runs the&nbsp;job.</h2>
+<section class="about g-ink" id="about">
+  <div class="about-wrap">
+    <div class="about-grid">
+      <div class="about-copy">
+        <p class="t-micro eyebrow">WHO YOU’D BE HIRING</p>
+        <h2 class="t-h2">The engineer who runs the&nbsp;job.</h2>
 
-    <p class="t-body about-body" data-rv>
-      Most developers can’t run a project to time and budget. Most project managers
-      can’t build. I do both — and it’s just me, which is the point: the person you meet on
-      site is the person who designs, builds, and answers the phone.
-    </p>
+        <p class="t-body about-body" data-rv>
+          Most developers can’t run a project to time and budget. Most project managers
+          can’t build. I do both — and it’s just me, which is the point: the person you meet on
+          site is the person who designs, builds, and answers the phone.
+        </p>
 
-    <div class="cred-rows" data-rv>
-      {rows.map((row) => (
-        <div class="cred-row">
-          <span class="t-micro cred-key">{row.key}</span>
-          <span class="cred-value">{row.value}</span>
+        <div class="cred-cols" data-rv>
+          <div class="cred-group">
+            <p class="t-micro cred-head">THE SKILLSET</p>
+            {skillset.map((row) => (
+              <div class="cred-row">
+                <span class="t-micro cred-key">{row.key}</span>
+                <span class="cred-value">{row.value}</span>
+              </div>
+            ))}
+          </div>
+          <div class="cred-group">
+            <p class="t-micro cred-head">THE PERSON</p>
+            {person.map((row) => (
+              <div class="cred-row">
+                <span class="t-micro cred-key">{row.key}</span>
+                <span class="cred-value">{row.value}</span>
+              </div>
+            ))}
+          </div>
         </div>
-      ))}
+      </div>
+
+      <div class="about-photo" data-rv>
+        <figure class="about-frame">
+          <img
+            src="/images/talon-portrait.webp"
+            width={640}
+            height={360}
+            loading="lazy"
+            decoding="async"
+            alt="Talon Herring at a client table, notebook open, pen in hand."
+          />
+        </figure>
+        <p class="about-caption t-mono">THE PERSON ACROSS THE TABLE<i>◆</i>TELFORD</p>
+      </div>
     </div>
   </div>
 </section>
 
 <style>
-  .about { padding-block: 120px; }
-  .about-body { margin-top: 32px; }
-
-  .cred-rows { margin-top: 48px; max-width: 640px; }
-  .cred-row {
-    display: grid;
-    grid-template-columns: 150px 1fr;
-    gap: 16px;
-    align-items: baseline;
-    padding-block: 16px;
-    border-top: var(--hairline);
+  .about {
+    padding-block: 120px;
+    /* the method/case ground language: cobalt washes through ink-deep —
+       here the light sits behind the portrait and answers low-left */
+    background:
+      radial-gradient(900px 520px at 82% 30%, rgb(29 78 216 / 0.18), transparent 68%),
+      radial-gradient(700px 400px at 46% 92%, rgb(29 78 216 / 0.07), transparent 72%),
+      radial-gradient(800px 440px at 8% 10%, rgb(29 78 216 / 0.12), transparent 70%),
+      var(--color-ink-deep);
   }
-  .cred-row:last-child { border-bottom: var(--hairline); }
-  .cred-key { color: var(--color-graphite); }
-  .cred-value { color: var(--color-ink); }
+  .about-wrap {
+    max-width: 1560px; /* matches faults/method/case/process */
+    margin-inline: auto;
+    padding-inline: 24px;
+  }
+  .about-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: clamp(40px, 5vw, 96px);
+    align-items: center;
+  }
 
-  @media (max-width: 639.98px) {
+  .about-body {
+    margin-top: 32px;
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    color: rgb(245 247 249 / 0.78);
+    max-width: 44em;
+  }
+
+  /* ---------- the two halves ---------- */
+  .cred-cols {
+    margin-top: 44px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+  .cred-head {
+    color: var(--color-cobalt-lift);
+    letter-spacing: 0.18em;
+    margin-bottom: 4px;
+    text-shadow: 0 0 12px rgb(77 124 255 / 0.4);
+  }
+  .cred-row {
+    padding-block: 14px;
+    border-top: 1px solid rgb(245 247 249 / 0.12);
+  }
+  .cred-row:last-child { border-bottom: 1px solid rgb(245 247 249 / 0.12); }
+  .cred-key {
+    display: block;
+    color: rgb(245 247 249 / 0.5);
+  }
+  .cred-value {
+    display: block;
+    margin-top: 4px;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+    color: rgb(245 247 249 / 0.85);
+  }
+
+  /* ---------- the portrait ---------- */
+  .about-frame {
+    margin: 0;
+    border: 1px solid rgb(245 247 249 / 0.16);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow:
+      0 40px 90px -30px rgb(0 0 0 / 0.6),
+      0 12px 30px -12px rgb(0 0 0 / 0.5);
+    transition: border-color 220ms var(--ease), box-shadow 220ms var(--ease);
+  }
+  .about-photo:hover .about-frame {
+    border-color: rgb(77 124 255 / 0.45);
+    box-shadow:
+      0 40px 90px -30px rgb(0 0 0 / 0.7),
+      0 0 40px -8px rgb(77 124 255 / 0.25);
+  }
+  .about-frame img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .about-caption {
+    margin-top: 16px;
+    text-align: center;
+    font-size: 0.78125rem;
+    letter-spacing: 0.14em;
+    color: rgb(245 247 249 / 0.55);
+  }
+  .about-caption i {
+    font-style: normal;
+    margin-inline: 12px;
+    font-size: 0.5625rem;
+    vertical-align: 1px;
+    color: rgb(77 124 255 / 0.7);
+  }
+
+  @media (max-width: 899.98px) {
     .about { padding-block: 96px; }
-    .cred-row { grid-template-columns: 1fr; gap: 4px; }
+    .about-grid { grid-template-columns: 1fr; gap: 48px; }
+    .cred-cols { grid-template-columns: 1fr; gap: 32px; }
+    .about-body { max-width: 34em; font-size: 1rem; }
   }
 </style>
