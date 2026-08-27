@@ -1,26 +1,132 @@
 ---
-// Footer (§6) — ink ground, 28px. The contact address is the domain one,
-// never the gmail address: that was a launch blocker, not a preference.
+// Footer, rebuilt 27 Aug (owner: "a proper footer") — three columns on the
+// close's own darker ground: the brand with its mark, the site's anchors,
+// and contact. The legal row keeps the linked-but-unbuilt routes. The
+// contact address is the domain one, never the gmail address: that was a
+// launch blocker, not a preference. Wording note: "bespoke" is capped at
+// one appearance on the page (hero eyebrow) — the footer strapline
+// deliberately avoids it.
 ---
 
 <footer class="foot g-ink">
-  <div class="wrap foot-row">
-    <p class="foot-left">© 2026 Talon Insights · Telford, Shropshire</p>
-    <p class="foot-right">
-      <a href="mailto:hello@taloninsights.co.uk">hello@taloninsights.co.uk</a>
-      <a href="/privacy">Privacy</a>
-      <a href="/accessibility">Accessibility</a>
-      <a href="/terms">Terms</a>
-    </p>
+  <div class="foot-wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="foot-mark" href="#top" aria-label="Talon Insights — back to top">
+          <img src="/images/mark.webp" alt="" width="158" height="132" />
+          <span class="wordmark">Talon<i>Insights</i></span>
+        </a>
+        <p class="foot-strap">
+          Websites and software, designed with you on site — one person,
+          start to finish.
+        </p>
+        <p class="t-micro foot-place">TELFORD · SHROPSHIRE</p>
+      </div>
+
+      <nav class="foot-col" aria-label="Footer">
+        <p class="t-micro foot-head">SITE</p>
+        <a href="#work">Work</a>
+        <a href="#method">Approach</a>
+        <a href="#process">Process</a>
+        <a href="#about">About</a>
+        <a href="#book">Book a visit</a>
+      </nav>
+
+      <div class="foot-col">
+        <p class="t-micro foot-head">CONTACT</p>
+        <a href="mailto:hello@taloninsights.co.uk">hello@taloninsights.co.uk</a>
+        <a href="tel:+447742082423">07742 082423</a>
+        <span class="foot-note">Reply within one working day</span>
+      </div>
+    </div>
+
+    <div class="foot-legal">
+      <p>© 2026 Talon Insights · Telford, Shropshire</p>
+      <p class="foot-links">
+        <a href="/privacy">Privacy</a>
+        <a href="/accessibility">Accessibility</a>
+        <a href="/terms">Terms</a>
+      </p>
+    </div>
   </div>
 </footer>
 
 <style>
   .foot {
+    /* continues the merged close's darker ground — the page ends where
+       its deepest black lives */
+    background: #04080F;
     border-top: var(--hairline-dark);
-    padding-block: 28px;
+    padding-block: 64px 32px;
   }
-  .foot-row {
+  .foot-wrap {
+    max-width: 1560px; /* matches the dark sections above */
+    margin-inline: auto;
+    padding-inline: 24px;
+  }
+
+  .foot-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 6fr) minmax(0, 3fr) minmax(0, 3fr);
+    gap: clamp(32px, 4vw, 80px);
+    align-items: start;
+  }
+
+  /* ---------- brand ---------- */
+  .foot-mark {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+  }
+  .foot-mark img { width: 30px; height: auto; display: block; }
+  .wordmark {
+    font-weight: 600;
+    font-size: 1.125rem;
+    color: var(--color-sheet);
+  }
+  .wordmark i { font-style: italic; font-weight: 500; }
+  .foot-strap {
+    margin-top: 16px;
+    max-width: 30em;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: rgb(245 247 249 / 0.6);
+  }
+  .foot-place {
+    margin-top: 14px;
+    letter-spacing: 0.14em;
+    color: rgb(245 247 249 / 0.45);
+  }
+
+  /* ---------- columns ---------- */
+  .foot-col { display: flex; flex-direction: column; gap: 10px; }
+  .foot-head {
+    color: var(--color-cobalt-lift);
+    letter-spacing: 0.18em;
+    margin-bottom: 6px;
+  }
+  .foot-col a {
+    color: rgb(245 247 249 / 0.65);
+    text-decoration: none;
+    font-size: 0.9375rem;
+    width: fit-content;
+    transition: color 180ms var(--ease);
+  }
+  .foot-col a:hover { color: var(--color-sheet); }
+  .foot-note {
+    font-family: var(--font-mono);
+    font-size: 0.71875rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgb(245 247 249 / 0.4);
+  }
+
+  /* ---------- legal row ---------- */
+  .foot-legal {
+    margin-top: 56px;
+    padding-top: 24px;
+    border-top: var(--hairline-dark);
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -28,12 +134,18 @@
     gap: 12px 32px;
     font-size: 0.875rem;
   }
-  .foot-left { color: rgb(245 247 249 / 0.55); }
-  .foot-right { display: flex; flex-wrap: wrap; gap: 12px 24px; }
-  .foot-right a {
-    color: rgb(245 247 249 / 0.55);
+  .foot-legal p { color: rgb(245 247 249 / 0.5); }
+  .foot-links { display: flex; flex-wrap: wrap; gap: 12px 24px; }
+  .foot-links a {
+    color: rgb(245 247 249 / 0.5);
     text-decoration: none;
     transition: color 180ms var(--ease);
   }
-  .foot-right a:hover { color: var(--color-sheet); }
+  .foot-links a:hover { color: var(--color-sheet); }
+
+  @media (max-width: 767.98px) {
+    .foot { padding-block: 48px 28px; }
+    .foot-grid { grid-template-columns: 1fr; gap: 36px; }
+    .foot-legal { margin-top: 40px; }
+  }
 </style>

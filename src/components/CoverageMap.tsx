@@ -58,35 +58,9 @@ export default function CoverageMap() {
     const dots = mapData.dots as [number, number][];
     const base = mapData.base;
 
-    /* Correction 2 — a legible silhouette. A dot on the boundary has fewer
-       hex neighbours than an interior one; those edge dots render at 70%
-       against the field's 45%, sharpening the outline without adding
-       points. Grid-hashed neighbour count, computed once. */
-    const pitch = mapData.w / 58;
-    const nearSq = (pitch * 1.3) ** 2;
-    const buckets = new Map<string, number[]>();
-    const bucketKey = (x: number, y: number) =>
-      `${Math.floor(x / pitch)}:${Math.floor(y / pitch)}`;
-    dots.forEach(([x, y], i) => {
-      const k = bucketKey(x, y);
-      const arr = buckets.get(k);
-      if (arr) arr.push(i);
-      else buckets.set(k, [i]);
-    });
-    const isEdge = dots.map(([x, y], i) => {
-      let neighbours = 0;
-      const cx = Math.floor(x / pitch), cy = Math.floor(y / pitch);
-      for (let ax = cx - 1; ax <= cx + 1; ax++) {
-        for (let ay = cy - 1; ay <= cy + 1; ay++) {
-          for (const j of buckets.get(`${ax}:${ay}`) ?? []) {
-            if (j === i) continue;
-            const [ox, oy] = dots[j];
-            if ((ox - x) ** 2 + (oy - y) ** 2 <= nearSq) neighbours++;
-          }
-        }
-      }
-      return neighbours < 6;
-    });
+    /* The edge/interior alpha split (70/45) retired 27 Aug: the dimmer
+       interior read as a visible dark patch inside the silhouette (owner:
+       "no visible square"). One field, one brightness. */
 
     /* Journeys — gentle quadratic curves, control point pushed
        perpendicular off the midpoint by 12% of path length, alternating
@@ -141,8 +115,8 @@ export default function CoverageMap() {
       const lctx = layer.getContext("2d")!;
       lctx.setTransform(dpr * scale, 0, 0, dpr * scale, 0, 0);
       lctx.fillStyle = COBALT_LIFT;
-      dots.forEach(([x, y], i) => {
-        lctx.globalAlpha = isEdge[i] ? 0.7 : 0.45;
+      dots.forEach(([x, y]) => {
+        lctx.globalAlpha = 0.7;
         lctx.beginPath();
         lctx.arc(x, y, 1.1, 0, Math.PI * 2);
         lctx.fill();
