@@ -4,9 +4,10 @@
 // method steps as chained chevrons under HOW WE DO IT DIFFERENTLY, the
 // unfair-advantage banner, and the BUILT DIFFERENTLY close with its stat
 // pills. The mock's THE PROBLEM block was dropped at the owner's
-// instruction (duplicate of the fault board), and its laptop photograph is
-// not reproduced — no stock, no AI imagery (§8) — the screen's chart lives
-// here as a drawn panel instead. Icons are lucide geometry inlined as SVG.
+// instruction (duplicate of the fault board). The desk scene is the mock's
+// OWN artwork, cropped from the supplied design at the owner's direction
+// ("copied exactly") — owner-supplied art, not stock. Icons are lucide
+// geometry inlined as SVG.
 // The prose visit story this replaces is in git history; P2/Q1 remain
 // owner-held slots for a future block.
 
@@ -19,7 +20,7 @@ const steps = [
 ---
 
 <section class="method" id="method">
-  <div class="wrap">
+  <div class="wrap method-wrap">
     <div class="m-top">
       <div class="m-copy" data-rv>
         <p class="t-micro m-eyebrow"><i></i>TURN INSIGHTS INTO GROWTH<i></i></p>
@@ -38,31 +39,12 @@ const steps = [
         </div>
       </div>
 
-      <!-- the mock's laptop screen, drawn: a brief becomes direction -->
-      <div class="m-panel" data-rv aria-hidden="true">
-        <div class="m-panel-head">
-          <span>From Brief</span>
-          <span>To Direction</span>
-        </div>
-        <div class="m-panel-stage">
-          <svg class="m-curve" viewBox="0 0 320 150" fill="none" preserveAspectRatio="none">
-            <path class="m-curve-fill" d="M0 138 C 90 132, 150 120, 200 84 C 240 55, 275 30, 318 14 L 318 150 L 0 150 Z" fill="url(#m-fill)" />
-            <path class="m-curve-line" d="M0 138 C 90 132, 150 120, 200 84 C 240 55, 275 30, 318 14" stroke="#4D7CFF" stroke-width="2.5" stroke-linecap="round" />
-            <circle cx="318" cy="14" r="4" fill="#4D7CFF" />
-            <defs>
-              <linearGradient id="m-fill" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0" stop-color="#1D4ED8" stop-opacity="0.35" />
-                <stop offset="1" stop-color="#1D4ED8" stop-opacity="0" />
-              </linearGradient>
-            </defs>
-          </svg>
-          <div class="m-chips">
-            <span>Insights</span>
-            <span>Strategy</span>
-            <span>Positioning</span>
-            <span>Growth</span>
-          </div>
-        </div>
+      <!-- the mock's own desk scene (owner-supplied artwork, cropped from
+           the design itself): the laptop showing brief-to-direction, the
+           marked mug, the lamp. Masked so it melts into the ink exactly as
+           the mock's scene does. -->
+      <div class="m-scene" data-rv aria-hidden="true">
+        <img src="/images/method-scene.webp" alt="" width="479" height="436" loading="lazy" decoding="async" />
       </div>
     </div>
 
@@ -130,11 +112,13 @@ const steps = [
 </section>
 
 <style>
+  .method-wrap { max-width: 1560px; }
   .method {
     padding-block: 110px 96px;
     background:
-      radial-gradient(760px 420px at 78% 12%, rgb(29 78 216 / 0.16), transparent 70%),
-      radial-gradient(900px 520px at 12% 88%, rgb(29 78 216 / 0.1), transparent 72%),
+      radial-gradient(900px 520px at 82% 8%, rgb(29 78 216 / 0.22), transparent 68%),
+      radial-gradient(700px 380px at 50% 58%, rgb(29 78 216 / 0.08), transparent 72%),
+      radial-gradient(1000px 560px at 14% 96%, rgb(29 78 216 / 0.14), transparent 72%),
       var(--color-ink-deep);
     color: var(--on-ink-body);
   }
@@ -207,44 +191,30 @@ const steps = [
   }
   .m-btn-ghost:hover { border-color: rgb(77 124 255 / 0.7); }
 
-  /* the drawn screen: brief in, direction out */
-  .m-panel {
-    border: 1px solid rgb(77 124 255 / 0.35);
-    border-radius: 12px;
-    background:
-      linear-gradient(160deg, rgb(29 78 216 / 0.12), rgb(6 14 28 / 0.6)),
-      var(--color-ink-deep);
-    box-shadow:
-      0 0 70px -24px rgb(77 124 255 / 0.5),
-      inset 0 0 40px -20px rgb(77 124 255 / 0.35);
-    padding: 20px 22px 0;
-    overflow: clip;
+  /* the mock's scene: no card, no border — the photograph's own glow is
+     the lighting, and mask fades melt its cut edges into the ink the way
+     the mock's scene sits in its ground */
+  .m-scene { position: relative; }
+  .m-scene img {
+    display: block;
+    width: 100%;
+    height: auto;
+    -webkit-mask-image:
+      linear-gradient(90deg, transparent 0%, #000 14%),
+      linear-gradient(180deg, #000 78%, transparent 100%);
+    -webkit-mask-composite: source-in;
+    mask-image:
+      linear-gradient(90deg, transparent 0%, #000 14%),
+      linear-gradient(180deg, #000 78%, transparent 100%);
+    mask-composite: intersect;
   }
-  .m-panel-head {
-    display: flex;
-    justify-content: space-between;
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    letter-spacing: 0.08em;
-    color: rgb(245 247 249 / 0.6);
-  }
-  .m-panel-stage { position: relative; height: 230px; margin-top: 14px; }
-  .m-curve { position: absolute; inset: 0; width: 100%; height: 100%; }
-  .m-chips {
+  /* the lamp's spill, extended past the crop */
+  .m-scene::after {
+    content: "";
     position: absolute;
-    right: 6px; top: 2px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  .m-chips span {
-    padding: 7px 16px;
-    border: 1px solid rgb(77 124 255 / 0.45);
-    border-radius: 999px;
-    background: rgb(6 14 28 / 0.75);
-    font-size: 0.8125rem;
-    color: var(--color-sheet);
-    text-align: center;
+    inset: -20% -30% -20% 30%;
+    background: radial-gradient(50% 45% at 78% 18%, rgb(77 124 255 / 0.16), transparent 70%);
+    pointer-events: none;
   }
 
   /* ---------- the four steps ---------- */
@@ -260,22 +230,42 @@ const steps = [
     margin: 36px 0 0;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 14px;
+    gap: 18px;
+    position: relative;
+  }
+  /* the glints in the joints between chevrons */
+  .m-hex { position: relative; }
+  .m-hex:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: -13px;
+    width: 8px; height: 8px;
+    translate: 0 -50%;
+    rotate: 45deg;
+    background: var(--color-cobalt-lift);
+    box-shadow: 0 0 14px 2px rgb(77 124 255 / 0.8);
+    z-index: 1;
   }
   /* chained chevrons: pointed both ends, drawn as a 1px cobalt shell with
      the panel inset inside the same clip */
   .m-hex {
     --notch: 26px;
     clip-path: polygon(var(--notch) 0, calc(100% - var(--notch)) 0, 100% 50%, calc(100% - var(--notch)) 100%, var(--notch) 100%, 0 50%);
-    background: rgb(77 124 255 / 0.4);
+    background: linear-gradient(180deg, rgb(77 124 255 / 0.35), rgb(77 124 255 / 0.75));
     padding: 1px;
-    transition: background-color 200ms var(--ease);
+    filter: drop-shadow(0 6px 22px rgb(29 78 216 / 0.3));
+    transition: background-color 200ms var(--ease), filter 200ms var(--ease);
   }
-  .m-hex:hover { background: rgb(77 124 255 / 0.85); }
+  .m-hex:hover {
+    background: rgb(77 124 255 / 0.9);
+    filter: drop-shadow(0 6px 30px rgb(77 124 255 / 0.5));
+  }
   .m-hex-in {
     clip-path: polygon(var(--notch) 0, calc(100% - var(--notch)) 0, calc(100% - 1px) 50%, calc(100% - var(--notch)) 100%, var(--notch) 100%, 1px 50%);
     background:
-      radial-gradient(80% 60% at 50% 0%, rgb(29 78 216 / 0.14), transparent 75%),
+      radial-gradient(85% 70% at 50% 115%, rgb(29 78 216 / 0.28), transparent 72%),
+      radial-gradient(80% 60% at 50% 0%, rgb(29 78 216 / 0.1), transparent 75%),
       var(--color-ink-deep);
     height: 100%;
     padding: 26px 34px 30px;
