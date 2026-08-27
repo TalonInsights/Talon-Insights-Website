@@ -13,15 +13,6 @@
 <section class="hero">
   <div class="wrap hero-inner">
     <div class="hero-copy">
-      <a class="announce" href="#pricing">
-        <span class="announce-text">Taking on founding projects at a reduced rate</span>
-        <span class="announce-more">Read more
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-            <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
-        </span>
-      </a>
-
       <h1 class="t-display">You’re a&nbsp;specialist.<br />Your website&nbsp;isn’t.</h1>
 
       <p class="standfirst">
@@ -65,7 +56,12 @@
       radial-gradient(720px 460px at 50% 22%, rgb(77 124 255 / 0.24), transparent 70%),
       radial-gradient(1100px 700px at 50% 18%, rgb(29 78 216 / 0.15), transparent 72%),
       var(--color-ink-deep);
-    padding-top: clamp(88px, 12vh, 140px);
+    /* The header is sticky and, over the hero, surface-less: the hero
+       pulls itself up behind it so what shows through the transparency is
+       this ink, not the white body. The first 68px of padding are the
+       header's own band. */
+    margin-top: -68px;
+    padding-top: calc(68px + clamp(20px, 4vh, 40px));
     padding-bottom: 0; /* the shot melts straight into the proof strip */
     overflow: clip;
   }
@@ -98,33 +94,10 @@
     margin-inline: auto;
   }
 
-  .announce {
-    display: inline-flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: 4px 12px;
-    padding: 9px 18px;
-    border: 1px solid rgb(245 247 249 / 0.2);
-    border-radius: 999px;
-    text-decoration: none;
-    color: rgb(245 247 249 / 0.65);
-    font-size: 0.875rem;
-    transition: border-color 180ms var(--ease);
-  }
-  .announce:hover { border-color: rgb(245 247 249 / 0.45); }
-  .announce-more {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-weight: 500;
-    color: var(--color-sheet);
-  }
-  .announce-more svg { width: 15px; height: 15px; }
-
   /* The H1 must break exactly once, after "specialist." — at every
      breakpoint. */
   .hero-copy h1 {
-    margin-top: 28px;
+    margin-top: 0;
     max-width: 16ch;
     font-size: min(clamp(2.625rem, 5.2vw, 4.125rem), 9.4cqw);
     color: var(--color-sheet);
@@ -166,11 +139,16 @@
      does not produce the same lean. The panel bleeds off the right edge
      under two mask fades: bottom (into the proof strip) and right. */
   .hero-shot {
-    margin-top: clamp(32px, 5vw, 56px);
+    margin-top: clamp(24px, 3.5vh, 44px);
     margin-inline: auto;
     max-width: 1280px;
-    -webkit-mask-image: linear-gradient(180deg, #000 50%, transparent 100%);
-    mask-image: linear-gradient(180deg, #000 50%, transparent 100%);
+    /* sized so the proof strip lands above the fold on open: the panel
+       keeps its width and the fade owns the crop line */
+    max-height: clamp(240px, calc(100vh - 560px), 620px);
+    max-height: clamp(240px, calc(100svh - 560px), 620px);
+    overflow: clip;
+    -webkit-mask-image: linear-gradient(180deg, #000 45%, transparent 96%);
+    mask-image: linear-gradient(180deg, #000 45%, transparent 96%);
   }
   .hero-shot-tilt {
     perspective: 1200px;
