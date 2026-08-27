@@ -366,6 +366,12 @@ const steps = [
   .m-stat {
     text-align: center;
     padding-inline: 12px;
+    /* every cell centres its stack — the 100% figure and the icons sit
+       on one visual axis instead of hanging from the top (27 Aug, owner) */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
   .m-stat + .m-stat { border-left: 1px solid rgb(245 247 249 / 0.12); }
   .m-stat-big {
@@ -378,7 +384,9 @@ const steps = [
   .m-stat svg {
     width: 30px; height: 30px;
     margin-bottom: 4px;
-    color: var(--color-cobalt-lift);
+    /* the gantt gradient's bright end — hotter than cobalt-lift, for
+       impact (27 Aug, owner) */
+    color: #6E93FF;
   }
   .m-stat-label {
     margin-top: 6px;
