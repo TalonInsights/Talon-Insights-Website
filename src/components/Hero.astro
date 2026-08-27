@@ -257,13 +257,15 @@
     opacity: 0;
     /* the fixed point of the expansion: solved so that at the starting
        scale the capture's box coincides with the laptop display's landed
-       rect — solved numerically against live rects at 1912×1080 WITH the
-       keystoned start pose applied (the analytic flat-box solve can't see
-       the perspective): start bbox lands on the display within 0.4px in
-       x/y and 0.1px in width; the ~10px height slack tucks the panel
-       inside the screen's glass. Re-run the browser iteration if the
-       hero's geometry or type changes. */
-    transform-origin: 27.43% 61.14%;
+       rect. The owner's screen recording proved fixed constants can only
+       ever be right at one viewport: the laptop is a FIXED-SIZE prop
+       (150×96 at scale 3.1) while the panel scales with the window, so
+       the mapping between them changes with every width. The start pose
+       is therefore solved AT RUNTIME by the script below, which writes
+       --ho-tx/--ho-ty/--ho-s onto this element; the var() fallbacks are
+       the 1912×1080 solve (centre-origin parametrisation: displayC −
+       panelC = (−119.9, 36.3), s = 0.4264). */
+    transform-origin: 50% 50%;
     animation: shot-arrive 1500ms var(--ease) 4.15s forwards;
   }
 
@@ -463,12 +465,13 @@
      the mac screen is). Opacity front-loads harder so the panel is fully
      there before the laptop's swell moves the screen away. */
   @keyframes shot-arrive {
-    0%   { opacity: 0; transform: perspective(1550px) rotateX(-20deg) scale(0.4265); }
+    0%   { opacity: 0; transform: translate(var(--ho-tx, -119.9px), var(--ho-ty, 36.3px)) perspective(1550px) rotateX(-20deg) scale(var(--ho-s, 0.4264)); }
     8%   { opacity: 1; }
     100% { opacity: 1; transform: none; }
   }
 
   /* No theatre for reduced motion: the panel is simply there. */
+  /* (the runtime handoff solver below skips those cases too) */
   @media (prefers-reduced-motion: reduce) {
     .hero-theatre { display: none; }
     .hero-shot img { opacity: 1; animation: none; }
@@ -492,3 +495,53 @@
     }
   }
 </style>
+
+<script>
+  /* The handoff solver — the site's fifth plain script (no island). The
+     panel must START exactly on the laptop's lit display, and both rects
+     depend on the viewport (the laptop is fixed-size, the panel fluid),
+     so the start transform is solved here per-load: apply the laptop's
+     landing pose invisibly for one layout pass, measure both rects, then
+     iterate translate+scale (the keystone changes the bbox, so measured
+     iteration beats algebra) and hand the result to the keyframe via
+     custom properties. Runs synchronously before first paint's animation
+     start (4.15s away); CSSOM writes are CSP-clean. */
+  const solveHandoff = () => {
+    const img = document.querySelector<HTMLImageElement>(".hero-shot img");
+    const inner = document.querySelector<HTMLElement>(".mb-inner");
+    const disp = document.querySelector<HTMLElement>(".mb-display");
+    if (!img || !inner || !disp) return;
+    if (matchMedia("(max-width: 860px)").matches) return;
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const prevT = inner.style.transform;
+    const prevA = inner.style.animation;
+    inner.style.animation = "none";
+    inner.style.transform = "rotateX(-20deg) rotateY(360deg)"; // the landing pose
+    const d = disp.getBoundingClientRect();
+    inner.style.animation = prevA;
+    inner.style.transform = prevT;
+    if (!d.width) return;
+    const c0 = img.getBoundingClientRect();
+    if (!c0.width) return;
+    let s = (d.width / c0.width) * 0.97; // keystone widens the bbox ~3%
+    let tx = d.x + d.width / 2 - (c0.x + c0.width / 2);
+    let ty = d.y + d.height / 2 - (c0.y + c0.height / 2);
+    for (let i = 0; i < 5; i++) {
+      img.style.transform = `translate(${tx}px, ${ty}px) perspective(1550px) rotateX(-20deg) scale(${s})`;
+      const c = img.getBoundingClientRect();
+      tx += d.x + d.width / 2 - (c.x + c.width / 2);
+      ty += d.y + d.height / 2 - (c.y + c.height / 2);
+      s *= d.width / c.width;
+    }
+    img.style.transform = "";
+    img.style.setProperty("--ho-tx", tx.toFixed(1) + "px");
+    img.style.setProperty("--ho-ty", ty.toFixed(1) + "px");
+    img.style.setProperty("--ho-s", s.toFixed(4));
+  };
+  solveHandoff();
+  /* layout can shift between parse and the 4.15s start (font swap, a
+     resize) — re-solve on both; once the animation has run, the vars are
+     inert and re-solving is harmless */
+  document.fonts?.ready.then(solveHandoff);
+  window.addEventListener("resize", solveHandoff);
+</script>
