@@ -32,6 +32,41 @@
     </div>
   </div>
 
+  <!-- The overture (owner-supplied 21st import, restaged CSS-only): a 3D
+       laptop tumbles through its open-close pass, lands open facing the
+       viewer with the WulfTek page lit on its screen, then swells and
+       hands off to the real panel below, which expands into place. Pure
+       CSS keyframes, chained by delays; reduced motion skips straight to
+       the panel. -->
+  <div class="hero-theatre" aria-hidden="true">
+    <div class="mb-frame">
+      <div class="mb-inner">
+        <div class="mb-screen">
+          <div class="mb-screen-face">
+            <div class="mb-camera"></div>
+            <div class="mb-display">
+              <img src="/images/work-wulftek-home.webp" alt="" loading="eager" decoding="async" />
+              <div class="mb-glare"></div>
+            </div>
+          </div>
+        </div>
+        <div class="mb-body">
+          <div class="mb-body-face">
+            <div class="mb-trackpad"></div>
+            <div class="mb-keyboard">
+              {Array.from({ length: 58 }).map(() => <i class="mb-key"></i>)}
+              <i class="mb-key mb-key-space"></i>
+              {Array.from({ length: 16 }).map(() => <i class="mb-key mb-key-f"></i>)}
+            </div>
+          </div>
+          <span class="mb-foot mb-foot-tl"></span><span class="mb-foot mb-foot-tr"></span>
+          <span class="mb-foot mb-foot-bl"></span><span class="mb-foot mb-foot-br"></span>
+        </div>
+      </div>
+      <div class="mb-shadow"></div>
+    </div>
+  </div>
+
   <!-- The showcase: real client work, angled off the page the way the
        reference presents its product. It sits at SECTION level, outside
        the width-capped wrap, so its absolute anchoring and sizing resolve
@@ -182,6 +217,11 @@
     position: absolute;
     right: 0;
     bottom: 0; /* rises from just above the proof strip */
+    /* held back until the laptop hands over, then expands out of the
+       screen's position into its resting pose */
+    opacity: 0;
+    transform-origin: 62% 58%;
+    animation: shot-arrive 900ms var(--ease) 5.15s forwards;
     /* as wide as the screen allows while holding a 660px reserve for the
        copy column — on a large monitor this is roughly double the grid
        column it replaces */
@@ -226,15 +266,244 @@
     box-shadow: 0 40px 90px -30px rgb(0 0 0 / 0.65);
   }
 
+  /* ---------- the overture ---------- */
+  /* The 21st MacBook, translated from its React/Tailwind form to plain
+     markup and scoped keyframes — the same nested-3D construction, run
+     ONCE: its final keyframes are retimed so the pass ends open, facing
+     the viewer (rotateY 360, a whisper of X tilt), the display lights up
+     with the WulfTek page, and the whole machine swells toward the
+     camera as the real panel arrives beneath it. */
+  .hero-theatre {
+    position: absolute;
+    right: min(30vw, 620px);
+    bottom: 38%;
+    width: 150px;
+    height: 96px;
+    scale: 3.1;
+    pointer-events: none;
+    animation: mb-exit 800ms var(--ease) 5.05s forwards;
+  }
+  .mb-frame {
+    position: absolute;
+    inset: 0;
+    perspective: 500px;
+  }
+  .mb-inner {
+    position: absolute;
+    inset: 0;
+    transform-style: preserve-3d;
+    transform: rotateX(-20deg);
+    animation: mb-rotate 4.6s ease-in-out both;
+  }
+
+  /* screen half */
+  .mb-screen {
+    position: absolute;
+    left: 0; bottom: 0;
+    width: 150px; height: 96px;
+    border-radius: 7px;
+    transform-style: preserve-3d;
+    transform-origin: 50% 100%;
+    background: linear-gradient(45deg, rgb(0 0 0 / 0.34), rgb(0 0 0 / 0)) left bottom / 300px 300px, #ddd;
+    box-shadow: inset 0 3px 7px rgb(255 255 255 / 0.5);
+    animation: mb-lid 4.6s ease-in-out both;
+  }
+  .mb-screen-face {
+    position: absolute;
+    left: 0; bottom: 0;
+    width: 150px; height: 96px;
+    border-radius: 7px;
+    transform: translateZ(2px);
+    background: linear-gradient(45deg, rgb(0 0 0 / 0.24), rgb(0 0 0 / 0)), #d3d3d3;
+  }
+  .mb-camera {
+    position: absolute;
+    left: 50%; top: 4px;
+    width: 3px; height: 3px;
+    margin-left: -1.5px;
+    border-radius: 50%;
+    background: #000;
+  }
+  .mb-display {
+    position: relative;
+    width: 130px; height: 74px;
+    margin: 10px;
+    border-radius: 1px;
+    background: #000;
+    overflow: hidden;
+    box-shadow: inset 0 0 2px rgb(0 0 0);
+  }
+  /* the site on the screen: dark until the pass settles, then lit */
+  .mb-display img {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: top;
+    opacity: 0;
+    animation: mb-content 700ms ease-out 3.9s forwards;
+  }
+  .mb-glare {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(-135deg, rgb(255 255 255 / 0) 0%, rgb(255 255 255 / 0.1) 47%, rgb(255 255 255 / 0) 48%) 0 0 / 300px 200px;
+    animation: mb-glare 4.6s ease-in-out both;
+  }
+
+  /* body half */
+  .mb-body {
+    position: absolute;
+    left: 0; bottom: 0;
+    width: 150px; height: 96px;
+    border-radius: 7px;
+    transform-style: preserve-3d;
+    transform-origin: 50% 0%;
+    transform: rotateX(-90deg);
+    background: linear-gradient(45deg, rgb(0 0 0 / 0.24), rgb(0 0 0 / 0)), #cbcbcb;
+  }
+  .mb-body-face {
+    position: absolute;
+    left: 0; bottom: 0;
+    width: 150px; height: 96px;
+    border-radius: 7px;
+    transform-style: preserve-3d;
+    transform: translateZ(-2px);
+    background: linear-gradient(30deg, rgb(0 0 0 / 0.24), rgb(0 0 0 / 0)), #dfdfdf;
+    animation: mb-deck 4.6s ease-in-out both;
+  }
+  .mb-trackpad {
+    position: absolute;
+    left: 50%; top: 50%;
+    width: 40px; height: 31px;
+    margin: -44px 0 0 -18px;
+    border-radius: 4px;
+    background: linear-gradient(30deg, rgb(0 0 0 / 0.24), rgb(0 0 0 / 0)), #cdcdcd;
+    box-shadow: inset 0 0 3px #888;
+  }
+  .mb-keyboard {
+    position: absolute;
+    left: 7px; top: 41px;
+    width: 130px; height: 45px;
+    border-radius: 4px;
+    padding-left: 2px;
+    overflow: hidden;
+    background: linear-gradient(30deg, rgb(0 0 0 / 0.24), rgb(0 0 0 / 0)), #cdcdcd;
+    box-shadow: inset 0 0 3px #777;
+  }
+  .mb-key {
+    float: left;
+    width: 6px; height: 6px;
+    margin: 1px;
+    border-radius: 2px;
+    background: #444;
+    transform: translateZ(-2px);
+    box-shadow: 0 -2px 0 #222;
+    animation: mb-keys 4.6s ease-in-out both;
+  }
+  .mb-key-space { width: 45px; }
+  .mb-key-f { height: 3px; }
+  .mb-foot {
+    position: absolute;
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: #333;
+  }
+  .mb-foot-tl { left: 20px; top: 20px; }
+  .mb-foot-tr { right: 20px; top: 20px; }
+  .mb-foot-bl { left: 20px; bottom: 20px; }
+  .mb-foot-br { right: 20px; bottom: 20px; }
+
+  .mb-shadow {
+    position: absolute;
+    left: 40px; top: 160px;
+    width: 60px; height: 0;
+    transform: rotateX(80deg);
+    box-shadow: 0 0 60px 40px rgb(0 0 0 / 0.3);
+    animation: mb-shadow 4.6s ease-in-out both;
+  }
+
+  /* ---------- the choreography (the import's keyframes, retimed to
+       land open and facing the viewer) ---------- */
+  @keyframes mb-rotate {
+    0%   { transform: rotateX(-20deg) rotateY(0deg); }
+    5%   { transform: rotateX(-20deg) rotateY(-20deg); }
+    20%  { transform: rotateX(30deg) rotateY(200deg); }
+    25%  { transform: rotateX(-60deg) rotateY(150deg); }
+    60%  { transform: rotateX(-20deg) rotateY(130deg); }
+    65%  { transform: rotateX(-20deg) rotateY(120deg); }
+    80%  { transform: rotateX(-20deg) rotateY(375deg); }
+    85%  { transform: rotateX(-14deg) rotateY(357deg); }
+    90%  { transform: rotateX(-10deg) rotateY(360deg); }
+    100% { transform: rotateX(-6deg) rotateY(360deg); }
+  }
+  @keyframes mb-lid {
+    0%   { transform: rotateX(0deg); background-position: left bottom; }
+    5%   { transform: rotateX(50deg); background-position: left bottom; }
+    20%  { transform: rotateX(-90deg); background-position: -150px top; }
+    25%  { transform: rotateX(15deg); background-position: left bottom; }
+    30%  { transform: rotateX(-5deg); background-position: right top; }
+    38%  { transform: rotateX(5deg); background-position: right top; }
+    48%  { transform: rotateX(0deg); background-position: right top; }
+    100% { transform: rotateX(0deg); background-position: right center; }
+  }
+  @keyframes mb-deck {
+    0%, 50%, 100% { background-color: #dfdfdf; }
+    25% { background-color: #bbb; }
+  }
+  @keyframes mb-glare {
+    0%   { background-position: -20px 0; }
+    5%   { background-position: -40px 0; }
+    20%  { background-position: 200px 0; }
+    50%  { background-position: -200px 0; }
+    80%  { background-position: 0 0; }
+    100% { background-position: -20px 0; }
+  }
+  @keyframes mb-keys {
+    0%   { box-shadow: 0 -2px 0 #222; }
+    5%   { box-shadow: 1px -1px 0 #222; }
+    20%, 60% { box-shadow: -1px 1px 0 #222; }
+    80%, 100% { box-shadow: 0 -2px 0 #222; }
+  }
+  @keyframes mb-shadow {
+    0%   { transform: rotateX(80deg); box-shadow: 0 0 60px 40px rgb(0 0 0 / 0.3); }
+    20%  { transform: rotateX(30deg) rotateY(-20deg) rotateZ(-20deg); box-shadow: 0 0 50px 30px rgb(0 0 0 / 0.3); }
+    25%  { transform: rotateX(80deg) rotateY(-20deg) rotateZ(50deg); box-shadow: 0 0 35px 15px rgb(0 0 0 / 0.1); }
+    60%  { transform: rotateX(80deg) rotateZ(-50deg) translateX(30px); box-shadow: 0 0 60px 40px rgb(0 0 0 / 0.3); }
+    100% { transform: rotateX(80deg); box-shadow: 0 0 60px 40px rgb(0 0 0 / 0.3); }
+  }
+  @keyframes mb-content {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  /* the machine swells toward the camera and yields */
+  @keyframes mb-exit {
+    0%   { opacity: 1; scale: 3.1; }
+    100% { opacity: 0; scale: 5.4; }
+  }
+  /* ...as the real panel expands out of its position */
+  @keyframes shot-arrive {
+    0%   { opacity: 0; scale: 0.42; }
+    100% { opacity: 1; scale: 1; }
+  }
+
+  /* No theatre for reduced motion: the panel is simply there. */
+  @media (prefers-reduced-motion: reduce) {
+    .hero-theatre { display: none; }
+    .hero-shot { opacity: 1; animation: none; }
+  }
+
   /* Small screens: the projection reads as distortion at phone widths —
      the panel sits flat and full-width instead, bottom fade retained. */
   @media (max-width: 860px) {
     .hero-copy { min-height: 0; padding-bottom: 0; margin-left: 0; }
+    .hero-theatre { display: none; }
     .hero-shot {
       position: static;
       width: auto;
       margin: 32px 24px 0;
       max-height: clamp(220px, 38vh, 420px);
+      opacity: 1;
+      animation: none;
     }
     .hero-shot-tilt {
       margin-right: 0;

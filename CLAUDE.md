@@ -59,7 +59,12 @@ npm run map        # regenerate src/data/map-dots.json (network; result is commi
   Nothing loops or idles — EXCEPT the B3 fault board's icon micro-motion
   (27 Aug pm, owner's explicit directive: "the icons aren't moving"):
   slow CSS idles that quicken on card hover, all killed under
-  prefers-reduced-motion. That carve-out extends no further.
+  prefers-reduced-motion. And the hero gained a one-time load overture
+  (27 Aug pm, owner-supplied 21st import): a CSS 3D laptop tumbles once,
+  lands open with the WulfTek page on its screen, and hands off to the
+  showcase panel — ~6s, runs once per load, never loops; reduced motion
+  and stacked layouts skip straight to the panel. Those carve-outs
+  extend no further.
 - **IO/rAF fallbacks are load-bearing.** Reveals arm only below the fold and
   a 2.5s failsafe shows everything; the map has an IO watchdog and a
   travel-phase rAF backstop that land its final state. (The folder gallery's
