@@ -1,27 +1,29 @@
 ---
 // B6 — Case study + evidence (id="work").
-// Restaged 27 Aug (owner): the section joins the dark run — ink-deep ground,
-// copy left, and the live DJ homepage capture (owner-supplied, like the
-// hero's WulfTek shot) projected on the right with the hero's own recipe.
-// Copy updated to the shipped 12-page site (the configurator claim is gone —
-// the built site answers questions instead: consent checker, guides,
-// materials in plain terms).
+// Restaged 27 Aug (owner, two passes): dark ground, copy left, the live DJ
+// homepage capture right — first with the hero's old projection, then
+// STRAIGHT (the hero's own lesson caught up with it: a skewed capture
+// reads as texture, and this section exists to be proof). The capture now
+// sits in a browser frame — dots, the real domain, a LIVE mark — with a
+// mono fact strip beneath, and the movements read down a numbered rail
+// with the neon cobalt numerals the fault board established.
 // Gated assets, absent by rule (§8) — no placeholders ever:
 //  · W1 WulfTek vignette: omitted entirely until WulfTek's explicit nod.
-//    Copy is final in the master build doc §6/B6; drop it in verbatim then.
-//  · V1 planner capture: omitted until the 8–12s recording exists
-//    (mono strip + bordered video + "Try the full demo" link when it lands).
+//  · V1 planner capture: omitted until the 8–12s recording exists.
 
 const movements = [
   {
+    num: "01",
     head: "What I found",
     body: "Work of a standard that ends up in listed buildings — and a website that said “joinery services”. The gap between the two was the whole brief, and it only became visible in the workshop.",
   },
   {
+    num: "02",
     head: "What it changed",
     body: "The site had to lead with the making, not the categories: the work photographed in progress, the one credential most joiners can’t claim — approved Accoya manufacturer — moved to the front, and the question that stops people ringing answered on the page. That was one of the real directions Harry saw before any code existed — the same stage the demonstration above walks you through. He pulled it apart, and the site got better for it.",
   },
   {
+    num: "03",
     head: "What got built",
     body: "A twelve-page site designed from scratch — the consent checker, the heritage guides, the materials in plain terms — and, because I was in there anyway, something else: production was planned on paper. So I built the planner too.",
   },
@@ -39,6 +41,7 @@ const movements = [
         <div class="movements" data-rv>
           {movements.map((m) => (
             <div class="movement">
+              <span class="m-num t-mono" aria-hidden="true">{m.num}</span>
               <h3 class="t-h3">{m.head}</h3>
               <p>{m.body}</p>
             </div>
@@ -50,23 +53,28 @@ const movements = [
         </p>
       </div>
 
-      <!-- the live homepage, leaning the way the hero's WulfTek panel does:
-           perspective → rotateX → skewX, each on its own nested element
-           (nested transforms flatten independently — one combined transform
-           cannot reproduce the lean) -->
+      <!-- the live homepage, straight-on in a browser frame: the same
+           chrome fiction the Wrekin Forge pages use, here declaring a
+           real, live site -->
       <div class="case-shot" data-rv>
-        <div class="case-shot-tilt">
-          <div class="case-shot-skew">
-            <img
-              src="/images/work-dj-home.webp"
-              width={1895}
-              height={824}
-              loading="lazy"
-              decoding="async"
-              alt="The David Jackson & Son homepage — “Windows made the way the house was made.”"
-            />
+        <figure class="case-frame">
+          <div class="case-chrome" aria-hidden="true">
+            <span class="case-dots"><i /><i /><i /></span>
+            <span class="case-url t-mono">davidjacksonandson.com</span>
+            <span class="case-live t-mono">● LIVE</span>
           </div>
-        </div>
+          <img
+            src="/images/work-dj-home.webp"
+            width={1895}
+            height={824}
+            loading="lazy"
+            decoding="async"
+            alt="The David Jackson & Son homepage — “Windows made the way the house was made.”"
+          />
+        </figure>
+        <p class="case-facts t-mono" aria-label="What shipped">
+          TWELVE PAGES<i>◆</i>CONSENT CHECKER<i>◆</i>HERITAGE GUIDES<i>◆</i>PRODUCTION PLANNER
+        </p>
       </div>
     </div>
   </div>
@@ -76,8 +84,6 @@ const movements = [
   .case {
     padding-block: 120px;
     background: var(--color-ink-deep); /* joins the dark run above */
-    overflow: hidden; /* the skew's overhang, absorbed by the headroom below,
-                         must never widen the page */
   }
   .case-wrap {
     max-width: 1560px; /* the faults/method wrap — must match */
@@ -91,55 +97,126 @@ const movements = [
     align-items: center;
   }
 
-  .case-meta { color: rgb(245 247 249 / 0.45); margin-top: 4px; }
+  .case-meta { color: rgb(245 247 249 / 0.5); margin-top: 4px; }
 
+  /* ---------- the movements: a numbered rail ---------- */
   .movements {
     margin-top: 44px;
     display: grid;
-    gap: 32px;
+    gap: 36px;
+  }
+  .movement {
+    position: relative;
+    padding-left: 56px;
+  }
+  /* the rail: a hairline dropping from each numeral to the next */
+  .movement::before {
+    content: "";
+    position: absolute;
+    left: 13px;
+    top: 36px;
+    bottom: -36px;
+    width: 1px;
+    background: rgb(245 247 249 / 0.14);
+  }
+  .movement:last-child::before { display: none; }
+  /* neon numerals — the fault board's glowing-figure language */
+  .m-num {
+    position: absolute;
+    left: 0;
+    top: 1px;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-cobalt-lift);
+    text-shadow: 0 0 14px rgb(77 124 255 / 0.55);
   }
   .movement .t-h3 { margin-bottom: 10px; }
-  .movement p { font-size: 1rem; max-width: 44em; }
+  /* the readability pass: fuller weight, brighter body, looser leading */
+  .movement p {
+    font-size: 1.0625rem;
+    font-weight: 400;
+    line-height: 1.65;
+    color: rgb(245 247 249 / 0.78);
+    max-width: 44em;
+  }
 
   .case-link { margin-top: 40px; }
 
   /* ---------- the shot ---------- */
-  .case-shot {
-    /* shear headroom: skewX throws the panel's lower corners right of its
-       static box — hand the projection room instead of clipping it (the
-       hero's hard-won rule: masks/clips sized to a static box swallow 3D
-       overhang) */
-    padding-right: clamp(32px, 4vw, 96px);
-  }
-  .case-shot-tilt {
-    perspective: 1200px;
-  }
-  .case-shot-skew {
-    transform: rotateX(20deg);
-  }
-  .case-shot-skew img {
-    display: block;
-    width: 100%;
-    height: auto;
-    transform: skewX(0.36rad);
-    /* the border rides the projected plane — a framed panel, leaning */
-    border: 1px solid rgb(245 247 249 / 0.18);
-    border-radius: 10px;
+  .case-frame {
+    margin: 0;
+    border: 1px solid rgb(245 247 249 / 0.16);
+    border-radius: 12px;
+    overflow: hidden;
+    background: rgb(245 247 249 / 0.03);
     box-shadow:
       0 40px 90px -30px rgb(0 0 0 / 0.6),
       0 12px 30px -12px rgb(0 0 0 / 0.5);
-    background: var(--color-ink-deep);
+    transition: border-color 220ms var(--ease), box-shadow 220ms var(--ease);
+  }
+  .case-shot:hover .case-frame {
+    border-color: rgb(77 124 255 / 0.45);
+    box-shadow:
+      0 40px 90px -30px rgb(0 0 0 / 0.7),
+      0 0 40px -8px rgb(77 124 255 / 0.25);
+  }
+  .case-chrome {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 11px 16px;
+    background: rgb(245 247 249 / 0.05);
+    border-bottom: 1px solid rgb(245 247 249 / 0.1);
+  }
+  .case-dots { display: inline-flex; gap: 6px; }
+  .case-dots i {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: rgb(245 247 249 / 0.18);
+  }
+  .case-url {
+    flex: 1;
+    text-align: center;
+    font-size: 0.78125rem;
+    letter-spacing: 0.08em;
+    color: rgb(245 247 249 / 0.5);
+  }
+  .case-live {
+    font-size: 0.71875rem;
+    letter-spacing: 0.12em;
+    color: var(--color-cobalt-lift);
+    text-shadow: 0 0 10px rgb(77 124 255 / 0.5);
+  }
+  .case-frame img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  /* what shipped, in one mono line under the evidence */
+  .case-facts {
+    margin-top: 16px;
+    text-align: center;
+    font-size: 0.78125rem;
+    letter-spacing: 0.14em;
+    color: rgb(245 247 249 / 0.55);
+  }
+  .case-facts i {
+    font-style: normal;
+    margin-inline: 12px;
+    font-size: 0.5625rem;
+    vertical-align: 1px;
+    color: rgb(77 124 255 / 0.7);
   }
 
   @media (max-width: 899.98px) {
     .case { padding-block: 96px; }
     .case-grid { grid-template-columns: 1fr; gap: 48px; }
-    .movements { gap: 28px; }
-    .movement p { max-width: 34em; }
-    /* flat below the split, like the hero's panel */
-    .case-shot { padding-right: 0; }
-    .case-shot-tilt { perspective: none; }
-    .case-shot-skew { transform: none; }
-    .case-shot-skew img { transform: none; }
+    .movements { gap: 30px; }
+    .movement { padding-left: 44px; }
+    .movement::before { bottom: -30px; }
+    .movement p { max-width: 34em; font-size: 1rem; }
+    .case-facts { letter-spacing: 0.1em; }
+    .case-facts i { margin-inline: 8px; }
   }
 </style>

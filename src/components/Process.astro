@@ -1,13 +1,15 @@
 ---
-// B7 — Process (id="process"), restaged 27 Aug (owner): the five steps are
-// now a GANTT — undated, bars sized by how long each stage really runs
-// relative to the others — on the left, with each stage's description on
-// the right. The section joins the dark run and the bars wear the neon
-// lifted cobalt from the map and fault board. Bars are still signature #3:
-// they draw on first scroll-in via the [data-process] hooks in Base
-// (pb-armed / pb-draw, IO + 2.5s failsafe), left→right in sequence like a
-// schedule filling in. Bar geometry lives in nth-child CSS — no style
-// attributes under the hashed CSP.
+// B7 — Process (id="process"), restaged 27 Aug (owner) and made to earn
+// its keep the same night: the five steps are an undated GANTT — bars
+// sized by how long each stage really runs — with each stage's
+// description on the right. Three things make it a schedule rather than
+// five stripes: a PRICE FIXED milestone stands where the build begins
+// (the heading's whole claim, drawn), each bar hangs off the end of the
+// one before it by a dropped connector, and hovering either a bar or its
+// description lights both (pure CSS :has() — no JS). Bars are still
+// signature #3: they draw on first scroll-in via the [data-process]
+// hooks in Base (pb-armed / pb-draw, IO + 2.5s failsafe). Geometry lives
+// in nth-child CSS — no style attributes under the hashed CSP.
 
 const steps = [
   { num: "01", name: "A CALL", bar: "CALL", body: "Fifteen minutes to see whether it’s worth going further.", chip: "FREE", amber: false },
@@ -23,19 +25,22 @@ const steps = [
     <h2 class="t-h2">Five steps — and you know the price before the build&nbsp;starts.</h2>
 
     <div class="process-grid">
-      <!-- the schedule: no dates, just honest proportion — a fifteen-minute
-           call is a sliver, the build is the long haul, and handover caps
-           the end of the line -->
-      <ol class="gantt" data-process aria-label="The five steps in sequence — bar length shows each stage’s share of the whole">
-        {steps.map((step) => (
-          <li class="g-row">
-            <span class="g-label t-mono"><b>{step.num}</b> {step.bar}</span>
-            <span class="g-track" aria-hidden="true">
-              <span class="g-bar"><span class="fill"></span></span>
-            </span>
-          </li>
-        ))}
-      </ol>
+      <!-- the schedule: no dates, just honest proportion — and the one
+           milestone that matters, standing exactly where the build begins -->
+      <div class="gantt-box">
+        <i class="g-mark-line" aria-hidden="true"></i>
+        <span class="g-mark-label t-mono" aria-hidden="true"><b>◆</b> PRICE FIXED</span>
+        <ol class="gantt" data-process aria-label="The five steps in sequence — bar length shows each stage’s share of the whole, and the price is fixed before the build bar begins">
+          {steps.map((step) => (
+            <li class="g-row">
+              <span class="g-label t-mono"><b>{step.num}</b> {step.bar}</span>
+              <span class="g-track" aria-hidden="true">
+                <span class="g-bar"><span class="fill"></span></span>
+              </span>
+            </li>
+          ))}
+        </ol>
+      </div>
 
       <ol class="step-list">
         {steps.map((step) => (
@@ -71,6 +76,12 @@ const steps = [
   }
 
   /* ---------- the gantt ---------- */
+  /* headroom for the milestone label; the box, not the ol, is the
+     positioning context so the marker can span every row */
+  .gantt-box {
+    position: relative;
+    padding-top: 42px;
+  }
   .gantt {
     list-style: none;
     margin: 0;
@@ -87,10 +98,36 @@ const steps = [
   .g-label {
     font-size: 0.78125rem;
     letter-spacing: 0.08em;
-    color: rgb(245 247 249 / 0.55);
+    color: rgb(245 247 249 / 0.6);
     white-space: nowrap;
+    transition: color 180ms ease;
   }
   .g-label b { color: var(--color-sheet); font-weight: 700; }
+
+  /* the milestone: the heading, drawn. x = label column (148) + gap (18)
+     + 50% of the track — where the BUILD bar begins. */
+  .g-mark-line {
+    position: absolute;
+    left: calc(83px + 50%);
+    top: 32px;
+    bottom: 2px;
+    width: 0;
+    border-left: 1px dashed rgb(77 124 255 / 0.5);
+  }
+  .g-mark-label {
+    position: absolute;
+    left: calc(83px + 50%);
+    top: 0;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    font-size: 0.71875rem;
+    letter-spacing: 0.18em;
+    color: var(--color-cobalt-lift);
+  }
+  .g-mark-label b {
+    font-weight: 400;
+    text-shadow: 0 0 12px rgb(77 124 255 / 0.7);
+  }
 
   /* the ruled field the bars sit on: a baseline plus faint tenth ticks —
      calendar texture without claiming any calendar */
@@ -101,6 +138,21 @@ const steps = [
       repeating-linear-gradient(90deg, rgb(245 247 249 / 0.07) 0 1px, transparent 1px 10%),
       linear-gradient(rgb(245 247 249 / 0.05), rgb(245 247 249 / 0.05));
   }
+
+  /* dependency drops: each bar starts where the last one ended, and the
+     chart says so — a short connector falls from the junction */
+  .g-row + .g-row .g-track::before {
+    content: "";
+    position: absolute;
+    top: -31px;
+    height: 31px;
+    width: 0;
+    border-left: 1px solid rgb(77 124 255 / 0.3);
+  }
+  .g-row:nth-child(2) .g-track::before { left: 6%; }
+  .g-row:nth-child(3) .g-track::before { left: 30%; }
+  .g-row:nth-child(4) .g-track::before { left: 50%; }
+  .g-row:nth-child(5) .g-track::before { left: 90%; }
 
   /* bar geometry: offsets and lengths in tenths of the whole engagement.
      The proportions are the argument — a sliver of a call, real time on
@@ -131,19 +183,20 @@ const steps = [
       0 0 10px rgb(77 124 255 / 0.65),
       0 0 26px rgb(77 124 255 / 0.35);
     transform-origin: left;
+    transition: filter 200ms ease, box-shadow 200ms ease;
   }
   :global(.pb-armed) .fill { transform: scaleX(0); }
   :global(.pb-armed.pb-draw) .fill {
     transform: scaleX(1);
-    transition: transform 450ms var(--ease);
+    transition: transform 450ms var(--ease), filter 200ms ease, box-shadow 200ms ease;
   }
-  /* the schedule fills in sequence, left to right down the rows (style
-     attributes are off-limits under the hashed CSP, so the delays live
-     here) */
-  .g-row:nth-child(2) .fill { transition-delay: 60ms; }
-  .g-row:nth-child(3) .fill { transition-delay: 120ms; }
-  .g-row:nth-child(4) .fill { transition-delay: 180ms; }
-  .g-row:nth-child(5) .fill { transition-delay: 240ms; }
+  /* the schedule fills in sequence, left to right down the rows — the
+     delay applies to the draw only, never the hover (style attributes
+     are off-limits under the hashed CSP, so the delays live here) */
+  .g-row:nth-child(2) .fill { transition-delay: 60ms, 0s, 0s; }
+  .g-row:nth-child(3) .fill { transition-delay: 120ms, 0s, 0s; }
+  .g-row:nth-child(4) .fill { transition-delay: 180ms, 0s, 0s; }
+  .g-row:nth-child(5) .fill { transition-delay: 240ms, 0s, 0s; }
 
   /* ---------- the descriptions ---------- */
   .step-list {
@@ -151,11 +204,24 @@ const steps = [
     margin: 0;
     padding: 0;
     display: grid;
-    gap: 28px;
+    gap: 26px;
   }
-  .step-name { color: rgb(245 247 249 / 0.55); }
+  .step {
+    border-left: 2px solid transparent;
+    padding-left: 18px;
+    transition: border-color 180ms ease, background-color 180ms ease;
+  }
+  .step-name { color: rgb(245 247 249 / 0.6); }
   .step-name b { color: var(--color-sheet); font-weight: 700; }
-  .step-body { margin-top: 6px; font-size: 0.9375rem; max-width: 40em; }
+  /* the readability pass: full-size body at a brighter step */
+  .step-body {
+    margin-top: 6px;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.6;
+    color: rgb(245 247 249 / 0.75);
+    max-width: 40em;
+  }
 
   .chip {
     display: inline-block;
@@ -171,8 +237,53 @@ const steps = [
     border-color: rgb(232 163 61 / 0.4);
   }
 
+  /* ---------- the cross-light: bar ↔ description ---------- */
+  /* Hover either side and both light. Pure CSS: the grid watches its own
+     children with :has() — browsers without it simply keep the flat
+     styling, nothing breaks. */
+  .process-grid:has(.g-row:nth-child(1):hover) .step:nth-child(1),
+  .process-grid:has(.step:nth-child(1):hover) .step:nth-child(1),
+  .process-grid:has(.g-row:nth-child(2):hover) .step:nth-child(2),
+  .process-grid:has(.step:nth-child(2):hover) .step:nth-child(2),
+  .process-grid:has(.g-row:nth-child(3):hover) .step:nth-child(3),
+  .process-grid:has(.step:nth-child(3):hover) .step:nth-child(3),
+  .process-grid:has(.g-row:nth-child(4):hover) .step:nth-child(4),
+  .process-grid:has(.step:nth-child(4):hover) .step:nth-child(4),
+  .process-grid:has(.g-row:nth-child(5):hover) .step:nth-child(5),
+  .process-grid:has(.step:nth-child(5):hover) .step:nth-child(5) {
+    border-left-color: var(--color-cobalt-lift);
+    background: rgb(245 247 249 / 0.04);
+  }
+  .process-grid:has(.g-row:nth-child(1):hover) .g-row:nth-child(1) .fill,
+  .process-grid:has(.step:nth-child(1):hover) .g-row:nth-child(1) .fill,
+  .process-grid:has(.g-row:nth-child(2):hover) .g-row:nth-child(2) .fill,
+  .process-grid:has(.step:nth-child(2):hover) .g-row:nth-child(2) .fill,
+  .process-grid:has(.g-row:nth-child(3):hover) .g-row:nth-child(3) .fill,
+  .process-grid:has(.step:nth-child(3):hover) .g-row:nth-child(3) .fill,
+  .process-grid:has(.g-row:nth-child(4):hover) .g-row:nth-child(4) .fill,
+  .process-grid:has(.step:nth-child(4):hover) .g-row:nth-child(4) .fill,
+  .process-grid:has(.g-row:nth-child(5):hover) .g-row:nth-child(5) .fill,
+  .process-grid:has(.step:nth-child(5):hover) .g-row:nth-child(5) .fill {
+    filter: brightness(1.25);
+    box-shadow:
+      0 0 14px rgb(77 124 255 / 0.85),
+      0 0 34px rgb(77 124 255 / 0.5);
+  }
+  .process-grid:has(.g-row:nth-child(1):hover) .g-row:nth-child(1) .g-label,
+  .process-grid:has(.step:nth-child(1):hover) .g-row:nth-child(1) .g-label,
+  .process-grid:has(.g-row:nth-child(2):hover) .g-row:nth-child(2) .g-label,
+  .process-grid:has(.step:nth-child(2):hover) .g-row:nth-child(2) .g-label,
+  .process-grid:has(.g-row:nth-child(3):hover) .g-row:nth-child(3) .g-label,
+  .process-grid:has(.step:nth-child(3):hover) .g-row:nth-child(3) .g-label,
+  .process-grid:has(.g-row:nth-child(4):hover) .g-row:nth-child(4) .g-label,
+  .process-grid:has(.step:nth-child(4):hover) .g-row:nth-child(4) .g-label,
+  .process-grid:has(.g-row:nth-child(5):hover) .g-row:nth-child(5) .g-label,
+  .process-grid:has(.step:nth-child(5):hover) .g-row:nth-child(5) .g-label {
+    color: var(--color-sheet);
+  }
+
   /* Below 1024 the chart stacks above the descriptions; the label column
-     narrows and the rows tighten. */
+     narrows and the milestone re-centres on the narrower geometry. */
   @media (max-width: 1023.98px) {
     .process { padding-block: 72px; }
     .process-grid { grid-template-columns: 1fr; gap: 48px; }
@@ -180,6 +291,8 @@ const steps = [
     .g-row { grid-template-columns: 118px minmax(0, 1fr); gap: 12px; }
     .g-label { font-size: 0.71rem; }
     .g-track { height: 14px; }
+    .g-row + .g-row .g-track::before { top: -23px; height: 23px; }
+    .g-mark-line, .g-mark-label { left: calc(65px + 50%); }
     .step-body { max-width: 34em; }
   }
 </style>
