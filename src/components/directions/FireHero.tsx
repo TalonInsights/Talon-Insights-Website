@@ -121,6 +121,7 @@ const gateShader = {
   uniforms: {
     tDiffuse: { value: null },
     ground: { value: new THREE.Vector3(GROUND.r, GROUND.g, GROUND.b) },
+    time: { value: 0.0 },
   },
   vertexShader: `
     varying vec2 vUv;
@@ -129,18 +130,58 @@ const gateShader = {
       gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
     }
   `,
+  /* Content-driven containment (owner's insight): rather than a geometric
+     zone, this recomputes the flame's own noise field — same time, same
+     fbm — and keeps only pixels where the field is at or near flame
+     strength. The kept region IS the flame's silhouette plus a whisker of
+     glow that follows every tongue; between and above the tongues, the
+     page's dark. A slim fixed margin holds under the rope's belly. */
   fragmentShader: `
     uniform sampler2D tDiffuse;
     uniform vec3 ground;
+    uniform float time;
     varying vec2 vUv;
+
+    float rand(vec2 n) { return fract(sin(dot(n, vec2(12.9898, 4.1414))) * 43758.5453); }
+    float noise(vec2 p){
+      vec2 ip = floor(p);
+      vec2 u = fract(p);
+      u = u*u*(3.0-2.0*u);
+      float res = mix(
+        mix(rand(ip),rand(ip+vec2(1.0,0.0)),u.x),
+        mix(rand(ip+vec2(0.0,1.0)),rand(ip+vec2(1.0,1.0)),u.x),u.y);
+      return res*res;
+    }
+    float fbm(vec2 x) {
+      float v = 0.0;
+      float a = 0.5;
+      vec2 shift = vec2(100.0);
+      mat2 rot = mat2(cos(0.5), sin(0.5), -sin(0.5), cos(0.50));
+      for (int i = 0; i < 5; ++i) {
+        v += a * noise(x);
+        x = rot * x * 2.0 + shift;
+        a *= 0.5;
+      }
+      return v;
+    }
+
     void main() {
       float x = vUv.x;
       float vv = 1.0 - vUv.y;
       float seam = 1.0 - (0.12 + 2.0 * (x - 0.5) * (x - 0.5));
       float u = seam - vv;
-      // the designated fire range: a little under the rope, up to the
-      // tongues' reach — feathered over ~0.02 so the cut doesn't alias
-      float keep = smoothstep(-0.04, -0.015, u) * (1.0 - smoothstep(0.16, 0.21, u));
+
+      // the flame's own field, identical to the material's
+      float nu = u + time*0.0004;
+      vec2 p = vec2(x * 24.0, nu * 9.0);
+      float n = fbm(p + fbm(p));
+      float f = 1.0 - u * 3.0;
+      float s = f + n*f;
+
+      // flame exists at s >= 0.99; glow may live just outside it, shaped
+      // by the same field — beyond that, the page's dark
+      float keep = smoothstep(0.60, 0.96, s);
+      keep *= smoothstep(-0.06, -0.015, u); // under-belly margin
       keep *= smoothstep(0.0, 0.05, x) * smoothstep(1.0, 0.95, x);
       vec4 c = texture2D(tDiffuse, vUv);
       gl_FragColor = vec4(mix(ground, c.rgb, keep), 1.0);
@@ -177,7 +218,8 @@ function FireLine({ stokedRef }: { stokedRef: React.MutableRefObject<boolean> })
     bloomPass.strength = 1.15;
     bloomPass.radius = 0.28; /* glow dies before the gate, so the cut never shows */
     composer.addPass(bloomPass);
-    composer.addPass(new ShaderPass(gateShader));
+    const gatePass = new ShaderPass(gateShader);
+    composer.addPass(gatePass);
     // Without this, the composer displays linear values as sRGB: the whole
     // canvas washes brighter than the page (a visible khaki rectangle) and
     // the golden base reads cream. This converts the output properly, so
@@ -224,10 +266,12 @@ function FireLine({ stokedRef }: { stokedRef: React.MutableRefObject<boolean> })
         elapsed += (now - last) * speed;
         last = now;
         uniforms.time.value = elapsed * 1000.0;
+        gatePass.uniforms.time.value = uniforms.time.value;
       }
       composer.render();
       if (!reduce) raf = requestAnimationFrame(tick);
     };
+    gatePass.uniforms.time.value = uniforms.time.value;
     tick(); // at least one frame, even where rAF starves
 
     return () => {
