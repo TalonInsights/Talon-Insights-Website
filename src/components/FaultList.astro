@@ -280,7 +280,6 @@ const right = faults.slice(3);
     .fx-badge { animation: fl-pulse 3.6s ease-in-out infinite; }
     .fault-featured:hover .fx-badge { animation-duration: 1.2s; }
 
-    .featured-number { animation: fl-breathe 4.5s ease-in-out infinite; }
   }
   @keyframes fl-spin { to { rotate: 360deg; } }
   @keyframes fl-lift {
@@ -306,18 +305,6 @@ const right = faults.slice(3);
     0%, 100% { translate: 0 0; }
     50% { translate: 0 -1.6px; }
   }
-  @keyframes fl-breathe {
-    0%, 100% {
-      text-shadow:
-        0 0 26px rgb(61 107 255 / 0.75),
-        0 0 90px rgb(61 107 255 / 0.45);
-    }
-    50% {
-      text-shadow:
-        0 0 34px rgb(61 107 255 / 0.95),
-        0 0 130px rgb(61 107 255 / 0.6);
-    }
-  }
 
   /* ---------- the enthroned seventh ---------- */
   .fault-featured {
@@ -342,10 +329,7 @@ const right = faults.slice(3);
     font-weight: 700;
     font-size: clamp(7.5rem, 11vw, 12rem);
     line-height: 0.95;
-    color: #3D6BFF;
-    text-shadow:
-      0 0 26px rgb(61 107 255 / 0.75),
-      0 0 90px rgb(61 107 255 / 0.45);
+    color: #3D6BFF; /* glow removed 27 Aug (owner: reads AI) — flat colour, same brightness */
   }
   .featured-icon { margin-top: 18px; color: var(--color-cobalt-lift); }
   .featured-icon svg { width: 46px; height: 46px; }
