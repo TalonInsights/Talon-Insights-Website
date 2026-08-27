@@ -83,7 +83,15 @@ const movements = [
 <style>
   .case {
     padding-block: 120px;
-    background: var(--color-ink-deep); /* joins the dark run above */
+    /* the method section's ground language (owner: keep the ink from
+       going monotonous): cobalt washes breathing through ink-deep —
+       here the light pools behind the evidence frame on the right, with
+       a low answering wash under the copy */
+    background:
+      radial-gradient(1000px 560px at 78% 34%, rgb(29 78 216 / 0.2), transparent 68%),
+      radial-gradient(700px 400px at 50% 88%, rgb(29 78 216 / 0.08), transparent 72%),
+      radial-gradient(820px 460px at 10% 12%, rgb(29 78 216 / 0.13), transparent 70%),
+      var(--color-ink-deep);
   }
   .case-wrap {
     max-width: 1560px; /* the faults/method wrap — must match */
