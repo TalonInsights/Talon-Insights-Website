@@ -89,7 +89,7 @@ body {
 .t-body { font-size: 1.1875rem; /* body tier up 27 Aug (owner) */ font-weight: 400; line-height: 1.65; max-width: 34em; }
 .t-mono {
   font-family: var(--font-mono);
-  font-size: 0.875rem; /* stepped up 27 Aug (owner: small text everywhere) */
+  font-size: 0.9375rem; /* floor raised twice 27 Aug — nothing under 15px reads on this build */
   font-weight: 400;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -97,7 +97,7 @@ body {
 }
 .t-micro {
   font-family: var(--font-mono);
-  font-size: 0.8125rem; /* stepped up 27 Aug (owner: small text everywhere) */
+  font-size: 0.9375rem; /* floor raised twice 27 Aug — nothing under 15px reads on this build */
   font-weight: 400;
   letter-spacing: 0.04em;
   text-transform: uppercase;

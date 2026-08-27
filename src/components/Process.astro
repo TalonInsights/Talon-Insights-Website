@@ -91,12 +91,12 @@ const steps = [
   }
   .g-row {
     display: grid;
-    grid-template-columns: 148px minmax(0, 1fr);
+    grid-template-columns: 172px minmax(0, 1fr);
     align-items: center;
     gap: 18px;
   }
   .g-label {
-    font-size: 0.875rem;
+    font-size: 0.9375rem;
     letter-spacing: 0.08em;
     color: rgb(245 247 249 / 0.6);
     white-space: nowrap;
@@ -104,11 +104,11 @@ const steps = [
   }
   .g-label b { color: var(--color-sheet); font-weight: 700; }
 
-  /* the milestone: the heading, drawn. x = label column (148) + gap (18)
-     + 50% of the track — where the BUILD bar begins. */
+  /* the milestone: the heading, drawn. x = label column (172) + gap (18)
+     + 50% of the track — where the BUILD bar begins. 95 = (172+18)/2. */
   .g-mark-line {
     position: absolute;
-    left: calc(83px + 50%);
+    left: calc(95px + 50%);
     top: 32px;
     bottom: 2px;
     width: 0;
@@ -116,11 +116,11 @@ const steps = [
   }
   .g-mark-label {
     position: absolute;
-    left: calc(83px + 50%);
+    left: calc(95px + 50%);
     top: 0;
     transform: translateX(-50%);
     white-space: nowrap;
-    font-size: 0.8125rem;
+    font-size: 0.9375rem;
     letter-spacing: 0.18em;
     color: var(--color-cobalt-lift);
   }
@@ -288,11 +288,11 @@ const steps = [
     .process { padding-block: 72px; }
     .process-grid { grid-template-columns: 1fr; gap: 48px; }
     .gantt { gap: 22px; }
-    .g-row { grid-template-columns: 118px minmax(0, 1fr); gap: 12px; }
-    .g-label { font-size: 0.8125rem; }
+    .g-row { grid-template-columns: 138px minmax(0, 1fr); gap: 12px; }
+    .g-label { font-size: 0.875rem; }
     .g-track { height: 14px; }
     .g-row + .g-row .g-track::before { top: -23px; height: 23px; }
-    .g-mark-line, .g-mark-label { left: calc(65px + 50%); }
+    .g-mark-line, .g-mark-label { left: calc(75px + 50%); }
     .step-body { max-width: 34em; }
   }
 </style>
