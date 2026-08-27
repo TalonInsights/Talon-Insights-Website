@@ -41,14 +41,18 @@
          reference presents its product. The proof strip directly below
          names the client. -->
     <div class="hero-shot">
-      <img
-        src="/images/work-wulftek-home.webp"
-        width="1910"
-        height="1026"
-        alt="The WulfTek Tuning homepage — a delivered client site: registration lookup hero with the line ‘What could your car actually do?’"
-        decoding="async"
-        fetchpriority="high"
-      />
+      <div class="hero-shot-tilt">
+        <div class="hero-shot-skew">
+          <img
+            src="/images/work-wulftek-home.webp"
+            width="1910"
+            height="1026"
+            alt="The WulfTek Tuning homepage — a delivered client site: registration lookup hero with the line ‘What could your car actually do?’"
+            decoding="async"
+            fetchpriority="high"
+          />
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -152,37 +156,49 @@
   }
 
   /* ---------- the showcase shot ---------- */
-  /* The panel lies back into the page: perspective + a lean to the right,
-     top edge away, exactly the reference's staging. The wrapper carries
-     the perspective so the shadow tilts with the panel; the bottom fade
-     melts it into the proof strip's ink. */
+  /* The panel's projection is the owner-supplied Tailark hero's, adopted
+     mechanics-only per §7 (its nav, buttons and logo strip did not
+     survive; no dependencies came with it): perspective 1200px, then
+     rotateX(20deg), then skewX(.36rad) — EACH ON ITS OWN ELEMENT, because
+     nested transforms flatten independently and one combined transform
+     does not produce the same lean. The panel bleeds off the right edge
+     under two mask fades: bottom (into the proof strip) and right. */
   .hero-shot {
-    margin-top: clamp(40px, 6vw, 72px);
+    margin-top: clamp(32px, 5vw, 56px);
     margin-inline: auto;
-    width: min(100%, 1040px);
-    perspective: 1800px;
-    -webkit-mask-image: linear-gradient(180deg, #000 72%, transparent 98%);
-    mask-image: linear-gradient(180deg, #000 72%, transparent 98%);
+    max-width: 1280px;
+    -webkit-mask-image: linear-gradient(180deg, #000 50%, transparent 100%);
+    mask-image: linear-gradient(180deg, #000 50%, transparent 100%);
   }
+  .hero-shot-tilt {
+    perspective: 1200px;
+    margin-right: -14rem;
+    padding-left: 14rem;
+    -webkit-mask-image: linear-gradient(90deg, #000 50%, transparent 100%);
+    mask-image: linear-gradient(90deg, #000 50%, transparent 100%);
+  }
+  .hero-shot-skew { transform: rotateX(20deg); }
+  .hero-shot-skew > div,
+  .hero-shot img { display: block; }
   .hero-shot img {
-    display: block;
     width: 100%;
     height: auto;
     border-radius: 10px;
-    border: 1px solid rgb(245 247 249 / 0.14);
-    transform: rotateX(26deg) rotateY(-7deg) rotateZ(3deg);
-    transform-origin: 50% 0%;
-    box-shadow:
-      0 40px 90px -30px rgb(0 0 0 / 0.65),
-      0 0 120px -40px rgb(29 78 216 / 0.45);
+    border: 1px solid rgb(245 247 249 / 0.16);
+    transform: skewX(0.36rad);
+    box-shadow: 0 40px 90px -30px rgb(0 0 0 / 0.65);
   }
 
-  /* Small screens: the tilt reads as distortion at phone widths — the
-     panel sits flat and full-width instead, fade retained. */
+  /* Small screens: the projection reads as distortion at phone widths —
+     the panel sits flat and full-width instead, bottom fade retained. */
   @media (max-width: 720px) {
-    .hero-shot img {
-      transform: none;
-      border-radius: 8px;
+    .hero-shot-tilt {
+      margin-right: 0;
+      padding-left: 0;
+      -webkit-mask-image: none;
+      mask-image: none;
     }
+    .hero-shot-skew { transform: none; }
+    .hero-shot img { transform: none; border-radius: 8px; }
   }
 </style>
