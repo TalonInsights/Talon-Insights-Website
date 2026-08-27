@@ -122,7 +122,18 @@
   margin-top: -4cqw; /* the arc's tips rise either side of the display */
   pointer-events: none;
 }
-.fh-fire { position: absolute; inset: 0; }
+.fh-fire {
+  position: absolute;
+  inset: 0;
+  /* the bloom halo must never meet a canvas edge — fade it out first, so
+     the glow melts into the page instead of cutting a rectangle */
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 30%, #000 100%),
+    linear-gradient(90deg, transparent 0%, #000 5%, #000 95%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(180deg, transparent 0%, #000 30%, #000 100%),
+    linear-gradient(90deg, transparent 0%, #000 5%, #000 95%, transparent 100%);
+  mask-composite: intersect;
+}
 .fh-fire canvas { display: block; width: 100%; height: 100%; }
 
 .fh-sub {

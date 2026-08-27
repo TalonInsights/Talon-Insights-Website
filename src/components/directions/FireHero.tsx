@@ -4,6 +4,7 @@ import * as THREE from "three";
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js";
+import { OutputPass } from "three/examples/jsm/postprocessing/OutputPass.js";
 import "./fire-hero.css";
 
 /* Direction A — THE FIRE, as an interactable hero page (owner's brief,
@@ -133,10 +134,15 @@ function FireLine({ stokedRef }: { stokedRef: React.MutableRefObject<boolean> })
     const composer = new EffectComposer(renderer);
     composer.addPass(new RenderPass(scene, camera));
     const bloomPass = new UnrealBloomPass(new THREE.Vector2(width, height), 1.5, 0.4, 0.85);
-    bloomPass.threshold = 0.22;
-    bloomPass.strength = 0.95;
-    bloomPass.radius = 0.55;
+    bloomPass.threshold = 0.15;
+    bloomPass.strength = 1.2;
+    bloomPass.radius = 0.6;
     composer.addPass(bloomPass);
+    // Without this, the composer displays linear values as sRGB: the whole
+    // canvas washes brighter than the page (a visible khaki rectangle) and
+    // the golden base reads cream. This converts the output properly, so
+    // the cleared ground is pixel-identical to the page behind it.
+    composer.addPass(new OutputPass());
 
     const uniforms = {
       time: { value: reduce ? 5200.0 : 0.0 },
@@ -171,7 +177,7 @@ function FireLine({ stokedRef }: { stokedRef: React.MutableRefObject<boolean> })
       if (!reduce) {
         // hovering the commission button stokes the seam
         const targetSpeed = stokedRef.current ? 2.2 : 1;
-        const targetBloom = stokedRef.current ? 1.6 : 0.95;
+        const targetBloom = stokedRef.current ? 1.9 : 1.2;
         speed += (targetSpeed - speed) * 0.06;
         bloomPass.strength += (targetBloom - bloomPass.strength) * 0.06;
         const now = (performance.now() - start) / 1000;
