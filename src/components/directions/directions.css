@@ -385,7 +385,7 @@
   top: 50%;
   translate: -50% -50%;
   z-index: 305; /* above the enlarged card (300), under the close control (310) */
-  background: #12100d;
+  background: #010101; /* the fire page's ground — see fire-hero.css */
   border: 1px solid rgb(245 247 249 / 0.14);
   border-radius: 2px;
   overflow: hidden;

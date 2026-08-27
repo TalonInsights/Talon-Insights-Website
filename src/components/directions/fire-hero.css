@@ -12,7 +12,14 @@
   inset: 0;
   display: flex;
   flex-direction: column;
-  background: #12100d;
+  /* The page meets the fire's own ground rather than the other way round.
+     The shader's clear colour reaches the screen as #010101 — its source
+     hex is linearised twice on the way to the GPU (see FireHero.tsx), and
+     that near-black is what makes the seam read hard-edged and hot, so it
+     stays. Matching the page to it is what makes the canvas rectangle
+     disappear; correcting the shader instead lifts the ground, and the
+     bloom halo turns to grey smoke. Change one and you must change both. */
+  background: var(--fh-ground);
   color: #f4ede4;
   font-family: "Oswald", "Arial Narrow", sans-serif;
   overflow: hidden;
@@ -21,6 +28,7 @@
   /* the page's own heat scale: the fire burns ember-orange, the controls
      sit an octave hotter in amber so they read as worked metal rather
      than competing with the seam itself */
+  --fh-ground: #010101; /* == the shader's clear colour on screen */
   --fh-amber: #f2a83c;
   --fh-amber-hot: #ffc266;
   --fh-amber-rgb: 242 168 60;
