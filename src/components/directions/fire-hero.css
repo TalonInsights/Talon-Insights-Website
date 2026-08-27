@@ -3,8 +3,9 @@
    Exempt from the site token system like the comps: this IS the
    demonstration. One viewport, no scrolling; everything scales with the
    portal frame via container-query units. Its typography is its own —
-   Big Shoulders (display), Archivo (text and controls), Chivo Mono
-   (technical labels) — loaded by FireHero.tsx when the page mounts.
+   Big Shoulders (display), Khand (nav, buttons: squared industrial
+   signage), Saira (running text), Chivo Mono (technical labels) —
+   loaded by FireHero.tsx when the page mounts.
    ========================================================================== */
 
 .fh {
@@ -22,7 +23,7 @@
      bloom halo turns to grey smoke. Change one and you must change both. */
   background: var(--fh-ground);
   color: #f4ede4;
-  font-family: "Archivo", "Helvetica Neue", system-ui, sans-serif;
+  font-family: "Saira", "Helvetica Neue", system-ui, sans-serif;
   overflow: hidden;
   user-select: none;
 
@@ -30,9 +31,9 @@
      sit an octave hotter in amber so they read as worked metal rather
      than competing with the seam itself */
   --fh-ground: #010101; /* == the shader's clear colour on screen */
-  --fh-amber: #f2a83c;
-  --fh-amber-hot: #ffc266;
-  --fh-amber-rgb: 242 168 60;
+  --fh-ember: #e8702e;
+  --fh-ember-hot: #ff8a42;
+  --fh-ember-rgb: 232 112 46;
 }
 
 /* ---------- browser chrome ---------- */
@@ -80,8 +81,9 @@
   border: 0;
   padding: 0.4cqw 0;
   font: inherit;
+  font-family: "Khand", "Arial Narrow", sans-serif;
   font-weight: 600;
-  font-size: 1.6cqw;
+  font-size: 1.9cqw;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: rgb(244 237 228 / 0.6);
@@ -91,22 +93,23 @@
 .fh-links button:hover { color: #f4ede4; }
 .fh-navcta {
   background: none;
-  border: 1px solid rgb(var(--fh-amber-rgb) / 0.45);
+  border: 1px solid rgb(var(--fh-ember-rgb) / 0.45);
   padding: 0.9cqw 2.2cqw;
   font: inherit;
+  font-family: "Khand", "Arial Narrow", sans-serif;
   font-weight: 600;
-  font-size: 1.6cqw;
+  font-size: 1.9cqw;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--fh-amber);
+  color: var(--fh-ember);
   cursor: pointer;
-  box-shadow: 0 0 1.6cqw -0.6cqw rgb(var(--fh-amber-rgb) / 0.5);
+  box-shadow: 0 0 1.6cqw -0.6cqw rgb(var(--fh-ember-rgb) / 0.5);
   transition: border-color 180ms ease, box-shadow 180ms ease, color 180ms ease;
 }
 .fh-navcta:hover {
-  border-color: rgb(var(--fh-amber-rgb) / 0.9);
-  color: var(--fh-amber-hot);
-  box-shadow: 0 0 2.6cqw -0.5cqw rgb(var(--fh-amber-rgb) / 0.75);
+  border-color: rgb(var(--fh-ember-rgb) / 0.9);
+  color: var(--fh-ember-hot);
+  box-shadow: 0 0 2.6cqw -0.5cqw rgb(var(--fh-ember-rgb) / 0.75);
 }
 
 /* ---------- the stage ---------- */
@@ -120,6 +123,8 @@
   min-height: 0;
 }
 .fh .fh-kicker {
+  position: relative;
+  z-index: 2; /* the ember sky now reaches up past it */
   font-family: "Chivo Mono", ui-monospace, monospace;
   font-weight: 400; /* .g-ink p would thin it to 350 */
   font-size: 1.35cqw;
@@ -194,12 +199,17 @@
     0 0 0.55em rgb(226 98 32 / 0.4);
 }
 
-/* the feature: an arc of fire flanking the headline, dipping at centre */
+/* the feature: an arc of fire flanking the headline, dipping at centre.
+   The canvas is taller than the fire needs — its top reaches above the
+   headline so the embers can climb past the glyphs. The seam stays put:
+   the extra height is all sky, and the shader's BAND constant maps the
+   fire into the bottom 22/32 of it. Grows up via the deeper negative
+   margin; the bottom edge does not move. */
 .fh-line {
   position: relative;
   width: 94%;
-  height: 22cqw;
-  margin-top: -4cqw; /* the arc's tips rise either side of the display */
+  height: 32cqw;
+  margin-top: -14cqw;
   pointer-events: none;
 }
 .fh-fire { position: absolute; inset: 0; /* the shader's gate pass owns all edge control */ }
@@ -211,7 +221,7 @@
   font-weight: 400; /* .g-ink p would thin it to 350 */
   margin-top: 0.6cqw;
   max-width: 58cqw;
-  font-family: "Archivo", "Helvetica Neue", system-ui, sans-serif;
+  font-family: "Saira", "Helvetica Neue", system-ui, sans-serif;
   font-size: 1.75cqw;
   line-height: 1.6;
   color: rgb(244 237 228 / 0.7);
@@ -219,36 +229,38 @@
 
 .fh-ctas { display: flex; gap: 1.8cqw; margin-top: 2.6cqw; }
 .fh-primary {
-  background: var(--fh-amber);
-  border: 1px solid var(--fh-amber);
-  padding: 1.4cqw 3.4cqw;
+  background: var(--fh-ember);
+  border: 1px solid var(--fh-ember);
+  padding: 1.2cqw 3.4cqw;
   font: inherit;
+  font-family: "Khand", "Arial Narrow", sans-serif;
   font-weight: 600;
-  font-size: 1.75cqw;
+  font-size: 2.05cqw;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #140f06;
+  color: #1a0d04;
   cursor: pointer;
   /* a tight rim of heat, then a wide soft halo — the bar looks hot,
      not neon-outlined */
   box-shadow:
-    0 0 0.9cqw -0.2cqw rgb(var(--fh-amber-rgb) / 0.55),
-    0 0.4cqw 4.5cqw -1cqw rgb(var(--fh-amber-rgb) / 0.5);
+    0 0 0.9cqw -0.2cqw rgb(var(--fh-ember-rgb) / 0.55),
+    0 0.4cqw 4.5cqw -1cqw rgb(var(--fh-ember-rgb) / 0.5);
   transition: background-color 180ms ease, box-shadow 220ms ease;
 }
 .fh-primary:hover {
-  background: var(--fh-amber-hot);
+  background: var(--fh-ember-hot);
   box-shadow:
-    0 0 1.3cqw -0.2cqw rgb(var(--fh-amber-rgb) / 0.8),
-    0 0.5cqw 6.5cqw -1cqw rgb(var(--fh-amber-rgb) / 0.7);
+    0 0 1.3cqw -0.2cqw rgb(var(--fh-ember-rgb) / 0.8),
+    0 0.5cqw 6.5cqw -1cqw rgb(var(--fh-ember-rgb) / 0.7);
 }
 .fh-ghost {
   background: none;
   border: 1px solid rgb(244 237 228 / 0.3);
-  padding: 1.4cqw 3.4cqw;
+  padding: 1.2cqw 3.4cqw;
   font: inherit;
+  font-family: "Khand", "Arial Narrow", sans-serif;
   font-weight: 500;
-  font-size: 1.75cqw;
+  font-size: 2.05cqw;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: #f4ede4;
@@ -256,9 +268,9 @@
   transition: border-color 180ms ease, color 180ms ease, box-shadow 180ms ease;
 }
 .fh-ghost:hover {
-  border-color: rgb(var(--fh-amber-rgb) / 0.7);
-  color: var(--fh-amber);
-  box-shadow: 0 0 2.2cqw -0.8cqw rgb(var(--fh-amber-rgb) / 0.55);
+  border-color: rgb(var(--fh-ember-rgb) / 0.7);
+  color: var(--fh-ember);
+  box-shadow: 0 0 2.2cqw -0.8cqw rgb(var(--fh-ember-rgb) / 0.55);
 }
 
 /* keyboard users get the same heat, stated plainly */
@@ -266,7 +278,7 @@
 .fh-ghost:focus-visible,
 .fh-navcta:focus-visible,
 .fh-links button:focus-visible {
-  outline: 2px solid var(--fh-amber);
+  outline: 2px solid var(--fh-ember);
   outline-offset: 3px;
 }
 

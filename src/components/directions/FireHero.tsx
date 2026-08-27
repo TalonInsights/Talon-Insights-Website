@@ -23,6 +23,12 @@ import "./fire-hero.css";
    loops. Everything disposes on unmount — the fire burns only while this
    page is open. Wrekin Forge remains a fiction, and says so on the page. */
 
+/* The CSS gives the canvas 32cqw but the fire keeps its 22cqw band at the
+   bottom — the headroom is for the embers. Both fragment shaders divide
+   their vv by this constant so the seam, tongues and gate are untouched;
+   the particle shader uses it to place the rope and aim the climb. */
+const BAND = 22 / 32;
+
 const vert = `
   varying vec2 vUv;
   void main() {
@@ -69,9 +75,14 @@ const frag = `
   }
 
   void main(){
-    // mirror v (the composer pipeline flips it): vv = 0 at the band's
-    // bottom edge on screen
-    float vv = 1.0 - vUv.y;
+    // mirror v (the composer pipeline flips it). In this pipeline
+    // (1.0 - vUv.y) runs 0 at the canvas's SCREEN TOP to 1 at its
+    // bottom, so the fire band anchors to the bottom by subtracting the
+    // ember sky's share first; the divide then restores the 22cqw
+    // band's own coordinates exactly. Above the band vv goes negative —
+    // that is the embers' sky, and no flame may render there.
+    float vv = ((1.0 - vUv.y) - ${(1 - BAND).toFixed(6)}) / ${BAND};
+    if (vv < 0.0) { discard; }
     float x = vUv.x;
 
     // the seam arcs: tips raised at either side, lowest dip at the
@@ -167,7 +178,9 @@ const gateShader = {
 
     void main() {
       float x = vUv.x;
-      float vv = 1.0 - vUv.y;
+      // same band mapping as the fire; the sky (vv < 0) gates to ground
+      // on its own — u overshoots and the flame field zeroes out there
+      float vv = ((1.0 - vUv.y) - ${(1 - BAND).toFixed(6)}) / ${BAND};
       float seam = 1.0 - (0.12 + 2.0 * (x - 0.5) * (x - 0.5));
       float u = seam - vv;
 
@@ -265,10 +278,14 @@ function FireLine({ stokedRef }: { stokedRef: React.MutableRefObject<boolean> })
         void main() {
           float t = fract(time * 0.00025 * aSpeed + aPhase);
           float ux = aSeed + sin(time * 0.002 + aPhase * 40.0) * 0.012;
-          // the rope's clip-space height at this x (same curve as the fire)
-          float cy = 2.0 * (0.12 + 2.0 * (ux - 0.5) * (ux - 0.5)) - 1.0;
+          // the rope's clip-space height at this x: the same curve as the
+          // fire, compressed into the bottom band of the taller canvas
+          float cyBand = 2.0 * (0.12 + 2.0 * (ux - 0.5) * (ux - 0.5)) - 1.0;
+          float cy = -1.0 + (cyBand + 1.0) * ${BAND};
           vT = t;
-          gl_Position = vec4(ux * 2.0 - 1.0, cy + t * 1.7, 0.0, 1.0);
+          // each ember climbs from the rope to a fixed ceiling that sits
+          // level with the top of the headline, fading as it goes
+          gl_Position = vec4(ux * 2.0 - 1.0, mix(cy, 0.72, t), 0.0, 1.0);
           gl_PointSize = aSize * uPixelRatio * (1.0 - t * 0.6);
         }
       `,
@@ -364,17 +381,18 @@ function FireLine({ stokedRef }: { stokedRef: React.MutableRefObject<boolean> })
 
 /* The hero's typography is its own: Big Shoulders for the display (civic
    signage stock — engineered rather than merely condensed, with strokes wide
-   enough to carry the steel gradient), Archivo for running text and controls
-   (a grotesque whose width echoes the logo's tracked wordmark), and Chivo
-   Mono for the technical labels, which should read like drawing annotations.
-   The stylesheet is fetched when this page mounts rather than declared in
-   the site head, so three families the homepage never renders stay out of
-   its critical path — the same rule three.js follows. */
+   enough to carry the steel gradient), Khand for the nav and controls (a
+   squared industrial condensed — signage cut in metal), Saira for running
+   text, and Chivo Mono for the technical labels, which should read like
+   drawing annotations. The stylesheet is fetched when this page mounts
+   rather than declared in the site head, so families the homepage never
+   renders stay out of its critical path — the rule three.js follows. */
 const FONT_ID = "fh-fonts";
 const FONT_HREF =
   "https://fonts.googleapis.com/css2" +
   "?family=Big+Shoulders+Display:wght@600;700;800" +
-  "&family=Archivo:wght@400;500;600;700" +
+  "&family=Khand:wght@500;600" +
+  "&family=Saira:wght@400;500" +
   "&family=Chivo+Mono:wght@400;500" +
   "&display=swap";
 
