@@ -109,10 +109,12 @@ body {
 .t-h2 { margin-bottom: 16px; }
 .eyebrow {
   display: block;
-  /* eyebrows are headings, not whispers (owner, twice) — they leave the
-     micro tier for a 16px voice of their own */
-  font-size: 1rem;
-  letter-spacing: 0.28em;
+  /* eyebrows are headings, not whispers (owner, three times now) —
+     17px, bold, tighter tracking than before (extreme letterspacing was
+     half the legibility problem), and full-strength colour */
+  font-size: 1.0625rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
   color: var(--color-graphite);
   margin-bottom: 16px;
 }
@@ -128,7 +130,13 @@ body {
 .g-ink { color: var(--on-ink-body); }
 .g-ink p, .g-ink li { font-weight: 350; }
 .g-ink h1, .g-ink h2, .g-ink h3 { color: var(--color-sheet); }
-.g-ink .eyebrow { color: rgb(245 247 249 / 0.78); }
+.g-ink .eyebrow {
+  color: var(--color-cobalt-lift); /* on ink they take the accent — unmissable, and it matches the sub-head voice */
+  /* .g-ink p's 350 thinning out-specifies .eyebrow alone (0,1,1 vs 0,1,0)
+     — THIS was why eyebrows read weak at every size: they were being
+     thinned to 350 the whole time. Two classes win. */
+  font-weight: 700;
+}
 .g-ink .lede { color: var(--on-ink-body); }
 
 /* ---------- layout (§4) ---------- */
