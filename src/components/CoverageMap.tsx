@@ -198,7 +198,7 @@ export default function CoverageMap() {
       ctx.arc(sx(base.x), sx(base.y), 9.5, 0, Math.PI * 2);
       ctx.stroke();
       ctx.restore();
-      drawLabel(ctx, "Telford · base", sx(base.x) + 12, sx(base.y), SHEET, 1);
+      drawLabel(ctx, "Telford", sx(base.x) + 12, sx(base.y), SHEET, 1); // marker shape alone says base (27 Aug, owner)
 
       let allSettled = true;
       for (const j of journeys) {

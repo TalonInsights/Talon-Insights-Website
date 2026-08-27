@@ -1,35 +1,89 @@
 ---
-// B11 — Close (id="book"). Ink ground, centred, 150px padding.
+// B11 — Close (id="book"), merged with B10 (27 Aug, owner): the booking
+// form and the coverage map are one section now — form on the left, the
+// neon map on the right, on a ground a step DARKER than ink-deep so the
+// lifted-amber dots and travel animation read at full strength. The map's
+// legend loses the word BASE (the square-vs-dot marker distinction does
+// that job); the canvas label says just "Telford" (CoverageMap.tsx).
+// Map.astro is unmounted from the page; its component stays in the repo.
 import BookingForm from "./BookingForm";
+import CoverageMap from "./CoverageMap";
 ---
 
 <section class="close g-ink" id="book">
-  <div class="wrap close-inner">
-    <img class="close-mark" src="/images/mark.webp" alt="" width="158" height="132" />
-    <h2 class="t-h2">Book a visit — I’ll come to&nbsp;you.</h2>
-    <p class="lede close-lede">
-      No jargon, no pressure, and whatever we find is yours to keep — whether or not
-      we go ahead.
-    </p>
+  <div class="close-wrap">
+    <div class="close-grid">
+      <div class="close-left">
+        <img class="close-mark" src="/images/mark.webp" alt="" width="158" height="132" />
+        <h2 class="t-h2">Book a visit — I’ll come to&nbsp;you.</h2>
+        <p class="lede close-lede">
+          No jargon, no pressure, and whatever we find is yours to keep — whether or not
+          we go ahead.
+        </p>
 
-    <div class="close-form">
-      <BookingForm client:idle />
+        <div class="close-form">
+          <BookingForm client:idle />
+        </div>
+
+        <p class="close-call">
+          Or call <a class="tel" href="tel:+447742082423">07742 082423</a>
+          <span class="t-micro call-note">REPLY WITHIN ONE WORKING DAY</span>
+        </p>
+      </div>
+
+      <div class="close-map">
+        <p class="t-micro eyebrow">WHERE I WORK</p>
+        <p class="t-body close-reach">
+          Every job starts where you work, and it doesn’t stop after one visit. Telford,
+          Shrewsbury, Bridgnorth, Wolverhampton, Birmingham — within an hour of Telford, the
+          first visit costs nothing.
+        </p>
+
+        <div class="coverage-canvas">
+          <CoverageMap client:idle />
+        </div>
+
+        <div class="map-legend">
+          <span class="legend-item"><i class="swatch swatch-base" aria-hidden="true"></i><span class="t-micro">TELFORD</span></span>
+          <span class="legend-item"><i class="swatch swatch-city" aria-hidden="true"></i><span class="t-micro">WITHIN AN HOUR</span></span>
+        </div>
+        <div class="map-caption">
+          <span class="t-micro">WEST MIDLANDS REGION · ONS BOUNDARY DATA</span>
+          <span class="t-micro">VISITS · NO CHARGE WITHIN AN HOUR OF TELFORD</span>
+        </div>
+      </div>
     </div>
-
-    <p class="close-call">
-      Or call <a class="tel" href="tel:+447742082423">07742 082423</a>
-      <span class="t-micro call-note">REPLY WITHIN ONE WORKING DAY</span>
-    </p>
   </div>
 </section>
 
 <style>
-  .close { padding-block: 150px; text-align: center; }
-  .close-inner { display: flex; flex-direction: column; align-items: center; }
+  .close {
+    padding-block: 120px;
+    /* a step darker than --color-ink-deep (#060E1C): the neon map's
+       lifted-amber dots and the form's focus states carry the light here.
+       NOT #010101 — that value is the fire page's matched pair. */
+    background:
+      radial-gradient(800px 460px at 18% 18%, rgb(29 78 216 / 0.1), transparent 70%),
+      #04080F;
+    border-top: var(--hairline-dark);
+  }
+  .close-wrap {
+    max-width: 1560px; /* matches the other dark sections */
+    margin-inline: auto;
+    padding-inline: 24px;
+  }
+  .close-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 6fr) minmax(0, 6fr);
+    gap: clamp(40px, 5vw, 96px);
+    align-items: center;
+  }
+
+  /* ---------- left: the ask ---------- */
   .close-mark { width: 44px; height: auto; margin-bottom: 24px; }
   .close-lede { margin-top: 8px; max-width: 34em; }
 
-  .close-form { width: 100%; max-width: 640px; margin-top: 48px; text-align: left; }
+  .close-form { width: 100%; max-width: 640px; margin-top: 40px; }
 
   /* Form styling lives here (global within the section) because the island
      renders markup only — mechanics in BookingForm.tsx, skin from tokens. */
@@ -72,17 +126,65 @@ import BookingForm from "./BookingForm";
     font-size: 0.8125rem;
     letter-spacing: 0.04em;
     color: var(--color-amber); /* success state — not part of the at-rest amber budget */
-    text-align: center;
+    text-align: left;
     padding-block: 32px;
   }
 
-  .close-call { margin-top: 40px; display: flex; flex-wrap: wrap; align-items: baseline; justify-content: center; gap: 8px 16px; }
+  .close-call { margin-top: 36px; display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 16px; }
   .tel { color: var(--color-sheet); text-decoration: none; font-weight: 500; }
   .tel:hover { text-decoration: underline; }
   .call-note { color: rgb(245 247 249 / 0.45); }
 
-  @media (max-width: 639.98px) {
+  /* ---------- right: the reach ---------- */
+  .close-reach { margin-top: 8px; max-width: 40em; }
+
+  /* Reserves the canvas's space pre-hydration — zero CLS. 640 / 679 is the
+     logical frame written by scripts/generate-map.py into map-dots.json;
+     update together if the map geometry ever changes. Labels render on the
+     canvas itself, so nothing shifts when they arrive. */
+  .coverage-canvas { margin-top: 24px; }
+  .coverage-canvas :global(canvas) {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 640 / 679;
+  }
+
+  /* legend and caption share one footer under the canvas; TELFORD keeps
+     the square marker, the word BASE is gone (27 Aug, owner) */
+  .map-legend {
+    margin-top: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 28px;
+  }
+  .legend-item { display: inline-flex; align-items: center; gap: 10px; }
+  .legend-item .t-micro { color: rgb(245 247 249 / 0.6); }
+  .swatch { flex: none; }
+  .swatch-base { width: 10px; height: 10px; background: var(--color-amber-lift); }
+  .swatch-city {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-amber-lift);
+  }
+
+  .map-caption {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: var(--hairline-dark);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px 24px;
+  }
+  .map-caption .t-micro { color: rgb(245 247 249 / 0.5); }
+
+  @media (max-width: 899.98px) {
     .close { padding-block: 96px; }
+    .close-grid { grid-template-columns: 1fr; gap: 56px; }
+  }
+  @media (max-width: 639.98px) {
     .close-form :global(.bform-grid) { grid-template-columns: 1fr; }
   }
 </style>
