@@ -31,14 +31,12 @@ import CoverageMap from "./CoverageMap";
         </p>
       </div>
 
+      <!-- 27 Aug (owner): the WHERE I WORK copy came off — the map, its key
+           and an exact statement of what is drawn now stand centred on
+           their own. The boundary is the full ONS West Midlands region
+           (generate-map.py fetches the EER feature named "West Midlands"),
+           so the label names all six counties it contains. -->
       <div class="close-map">
-        <p class="t-micro eyebrow">WHERE I WORK</p>
-        <p class="t-body close-reach">
-          Every job starts where you work, and it doesn’t stop after one visit. Telford,
-          Shrewsbury, Bridgnorth, Wolverhampton, Birmingham — within an hour of Telford, the
-          first visit costs nothing.
-        </p>
-
         <div class="coverage-canvas">
           <CoverageMap client:idle />
         </div>
@@ -48,8 +46,8 @@ import CoverageMap from "./CoverageMap";
           <span class="legend-item"><i class="swatch swatch-city" aria-hidden="true"></i><span class="t-micro">WITHIN AN HOUR</span></span>
         </div>
         <div class="map-caption">
-          <span class="t-micro">WEST MIDLANDS REGION · ONS BOUNDARY DATA</span>
-          <span class="t-micro">VISITS · NO CHARGE WITHIN AN HOUR OF TELFORD</span>
+          <span class="t-micro">THE FULL WEST MIDLANDS REGION — SHROPSHIRE · STAFFORDSHIRE · HEREFORDSHIRE · WORCESTERSHIRE · WARWICKSHIRE · WEST MIDLANDS COUNTY</span>
+          <span class="t-micro">ONS BOUNDARY DATA · VISITS — NO CHARGE WITHIN AN HOUR OF TELFORD</span>
         </div>
       </div>
     </div>
@@ -135,14 +133,12 @@ import CoverageMap from "./CoverageMap";
   .tel:hover { text-decoration: underline; }
   .call-note { color: rgb(245 247 249 / 0.45); }
 
-  /* ---------- right: the reach ---------- */
-  .close-reach { margin-top: 8px; max-width: 40em; }
-
+  /* ---------- right: the map, centred ---------- */
   /* Reserves the canvas's space pre-hydration — zero CLS. 640 / 679 is the
      logical frame written by scripts/generate-map.py into map-dots.json;
      update together if the map geometry ever changes. Labels render on the
      canvas itself, so nothing shifts when they arrive. */
-  .coverage-canvas { margin-top: 24px; }
+  .coverage-canvas { max-width: 600px; margin-inline: auto; }
   .coverage-canvas :global(canvas) {
     display: block;
     width: 100%;
@@ -156,6 +152,7 @@ import CoverageMap from "./CoverageMap";
     margin-top: 16px;
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: 10px 28px;
   }
   .legend-item { display: inline-flex; align-items: center; gap: 10px; }
@@ -170,15 +167,16 @@ import CoverageMap from "./CoverageMap";
   }
 
   .map-caption {
-    margin-top: 12px;
+    margin-top: 14px;
     padding-top: 12px;
     border-top: var(--hairline-dark);
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 8px 24px;
+    max-width: 600px;
+    margin-inline: auto;
+    display: grid;
+    gap: 6px;
+    text-align: center;
   }
-  .map-caption .t-micro { color: rgb(245 247 249 / 0.5); }
+  .map-caption .t-micro { color: rgb(245 247 249 / 0.5); line-height: 1.6; }
 
   @media (max-width: 899.98px) {
     .close { padding-block: 96px; }
