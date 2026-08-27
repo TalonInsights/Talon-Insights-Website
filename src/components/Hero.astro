@@ -221,7 +221,7 @@
        screen's position into its resting pose */
     opacity: 0;
     transform-origin: 62% 58%;
-    animation: shot-arrive 1400ms var(--ease) 3.75s forwards;
+    animation: shot-arrive 1400ms var(--ease) 3.2s forwards;
     /* as wide as the screen allows while holding a 660px reserve for the
        copy column — on a large monitor this is roughly double the grid
        column it replaces */
@@ -281,7 +281,7 @@
     height: 96px;
     scale: 3.1;
     pointer-events: none;
-    animation: mb-exit 1250ms var(--ease) 3.5s forwards;
+    animation: mb-exit 1250ms var(--ease) 2.95s forwards;
   }
   .mb-frame {
     position: absolute;
@@ -292,8 +292,8 @@
     position: absolute;
     inset: 0;
     transform-style: preserve-3d;
-    transform: rotateX(-20deg);
-    animation: mb-rotate 3.2s ease-in-out both;
+    transform: rotateX(-20deg) rotateY(180deg);
+    animation: mb-rotate 2.6s ease-in-out both;
   }
 
   /* screen half */
@@ -306,7 +306,6 @@
     transform-origin: 50% 100%;
     background: linear-gradient(45deg, rgb(0 0 0 / 0.34), rgb(0 0 0 / 0)) left bottom / 300px 300px, #ddd;
     box-shadow: inset 0 3px 7px rgb(255 255 255 / 0.5);
-    animation: mb-lid 3.2s ease-in-out both;
   }
   .mb-screen-face {
     position: absolute;
@@ -341,13 +340,12 @@
     object-fit: cover;
     object-position: top;
     opacity: 0;
-    animation: mb-content 700ms ease-out 2.45s forwards;
+    animation: mb-content 600ms ease-out 2.1s forwards;
   }
   .mb-glare {
     position: absolute;
     inset: 0;
     background: linear-gradient(-135deg, rgb(255 255 255 / 0) 0%, rgb(255 255 255 / 0.1) 47%, rgb(255 255 255 / 0) 48%) 0 0 / 300px 200px;
-    animation: mb-glare 3.2s ease-in-out both;
   }
 
   /* body half */
@@ -374,7 +372,6 @@
     transform-style: preserve-3d;
     transform: translateZ(-2px);
     background: linear-gradient(30deg, rgb(0 0 0 / 0.24), rgb(0 0 0 / 0)), #dfdfdf;
-    animation: mb-deck 3.2s ease-in-out both;
   }
   .mb-trackpad {
     position: absolute;
@@ -403,7 +400,6 @@
     background: #444;
     transform: translateZ(-2px);
     box-shadow: 0 -2px 0 #222;
-    animation: mb-keys 3.2s ease-in-out both;
   }
   .mb-key-space { width: 45px; }
   .mb-key-f { height: 3px; }
@@ -424,64 +420,20 @@
     width: 60px; height: 0;
     transform: rotateX(80deg);
     box-shadow: 0 0 60px 40px rgb(0 0 0 / 0.3);
-    animation: mb-shadow 3.2s ease-in-out both;
   }
 
   /* ---------- the choreography (the import's keyframes, retimed to
        land open and facing the viewer) ---------- */
-  /* Trimmed 27 Aug (owner: the full pass overstayed): the import's beats
-     survive but the long mid-drift is gone — one crisp revolution into
-     the landing. Percentages are redistributed so the compression lands
-     on the tumble while the settle keeps close to its real time; the
-     tail still banks into the SHOWCASE PANEL'S OWN LEAN (left edge
-     receding, counter-tilt echoing the skew) so the handoff reads as
-     one object. */
+  /* Simplified again, 27 Aug (owner: still too much): no tumble at all.
+     The machine begins OPEN and FACING AWAY, makes one slow turn to the
+     camera, banks into the showcase panel's lean, the screen switches on
+     with the WulfTek page, and the swell hands over to the real panel.
+     The import's flip/close/bounce keyframes are retired with the lid,
+     deck, key and shadow animations they drove. */
   @keyframes mb-rotate {
-    0%   { transform: rotateX(-20deg) rotateY(0deg); }
-    6%   { transform: rotateX(-20deg) rotateY(-20deg); }
-    26%  { transform: rotateX(30deg) rotateY(200deg); }
-    33%  { transform: rotateX(-60deg) rotateY(150deg); }
-    52%  { transform: rotateX(-20deg) rotateY(130deg); }
-    57%  { transform: rotateX(-20deg) rotateY(120deg); }
-    72%  { transform: rotateX(-20deg) rotateY(375deg) rotateZ(0deg); }
-    82%  { transform: rotateX(-20deg) rotateY(357deg) rotateZ(0deg); }
-    87%  { transform: rotateX(-20deg) rotateY(360deg) rotateZ(0deg); }
+    0%   { transform: rotateX(-20deg) rotateY(180deg) rotateZ(0deg); }
+    82%  { transform: rotateX(-20deg) rotateY(360deg) rotateZ(0deg); }
     100% { transform: rotateX(-17deg) rotateY(382deg) rotateZ(-3deg); }
-  }
-  @keyframes mb-lid {
-    0%   { transform: rotateX(0deg); background-position: left bottom; }
-    6%   { transform: rotateX(50deg); background-position: left bottom; }
-    26%  { transform: rotateX(-90deg); background-position: -150px top; }
-    33%  { transform: rotateX(15deg); background-position: left bottom; }
-    40%  { transform: rotateX(-5deg); background-position: right top; }
-    50%  { transform: rotateX(5deg); background-position: right top; }
-    62%  { transform: rotateX(0deg); background-position: right top; }
-    100% { transform: rotateX(0deg); background-position: right center; }
-  }
-  @keyframes mb-deck {
-    0%, 60%, 100% { background-color: #dfdfdf; }
-    33% { background-color: #bbb; }
-  }
-  @keyframes mb-glare {
-    0%   { background-position: -20px 0; }
-    6%   { background-position: -40px 0; }
-    26%  { background-position: 200px 0; }
-    55%  { background-position: -200px 0; }
-    82%  { background-position: 0 0; }
-    100% { background-position: -20px 0; }
-  }
-  @keyframes mb-keys {
-    0%   { box-shadow: 0 -2px 0 #222; }
-    6%   { box-shadow: 1px -1px 0 #222; }
-    26%, 57% { box-shadow: -1px 1px 0 #222; }
-    72%, 100% { box-shadow: 0 -2px 0 #222; }
-  }
-  @keyframes mb-shadow {
-    0%   { transform: rotateX(80deg); box-shadow: 0 0 60px 40px rgb(0 0 0 / 0.3); }
-    26%  { transform: rotateX(30deg) rotateY(-20deg) rotateZ(-20deg); box-shadow: 0 0 50px 30px rgb(0 0 0 / 0.3); }
-    33%  { transform: rotateX(80deg) rotateY(-20deg) rotateZ(50deg); box-shadow: 0 0 35px 15px rgb(0 0 0 / 0.1); }
-    57%  { transform: rotateX(80deg) rotateZ(-50deg) translateX(30px); box-shadow: 0 0 60px 40px rgb(0 0 0 / 0.3); }
-    100% { transform: rotateX(80deg); box-shadow: 0 0 60px 40px rgb(0 0 0 / 0.3); }
   }
   @keyframes mb-content {
     from { opacity: 0; }
