@@ -167,22 +167,31 @@
     /* as wide as the screen allows while holding a 660px reserve for the
        copy column — on a large monitor this is roughly double the grid
        column it replaces */
-    width: clamp(560px, calc(100% - 660px), 1400px);
-    overflow: clip;
+    /* wider than the panel needs: the tilt's left padding below is shear
+       headroom, so the width formula hands that space back */
+    width: clamp(640px, calc(100% - 480px), 1640px);
+    /* NO overflow clip here: the projection's lean lives in the corners
+       that rotateX and the skew push outside the box — clipping them
+       flattens the whole panel back to a rectangle. The masks below and
+       the section's own overflow handle every edge. */
     /* two fades intersected: the bottom melts into the proof strip, and
        the left melts into the hero so the panel has no hard entry edge
        where it passes behind the copy */
     -webkit-mask-image:
       linear-gradient(180deg, #000 55%, transparent 98%),
-      linear-gradient(90deg, transparent 0%, #000 16%);
+      linear-gradient(90deg, transparent 0%, #000 22%);
     -webkit-mask-composite: source-in;
     mask-image:
       linear-gradient(180deg, #000 55%, transparent 98%),
-      linear-gradient(90deg, transparent 0%, #000 16%);
+      linear-gradient(90deg, transparent 0%, #000 22%);
     mask-composite: intersect;
   }
   .hero-shot-tilt {
     perspective: 1200px;
+    /* the reference's pl-56: room INSIDE the masked box for the corner
+       the skew throws left — without it the fades eat the sheared
+       corners and the projection reads as a flat rectangle */
+    padding-left: clamp(6rem, 11vw, 15rem);
     margin-right: clamp(-16rem, -10vw, -4rem);
     -webkit-mask-image: linear-gradient(90deg, #000 55%, transparent 100%);
     mask-image: linear-gradient(90deg, #000 55%, transparent 100%);
@@ -211,6 +220,7 @@
     }
     .hero-shot-tilt {
       margin-right: 0;
+      padding-left: 0;
       -webkit-mask-image: none;
       mask-image: none;
     }
