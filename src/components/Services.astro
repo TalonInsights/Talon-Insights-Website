@@ -1,10 +1,11 @@
 ---
-// B5 — Services: hierarchy, not a grid. Restaged 26 Aug 2026: lead panel
-// (copy only) → full-bleed ink Directions band → the thin subordinate
-// strip. The band now holds the folder gallery (owner's instruction,
-// replacing the coverflow): the three comps live in a folder that opens on
-// click and closes on drag-down. The lead panel and strip are hand-built
-// (§7); only the folder inside carries import mechanics.
+// B5 — Services, restaged 27 Aug 2026 (owner's directive): the separate
+// WHAT I DO light section is gone — its information now lives on the
+// Directions stage itself, arranged around the folder. The folder stays
+// central; the flagship websites story flanks it (the offer on the left,
+// the word survey and outcome on the right), and the three subordinate
+// services run as a strip along the band's foot. One dark stage, one
+// story: what I do, demonstrated live in the middle of it.
 import FolderGallery from "./directions/FolderGallery";
 
 const strip = [
@@ -14,49 +15,52 @@ const strip = [
 ];
 ---
 
-<section class="services g-white" id="services">
-  <div class="wrap">
-    <p class="t-micro eyebrow">WHAT I DO</p>
-    <h2 class="t-h2">One thing above all. Three more, done&nbsp;properly.</h2>
+<section class="services g-ink dband" id="services">
+  <div class="wrap services-wrap">
+    <header class="sv-head" data-rv>
+      <p class="t-micro sv-eyebrow">WHAT I DO</p>
+      <h2 class="sv-h">One thing above all. Three more, done&nbsp;properly.</h2>
+    </header>
 
-    <div class="lead-panel" data-rv>
-      <div class="lead-head">
-        <span class="t-mono">01 / WEBSITES</span>
-        <span class="t-mono lead-price">FROM £3,000</span>
-      </div>
-      <div class="lead-body">
-        <h3 class="t-h3">Designed with you, not presented to&nbsp;you.</h3>
-        <p class="t-body">
+    <p class="t-micro dband-eyebrow">
+      <i class="dband-diamond" aria-hidden="true"></i>
+      STEP 03 / DIRECTIONS · WREKIN FORGE
+    </p>
+
+    <div class="sv-stage">
+      <div class="sv-side sv-side-left" data-rv>
+        <div class="sv-kicker">
+          <span class="t-mono">01 / WEBSITES</span>
+          <span class="t-mono sv-price">FROM £3,000</span>
+        </div>
+        <h3 class="sv-h3">Designed with you, not presented to&nbsp;you.</h3>
+        <p class="sv-body">
           You see two or three real directions before a line of code is written — not one
           mockup to approve at the end. You tell me what’s wrong with them. That’s where the
           site starts to become yours. Then it gets built, and the line stays open the whole
           way: if you have a better idea in week three, I want to hear it.
         </p>
-        <div class="word-survey">
-          <p class="t-micro ws-label">INCLUDED — THE WORD SURVEY</p>
-          <p class="t-body">
-            Every site is built from the words your customers actually use — including the
-            ones nobody in your area is competing for. Found on the visits, listed in your
-            written scope, and built into the page from day one.
-          </p>
-        </div>
-        <div class="lead-foot">
+      </div>
+
+      <div class="sv-folder">
+        <FolderGallery client:idle />
+      </div>
+
+      <div class="sv-side sv-side-right" data-rv>
+        <p class="t-micro sv-label">INCLUDED — THE WORD SURVEY</p>
+        <p class="sv-body">
+          Every site is built from the words your customers actually use — including the
+          ones nobody in your area is competing for. Found on the visits, listed in your
+          written scope, and built into the page from day one.
+        </p>
+        <div class="sv-outcome">
           <span class="t-micro">OUTCOME</span>
           <strong>A site nobody else could have</strong>
-          <a class="link" href="#work">See the work →</a>
         </div>
+        <a class="sv-link" href="#work">See the work →</a>
       </div>
     </div>
-  </div>
 
-  {/* The Directions stage — full-bleed, edge to edge, ink. The amber ◆ is
-      the directions-artefact mark, one of the page's six amber marks. */}
-  <div class="dband g-ink">
-    <p class="t-micro dband-eyebrow">
-      <i class="dband-diamond" aria-hidden="true"></i>
-      STEP 03 / DIRECTIONS · WREKIN FORGE
-    </p>
-    <FolderGallery client:idle />
     <div class="demo-captions">
       <p class="t-micro">SAME FORGE. THREE DIFFERENT COMPANIES. NONE OF THEM WRONG.</p>
       <p class="t-micro">THE ONE THAT FEELS RIGHT IS THE ONE THAT GETS BUILT.</p>
@@ -64,9 +68,7 @@ const strip = [
         <a class="caption-link" href="#work">WREKIN FORGE IS A DEMONSTRATION — DAVID JACKSON &amp; SON GOT THE REAL THING ↓</a>
       </p>
     </div>
-  </div>
 
-  <div class="wrap">
     <div class="strip" data-rv>
       {strip.map((s) => (
         <div class="strip-item">
@@ -81,64 +83,32 @@ const strip = [
 
 <style>
   .services {
-    border-top: var(--hairline);
     padding-block: 96px;
-  }
-
-  /* ---------- lead panel: full width, copy only, no artefact ---------- */
-  .lead-panel {
-    margin-top: 48px;
-    background: var(--color-white);
-    border: var(--hairline);
-    border-radius: var(--radius);
-  }
-  .lead-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 16px;
-    padding: 20px 28px;
-    border-bottom: var(--hairline);
-  }
-  .lead-price { color: var(--color-graphite); }
-
-  /* Copy reflows to a comfortable measure — .t-body caps at 34em; the
-     panel never stretches its text across 1180px. */
-  .lead-body { padding: 28px; }
-  .lead-body .t-h3 { margin-bottom: 12px; }
-  .word-survey {
-    margin-top: 24px;
-    padding-top: 24px;
-    border-top: var(--hairline);
-  }
-  .ws-label { color: var(--color-graphite); margin-bottom: 8px; }
-  .lead-foot {
-    margin-top: 24px;
-    padding-top: 20px;
-    border-top: var(--hairline);
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: 8px 16px;
-  }
-  .lead-foot .t-micro { color: var(--color-graphite); }
-  .lead-foot strong { font-weight: 500; }
-  .lead-foot .link { margin-left: auto; }
-
-  /* ---------- the full-bleed ink band ---------- */
-  .dband {
-    margin-top: 64px;
-    padding-block: 96px;
+    background: var(--color-ink-deep);
     /* dragged cards may travel past the viewport edge */
     overflow-x: clip;
   }
+  .services-wrap { max-width: 1560px; }
+
+  /* ---------- head ---------- */
+  .sv-head { text-align: center; }
+  .sv-eyebrow { color: var(--color-cobalt-lift); letter-spacing: 0.4em; margin-bottom: 16px; }
+  .sv-h {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(2rem, 2.6vw, 3.25rem);
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+    color: var(--color-sheet);
+  }
+
   .dband-eyebrow {
+    margin-top: 48px;
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 10px;
     color: rgb(245 247 249 / 0.6);
-    margin-bottom: 40px;
   }
   .dband-diamond {
     width: 9px;
@@ -147,6 +117,62 @@ const strip = [
     background: var(--color-amber);
     transform: rotate(45deg);
   }
+
+  /* ---------- the stage: info flanking the central folder ---------- */
+  .sv-stage {
+    margin-top: 8px;
+    display: grid;
+    grid-template-columns: minmax(280px, 1fr) minmax(520px, 640px) minmax(280px, 1fr);
+    gap: clamp(24px, 3vw, 56px);
+    align-items: center;
+  }
+  /* the folder keeps the centre; its fan and enlargement pass over the
+     side columns by their own z-order */
+  .sv-folder { min-width: 0; }
+
+  .sv-side { color: rgb(245 247 249 / 0.68); }
+
+  .sv-kicker {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    color: var(--color-sheet);
+  }
+  .sv-price { color: rgb(245 247 249 / 0.55); }
+  .sv-h3 {
+    margin-top: 14px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1.25rem, 1.35vw, 1.75rem);
+    line-height: 1.25;
+    color: var(--color-sheet);
+  }
+  .sv-body {
+    margin-top: 12px;
+    font-size: clamp(0.9375rem, 0.85vw, 1.125rem);
+    line-height: 1.65;
+  }
+  .sv-label { color: var(--color-cobalt-lift); margin-bottom: 10px; }
+  .sv-outcome {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid rgb(245 247 249 / 0.16);
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .sv-outcome .t-micro { color: rgb(245 247 249 / 0.55); }
+  .sv-outcome strong { font-weight: 500; color: var(--color-sheet); }
+  .sv-link {
+    display: inline-block;
+    margin-top: 14px;
+    color: var(--color-cobalt-lift);
+    text-decoration: none;
+    transition: color 180ms var(--ease);
+  }
+  .sv-link:hover { color: var(--color-sheet); }
 
   .demo-captions {
     margin-top: 40px;
@@ -163,24 +189,31 @@ const strip = [
   }
   .caption-link:hover { color: var(--color-amber); }
 
-  /* ---------- subordinate strip: dividers, no cards, no borders ---------- */
+  /* ---------- subordinate strip on the band's foot ---------- */
   .strip {
-    margin-top: 64px;
+    margin-top: 56px;
+    padding-top: 40px;
+    border-top: 1px solid rgb(245 247 249 / 0.14);
     display: grid;
     grid-template-columns: repeat(3, 1fr);
   }
   .strip-item { padding: 8px 32px; }
   .strip-item:first-child { padding-left: 0; }
-  .strip-item + .strip-item { border-left: var(--hairline); }
-  .strip-name { color: var(--color-ink); }
-  .strip-body { color: var(--color-graphite); font-size: 0.9375rem; margin-top: 8px; max-width: 26em; }
-  .strip-price { color: var(--color-graphite); margin-top: 12px; }
+  .strip-item + .strip-item { border-left: 1px solid rgb(245 247 249 / 0.14); }
+  .strip-name { color: var(--color-sheet); }
+  .strip-body { color: rgb(245 247 249 / 0.62); font-size: 0.9375rem; margin-top: 8px; max-width: 26em; }
+  .strip-price { color: rgb(245 247 249 / 0.55); margin-top: 12px; }
 
+  /* ---------- responsive ---------- */
+  @media (max-width: 1100px) {
+    .sv-stage { grid-template-columns: 1fr; }
+    .sv-folder { order: -1; }
+    .sv-side { max-width: 560px; margin-inline: auto; }
+  }
   @media (max-width: 767.98px) {
     .services { padding-block: 64px; }
-    .dband { padding-block: 64px; margin-top: 48px; }
     .strip { grid-template-columns: 1fr; margin-top: 48px; }
     .strip-item { padding: 20px 0; }
-    .strip-item + .strip-item { border-left: 0; border-top: var(--hairline); }
+    .strip-item + .strip-item { border-left: 0; border-top: 1px solid rgb(245 247 249 / 0.14); }
   }
 </style>
