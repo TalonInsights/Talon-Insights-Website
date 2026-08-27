@@ -20,6 +20,12 @@ const steps = [
 ---
 
 <section class="method" id="method">
+  <!-- the scene is the section's own ground, as in the mock: full-bleed
+       from the very top edge, the copy sitting over its dark left, its
+       cut edges dissolved by mask fades — no frame, no block. -->
+  <div class="m-scene" aria-hidden="true">
+    <img src="/images/method-scene.webp" alt="" width="1330" height="1182" loading="lazy" decoding="async" />
+  </div>
   <div class="wrap method-wrap">
     <div class="m-top">
       <div class="m-copy" data-rv>
@@ -39,13 +45,6 @@ const steps = [
         </div>
       </div>
 
-      <!-- the desk scene, remade by the owner at full quality from the
-           written brief: laptop showing brief-to-direction, the falcon
-           mug, the lamp — text-free outside the display, edges left dark
-           for the fades. Masked so it melts into the ink like the mock. -->
-      <div class="m-scene" data-rv aria-hidden="true">
-        <img src="/images/method-scene.webp" alt="" width="1330" height="1182" loading="lazy" decoding="async" />
-      </div>
     </div>
 
     <p class="t-micro m-steps-eyebrow" data-rv>HOW WE DO IT DIFFERENTLY</p>
@@ -123,13 +122,16 @@ const steps = [
     color: var(--on-ink-body);
   }
 
-  /* ---------- top: copy + drawn panel ---------- */
+  /* ---------- top: the copy rides the scene ---------- */
   .m-top {
-    display: grid;
-    grid-template-columns: minmax(380px, 7fr) 5fr;
-    gap: clamp(32px, 5vw, 72px);
+    position: relative;
+    z-index: 2;
+    display: flex;
     align-items: center;
+    /* reserves the hero band the scene fills behind */
+    min-height: clamp(360px, 30vw, 560px);
   }
+  .m-copy { max-width: 620px; }
 
   .m-eyebrow {
     display: inline-flex;
@@ -191,30 +193,29 @@ const steps = [
   }
   .m-btn-ghost:hover { border-color: rgb(77 124 255 / 0.7); }
 
-  /* the mock's scene: no card, no border — the photograph's own glow is
-     the lighting, and mask fades melt its cut edges into the ink the way
-     the mock's scene sits in its ground */
-  .m-scene { position: relative; }
+  /* the scene as ground: pinned to the section's own top-right corner,
+     running to both edges with no frame — only the left and bottom fades
+     that dissolve it into the ink, exactly the mock's blend */
+  .method { position: relative; }
+  .m-scene {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: min(58vw, 1010px);
+    pointer-events: none;
+  }
   .m-scene img {
     display: block;
     width: 100%;
     height: auto;
     -webkit-mask-image:
-      linear-gradient(90deg, transparent 0%, #000 14%),
-      linear-gradient(180deg, #000 78%, transparent 100%);
+      linear-gradient(90deg, transparent 0%, #000 26%),
+      linear-gradient(180deg, #000 62%, transparent 96%);
     -webkit-mask-composite: source-in;
     mask-image:
-      linear-gradient(90deg, transparent 0%, #000 14%),
-      linear-gradient(180deg, #000 78%, transparent 100%);
+      linear-gradient(90deg, transparent 0%, #000 26%),
+      linear-gradient(180deg, #000 62%, transparent 96%);
     mask-composite: intersect;
-  }
-  /* the lamp's spill, extended past the crop */
-  .m-scene::after {
-    content: "";
-    position: absolute;
-    inset: -20% -30% -20% 30%;
-    background: radial-gradient(50% 45% at 78% 18%, rgb(77 124 255 / 0.16), transparent 70%);
-    pointer-events: none;
   }
 
   /* ---------- the four steps ---------- */
@@ -378,8 +379,9 @@ const steps = [
     .m-steps { grid-template-columns: repeat(2, 1fr); }
   }
   @media (max-width: 860px) {
-    .m-top, .m-built { grid-template-columns: 1fr; }
-    .m-panel { max-width: 520px; }
+    .m-built { grid-template-columns: 1fr; }
+    .m-top { min-height: 0; padding-top: clamp(200px, 52vw, 380px); }
+    .m-scene { width: min(86vw, 520px); }
   }
   @media (max-width: 620px) {
     .method { padding-block: 88px 80px; }
