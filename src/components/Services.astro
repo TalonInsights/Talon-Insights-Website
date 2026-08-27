@@ -18,14 +18,8 @@ const strip = [
 <section class="services g-ink dband" id="services">
   <div class="wrap services-wrap">
     <header class="sv-head" data-rv>
-      <p class="t-micro sv-eyebrow">WHAT I DO</p>
-      <h2 class="sv-h">One thing above all. Three more, done&nbsp;properly.</h2>
+      <h2 class="sv-h">Your judgement, my&nbsp;execution.</h2>
     </header>
-
-    <p class="t-micro dband-eyebrow">
-      <i class="dband-diamond" aria-hidden="true"></i>
-      STEP 03 / DIRECTIONS · WREKIN FORGE
-    </p>
 
     <div class="sv-stage">
       <div class="sv-side sv-side-left" data-rv>
@@ -92,7 +86,6 @@ const strip = [
 
   /* ---------- head ---------- */
   .sv-head { text-align: center; }
-  .sv-eyebrow { color: var(--color-cobalt-lift); letter-spacing: 0.4em; margin-bottom: 16px; }
   .sv-h {
     font-family: var(--font-display);
     font-weight: 600;
@@ -102,25 +95,9 @@ const strip = [
     color: var(--color-sheet);
   }
 
-  .dband-eyebrow {
-    margin-top: 48px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    color: rgb(245 247 249 / 0.6);
-  }
-  .dband-diamond {
-    width: 9px;
-    height: 9px;
-    flex: none;
-    background: var(--color-amber);
-    transform: rotate(45deg);
-  }
-
   /* ---------- the stage: info flanking the central folder ---------- */
   .sv-stage {
-    margin-top: 8px;
+    margin-top: 40px;
     display: grid;
     grid-template-columns: minmax(280px, 1fr) minmax(520px, 640px) minmax(280px, 1fr);
     gap: clamp(24px, 3vw, 56px);
