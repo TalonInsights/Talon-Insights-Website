@@ -3,10 +3,11 @@ import "../styles/theme.css";
 
 interface Props {
   path?: string;
+  noindex?: boolean;
   title: string;
   description: string;
 }
-const { title, description, path = "/" } = Astro.props;
+const { title, description, path = "/", noindex = false } = Astro.props;
 const pageUrl = "https://taloninsights.co.uk" + path;
 
 // §1 revised 27 Aug (owner: "fix the fonts… deploy sitewide") — the site
@@ -35,6 +36,7 @@ const fontsHref =
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={pageUrl} />
+    {noindex && <meta name="robots" content="noindex" />}
     <meta name="theme-color" content="#0B1F3A" />
     <meta name="color-scheme" content="light" />
     <meta name="author" content="Talon Herring" />

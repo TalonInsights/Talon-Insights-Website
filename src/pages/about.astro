@@ -1,0 +1,50 @@
+---
+// /about — placeholder (28 Aug, owner: nav links get their own pages).
+// Holds the route and the voice until the real page is designed; noindex
+// so the thin page never ranks. The homepage section covers the story
+// meanwhile.
+import Base from "../layouts/Base.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<Base title="About — Talon Insights" description="About Talon Insights — the engineer who runs the job." path="/about" noindex>
+  <Header />
+  <main>
+    <section class="ph g-ink">
+      <div class="ph-wrap">
+        <p class="t-micro eyebrow">ABOUT</p>
+        <h1 class="t-h2">Who you’d be hiring — the longer story is coming.</h1>
+        <p class="lede ph-lede">
+          This page is being built. The full story lives on the homepage for now —
+          and the door is open either way.
+        </p>
+        <div class="ph-ctas">
+          <a class="btn btn-primary" href="/#about">Meet me on the homepage</a>
+          <a class="btn btn-ghost ph-ghost" href="/booking">Book a visit</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  .ph {{
+    background:
+      radial-gradient(800px 460px at 18% 18%, rgb(29 78 216 / 0.1), transparent 70%),
+      var(--color-ink-deep);
+    padding-block: 160px 140px;
+    min-height: 62vh;
+  }}
+  .ph-wrap {{
+    max-width: 1560px;
+    margin-inline: auto;
+    padding-inline: 24px;
+  }}
+  .ph h1 {{ color: var(--color-sheet); }}
+  .ph-lede {{ margin-top: 14px; max-width: 38em; }}
+  .ph-ctas {{ display: flex; flex-wrap: wrap; gap: 14px; margin-top: 32px; }}
+  .ph-ghost {{ color: var(--color-sheet); border-color: rgb(245 247 249 / 0.3); }}
+  .ph-ghost:hover {{ border-color: var(--color-sheet); }}
+</style>
