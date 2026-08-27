@@ -22,6 +22,26 @@
   </div>
 </header>
 
+<script>
+  /* Over the hero the header sheds its surface (owner's directive, 27 Aug
+     pm): transparent until the hero has passed all the way under it, then
+     the ink surface returns. Failsafe orientation, per the house rule:
+     the SOLID header is the default — readable over every section — and
+     transparency is applied by script only while the hero is actually in
+     view, so environments where IO never fires simply keep the safe
+     surface. The observer's top inset is the header's own 68px, so
+     "past" means past the header's bottom edge, not the viewport's top. */
+  const head = document.querySelector(".site-head");
+  const hero = document.querySelector(".hero");
+  if (head && hero && "IntersectionObserver" in window) {
+    const io = new IntersectionObserver(
+      ([entry]) => head.classList.toggle("site-head--clear", entry.isIntersecting),
+      { rootMargin: "-68px 0px 0px 0px" }
+    );
+    io.observe(hero);
+  }
+</script>
+
 <style>
   .site-head {
     position: sticky;
@@ -32,6 +52,15 @@
     -webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
     border-bottom: var(--hairline-dark);
+    transition: background-color 240ms var(--ease), border-color 240ms var(--ease);
+  }
+  /* the clear state: no surface, no rule, no blur — the hero's own ground
+     shows through until it has fully passed */
+  .site-head--clear {
+    background: transparent;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    border-bottom-color: transparent;
   }
   .head-row {
     height: 68px;

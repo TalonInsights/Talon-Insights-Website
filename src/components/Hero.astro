@@ -1,6 +1,6 @@
 ---
 // B1 — Hero, restaged 27 Aug 2026 (owner's directive, Linear reference):
-// the centred block goes left-aligned and gains the site's first showcase
+// the block gains the site's first showcase
 // shot — the WulfTek Tuning homepage, a real delivered client page, lying
 // back at a Linear-style tilt below the copy. The copy itself is still the
 // master build's verbatim hero text: chip → H1 → standfirst → CTA pair →
@@ -62,8 +62,8 @@
   .hero {
     position: relative;
     background:
-      radial-gradient(720px 460px at 30% 24%, rgb(77 124 255 / 0.24), transparent 70%),
-      radial-gradient(1100px 700px at 42% 20%, rgb(29 78 216 / 0.15), transparent 72%),
+      radial-gradient(720px 460px at 50% 22%, rgb(77 124 255 / 0.24), transparent 70%),
+      radial-gradient(1100px 700px at 50% 18%, rgb(29 78 216 / 0.15), transparent 72%),
       var(--color-ink-deep);
     padding-top: clamp(88px, 12vh, 140px);
     padding-bottom: 0; /* the shot melts straight into the proof strip */
@@ -78,8 +78,8 @@
       linear-gradient(rgb(245 247 249 / 0.055) 1px, transparent 1px),
       linear-gradient(90deg, rgb(245 247 249 / 0.055) 1px, transparent 1px);
     background-size: 56px 56px;
-    -webkit-mask-image: radial-gradient(70% 64% at 40% 26%, #000 40%, transparent 78%);
-    mask-image: radial-gradient(70% 64% at 40% 26%, #000 40%, transparent 78%);
+    -webkit-mask-image: radial-gradient(70% 64% at 50% 24%, #000 40%, transparent 78%);
+    mask-image: radial-gradient(70% 64% at 50% 24%, #000 40%, transparent 78%);
     pointer-events: none;
   }
 
@@ -88,13 +88,14 @@
     container-type: inline-size;
   }
 
-  /* ---------- the copy block, left-aligned to the reference ---------- */
+  /* ---------- the copy block, centred to the reference's balance ---------- */
   .hero-copy {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    max-width: 640px;
+    align-items: center;
+    text-align: center;
+    max-width: 680px;
+    margin-inline: auto;
   }
 
   .announce {
@@ -141,6 +142,7 @@
   .ctas {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: 12px;
     margin-top: 28px;
   }
