@@ -121,12 +121,18 @@
 }
 .fh-kicker {
   font-family: "Chivo Mono", ui-monospace, monospace;
+  font-weight: 400; /* .g-ink p would thin it to 350 */
   font-size: 1.35cqw;
   letter-spacing: 0.3em;
   text-transform: uppercase;
   color: rgb(244 237 228 / 0.55);
 }
-.fh-display {
+/* Two-class selectors on purpose: the portal mounts inside the homepage's
+   .g-ink band, whose global `.g-ink h2 { color: var(--color-sheet) }`
+   (0,1,1) silently beat the single class here — sheet-flat headline live,
+   steel in any harness that lacked the site's stylesheet. .fh .fh-display
+   is (0,2,0) and wins everywhere. */
+.fh .fh-display {
   position: relative;
   z-index: 2; /* the fire arc rises behind and beside the headline */
   margin-top: 1.2cqw;
@@ -150,7 +156,7 @@
    Guarded, because `color: transparent` with no background-clip support
    would render the headline invisible rather than merely flat. */
 @supports ((-webkit-background-clip: text) or (background-clip: text)) {
-  .fh-display {
+  .fh .fh-display {
     background-image:
       repeating-linear-gradient(
         0deg,
@@ -179,7 +185,7 @@
 /* FIRE stays molten: an ember core with the heat carried outward in three
    steps, sized in em so the glow scales with the type at any frame width.
    It paints over the steel because its own colour is opaque. */
-.fh-display em {
+.fh .fh-display em {
   font-style: normal;
   color: #ff7a33;
   text-shadow:
@@ -202,6 +208,7 @@
 .fh-sub {
   position: relative;
   z-index: 2;
+  font-weight: 400; /* .g-ink p would thin it to 350 */
   margin-top: 0.6cqw;
   max-width: 58cqw;
   font-family: "Archivo", "Helvetica Neue", system-ui, sans-serif;
@@ -274,6 +281,7 @@
 }
 
 .fh-foot {
+  font-weight: 400; /* .g-ink p would thin it to 350 */
   padding: 1.4cqw 4cqw;
   border-top: 1px solid rgb(244 237 228 / 0.08);
   font-family: "Chivo Mono", ui-monospace, monospace;
