@@ -107,11 +107,19 @@ const frag = `
   }
 `;
 
-/* Everything the GPU receives is converted to LINEAR here, because the
-   OutputPass sRGB-encodes on the way out. Feeding sRGB values straight in
+/* Everything the GPU receives has to be LINEAR, because the OutputPass
+   sRGB-encodes on the way out. Feeding sRGB values straight in
    double-encodes them — the ground brightens into a visible tan panel and
-   the golden palette washes cream. (That was the "well".) */
-const GROUND = new THREE.Color(0x12100d).convertSRGBToLinear(); // the page's own dark
+   the golden palette washes cream. (That was the "well".)
+
+   BUT the route depends on the constructor: Color(hex) runs through
+   setHex, which colour-manages sRGB → linear for you, so the ground needs
+   NO manual call. Calling convertSRGBToLinear() on it as well converted
+   it twice (0.0057 → 0.00047, twelve times too dark) and the canvas
+   cleared to #010101 — a hard black rectangle sitting proud of the page's
+   own #12100d. Color(r,g,b) floats are taken as already-working-space, so
+   the fire palette below does need the call. */
+const GROUND = new THREE.Color(0x12100d); // the page's own dark, already linear
 
 /* The gate (owner's instruction): after bloom has done its work, any pixel
    outside the fire's designated band around the arc is forced back to the
