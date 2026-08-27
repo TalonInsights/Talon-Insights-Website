@@ -221,7 +221,7 @@
        screen's position into its resting pose */
     opacity: 0;
     transform-origin: 62% 58%;
-    animation: shot-arrive 1400ms var(--ease) 3.2s forwards;
+    animation: shot-arrive 1400ms var(--ease) 4s forwards;
     /* as wide as the screen allows while holding a 660px reserve for the
        copy column — on a large monitor this is roughly double the grid
        column it replaces */
@@ -281,7 +281,9 @@
     height: 96px;
     scale: 3.1;
     pointer-events: none;
-    animation: mb-exit 1250ms var(--ease) 2.95s forwards;
+    /* a full beat of rest with the screen lit before the swell — the
+       owner wanted the switch-on to land before anything else moves */
+    animation: mb-exit 1250ms var(--ease) 3.75s forwards;
   }
   .mb-frame {
     position: absolute;
