@@ -30,7 +30,9 @@ const phoneLooksComplete = (phone: string) => {
   return PHONE_CHARS_RE.test(phone) && digits.length >= 10 && digits.length <= 15;
 };
 
-export default function BookingForm() {
+/* Two homes (28 Aug, owner): the homepage close keeps the compact form
+   as it was; /booking carries the FULL field set via the `full` prop. */
+export default function BookingForm({ full = false }: { full?: boolean }) {
   const [errors, setErrors] = useState<Errors>({});
   const [sending, setSending] = useState(false);
   const [done, setDone] = useState(false);
@@ -156,7 +158,8 @@ export default function BookingForm() {
 
         {/* The full enquiry set (28 Aug, owner): what the job is, when,
             where, and the story — all optional, all delivered by Formspree
-            under their field names. */}
+            under their field names. /booking only. */}
+        {full && (<>
         <div className="bfield">
           <label className="bloc" htmlFor="bf-project">What do you need</label>
           <select id="bf-project" name="project" defaultValue="">
@@ -190,6 +193,7 @@ export default function BookingForm() {
             placeholder="What you do, what the website or tool needs to do, and anything already in place."
           />
         </div>
+        </>)}
       </div>
 
       <input type="hidden" name="_subject" value="New enquiry from taloninsights.co.uk" />

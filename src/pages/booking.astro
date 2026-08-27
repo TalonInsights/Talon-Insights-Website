@@ -1,0 +1,208 @@
+---
+// /booking — the full enquiry page (28 Aug, owner): every Book a visit
+// CTA lands here; the homepage's #book close keeps its compact form and
+// the map. The FULL form (BookingForm full) plus the what-happens-next
+// steps, the trust line and the phone route. Ground and voice match the
+// site's dark run; the header renders solid here (no .hero to clear
+// against), which is its failsafe default.
+// NOTE: the form skin below is the twin of Close.astro's .close-form
+// block — if one changes, change the other.
+import Base from "../layouts/Base.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import BookingForm from "../components/BookingForm";
+---
+
+<Base
+  title="Book a visit — Talon Insights"
+  description="Book a visit from Talon Insights — free within an hour of Telford. Tell me about the job and I’ll ring back within one working day."
+  path="/booking"
+>
+  <Header />
+  <main>
+    <section class="bk g-ink">
+      <div class="bk-wrap">
+        <header class="bk-head">
+          <p class="t-micro eyebrow">BOOK A VISIT</p>
+          <h1 class="t-h2">Tell me about the job — I’ll come to&nbsp;you.</h1>
+          <p class="lede bk-lede">
+            No jargon, no pressure, and whatever we find is yours to keep — whether or not
+            we go ahead. The more you can tell me here, the better the first visit is.
+          </p>
+        </header>
+
+        <div class="bk-grid">
+          <div class="bk-form">
+            <BookingForm full client:idle />
+          </div>
+
+          <aside class="bk-aside">
+            <p class="t-micro bk-aside-head">WHAT HAPPENS NEXT</p>
+            <ol class="next-steps">
+              <li><b>01</b><span>You send this — or just call.</span></li>
+              <li><b>02</b><span>I ring back within one working day.</span></li>
+              <li><b>03</b><span>We book the visit — free within an hour of Telford.</span></li>
+              <li><b>04</b><span>You see real directions before any code is written.</span></li>
+            </ol>
+
+            <p class="t-mono bk-trust">FIXED PRICE<i>◆</i>WRITTEN SCOPE<i>◆</i>YOU OWN EVERYTHING</p>
+
+            <p class="bk-call">
+              Rather talk it through?<br />
+              Call <a class="tel" href="tel:+447742082423">07742 082423</a>
+              <span class="t-micro bk-call-note">STRAIGHT THROUGH — NO CALL CENTRE</span>
+            </p>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  .bk {
+    /* the merged close's ground — the booking page lives in the site's
+       deepest black with one cobalt wash */
+    background:
+      radial-gradient(800px 460px at 82% 12%, rgb(29 78 216 / 0.1), transparent 70%),
+      #04080F;
+    padding-block: 140px 120px;
+    min-height: 70vh;
+  }
+  .bk-wrap {
+    max-width: 1560px;
+    margin-inline: auto;
+    padding-inline: 24px;
+  }
+
+  .bk-head h1 { color: var(--color-sheet); }
+  .bk-lede { margin-top: 12px; max-width: 40em; }
+
+  .bk-grid {
+    margin-top: 56px;
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: clamp(40px, 6vw, 120px);
+    align-items: start;
+  }
+
+  /* ---------- the form skin — twin of Close.astro's .close-form ---------- */
+  .bk-form { max-width: 720px; color-scheme: dark; }
+  .bk-form :global(.bform-grid) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .bk-form :global(.bfield) { display: flex; flex-direction: column; gap: 6px; }
+  .bk-form :global(.bfield-full) { grid-column: 1 / -1; }
+  .bk-form :global(.bloc) {
+    font-family: var(--font-mono);
+    font-size: 0.9375rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: rgb(245 247 249 / 0.65);
+    text-align: left;
+  }
+  .bk-form :global(input),
+  .bk-form :global(select),
+  .bk-form :global(textarea) {
+    background: rgb(245 247 249 / 0.06);
+    border: var(--hairline-dark);
+    border-radius: 2px;
+    padding: 12px 14px;
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    color: var(--color-sheet);
+    transition: border-color 180ms var(--ease);
+  }
+  .bk-form :global(input:hover),
+  .bk-form :global(select:hover),
+  .bk-form :global(textarea:hover) { border-color: rgb(245 247 249 / 0.3); }
+  .bk-form :global(textarea) { resize: vertical; min-height: 140px; }
+  .bk-form :global(input::placeholder),
+  .bk-form :global(textarea::placeholder) { color: rgb(245 247 249 / 0.35); }
+  .bk-form :global(input[aria-invalid="true"]) { border-color: var(--color-breach); }
+  .bk-form :global(.berr) {
+    margin-top: 8px;
+    font-size: 0.9375rem;
+    text-align: left;
+    color: #E38B7B;
+  }
+  .bk-form :global(.bfield .berr) { margin-top: 0; }
+  .bk-form :global(.bform-submit) { margin-top: 24px; }
+  .bk-form :global(.form-success) {
+    font-family: var(--font-mono);
+    font-size: 0.9375rem;
+    letter-spacing: 0.04em;
+    color: var(--color-amber); /* success is transient — outside the amber budget */
+    text-align: left;
+    padding-block: 32px;
+  }
+
+  /* ---------- the aside ---------- */
+  .bk-aside {
+    border-left: 1px solid rgb(245 247 249 / 0.12);
+    padding-left: clamp(24px, 3vw, 48px);
+  }
+  .bk-aside-head {
+    color: var(--color-cobalt-lift);
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+  }
+  .next-steps {
+    list-style: none;
+    margin: 20px 0 0;
+    padding: 0;
+    display: grid;
+    gap: 16px;
+  }
+  .next-steps li {
+    display: flex;
+    gap: 12px;
+    align-items: baseline;
+    font-size: 1.0625rem;
+    line-height: 1.55;
+    color: rgb(245 247 249 / 0.78);
+  }
+  .next-steps b {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.9375rem;
+    color: var(--color-cobalt-lift);
+  }
+  .bk-trust {
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid rgb(245 247 249 / 0.12);
+    font-size: 0.9375rem;
+    letter-spacing: 0.12em;
+    color: rgb(245 247 249 / 0.6);
+  }
+  .bk-trust i {
+    font-style: normal;
+    margin-inline: 10px;
+    font-size: 0.625rem;
+    vertical-align: 1px;
+    color: rgb(77 124 255 / 0.7);
+  }
+  .bk-call {
+    margin-top: 28px;
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: rgb(245 247 249 / 0.75);
+  }
+  .tel { color: var(--color-sheet); text-decoration: none; font-weight: 600; }
+  .tel:hover { text-decoration: underline; }
+  .bk-call-note { display: block; margin-top: 4px; color: rgb(245 247 249 / 0.45); }
+
+  @media (max-width: 899.98px) {
+    .bk { padding-block: 110px 88px; }
+    .bk-grid { grid-template-columns: 1fr; gap: 48px; }
+    .bk-aside { border-left: 0; padding-left: 0; border-top: 1px solid rgb(245 247 249 / 0.12); padding-top: 32px; }
+  }
+  @media (max-width: 639.98px) {
+    .bk-form :global(.bform-grid) { grid-template-columns: 1fr; }
+  }
+</style>

@@ -2,10 +2,12 @@
 import "../styles/theme.css";
 
 interface Props {
+  path?: string;
   title: string;
   description: string;
 }
-const { title, description } = Astro.props;
+const { title, description, path = "/" } = Astro.props;
+const pageUrl = "https://taloninsights.co.uk" + path;
 
 // §1 revised 27 Aug (owner: "fix the fonts… deploy sitewide") — the site
 // speaks the high-tech tri-stack from the design database: Space Grotesk
@@ -32,7 +34,7 @@ const fontsHref =
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href="https://taloninsights.co.uk/" />
+    <link rel="canonical" href={pageUrl} />
     <meta name="theme-color" content="#0B1F3A" />
     <meta name="color-scheme" content="light" />
     <meta name="author" content="Talon Herring" />
@@ -41,7 +43,7 @@ const fontsHref =
     <meta property="og:site_name" content="Talon Insights" />
     <meta property="og:locale" content="en_GB" />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://taloninsights.co.uk/" />
+    <meta property="og:url" content={pageUrl} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
 
