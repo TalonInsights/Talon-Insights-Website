@@ -5,12 +5,14 @@
 // side, FAULT 07 enthroned in the centre with a glowing numeral. The copy
 // is the master build's, verbatim; only the presentation changed (uppercase
 // is CSS, not content). Icons are the lucide set's own geometry, inlined as
-// SVG — the same vectors 21st.dev icon components wrap — so they render
-// live at any size in the section's own blue.
+// SVG with their moving parts wrapped in groups — the arcs orbit, the
+// shackle lifts, the crosses pulse — idling gently and quickening when the
+// card is hovered (owner's directive; supersedes the never-list's no-idle
+// rule for this section). All CSS keyframes, no JS, no island; every
+// animation dies under prefers-reduced-motion.
 //
 // The payoff rule was one of the site's amber marks; the mock recolours the
-// whole section into cobalt, so the amber budget drops by one (noted in
-// CLAUDE.md). Still no JS and no island.
+// whole section into cobalt, so the amber budget is three (CLAUDE.md).
 
 const faults = [
   { id: "FAULT 01", title: "The bait and switch.", body: "A senior person sells you the job, then a junior or offshore team builds it. You never speak to the seller again.", icon: "swap" },
@@ -25,7 +27,7 @@ const right = faults.slice(3);
 ---
 
 <section class="faults g-ink" id="faults">
-  <div class="wrap">
+  <div class="wrap faults-wrap">
     <header class="faults-head" data-rv>
       <p class="t-micro faults-eyebrow">WHY PEOPLE CALL ME</p>
       <h2 class="faults-h">
@@ -50,13 +52,13 @@ const right = faults.slice(3);
             <span class="corner" aria-hidden="true"></span>
             <div class="fault-icon">
               {fault.icon === "swap" && (
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9.5" r="3" /><path d="M8 17.5c.9-1.6 2.3-2.5 4-2.5s3.1.9 4 2.5" /><path d="M3.5 12a8.5 8.5 0 0 1 14-6.4" /><path d="M17.5 2.6v3h-3" /><path d="M20.5 12a8.5 8.5 0 0 1-14 6.4" /><path d="M6.5 21.4v-3h3" /></svg>
+                <svg class="i-swap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9.5" r="3" /><path d="M8 17.5c.9-1.6 2.3-2.5 4-2.5s3.1.9 4 2.5" /><g class="orbit"><path d="M3.5 12a8.5 8.5 0 0 1 14-6.4" /><path d="M17.5 2.6v3h-3" /><path d="M20.5 12a8.5 8.5 0 0 1-14 6.4" /><path d="M6.5 21.4v-3h3" /></g></svg>
               )}
               {fault.icon === "lock" && (
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /><circle cx="12" cy="16.5" r="1" /></svg>
+                <svg class="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" /><g class="shackle"><path d="M7 11V7a5 5 0 0 1 10 0v4" /></g><circle class="keyhole" cx="12" cy="16.5" r="1" /></svg>
               )}
               {fault.icon === "monitor-x" && (
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="3" rx="2" /><path d="M8 21h8" /><path d="M12 17v4" /><path d="m9.5 7.5 5 5" /><path d="m14.5 7.5-5 5" /></svg>
+                <svg class="i-monitor" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="3" rx="2" /><path d="M8 21h8" /><path d="M12 17v4" /><g class="cross"><path d="m9.5 7.5 5 5" /><path d="m14.5 7.5-5 5" /></g></svg>
               )}
             </div>
             <div class="fault-text">
@@ -73,7 +75,7 @@ const right = faults.slice(3);
         <p class="t-micro featured-kicker">FAULT</p>
         <p class="featured-number" aria-hidden="true">07</p>
         <div class="featured-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.25" /><circle cx="16.5" cy="6.5" r="2.5" /><path d="M3.5 19c.9-2.6 2.9-4 5.5-4s4.6 1.4 5.5 4" /><circle cx="18" cy="16" r="3.5" /><path d="m16.7 14.7 2.6 2.6" /><path d="m19.3 14.7-2.6 2.6" /></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.25" /><circle cx="16.5" cy="6.5" r="2.5" /><path d="M3.5 19c.9-2.6 2.9-4 5.5-4s4.6 1.4 5.5 4" /><g class="fx-badge"><circle cx="18" cy="16" r="3.5" /><path d="m16.7 14.7 2.6 2.6" /><path d="m19.3 14.7-2.6 2.6" /></g></svg>
         </div>
         <h3 class="featured-title">Approval, <em>not</em>&nbsp;involvement.</h3>
         <span class="featured-rule" aria-hidden="true"></span>
@@ -89,13 +91,13 @@ const right = faults.slice(3);
             <span class="corner" aria-hidden="true"></span>
             <div class="fault-icon">
               {fault.icon === "search" && (
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7" /><path d="m20.5 20.5-4.5-4.5" /></svg>
+                <svg class="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><g class="glass"><circle cx="11" cy="11" r="7" /><path d="m20.5 20.5-4.5-4.5" /></g></svg>
               )}
               {fault.icon === "file-pound" && (
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h7" /><path d="M14 2v4a2 2 0 0 0 2 2h4" /><path d="m20 8-6-6" /><path d="M8 11h5" /><path d="M8 15h4" /><circle cx="16.5" cy="17.5" r="4" /><path d="M17.8 19.3h-2.6m.4 0v-2.9a1 1 0 0 1 1-1c.5 0 .9.3 1 .7m-2.4 1.7h1.9" /></svg>
+                <svg class="i-file" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h7" /><path d="M14 2v4a2 2 0 0 0 2 2h4" /><path d="m20 8-6-6" /><path d="M8 11h5" /><path d="M8 15h4" /><g class="badge"><circle cx="16.5" cy="17.5" r="4" /><path d="M17.8 19.3h-2.6m.4 0v-2.9a1 1 0 0 1 1-1c.5 0 .9.3 1 .7m-2.4 1.7h1.9" /></g></svg>
               )}
               {fault.icon === "mail" && (
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2" /><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" /></svg>
+                <svg class="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2" /><path class="flap" d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" /></svg>
               )}
             </div>
             <div class="fault-text">
@@ -125,6 +127,8 @@ const right = faults.slice(3);
     padding-block: 120px;
     background: var(--color-ink-deep);
   }
+  /* the board earns a wider stage than the site's standard measure */
+  .faults-wrap { max-width: 1560px; }
 
   /* ---------- header ---------- */
   .faults-head { text-align: center; }
@@ -171,19 +175,31 @@ const right = faults.slice(3);
   .fault-board {
     margin-top: 56px;
     display: grid;
-    grid-template-columns: 1fr minmax(340px, 1.08fr) 1fr;
-    gap: 24px;
+    grid-template-columns: 1fr minmax(360px, 1.08fr) 1fr;
+    gap: 28px;
     align-items: stretch;
   }
-  .fault-col { display: flex; flex-direction: column; gap: 24px; }
+  .fault-col { display: flex; flex-direction: column; gap: 28px; }
 
   /* the shared card chassis: chamfered top-left and bottom-right, a faint
-     panel over the ink, and a corner accent bracket */
+     panel over the ink, and a corner accent bracket. Hover lifts the card,
+     sharpens its border and wakes its icon. */
   .fault-card, .fault-featured {
     position: relative;
     background: rgb(245 247 249 / 0.035);
     border: 1px solid rgb(245 247 249 / 0.13);
     clip-path: polygon(18px 0, 100% 0, 100% calc(100% - 18px), calc(100% - 18px) 100%, 0 100%, 0 18px);
+    transition:
+      translate 220ms var(--ease),
+      border-color 220ms var(--ease),
+      background-color 220ms var(--ease),
+      box-shadow 220ms var(--ease);
+  }
+  .fault-card:hover, .fault-featured:hover {
+    translate: 0 -4px;
+    border-color: rgb(77 124 255 / 0.55);
+    background: rgb(245 247 249 / 0.055);
+    box-shadow: 0 18px 44px -22px rgb(77 124 255 / 0.4);
   }
   .corner {
     position: absolute;
@@ -192,25 +208,35 @@ const right = faults.slice(3);
     border-top: 1px solid rgb(77 124 255 / 0.6);
     border-left: 1px solid rgb(77 124 255 / 0.6);
     pointer-events: none;
+    transition: width 220ms var(--ease), height 220ms var(--ease), border-color 220ms var(--ease);
+  }
+  .fault-card:hover .corner, .fault-featured:hover .corner {
+    width: 22px; height: 22px;
+    border-color: rgb(77 124 255 / 0.95);
   }
 
   .fault-card {
     flex: 1;
     display: flex;
-    gap: 18px;
-    padding: 24px 22px;
+    gap: 20px;
+    padding: 26px 24px;
   }
   .fault-icon {
     flex: none;
-    width: 60px; height: 60px;
+    width: 62px; height: 62px;
     display: grid; place-items: center;
     border: 1px solid rgb(77 124 255 / 0.5);
     border-radius: 10px;
     color: var(--color-cobalt-lift);
     background:
       radial-gradient(60% 60% at 50% 50%, rgb(77 124 255 / 0.12), transparent 75%);
+    transition: border-color 220ms var(--ease), box-shadow 220ms var(--ease);
   }
-  .fault-icon svg { width: 30px; height: 30px; }
+  .fault-card:hover .fault-icon {
+    border-color: rgb(77 124 255 / 0.9);
+    box-shadow: 0 0 22px -6px rgb(77 124 255 / 0.6);
+  }
+  .fault-icon svg { width: 31px; height: 31px; }
 
   .fault-id { color: var(--color-cobalt-lift); margin-bottom: 8px; }
   .fault-title {
@@ -224,13 +250,82 @@ const right = faults.slice(3);
   }
   .fault-body { font-size: 0.9375rem; line-height: 1.6; }
 
+  /* ---------- icon life ---------- */
+  /* Each icon's moving part is a group with transform-box: fill-box so its
+     transforms centre on itself. They idle slowly; the card's hover leans
+     in and quickens them. */
+  .orbit, .shackle, .cross, .glass, .badge, .flap, .fx-badge {
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .i-swap .orbit { transform-origin: 12px 12px; transform-box: view-box; animation: fl-spin 10s linear infinite; }
+    .fault-card:hover .i-swap .orbit { animation-duration: 2.4s; }
+
+    .i-lock .shackle { animation: fl-lift 5.5s var(--ease) infinite; }
+    .fault-card:hover .i-lock .shackle { animation-duration: 1.6s; }
+
+    .i-monitor .cross { animation: fl-blink 3.2s ease-in-out infinite; }
+    .fault-card:hover .i-monitor .cross { animation-duration: 1s; }
+
+    .i-search .glass { animation: fl-sweep 6s ease-in-out infinite; }
+    .fault-card:hover .i-search .glass { animation-duration: 1.8s; }
+
+    .i-file .badge { animation: fl-pulse 4.5s ease-in-out infinite; }
+    .fault-card:hover .i-file .badge { animation-duration: 1.4s; }
+
+    .i-mail { animation: fl-bob 4s ease-in-out infinite; }
+    .fault-card:hover .i-mail { animation-duration: 1.3s; }
+
+    .fx-badge { animation: fl-pulse 3.6s ease-in-out infinite; }
+    .fault-featured:hover .fx-badge { animation-duration: 1.2s; }
+
+    .featured-number { animation: fl-breathe 4.5s ease-in-out infinite; }
+  }
+  @keyframes fl-spin { to { rotate: 360deg; } }
+  @keyframes fl-lift {
+    0%, 78%, 100% { translate: 0 0; }
+    86% { translate: 0 -1.8px; }
+    93% { translate: 0 0.3px; }
+  }
+  @keyframes fl-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
+  }
+  @keyframes fl-sweep {
+    0%, 100% { translate: 0 0; }
+    25% { translate: 1.4px -1px; }
+    50% { translate: 0 -1.8px; }
+    75% { translate: -1.4px -0.6px; }
+  }
+  @keyframes fl-pulse {
+    0%, 100% { scale: 1; }
+    50% { scale: 1.14; }
+  }
+  @keyframes fl-bob {
+    0%, 100% { translate: 0 0; }
+    50% { translate: 0 -1.6px; }
+  }
+  @keyframes fl-breathe {
+    0%, 100% {
+      text-shadow:
+        0 0 26px rgb(61 107 255 / 0.75),
+        0 0 90px rgb(61 107 255 / 0.45);
+    }
+    50% {
+      text-shadow:
+        0 0 34px rgb(61 107 255 / 0.95),
+        0 0 130px rgb(61 107 255 / 0.6);
+    }
+  }
+
   /* ---------- the enthroned seventh ---------- */
   .fault-featured {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    padding: 36px 32px 40px;
+    padding: 40px 36px 44px;
     border-color: rgb(77 124 255 / 0.45);
     clip-path: polygon(26px 0, 100% 0, 100% calc(100% - 26px), calc(100% - 26px) 100%, 0 100%, 0 26px);
     background:
@@ -238,11 +333,14 @@ const right = faults.slice(3);
       rgb(245 247 249 / 0.03);
     box-shadow: 0 0 90px -30px rgb(77 124 255 / 0.45);
   }
+  .fault-featured:hover {
+    box-shadow: 0 0 120px -30px rgb(77 124 255 / 0.6);
+  }
   .featured-kicker { color: rgb(245 247 249 / 0.6); letter-spacing: 0.5em; }
   .featured-number {
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: clamp(7.5rem, 11vw, 11.5rem);
+    font-size: clamp(7.5rem, 11vw, 12rem);
     line-height: 0.95;
     color: #3D6BFF;
     text-shadow:
@@ -250,7 +348,7 @@ const right = faults.slice(3);
       0 0 90px rgb(61 107 255 / 0.45);
   }
   .featured-icon { margin-top: 18px; color: var(--color-cobalt-lift); }
-  .featured-icon svg { width: 44px; height: 44px; }
+  .featured-icon svg { width: 46px; height: 46px; }
   .featured-title {
     margin-top: 16px;
     font-family: var(--font-mono);
@@ -281,7 +379,6 @@ const right = faults.slice(3);
     background: rgb(245 247 249 / 0.22);
     position: relative;
   }
-  /* the diamonds at the far ends */
   .payoff-rule::before {
     content: "";
     position: absolute;

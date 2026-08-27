@@ -56,7 +56,10 @@ npm run map        # regenerate src/data/map-dots.json (network; result is commi
 - **Motion budget: two orchestrated moments** — process bars (scroll-in)
   and the B10 coverage-map travel (scroll-in, once, ≤1600ms). The hero's
   plan-bar draw retired with the panel (27 Aug); the hero is fully static.
-  Nothing loops or idles.
+  Nothing loops or idles — EXCEPT the B3 fault board's icon micro-motion
+  (27 Aug pm, owner's explicit directive: "the icons aren't moving"):
+  slow CSS idles that quicken on card hover, all killed under
+  prefers-reduced-motion. That carve-out extends no further.
 - **IO/rAF fallbacks are load-bearing.** Reveals arm only below the fold and
   a 2.5s failsafe shows everything; the map has an IO watchdog and a
   travel-phase rAF backstop that land its final state. (The folder gallery's
