@@ -6,6 +6,10 @@ import { DirectionFire, DirectionHeritage, DirectionArchitectural } from "./comp
 // The Fire's interactable hero page carries three.js — loaded only when a
 // design actually opens, never in the homepage bundle.
 const FireHero = lazy(() => import("./FireHero"));
+const HeritageHero = lazy(() => import("./HeritageHero"));
+const ArchHero = lazy(() => import("./ArchHero"));
+/* one interactable page per direction; index-aligned with DIRECTIONS */
+const PORTAL_PAGES = [FireHero, HeritageHero, ArchHero] as const;
 
 /* B5 — the Directions folder (island). Mechanics adapted from the 21st
    "Interactive Folder Gallery" (owner-supplied, §7 import #5): closed-stack
@@ -181,7 +185,24 @@ export default function FolderGallery() {
 
   return (
     <MotionConfig reducedMotion="user" transition={{ type: "spring", stiffness: 350, damping: 30 }}>
-      <div ref={rootRef} className="fgal">
+      <div ref={rootRef} className={isOpen ? "fgal is-raised" : "fgal"}>
+        {/* the dim: while the folder is open (and nothing is enlarged),
+            everything around the three directions falls away. Click to
+            close. */}
+        <AnimatePresence>
+          {isOpen && expanded === null && (
+            <motion.div
+              key="dim"
+              className="fgal-dim"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              onClick={closeFolder}
+              aria-hidden="true"
+            />
+          )}
+        </AnimatePresence>
         {/* the folder's back panel and tab — a surface, not a gradient */}
         <motion.div
           className="fgal-back"
@@ -319,21 +340,24 @@ export default function FolderGallery() {
                 onClick={collapse}
                 aria-hidden="true"
               />
-              {expanded === 0 && portal && (
-                <motion.div
-                  key="portal"
-                  className="fgal-portal"
-                  style={{ width: cardW * target.scale, height: cardW * target.scale * 0.625 }}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.18 }}
-                >
-                  <Suspense fallback={null}>
-                    <FireHero />
-                  </Suspense>
-                </motion.div>
-              )}
+              {expanded !== null && portal && (() => {
+                const Page = PORTAL_PAGES[expanded];
+                return (
+                  <motion.div
+                    key="portal"
+                    className={`fgal-portal fgal-portal--${expanded}`}
+                    style={{ width: cardW * target.scale, height: cardW * target.scale * 0.625 }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.18 }}
+                  >
+                    <Suspense fallback={null}>
+                      <Page />
+                    </Suspense>
+                  </motion.div>
+                );
+              })()}
               <motion.button
                 key="close"
                 ref={closeButtonRef}

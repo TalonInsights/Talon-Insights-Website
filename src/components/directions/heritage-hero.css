@@ -1,0 +1,229 @@
+/* ==========================================================================
+   THE HERITAGE — Direction B's interactable hero page (27 Aug).
+   Exempt from the token system like the comps: this IS the demonstration.
+   One viewport, no scrolling; container-query units against the portal.
+   Fraunces for display, Martian Mono for labels — both already load with
+   the site head. All hh- classes: heritage-hero.css is UNSCOPED global
+   CSS, so the prefix is reserved (same rule as fh-/fgal-).
+   ========================================================================== */
+
+.hh {
+  container-type: inline-size;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  --hh-paper: #F4ECDC;
+  --hh-ink: #2B2118;
+  --hh-oxblood: #7A2E1E;
+  --hh-oxblood-rgb: 122 46 30;
+  --hh-gold: #8C6A2F;
+  background:
+    radial-gradient(120% 90% at 50% 0%, rgb(255 250 238 / 0.9), transparent 60%),
+    radial-gradient(140% 110% at 50% 110%, rgb(43 33 24 / 0.14), transparent 62%),
+    var(--hh-paper);
+  color: var(--hh-ink);
+  font-family: "Fraunces", Georgia, serif;
+  overflow: hidden;
+  user-select: none;
+}
+
+/* ---------- browser chrome ---------- */
+.hh-chrome {
+  display: flex;
+  align-items: center;
+  gap: 2cqw;
+  padding: 1.1cqw 2.2cqw;
+  background: rgb(43 33 24 / 0.06);
+  border-bottom: 1px solid rgb(43 33 24 / 0.14);
+  font-family: "Martian Mono", ui-monospace, monospace;
+  font-size: 1.25cqw;
+  letter-spacing: 0.08em;
+  color: rgb(43 33 24 / 0.55);
+}
+.hh-dots { display: inline-flex; gap: 0.7cqw; }
+.hh-dots i {
+  width: 1.1cqw;
+  height: 1.1cqw;
+  border-radius: 50%;
+  background: rgb(43 33 24 / 0.2);
+}
+.hh-url { flex: 1; text-align: center; }
+.hh-demo { color: var(--hh-oxblood); }
+
+/* ---------- nav ---------- */
+.hh-nav {
+  display: flex;
+  align-items: center;
+  gap: 3cqw;
+  padding: 2cqw 4cqw;
+}
+.hh-logo {
+  height: 3cqw;
+  width: auto;
+  display: block;
+  flex: none;
+}
+.hh-links { margin-left: auto; display: flex; gap: 2.6cqw; }
+.hh-links button {
+  background: none;
+  border: 0;
+  padding: 0.4cqw 0;
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 500;
+  font-size: 1.6cqw;
+  letter-spacing: 0.06em;
+  color: rgb(43 33 24 / 0.68);
+  cursor: pointer;
+  transition: color 180ms ease;
+}
+.hh-links button:hover { color: var(--hh-ink); }
+.hh-navcta {
+  background: none;
+  border: 1px solid rgb(var(--hh-oxblood-rgb) / 0.5);
+  padding: 0.9cqw 2.4cqw;
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 500;
+  font-size: 1.6cqw;
+  letter-spacing: 0.08em;
+  color: var(--hh-oxblood);
+  cursor: pointer;
+  border-radius: 2px;
+  transition: border-color 180ms ease, background-color 180ms ease;
+}
+.hh-navcta:hover {
+  border-color: var(--hh-oxblood);
+  background: rgb(var(--hh-oxblood-rgb) / 0.06);
+}
+
+/* ---------- the stage ---------- */
+.hh-stage {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 0;
+}
+.hh .hh-kicker {
+  font-weight: 400;
+  font-family: "Martian Mono", ui-monospace, monospace;
+  font-size: 1.2cqw;
+  letter-spacing: 0.32em;
+  color: rgb(43 33 24 / 0.5);
+}
+/* two classes on purpose: the portal mounts inside the homepage's .g-ink
+   band, whose global heading/paragraph rules out-specify single classes
+   (the fire page's hard-won lesson) */
+.hh .hh-display {
+  color: var(--hh-ink);
+  margin-top: 1.2cqw;
+  font-weight: 500;
+  font-size: 5.6cqw;
+  line-height: 1.06;
+  letter-spacing: -0.01em;
+  max-width: 30em;
+}
+.hh-display em {
+  font-style: italic;
+  color: var(--hh-oxblood);
+}
+
+/* the gate: centre stage, drawing itself */
+.hh-gate {
+  margin-top: 2.2cqw;
+  width: 40cqw;
+  height: auto;
+  color: var(--hh-ink);
+}
+.hh-s {
+  stroke-dasharray: 220;
+  stroke-dashoffset: 220;
+  animation: hh-draw 1.6s ease-out forwards;
+}
+.hh-s2, .hh-s3 { animation-delay: 0.25s; }
+.hh-s4 { animation-delay: 0.55s; }
+.hh-s5 { animation-delay: 0.75s; }
+.hh-s6 { animation-delay: 0.05s; }
+.hh-fin {
+  opacity: 0;
+  animation: hh-ink 0.5s ease-out forwards;
+}
+.hh-f1 { animation-delay: 1.5s; }
+.hh-f2 { animation-delay: 1.7s; }
+@keyframes hh-draw { to { stroke-dashoffset: 0; } }
+@keyframes hh-ink { to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .hh-s { animation: none; stroke-dashoffset: 0; }
+  .hh-fin { animation: none; opacity: 1; }
+}
+
+.hh .hh-sub {
+  font-weight: 400;
+  margin-top: 2cqw;
+  max-width: 34em;
+  font-family: "Fraunces", Georgia, serif;
+  font-size: 1.7cqw;
+  line-height: 1.6;
+  color: rgb(43 33 24 / 0.75);
+}
+
+.hh-ctas { display: flex; gap: 1.8cqw; margin-top: 2.4cqw; }
+.hh-primary {
+  background: var(--hh-oxblood);
+  border: 1px solid var(--hh-oxblood);
+  border-radius: 2px;
+  padding: 1.3cqw 3.2cqw;
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 500;
+  font-size: 1.7cqw;
+  letter-spacing: 0.04em;
+  color: #F8F2E4;
+  cursor: pointer;
+  transition: background-color 180ms ease;
+}
+.hh-primary:hover { background: #8E3A26; }
+.hh-ghost {
+  background: none;
+  border: 1px solid rgb(43 33 24 / 0.35);
+  border-radius: 2px;
+  padding: 1.3cqw 3.2cqw;
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 500;
+  font-size: 1.7cqw;
+  letter-spacing: 0.04em;
+  color: var(--hh-ink);
+  cursor: pointer;
+  transition: border-color 180ms ease, color 180ms ease;
+}
+.hh-ghost:hover { border-color: var(--hh-oxblood); color: var(--hh-oxblood); }
+
+.hh-primary:focus-visible,
+.hh-ghost:focus-visible,
+.hh-navcta:focus-visible,
+.hh-links button:focus-visible {
+  outline: 2px solid var(--hh-oxblood);
+  outline-offset: 3px;
+}
+
+.hh-specs {
+  display: flex;
+  gap: 3.2cqw;
+  margin-top: 2.4cqw;
+  font-family: "Martian Mono", ui-monospace, monospace;
+  font-size: 1.1cqw;
+  letter-spacing: 0.2em;
+  color: rgb(43 33 24 / 0.45);
+}
+
+.hh .hh-foot {
+  font-weight: 400;
+  padding: 1.4cqw 4cqw;
+  border-top: 1px solid rgb(43 33 24 / 0.14);
+  font-family: "Martian Mono", ui-monospace, monospace;
+  font-size: 1.05cqw;
+  letter-spacing: 0.14em;
+  text-align: center;
+  color: rgb(43 33 24 / 0.45);
+}

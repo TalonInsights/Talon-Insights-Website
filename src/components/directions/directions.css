@@ -246,6 +246,19 @@
 }
 
 /* ---------- folder anatomy ---------- */
+/* while open, the gallery rises above its siblings so the dim beneath its
+   cards can swallow the rest of the page */
+.fgal.is-raised { position: relative; z-index: 60; }
+.fgal-dim {
+  position: fixed;
+  inset: 0;
+  z-index: 2; /* under the folder (5) and the cards (10+), over the page */
+  background: rgb(2 6 14 / 0.78);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+  cursor: pointer;
+}
+
 .fgal-back {
   position: absolute;
   bottom: 28px;
@@ -345,6 +358,8 @@
 
 /* ---------- the closing hint (a real control) ---------- */
 .fgal-hint {
+  position: relative;
+  z-index: 25;
   position: absolute;
   bottom: 0;
   left: 50%;
@@ -400,6 +415,14 @@
   translate: -50% -50%;
   z-index: 305; /* above the enlarged card (300), under the close control (310) */
   background: #010101; /* the fire page's ground — see fire-hero.css */
+}
+.fgal-portal--1 {
+  background: #F4ECDC; /* the heritage page's paper */
+  border-color: rgb(43 33 24 / 0.3);
+}
+.fgal-portal--2 {
+  background: #F6F8FA; /* the architectural page's sheet */
+  border-color: rgb(22 27 34 / 0.25);
   border: 1px solid rgb(245 247 249 / 0.14);
   border-radius: 2px;
   overflow: hidden;
