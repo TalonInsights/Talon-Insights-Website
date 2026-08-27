@@ -312,22 +312,29 @@
     cursor: pointer;
   }
 
-  /* ---------- the toggle states (28 Aug) ---------- */
+  /* ---------- the toggle states (28 Aug) ----------
+     OUT is the original overture on its original clock, started by the
+     click instead of the load: turn 0–2.6s, screen on 2.65s, lit hold,
+     swell 4.3s, panel 4.15s. IN rewinds the lot: panel folds back
+     0–0.9s, machine returns, screen off at 0.9s, turn back away from
+     1.3s — ending exactly on the resting pose, replayable forever. */
+  .hero.shot-out .mb-inner { animation: mb-rotate 2.6s ease-in-out both; }
+  .hero.shot-out .mb-display img { animation: mb-content 500ms ease-out 2.65s forwards; }
   .hero.shot-out .hero-theatre {
-    animation: mb-exit 1100ms var(--ease) 150ms forwards;
+    animation: mb-exit 1100ms var(--ease) 4.3s forwards;
     pointer-events: none;
   }
   .hero.shot-out .hero-shot img {
-    animation: shot-arrive 1500ms var(--ease) forwards;
+    animation: shot-arrive 1500ms var(--ease) 4.15s forwards;
     pointer-events: auto;
-  }
-  .hero.shot-in .hero-theatre {
-    animation: mb-return 900ms var(--ease) both;
   }
   .hero.shot-in .hero-shot img {
     animation: shot-depart 900ms var(--ease) forwards;
     pointer-events: none;
   }
+  .hero.shot-in .hero-theatre { animation: mb-return 900ms var(--ease) both; }
+  .hero.shot-in .mb-display img { animation: mb-content-off 400ms ease-out 900ms both; }
+  .hero.shot-in .mb-inner { animation: mb-unrotate 1.6s ease-in-out 1300ms both; }
 
   /* ---------- the overture ---------- */
   /* The 21st MacBook, translated from its React/Tailwind form to plain
@@ -360,9 +367,9 @@
     position: absolute;
     inset: 0;
     transform-style: preserve-3d;
-    /* resting pose IS the landed pose — the turn retired with the
-       auto-run (28 Aug); the machine simply sits open, facing out */
-    transform: rotateX(-20deg) rotateY(360deg);
+    /* resting pose: open, FACING AWAY, screen dark — the whole overture
+       (turn → light → handoff) is the click's reward (28 Aug, owner) */
+    transform: rotateX(-20deg) rotateY(180deg);
   }
 
   /* screen half */
@@ -408,8 +415,7 @@
     width: 100%; height: 100%;
     object-fit: cover;
     object-position: top;
-    /* lit at rest — the invitation is a working screen */
-    opacity: 1;
+    opacity: 0; /* dark until the turn settles */
   }
   .mb-glare {
     position: absolute;
@@ -491,15 +497,28 @@
     box-shadow: 0 0 60px 40px rgb(0 0 0 / 0.3);
   }
 
-  /* ---------- the choreography (the import's keyframes, retimed to
-       land open and facing the viewer) ---------- */
-  /* Simplified again, 27 Aug (owner: still too much): no tumble at all.
-     The machine begins OPEN and FACING AWAY, makes one slow turn to the
-     camera, and holds face-on - the banked landing (−17/382/−3) retired
-     with the panel's skew: a straight panel wants a straight machine.
-     The screen switches on with the WulfTek page, and the swell hands
-     over to the real panel. The import's flip/close/bounce keyframes are
-     retired with the lid, deck, key and shadow animations they drove. */
+  /* ---------- the choreography ----------
+     OUT plays the import's overture as it always ran — one slow turn
+     from facing away, the screen switching on once the turn settles,
+     the lit hold, then the machine swelling and dissolving around the
+     growing photo. IN is the full rewind. */
+  @keyframes mb-rotate {
+    0%   { transform: rotateX(-20deg) rotateY(180deg); }
+    82%  { transform: rotateX(-20deg) rotateY(360deg); }
+    100% { transform: rotateX(-20deg) rotateY(360deg); }
+  }
+  @keyframes mb-unrotate {
+    0%   { transform: rotateX(-20deg) rotateY(360deg); }
+    100% { transform: rotateX(-20deg) rotateY(180deg); }
+  }
+  @keyframes mb-content {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  @keyframes mb-content-off {
+    from { opacity: 1; }
+    to   { opacity: 0; }
+  }
   @keyframes mb-return {
     0%   { opacity: 0; scale: 4.1; }
     100% { opacity: 1; scale: 3.1; }
