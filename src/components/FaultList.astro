@@ -2,7 +2,7 @@
 // B3 — The fault list, restaged 27 Aug 2026 to the owner-supplied
 // infographic mock: centred display headline with the let-down phrase in
 // blue, the falcon mark on a rule, and a seven-card board — three faults a
-// side, FAULT 07 enthroned in the centre with a glowing numeral. The copy
+// side, FAULT 01 enthroned in the centre with a glowing numeral (owner's renumbering: the featured fault leads). The copy
 // is the master build's, verbatim; only the presentation changed (uppercase
 // is CSS, not content). Icons are the lucide set's own geometry, inlined as
 // SVG with their moving parts wrapped in groups — the arcs orbit, the
@@ -15,12 +15,12 @@
 // whole section into cobalt, so the amber budget is three (CLAUDE.md).
 
 const faults = [
-  { id: "FAULT 01", title: "The bait and switch.", body: "A senior person sells you the job, then a junior or offshore team builds it. You never speak to the seller again.", icon: "swap" },
-  { id: "FAULT 02", title: "Lock-in.", body: "You don’t own your domain, your code or your content. Leaving means starting from nothing — and everybody knows it.", icon: "lock" },
-  { id: "FAULT 03", title: "A pretty site that does nothing.", body: "It looks smart and generates no enquiries, because nobody asked what the business needed first.", icon: "monitor-x" },
-  { id: "FAULT 04", title: "No discovery.", body: "Nobody came to see how you actually work. The quote was written from a ten-minute phone call and a guess.", icon: "search" },
-  { id: "FAULT 05", title: "Vague quotes, moving numbers.", body: "Everything you assumed was included turns out to be extra, and there’s no written scope to point at.", icon: "file-pound" },
-  { id: "FAULT 06", title: "Support that vanishes.", body: "It went live, then the emails stopped being answered.", icon: "mail" },
+  { id: "FAULT 02", title: "The bait and switch.", body: "A senior person sells you the job, then a junior or offshore team builds it. You never speak to the seller again.", icon: "swap" },
+  { id: "FAULT 03", title: "Lock-in.", body: "You don’t own your domain, your code or your content. Leaving means starting from nothing — and everybody knows it.", icon: "lock" },
+  { id: "FAULT 04", title: "A pretty site that does nothing.", body: "It looks smart and generates no enquiries, because nobody asked what the business needed first.", icon: "monitor-x" },
+  { id: "FAULT 05", title: "No discovery.", body: "Nobody came to see how you actually work. The quote was written from a ten-minute phone call and a guess.", icon: "search" },
+  { id: "FAULT 06", title: "Vague quotes, moving numbers.", body: "Everything you assumed was included turns out to be extra, and there’s no written scope to point at.", icon: "file-pound" },
+  { id: "FAULT 07", title: "Support that vanishes.", body: "It went live, then the emails stopped being answered.", icon: "mail" },
 ];
 const left = faults.slice(0, 3);
 const right = faults.slice(3);
@@ -73,7 +73,7 @@ const right = faults.slice(3);
       <article class="fault-featured" data-rv>
         <span class="corner" aria-hidden="true"></span>
         <p class="t-micro featured-kicker">FAULT</p>
-        <p class="featured-number" aria-hidden="true">07</p>
+        <p class="featured-number" aria-hidden="true">01</p>
         <div class="featured-icon" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.25" /><circle cx="16.5" cy="6.5" r="2.5" /><path d="M3.5 19c.9-2.6 2.9-4 5.5-4s4.6 1.4 5.5 4" /><g class="fx-badge"><circle cx="18" cy="16" r="3.5" /><path d="m16.7 14.7 2.6 2.6" /><path d="m19.3 14.7-2.6 2.6" /></g></svg>
         </div>
