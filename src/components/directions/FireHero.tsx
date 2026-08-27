@@ -5,6 +5,7 @@ import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js";
 import { OutputPass } from "three/examples/jsm/postprocessing/OutputPass.js";
+import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
 import "./fire-hero.css";
 
 /* Direction A — THE FIRE, as an interactable hero page (owner's brief,
@@ -111,6 +112,41 @@ const frag = `
    double-encodes them — the ground brightens into a visible tan panel and
    the golden palette washes cream. (That was the "well".) */
 const GROUND = new THREE.Color(0x12100d).convertSRGBToLinear(); // the page's own dark
+
+/* The gate (owner's instruction): after bloom has done its work, any pixel
+   outside the fire's designated band around the arc is forced back to the
+   page's dark — a hard cut with a two-pixel feather, so the glow lives on
+   the rope and nowhere else. Runs between bloom and output. */
+const gateShader = {
+  uniforms: {
+    tDiffuse: { value: null },
+    ground: { value: new THREE.Vector3(GROUND.r, GROUND.g, GROUND.b) },
+  },
+  vertexShader: `
+    varying vec2 vUv;
+    void main() {
+      vUv = uv;
+      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+    }
+  `,
+  fragmentShader: `
+    uniform sampler2D tDiffuse;
+    uniform vec3 ground;
+    varying vec2 vUv;
+    void main() {
+      float x = vUv.x;
+      float vv = 1.0 - vUv.y;
+      float seam = 1.0 - (0.12 + 2.0 * (x - 0.5) * (x - 0.5));
+      float u = seam - vv;
+      // the designated fire range: a little under the rope, up to the
+      // tongues' reach — feathered over ~0.02 so the cut doesn't alias
+      float keep = smoothstep(-0.05, -0.02, u) * (1.0 - smoothstep(0.36, 0.42, u));
+      keep *= smoothstep(0.0, 0.05, x) * smoothstep(1.0, 0.95, x);
+      vec4 c = texture2D(tDiffuse, vUv);
+      gl_FragColor = vec4(mix(ground, c.rgb, keep), 1.0);
+    }
+  `,
+};
 const FIRE_BASE = new THREE.Color(201 / 255, 158 / 255, 72 / 255).convertSRGBToLinear();
 const FIRE_BORDER = new THREE.Color(74 / 255, 30 / 255, 0).convertSRGBToLinear();
 
@@ -138,9 +174,10 @@ function FireLine({ stokedRef }: { stokedRef: React.MutableRefObject<boolean> })
     composer.addPass(new RenderPass(scene, camera));
     const bloomPass = new UnrealBloomPass(new THREE.Vector2(width, height), 1.5, 0.4, 0.85);
     bloomPass.threshold = 0.25;
-    bloomPass.strength = 1.3;
-    bloomPass.radius = 0.35;
+    bloomPass.strength = 1.15;
+    bloomPass.radius = 0.28; /* glow dies before the gate, so the cut never shows */
     composer.addPass(bloomPass);
+    composer.addPass(new ShaderPass(gateShader));
     // Without this, the composer displays linear values as sRGB: the whole
     // canvas washes brighter than the page (a visible khaki rectangle) and
     // the golden base reads cream. This converts the output properly, so
@@ -180,7 +217,7 @@ function FireLine({ stokedRef }: { stokedRef: React.MutableRefObject<boolean> })
       if (!reduce) {
         // hovering the commission button stokes the seam
         const targetSpeed = stokedRef.current ? 2.2 : 1;
-        const targetBloom = stokedRef.current ? 2.0 : 1.3;
+        const targetBloom = stokedRef.current ? 1.8 : 1.15;
         speed += (targetSpeed - speed) * 0.06;
         bloomPass.strength += (targetBloom - bloomPass.strength) * 0.06;
         const now = (performance.now() - start) / 1000;
