@@ -27,7 +27,11 @@ const steps = [
     <img src="/images/method-scene.webp" alt="" width="1330" height="1182" loading="lazy" decoding="async" />
   </div>
   <div class="m-top-band">
-    <div class="m-top">
+    <!-- 27 Aug (owner): the copy holds the top-left and the four chevrons
+         sit 2×2 beneath it — one left column whose height is pinned to the
+         scene's own rendered height, so text + shapes run exactly the
+         length of the image beside them -->
+    <div class="m-left">
       <div class="m-copy" data-rv>
         <h2 class="m-h">Turn insights into <em>growth.</em></h2>
         <p class="m-lead">
@@ -47,13 +51,9 @@ const steps = [
         </div>
       </div>
 
-    </div>
-  </div>
-
-  <div class="wrap method-wrap">
-    <p class="t-micro m-steps-eyebrow" data-rv>HOW WE DO IT DIFFERENTLY</p>
-
-    <ol class="m-steps" data-rv>
+      <div class="m-steps-block" data-rv>
+        <p class="t-micro m-steps-eyebrow">HOW WE DO IT DIFFERENTLY</p>
+        <ol class="m-steps">
       {steps.map((step) => (
         <li class="m-hex">
           <div class="m-hex-in">
@@ -77,8 +77,12 @@ const steps = [
           </div>
         </li>
       ))}
-    </ol>
+        </ol>
+      </div>
+    </div>
+  </div>
 
+  <div class="wrap method-wrap">
     <div class="m-banner" data-rv>
       <p>It’s not just research. It’s your <em>unfair advantage.</em></p>
     </div>
@@ -126,23 +130,26 @@ const steps = [
     color: var(--on-ink-body);
   }
 
-  /* ---------- top: the copy rides the scene ---------- */
-  .m-top {
+  /* ---------- top: copy above a 2×2 of chevrons, riding the scene ---------- */
+  /* the band lives OUTSIDE the capped wrap (full width, 24px padding) and
+     the column takes the hero block's exact margin formula — the two share
+     a left edge by construction, scrollbar and all */
+  .m-top-band { padding-inline: 24px; }
+  .m-left {
     position: relative;
     z-index: 2;
     display: flex;
-    align-items: center;
-    /* reserves the hero band the scene fills behind */
-    min-height: clamp(360px, 30vw, 760px);
-  }
-  /* the copy band lives OUTSIDE the capped wrap, in the hero-inner's own
-     environment (full width, 24px padding), and the copy takes the hero
-     block's exact margin formula — the two share a left edge by
-     construction, scrollbar and all */
-  .m-top-band { padding-inline: 24px; }
-  .m-copy {
-    max-width: min(46vw, 1180px);
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 48px;
+    max-width: min(46vw, 900px);
     margin-left: max(24px, calc(50% - 1180px), min(5vw, 120px));
+    /* the owner's brief: text + shapes together run the length of the
+       image. The scene renders at min(58vw, 1400px) wide with a fixed
+       1330:1182 aspect, so its height is that width × 1182/1330 — the
+       column reserves exactly it and space-between spreads copy and grid
+       across it */
+    min-height: calc(min(58vw, 1400px) * 0.8887);
   }
 
   .m-h {
@@ -221,25 +228,24 @@ const steps = [
     mask-composite: intersect;
   }
 
-  /* ---------- the four steps ---------- */
+  /* ---------- the four steps, 2×2 under the copy ---------- */
   .m-steps-eyebrow {
-    margin-top: 84px;
-    text-align: center;
     color: rgb(245 247 249 / 0.55);
     letter-spacing: 0.42em;
   }
   .m-steps {
     list-style: none;
     padding: 0;
-    margin: 36px 0 0;
+    margin: 24px 0 0;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 18px;
     position: relative;
   }
-  /* the glints in the joints between chevrons */
+  /* the glints in the joints — only between row neighbours now the grid
+     wraps: odd cards point at their right-hand partner */
   .m-hex { position: relative; }
-  .m-hex:not(:last-child)::after {
+  .m-hex:nth-child(odd)::after {
     content: "";
     position: absolute;
     top: 50%;
@@ -301,7 +307,7 @@ const steps = [
 
   /* ---------- banner ---------- */
   .m-banner {
-    margin-top: 56px;
+    margin-top: 72px;
     border: 1px solid rgb(77 124 255 / 0.4);
     border-radius: 14px;
     background: rgb(29 78 216 / 0.07);
@@ -378,13 +384,15 @@ const steps = [
   .m-close-line { color: rgb(245 247 249 / 0.65); }
 
   /* ---------- responsive ---------- */
-  @media (max-width: 1080px) {
-    .m-steps { grid-template-columns: repeat(2, 1fr); }
-  }
   @media (max-width: 860px) {
     .m-built { grid-template-columns: 1fr; }
-    .m-top { min-height: 0; padding-top: clamp(200px, 52vw, 380px); }
-    .m-copy { max-width: none; margin-left: 0; }
+    .m-left {
+      min-height: 0;
+      max-width: none;
+      margin-left: 0;
+      gap: 40px;
+      padding-top: clamp(200px, 52vw, 380px);
+    }
     .m-scene { width: min(86vw, 520px); }
   }
   @media (max-width: 620px) {
