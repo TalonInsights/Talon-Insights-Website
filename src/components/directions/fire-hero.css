@@ -61,6 +61,9 @@
 
 /* ---------- nav ---------- */
 .fh-nav {
+  position: relative;
+  z-index: 2; /* the ember sky's canvas reaches up under the nav — without
+                 this its opaque ground covers the CTA's bottom border */
   display: flex;
   align-items: center;
   gap: 3cqw;
@@ -91,14 +94,17 @@
   transition: color 180ms ease;
 }
 .fh-links button:hover { color: #f4ede4; }
-.fh-navcta {
+.fh-navcta,
+.fh-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1; /* Khand's default line box sits the glyphs low */
   background: none;
   border: 1px solid rgb(var(--fh-ember-rgb) / 0.45);
-  padding: 0.9cqw 2.2cqw;
   font: inherit;
   font-family: "Khand", "Arial Narrow", sans-serif;
   font-weight: 600;
-  font-size: 1.9cqw;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--fh-ember);
@@ -106,7 +112,12 @@
   box-shadow: 0 0 1.6cqw -0.6cqw rgb(var(--fh-ember-rgb) / 0.5);
   transition: border-color 180ms ease, box-shadow 180ms ease, color 180ms ease;
 }
-.fh-navcta:hover {
+.fh-navcta {
+  padding: 1cqw 2.2cqw;
+  font-size: 1.9cqw;
+}
+.fh-navcta:hover,
+.fh-primary:hover {
   border-color: rgb(var(--fh-ember-rgb) / 0.9);
   color: var(--fh-ember-hot);
   box-shadow: 0 0 2.6cqw -0.5cqw rgb(var(--fh-ember-rgb) / 0.75);
@@ -228,35 +239,20 @@
 }
 
 .fh-ctas { display: flex; gap: 1.8cqw; margin-top: 2.6cqw; }
+/* The primary shares every visual rule with the nav CTA above (owner's
+   instruction: identical styling) — only the scale is its own. */
 .fh-primary {
-  background: var(--fh-ember);
-  border: 1px solid var(--fh-ember);
-  padding: 1.2cqw 3.4cqw;
-  font: inherit;
-  font-family: "Khand", "Arial Narrow", sans-serif;
-  font-weight: 600;
+  padding: 1.3cqw 3.4cqw;
   font-size: 2.05cqw;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: #1a0d04;
-  cursor: pointer;
-  /* a tight rim of heat, then a wide soft halo — the bar looks hot,
-     not neon-outlined */
-  box-shadow:
-    0 0 0.9cqw -0.2cqw rgb(var(--fh-ember-rgb) / 0.55),
-    0 0.4cqw 4.5cqw -1cqw rgb(var(--fh-ember-rgb) / 0.5);
-  transition: background-color 180ms ease, box-shadow 220ms ease;
-}
-.fh-primary:hover {
-  background: var(--fh-ember-hot);
-  box-shadow:
-    0 0 1.3cqw -0.2cqw rgb(var(--fh-ember-rgb) / 0.8),
-    0 0.5cqw 6.5cqw -1cqw rgb(var(--fh-ember-rgb) / 0.7);
 }
 .fh-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
   background: none;
   border: 1px solid rgb(244 237 228 / 0.3);
-  padding: 1.2cqw 3.4cqw;
+  padding: 1.3cqw 3.4cqw;
   font: inherit;
   font-family: "Khand", "Arial Narrow", sans-serif;
   font-weight: 500;
