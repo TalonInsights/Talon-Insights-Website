@@ -6,8 +6,9 @@
 // master build's verbatim hero text: chip → H1 → standfirst → CTA pair →
 // trust line. Grid and burst remain drawn in CSS from token blues; the
 // shot is a real capture (no mockups, §8), self-hosted (CSP allows no
-// remote images). No JS, no island: this block is fully static — the tilt
-// is a stylesheet transform.
+// remote images). No JS, no island: this block is fully static. The
+// Tailark projection was retired 27 Aug (owner: unreadable = texture);
+// the panel is straight-on now, framed, bleeding off the right edge.
 ---
 
 <section class="hero">
@@ -21,8 +22,11 @@
         <span class="nowrap-sentence">It’s just not on the page.</span>
       </p>
 
+      <!-- 27 Aug (owner's review): "See how I work" / "See the work" were
+           four words apart and neither was a contact action - the primary
+           now matches the nav's Book a visit, and the proof link stays -->
       <div class="ctas">
-        <a class="btn btn-primary" href="#method">See how I work</a>
+        <a class="btn btn-primary" href="#book">Book a visit</a>
         <a class="btn btn-ghost" href="#work">See the work</a>
       </div>
 
@@ -67,24 +71,22 @@
     </div>
   </div>
 
-  <!-- The showcase: real client work, angled off the page the way the
-       reference presents its product. It sits at SECTION level, outside
-       the width-capped wrap, so its absolute anchoring and sizing resolve
-       against the full-bleed hero. The proof strip directly below names
-       the client. -->
+  <!-- The showcase: real client work, straight-on (27 Aug, owner's review:
+       the Tailark projection made the capture read as texture - at hero
+       scale nothing on it was legible, and proof has to be readable).
+       It sits at SECTION level, outside the width-capped wrap, anchored
+       bottom-right and pushed past the viewport edge so it bleeds off the
+       right - the section's own overflow: clip does the crop. The proof
+       strip directly below names the client. -->
   <div class="hero-shot">
-    <div class="hero-shot-tilt">
-      <div class="hero-shot-skew">
-        <img
-          src="/images/work-wulftek-home.webp"
-          width="1910"
-          height="1026"
-          alt="The WulfTek Tuning homepage — a delivered client site: registration lookup hero with the line ‘What could your car actually do?’"
-          decoding="async"
-          fetchpriority="high"
-        />
-      </div>
-    </div>
+    <img
+      src="/images/work-wulftek-home.webp"
+      width="1910"
+      height="1026"
+      alt="The WulfTek Tuning homepage — a delivered client site: registration lookup hero with the line ‘What could your car actually do?’"
+      decoding="async"
+      fetchpriority="high"
+    />
   </div>
 </section>
 
@@ -150,10 +152,10 @@
     justify-content: center;
     max-width: 720px;
     /* centred in the zone the panel leaves free. The constants are tied
-       to the panel: 1180px = (its 1640px width cap + this 720px column)/2,
-       so 50% − 1150px is the free zone's centre once the panel hits its
+       to the panel: 1140px = (its 1560px width cap + this 720px column)/2,
+       so 50% − 1140px is the free zone's centre once the panel hits its
        cap; below that the viewport term holds a sane offset. */
-    margin-left: max(24px, calc(50% - 1180px), min(5vw, 120px));
+    margin-left: max(24px, calc(50% - 1140px), min(5vw, 120px));
     min-height: clamp(620px, 84svh, 920px);
     padding-bottom: clamp(24px, 6vh, 72px);
   }
@@ -206,68 +208,46 @@
   }
 
   /* ---------- the showcase shot ---------- */
-  /* The panel's projection is the owner-supplied Tailark hero's, adopted
-     mechanics-only per §7 (its nav, buttons and logo strip did not
-     survive; no dependencies came with it): perspective 1200px, then
-     rotateX(20deg), then skewX(.36rad) — EACH ON ITS OWN ELEMENT, because
-     nested transforms flatten independently and one combined transform
-     does not produce the same lean. The panel bleeds off the right edge
-     under two mask fades: bottom (into the proof strip) and right. */
+  /* Straight-on (27 Aug, owner's review - the projection retired: the 3D
+     tilt made the capture unreadable at hero scale, and a screenshot that
+     can't be read is texture, not proof). The panel sits flush above the
+     proof strip, bleeds off the right edge (negative right offset; the
+     section's overflow: clip crops it without widening the page), and
+     carries a crisp hairline frame with a soft shadow instead of the old
+     mask fades. */
   .hero-shot {
     position: absolute;
-    right: 0;
-    bottom: 0; /* rises from just above the proof strip */
+    /* past the viewport edge: the right-hand sliver of the capture is
+       deliberately cropped by the section - the panel reads as continuing
+       off the page */
+    right: clamp(-180px, -6vw, -60px);
+    bottom: 0; /* lands on the proof strip's top hairline */
     /* held back until the laptop hands over, then expands out of the
        screen's position into its resting pose */
     opacity: 0;
     /* the fixed point of the expansion: solved so that at the starting
        scale the panel's box coincides with the laptop display's landed
-       rect — the photo genuinely grows out of the screen. (Solved from
-       measured rects at 1912w: O = (D − s·C)/(1 − s).) */
-    transform-origin: 48% 44%;
+       rect - the photo genuinely grows out of the screen. (Re-solved for
+       the straight panel from rects measured live at 1912×1080:
+       display 415×217 @ (1041,470), panel 1057×569 @ (955,446) —
+       s = 415/1057, O = (D − s·C)/(1 − s).) */
+    transform-origin: 13.4% 6.8%;
     animation: shot-arrive 1500ms var(--ease) 4.15s forwards;
-    /* as wide as the screen allows while holding a 660px reserve for the
-       copy column — on a large monitor this is roughly double the grid
-       column it replaces */
-    /* wider than the panel needs: the tilt's left padding below is shear
-       headroom, so the width formula hands that space back */
-    width: clamp(640px, calc(100% - 480px), 1640px);
-    /* NO overflow clip here: the projection's lean lives in the corners
-       that rotateX and the skew push outside the box — clipping them
-       flattens the whole panel back to a rectangle. The masks below and
-       the section's own overflow handle every edge. */
-    /* two fades intersected: the bottom melts into the proof strip, and
-       the left melts into the hero so the panel has no hard entry edge
-       where it passes behind the copy */
-    -webkit-mask-image:
-      linear-gradient(180deg, #000 55%, transparent 98%),
-      linear-gradient(90deg, transparent 0%, #000 22%);
-    -webkit-mask-composite: source-in;
-    mask-image:
-      linear-gradient(180deg, #000 55%, transparent 98%),
-      linear-gradient(90deg, transparent 0%, #000 22%);
-    mask-composite: intersect;
+    /* as wide as the screen allows while holding an 840px reserve for the
+       copy column and its breathing room */
+    width: clamp(600px, calc(100% - 840px), 1560px);
   }
-  .hero-shot-tilt {
-    perspective: 1200px;
-    /* the reference's pl-56: room INSIDE the masked box for the corner
-       the skew throws left — without it the fades eat the sheared
-       corners and the projection reads as a flat rectangle */
-    padding-left: clamp(6rem, 11vw, 15rem);
-    margin-right: clamp(-16rem, -10vw, -4rem);
-    -webkit-mask-image: linear-gradient(90deg, #000 55%, transparent 100%);
-    mask-image: linear-gradient(90deg, #000 55%, transparent 100%);
-  }
-  .hero-shot-skew { transform: rotateX(20deg); }
-  .hero-shot-skew > div,
-  .hero-shot img { display: block; }
   .hero-shot img {
+    display: block;
     width: 100%;
     height: auto;
-    border-radius: 10px;
+    /* right corners square: that edge is cropped by the viewport */
+    border-radius: 12px 0 0 12px;
     border: 1px solid rgb(245 247 249 / 0.16);
-    transform: skewX(0.36rad);
-    box-shadow: 0 40px 90px -30px rgb(0 0 0 / 0.65);
+    border-right: 0;
+    box-shadow:
+      0 48px 110px -32px rgb(0 0 0 / 0.6),
+      0 16px 40px -16px rgb(0 0 0 / 0.5);
   }
 
   /* ---------- the overture ---------- */
@@ -434,14 +414,15 @@
        land open and facing the viewer) ---------- */
   /* Simplified again, 27 Aug (owner: still too much): no tumble at all.
      The machine begins OPEN and FACING AWAY, makes one slow turn to the
-     camera, banks into the showcase panel's lean, the screen switches on
-     with the WulfTek page, and the swell hands over to the real panel.
-     The import's flip/close/bounce keyframes are retired with the lid,
-     deck, key and shadow animations they drove. */
+     camera, and holds face-on - the banked landing (−17/382/−3) retired
+     with the panel's skew: a straight panel wants a straight machine.
+     The screen switches on with the WulfTek page, and the swell hands
+     over to the real panel. The import's flip/close/bounce keyframes are
+     retired with the lid, deck, key and shadow animations they drove. */
   @keyframes mb-rotate {
-    0%   { transform: rotateX(-20deg) rotateY(180deg) rotateZ(0deg); }
-    82%  { transform: rotateX(-20deg) rotateY(360deg) rotateZ(0deg); }
-    100% { transform: rotateX(-17deg) rotateY(382deg) rotateZ(-3deg); }
+    0%   { transform: rotateX(-20deg) rotateY(180deg); }
+    82%  { transform: rotateX(-20deg) rotateY(360deg); }
+    100% { transform: rotateX(-20deg) rotateY(360deg); }
   }
   @keyframes mb-content {
     from { opacity: 0; }
@@ -457,7 +438,7 @@
      about the solved origin) and expands to rest, fading up fast so the
      growth is what reads, not the fade */
   @keyframes shot-arrive {
-    0%   { opacity: 0; scale: 0.27; }
+    0%   { opacity: 0; scale: 0.393; }
     15%  { opacity: 1; }
     100% { opacity: 1; scale: 1; }
   }
@@ -477,17 +458,12 @@
       position: static;
       width: auto;
       margin: 32px 24px 0;
-      max-height: clamp(220px, 38vh, 420px);
       opacity: 1;
       animation: none;
     }
-    .hero-shot-tilt {
-      margin-right: 0;
-      padding-left: 0;
-      -webkit-mask-image: none;
-      mask-image: none;
+    .hero-shot img {
+      border-radius: 8px;
+      border-right: 1px solid rgb(245 247 249 / 0.16);
     }
-    .hero-shot-skew { transform: none; }
-    .hero-shot img { transform: none; border-radius: 8px; }
   }
 </style>

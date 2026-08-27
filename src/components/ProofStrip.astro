@@ -10,6 +10,10 @@
     <span class="t-micro dim">DELIVERED FOR</span>
     <span class="client">David Jackson &amp; Son</span>
     <span class="client">WulfTek Tuning</span>
+    <!-- the rule makes the gap deliberate (27 Aug, owner's review): the
+         tagline was already hard right, but the empty run between it and
+         the clients read as dead space - now a hairline spans it -->
+    <span class="proof-rule" aria-hidden="true"></span>
     <span class="t-micro dim tail">ONE PERSON, START TO FINISH</span>
   </div>
 </section>
@@ -29,8 +33,15 @@
   }
   .dim { color: rgb(245 247 249 / 0.45); }
   .client { font-size: 1.125rem; font-weight: 500; color: var(--color-sheet); }
-  .tail { margin-left: auto; }
+  .proof-rule {
+    flex: 1;
+    min-width: 64px;
+    height: 1px;
+    align-self: center;
+    background: rgb(245 247 249 / 0.14);
+  }
   @media (max-width: 639.98px) {
-    .tail { margin-left: 0; }
+    /* wrapped layout: the rule would be a stray dash between rows */
+    .proof-rule { display: none; }
   }
 </style>
