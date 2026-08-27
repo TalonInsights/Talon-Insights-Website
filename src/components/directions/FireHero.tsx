@@ -62,8 +62,6 @@ const frag = `
     return v;
   }
 
-  vec3 rgbcol(float r, float g, float b) { return vec3(r/255.0,g/255.0,b/255.0); }
-
   float setOpacity(float r, float g, float b) {
     float tone = (r + g + b) / 3.0;
     return tone < 0.99 ? 0.0 : 1.0;
@@ -96,8 +94,8 @@ const frag = `
     float aBack = setOpacity(shapeBack, shapeBack, shapeBack);
     float aFront = setOpacity(shapeFront, shapeFront, shapeFront) - aBack;
 
-    vec3 body = rgbcol(color1.r, color1.g, color1.b);
-    vec3 rim = rgbcol(color0.r, color0.g, color0.b);
+    vec3 body = color1; // linear, pre-converted on the CPU
+    vec3 rim = color0;
     vec3 col = aFront > 0.0 ? rim : body;
     float alpha = max(aBack, aFront > 0.0 ? 1.0 : 0.0);
     // the fire dies away before the frame's ends — faded here, pre-bloom,
@@ -108,11 +106,13 @@ const frag = `
   }
 `;
 
-const GROUND = 0x12100d; // the page's own dark, so the canvas has no edges
-// the reference's own palette — golden base, burnt border; bloom turns the
-// pair into the white-hot core and orange rim of the supplied render
-const FIRE_BASE: [number, number, number] = [201, 158, 72];
-const FIRE_BORDER: [number, number, number] = [74, 30, 0];
+/* Everything the GPU receives is converted to LINEAR here, because the
+   OutputPass sRGB-encodes on the way out. Feeding sRGB values straight in
+   double-encodes them — the ground brightens into a visible tan panel and
+   the golden palette washes cream. (That was the "well".) */
+const GROUND = new THREE.Color(0x12100d).convertSRGBToLinear(); // the page's own dark
+const FIRE_BASE = new THREE.Color(201 / 255, 158 / 255, 72 / 255).convertSRGBToLinear();
+const FIRE_BORDER = new THREE.Color(74 / 255, 30 / 255, 0).convertSRGBToLinear();
 
 function FireLine({ stokedRef }: { stokedRef: React.MutableRefObject<boolean> }) {
   const mountRef = useRef<HTMLDivElement | null>(null);
@@ -137,9 +137,9 @@ function FireLine({ stokedRef }: { stokedRef: React.MutableRefObject<boolean> })
     const composer = new EffectComposer(renderer);
     composer.addPass(new RenderPass(scene, camera));
     const bloomPass = new UnrealBloomPass(new THREE.Vector2(width, height), 1.5, 0.4, 0.85);
-    bloomPass.threshold = 0.1;
-    bloomPass.strength = 1.0;
-    bloomPass.radius = 0.32; /* tight: the glow hugs the rope, no slab */
+    bloomPass.threshold = 0.25;
+    bloomPass.strength = 1.3;
+    bloomPass.radius = 0.35;
     composer.addPass(bloomPass);
     // Without this, the composer displays linear values as sRGB: the whole
     // canvas washes brighter than the page (a visible khaki rectangle) and
@@ -149,8 +149,8 @@ function FireLine({ stokedRef }: { stokedRef: React.MutableRefObject<boolean> })
 
     const uniforms = {
       time: { value: reduce ? 5200.0 : 0.0 },
-      color1: { value: new THREE.Vector3(...FIRE_BASE) },
-      color0: { value: new THREE.Vector3(...FIRE_BORDER) },
+      color1: { value: new THREE.Vector3(FIRE_BASE.r, FIRE_BASE.g, FIRE_BASE.b) },
+      color0: { value: new THREE.Vector3(FIRE_BORDER.r, FIRE_BORDER.g, FIRE_BORDER.b) },
     };
 
     const geometry = new THREE.PlaneGeometry(2, 2);
@@ -180,7 +180,7 @@ function FireLine({ stokedRef }: { stokedRef: React.MutableRefObject<boolean> })
       if (!reduce) {
         // hovering the commission button stokes the seam
         const targetSpeed = stokedRef.current ? 2.2 : 1;
-        const targetBloom = stokedRef.current ? 1.6 : 1.0;
+        const targetBloom = stokedRef.current ? 2.0 : 1.3;
         speed += (targetSpeed - speed) * 0.06;
         bloomPass.strength += (targetBloom - bloomPass.strength) * 0.06;
         const now = (performance.now() - start) / 1000;
