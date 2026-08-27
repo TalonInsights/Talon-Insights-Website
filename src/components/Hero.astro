@@ -70,6 +70,12 @@
     </div>
   </div>
 
+  <!-- the visible toggle (28 Aug, owner: "add a click here toggle") —
+       revealed by the script only where the toy is wired -->
+  <button type="button" class="hero-toy-hint" aria-label="Toggle the laptop handoff">
+    <i aria-hidden="true">◆</i><span>CLICK THE MAC</span>
+  </button>
+
   <!-- The showcase: real client work, straight-on (27 Aug, owner's review:
        the Tailark projection made the capture read as texture - at hero
        scale nothing on it was legible, and proof has to be readable), then
@@ -239,8 +245,39 @@
     justify-content: center;
     /* the equidistance: one gap, all four sides */
     padding: clamp(24px, 3vw, 56px);
+    /* the zone paints ABOVE the theatre — without this it (and the
+       invisible panel img inside it) swallows every click meant for the
+       laptop. Found the honest way: el.click() in testing bypasses
+       hit-testing, the owner's real mouse does not. */
+    pointer-events: none;
   }
+  /* the hint pill: hidden until the script wires the toy */
+  .hero-toy-hint {
+    display: none;
+    position: absolute;
+    right: calc(min(30vw, 620px) + 75px);
+    bottom: calc(38% - 150px);
+    translate: 50% 0;
+    z-index: 3;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 16px;
+    background: rgb(6 14 28 / 0.75);
+    border: 1px solid rgb(77 124 255 / 0.4);
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: 0.9375rem;
+    letter-spacing: 0.14em;
+    color: var(--color-cobalt-lift);
+    cursor: pointer;
+    transition: border-color 180ms var(--ease), color 180ms var(--ease);
+  }
+  .hero-toy-hint:hover { border-color: var(--color-cobalt-lift); color: var(--color-sheet); }
+  .hero-toy-hint i { font-style: normal; font-size: 0.625rem; }
+  .hero.toy-ready .hero-toy-hint { display: inline-flex; }
+
   .hero-theatre:focus-visible,
+  .hero-toy-hint:focus-visible,
   .hero-shot img:focus-visible {
     outline: 2px solid var(--color-cobalt-lift);
     outline-offset: 6px;
@@ -252,6 +289,7 @@
     height: auto;
     max-width: 100%;
     max-height: 100%;
+    pointer-events: none; /* only the OUT state makes it a control */
     border-radius: 12px;
     border: 1px solid rgb(245 247 249 / 0.16);
     box-shadow:
@@ -572,9 +610,12 @@
     const hero = document.querySelector<HTMLElement>(".hero");
     const theatre = document.querySelector<HTMLElement>(".hero-theatre");
     const img = document.querySelector<HTMLImageElement>(".hero-shot img");
+    const hint = document.querySelector<HTMLElement>(".hero-toy-hint");
+    const hintLabel = hint?.querySelector("span");
     if (!hero || !theatre || !img) return;
     if (matchMedia("(max-width: 860px)").matches) return;
     if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    hero.classList.add("toy-ready"); // reveals the hint pill
     const out = () => {
       solveHandoff(); // fresh geometry the moment it plays
       hero.classList.remove("shot-in");
@@ -583,6 +624,7 @@
       img.setAttribute("role", "button");
       img.setAttribute("tabindex", "0");
       img.setAttribute("aria-label", "Return the website into the laptop");
+      if (hintLabel) hintLabel.textContent = "CLICK THE SITE TO SEND IT BACK";
     };
     const back = () => {
       hero.classList.remove("shot-out");
@@ -591,6 +633,7 @@
       img.removeAttribute("role");
       img.removeAttribute("tabindex");
       img.removeAttribute("aria-label");
+      if (hintLabel) hintLabel.textContent = "CLICK THE MAC";
     };
     const key = (fn: () => void) => (e: KeyboardEvent) => {
       if (e.key === "Enter" || e.key === " ") { e.preventDefault(); fn(); }
@@ -599,6 +642,9 @@
     theatre.addEventListener("keydown", key(() => { if (!hero.classList.contains("shot-out")) out(); }));
     img.addEventListener("click", () => { if (hero.classList.contains("shot-out")) back(); });
     img.addEventListener("keydown", key(() => { if (hero.classList.contains("shot-out")) back(); }));
+    hint?.addEventListener("click", () => {
+      hero.classList.contains("shot-out") ? back() : out();
+    });
   };
   wireToggle();
 </script>
