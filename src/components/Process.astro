@@ -1,64 +1,169 @@
 ---
-// B7 — Process (id="process"). Bars are signature #3: they draw on first
-// scroll-in (threshold .3, once — armed by the site script in Base).
-// Orientation mechanics from 21st import I1 (originui stepper, §7): the
-// data-orientation attribute pattern switches horizontal ≥1024px to vertical
-// below; all of its styling and icons were stripped on arrival.
+// B7 — Process (id="process"), restaged 27 Aug (owner): the five steps are
+// now a GANTT — undated, bars sized by how long each stage really runs
+// relative to the others — on the left, with each stage's description on
+// the right. The section joins the dark run and the bars wear the neon
+// lifted cobalt from the map and fault board. Bars are still signature #3:
+// they draw on first scroll-in via the [data-process] hooks in Base
+// (pb-armed / pb-draw, IO + 2.5s failsafe), left→right in sequence like a
+// schedule filling in. Bar geometry lives in nth-child CSS — no style
+// attributes under the hashed CSP.
 
 const steps = [
-  { num: "01", name: "A CALL", body: "Fifteen minutes to see whether it’s worth going further.", chip: "FREE", amber: false },
-  { num: "02", name: "TIME ON SITE", body: "I spend time where you work, at your events, with your customers — and write down how you work and the words they use.", chip: "FREE", amber: false },
-  { num: "03", name: "DIRECTIONS", body: "Two or three real design directions. You pick, and you pull them apart.", chip: "YOU CHOOSE", amber: true },
-  { num: "04", name: "BUILD", body: "Milestones against real dates, with the line open for ideas throughout.", chip: "OPEN LINE", amber: false },
-  { num: "05", name: "YOURS", body: "Domain, code and content are yours on full payment, plus a warranty period.", chip: "YOU OWN IT", amber: true },
+  { num: "01", name: "A CALL", bar: "CALL", body: "Fifteen minutes to see whether it’s worth going further.", chip: "FREE", amber: false },
+  { num: "02", name: "TIME ON SITE", bar: "TIME ON SITE", body: "I spend time where you work, at your events, with your customers — and write down how you work and the words they use.", chip: "FREE", amber: false },
+  { num: "03", name: "DIRECTIONS", bar: "DIRECTIONS", body: "Two or three real design directions. You pick, and you pull them apart.", chip: "YOU CHOOSE", amber: true },
+  { num: "04", name: "BUILD", bar: "BUILD", body: "Milestones against real dates, with the line open for ideas throughout.", chip: "OPEN LINE", amber: false },
+  { num: "05", name: "YOURS", bar: "YOURS", body: "Domain, code and content are yours on full payment, plus a warranty period.", chip: "YOU OWN IT", amber: true },
 ];
 ---
 
-<section class="process g-white" id="process">
-  <div class="wrap">
+<section class="process g-ink" id="process">
+  <div class="process-wrap">
     <h2 class="t-h2">Five steps — and you know the price before the build&nbsp;starts.</h2>
 
-    <ol class="steps" data-process data-orientation="horizontal">
-      {steps.map((step) => (
-        <li class="step">
-          <span class="track" aria-hidden="true">
-            <span class="fill"></span>
-          </span>
-          <p class="t-mono step-name"><b>{step.num}</b> {step.name}</p>
-          <p class="step-body">{step.body}</p>
-          <span class={`chip t-micro ${step.amber ? "chip-amber" : ""}`}>{step.chip}</span>
-        </li>
-      ))}
-    </ol>
+    <div class="process-grid">
+      <!-- the schedule: no dates, just honest proportion — a fifteen-minute
+           call is a sliver, the build is the long haul, and handover caps
+           the end of the line -->
+      <ol class="gantt" data-process aria-label="The five steps in sequence — bar length shows each stage’s share of the whole">
+        {steps.map((step) => (
+          <li class="g-row">
+            <span class="g-label t-mono"><b>{step.num}</b> {step.bar}</span>
+            <span class="g-track" aria-hidden="true">
+              <span class="g-bar"><span class="fill"></span></span>
+            </span>
+          </li>
+        ))}
+      </ol>
+
+      <ol class="step-list">
+        {steps.map((step) => (
+          <li class="step">
+            <p class="t-mono step-name"><b>{step.num}</b> {step.name}</p>
+            <p class="step-body">{step.body}</p>
+            <span class={`chip t-micro ${step.amber ? "chip-amber" : ""}`}>{step.chip}</span>
+          </li>
+        ))}
+      </ol>
+    </div>
   </div>
 </section>
 
 <style>
   .process {
-    border-top: var(--hairline);
+    background: var(--color-ink-deep); /* the dark run continues */
+    border-top: 1px solid rgb(245 247 249 / 0.08);
     padding-block: 96px;
   }
+  .process-wrap {
+    max-width: 1560px; /* matches faults/method/case */
+    margin-inline: auto;
+    padding-inline: 24px;
+  }
 
-  .steps {
-    margin-top: 48px;
+  .process-grid {
+    margin-top: 56px;
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: clamp(40px, 5vw, 96px);
+    align-items: center;
+  }
+
+  /* ---------- the gantt ---------- */
+  .gantt {
     list-style: none;
+    margin: 0;
     padding: 0;
     display: grid;
-    gap: 32px;
+    gap: 30px;
   }
-  .step { position: relative; }
+  .g-row {
+    display: grid;
+    grid-template-columns: 148px minmax(0, 1fr);
+    align-items: center;
+    gap: 18px;
+  }
+  .g-label {
+    font-size: 0.78125rem;
+    letter-spacing: 0.08em;
+    color: rgb(245 247 249 / 0.55);
+    white-space: nowrap;
+  }
+  .g-label b { color: var(--color-sheet); font-weight: 700; }
 
-  .step-name { margin-top: 16px; color: var(--color-graphite); }
-  .step-name b { color: var(--color-ink); font-weight: 700; }
-  .step-body { margin-top: 8px; font-size: 0.9375rem; color: var(--color-graphite); }
+  /* the ruled field the bars sit on: a baseline plus faint tenth ticks —
+     calendar texture without claiming any calendar */
+  .g-track {
+    position: relative;
+    height: 16px;
+    background:
+      repeating-linear-gradient(90deg, rgb(245 247 249 / 0.07) 0 1px, transparent 1px 10%),
+      linear-gradient(rgb(245 247 249 / 0.05), rgb(245 247 249 / 0.05));
+  }
+
+  /* bar geometry: offsets and lengths in tenths of the whole engagement.
+     The proportions are the argument — a sliver of a call, real time on
+     site, directions chosen, the build as the long haul, and ownership
+     capping the end. */
+  .g-bar {
+    position: absolute;
+    top: 1px;
+    bottom: 1px;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .g-row:nth-child(1) .g-bar { left: 0%;  width: 6%; }
+  .g-row:nth-child(2) .g-bar { left: 6%;  width: 24%; }
+  .g-row:nth-child(3) .g-bar { left: 30%; width: 20%; }
+  .g-row:nth-child(4) .g-bar { left: 50%; width: 40%; }
+  .g-row:nth-child(5) .g-bar { left: 90%; width: 10%; }
+
+  /* the neon: lifted cobalt (the map and fault board's blue) with a glow
+     that stays static — the draw is the motion moment, nothing idles */
+  .fill {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--color-cobalt-lift), #6E93FF);
+    box-shadow:
+      0 0 10px rgb(77 124 255 / 0.65),
+      0 0 26px rgb(77 124 255 / 0.35);
+    transform-origin: left;
+  }
+  :global(.pb-armed) .fill { transform: scaleX(0); }
+  :global(.pb-armed.pb-draw) .fill {
+    transform: scaleX(1);
+    transition: transform 450ms var(--ease);
+  }
+  /* the schedule fills in sequence, left to right down the rows (style
+     attributes are off-limits under the hashed CSP, so the delays live
+     here) */
+  .g-row:nth-child(2) .fill { transition-delay: 60ms; }
+  .g-row:nth-child(3) .fill { transition-delay: 120ms; }
+  .g-row:nth-child(4) .fill { transition-delay: 180ms; }
+  .g-row:nth-child(5) .fill { transition-delay: 240ms; }
+
+  /* ---------- the descriptions ---------- */
+  .step-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 28px;
+  }
+  .step-name { color: rgb(245 247 249 / 0.55); }
+  .step-name b { color: var(--color-sheet); font-weight: 700; }
+  .step-body { margin-top: 6px; font-size: 0.9375rem; max-width: 40em; }
 
   .chip {
     display: inline-block;
-    margin-top: 12px;
+    margin-top: 10px;
     padding: 3px 8px;
-    border: var(--hairline);
+    border: 1px solid rgb(245 247 249 / 0.22);
     border-radius: 2px;
-    color: var(--color-graphite);
+    color: rgb(245 247 249 / 0.6);
   }
   /* Amber: the two process chips — choice and ownership (§2). */
   .chip-amber {
@@ -66,54 +171,15 @@ const steps = [
     border-color: rgb(232 163 61 / 0.4);
   }
 
-  /* The drawing bars. At rest (no JS, reduced motion) they stand complete. */
-  .track {
-    display: block;
-    background: rgb(90 102 117 / 0.16);
-    overflow: hidden;
-  }
-  .fill {
-    display: block;
-    width: 100%;
-    height: 100%;
-    background: var(--color-cobalt);
-  }
-  :global(.pb-armed) .fill { transform: scaleX(0); }
-  :global(.pb-armed.pb-draw) .fill {
-    transform: scaleX(1);
-    transition: transform 450ms var(--ease);
-  }
-  /* 60ms stagger, mirroring the hero draw (style attributes are off-limits
-     under the hashed CSP, so the delays live here). */
-  .step:nth-child(2) .fill { transition-delay: 60ms; }
-  .step:nth-child(3) .fill { transition-delay: 120ms; }
-  .step:nth-child(4) .fill { transition-delay: 180ms; }
-  .step:nth-child(5) .fill { transition-delay: 240ms; }
-
-  /* Horizontal ≥1024: five across, 10px tracks drawing left→right. */
-  [data-orientation="horizontal"] { grid-template-columns: repeat(5, 1fr); }
-  [data-orientation="horizontal"] .track { height: 10px; border-radius: 2px; }
-  [data-orientation="horizontal"] .fill { transform-origin: left; border-radius: 2px; }
-
-  /* Below 1024 the same markup runs vertical: 8px-wide tracks. */
+  /* Below 1024 the chart stacks above the descriptions; the label column
+     narrows and the rows tighten. */
   @media (max-width: 1023.98px) {
-    [data-orientation="horizontal"] { grid-template-columns: 1fr; gap: 24px; }
-    [data-orientation="horizontal"] .step {
-      padding-left: 24px;
-      max-width: 34em;
-    }
-    [data-orientation="horizontal"] .track {
-      position: absolute;
-      left: 0;
-      top: 4px;
-      bottom: 4px;
-      width: 8px;
-      height: auto;
-      border-radius: 2px;
-    }
-    [data-orientation="horizontal"] .fill { transform-origin: top; }
-    :global(.pb-armed) .fill { transform: scaleY(0); }
-    :global(.pb-armed.pb-draw) .fill { transform: scaleY(1); }
-    [data-orientation="horizontal"] .step-name { margin-top: 0; }
+    .process { padding-block: 72px; }
+    .process-grid { grid-template-columns: 1fr; gap: 48px; }
+    .gantt { gap: 22px; }
+    .g-row { grid-template-columns: 118px minmax(0, 1fr); gap: 12px; }
+    .g-label { font-size: 0.71rem; }
+    .g-track { height: 14px; }
+    .step-body { max-width: 34em; }
   }
 </style>
