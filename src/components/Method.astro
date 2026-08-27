@@ -26,27 +26,31 @@ const steps = [
   <div class="m-scene" aria-hidden="true">
     <img src="/images/method-scene.webp" alt="" width="1330" height="1182" loading="lazy" decoding="async" />
   </div>
-  <div class="wrap method-wrap">
+  <div class="m-top-band">
     <div class="m-top">
       <div class="m-copy" data-rv>
-        <p class="t-micro m-eyebrow"><i></i>TURN INSIGHTS INTO GROWTH<i></i></p>
-        <h2 class="m-h">
-          A brief tells you what a business does.
-          Not <em>why</em> anyone chooses&nbsp;them.
-        </h2>
-        <p class="m-sub">We find the difference. Then we turn it into direction.</p>
-        <div class="m-ctas">
-          <a class="m-btn m-btn-solid" href="#book">Book a discovery call
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7" /><path d="M8 7h9v9" /></svg>
-          </a>
-          <a class="m-btn m-btn-ghost" href="#process">See how we work
-            <svg viewBox="0 0 24 24" fill="currentColor" stroke="none" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" /></svg>
-          </a>
+        <h2 class="m-h">Turn insights into <em>growth.</em></h2>
+        <p class="m-lead">
+          A brief tells you what a business does. Not <em>why</em> anyone chooses&nbsp;them.
+        </p>
+        <div class="m-sub">
+          <p>
+            We find the difference, then we turn it into direction. Before anything gets
+            designed, I turn up — time in your workshop watching the work happen, at your
+            events hearing what customers actually say about you.
+          </p>
+          <p>
+            That’s where the difference lives, and it never comes out in a questionnaire.
+            It comes out on the third visit, in something said offhand. Then we design
+            from it — real directions before any code, chosen by&nbsp;you.
+          </p>
         </div>
       </div>
 
     </div>
+  </div>
 
+  <div class="wrap method-wrap">
     <p class="t-micro m-steps-eyebrow" data-rv>HOW WE DO IT DIFFERENTLY</p>
 
     <ol class="m-steps" data-rv>
@@ -131,42 +135,47 @@ const steps = [
     /* reserves the hero band the scene fills behind */
     min-height: clamp(360px, 30vw, 560px);
   }
-  .m-copy { max-width: 620px; }
-
-  .m-eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
-    color: var(--color-cobalt-lift);
-    letter-spacing: 0.4em;
-  }
-  .m-eyebrow i {
-    width: 7px; height: 7px;
-    rotate: 45deg;
-    background: rgb(77 124 255 / 0.55);
+  /* the copy band lives OUTSIDE the capped wrap, in the hero-inner's own
+     environment (full width, 24px padding), and the copy takes the hero
+     block's exact margin formula — the two share a left edge by
+     construction, scrollbar and all */
+  .m-top-band { padding-inline: 24px; }
+  .m-copy {
+    max-width: min(46vw, 820px);
+    margin-left: max(24px, calc(50% - 1180px), min(5vw, 120px));
   }
 
   .m-h {
-    margin-top: 20px;
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: clamp(2.125rem, 3.4vw, 3.25rem);
-    line-height: 1.08;
+    font-size: clamp(2.5rem, 4vw, 3.75rem);
+    line-height: 1.05;
     letter-spacing: -0.02em;
     color: var(--color-sheet);
-    max-width: 15em;
   }
   .m-h em {
     font-style: italic;
     color: var(--color-cobalt-lift);
   }
-  .m-sub {
-    margin-top: 18px;
-    font-size: 1.125rem;
-    color: rgb(245 247 249 / 0.68);
+  .m-lead {
+    margin-top: 22px;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(1.25rem, 1.8vw, 1.625rem);
+    line-height: 1.3;
+    color: rgb(245 247 249 / 0.92);
+    max-width: 22em;
   }
+  .m-lead em { font-style: italic; color: var(--color-cobalt-lift); }
+  .m-sub {
+    margin-top: 20px;
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    color: rgb(245 247 249 / 0.68);
+    max-width: 34em;
+  }
+  .m-sub p + p { margin-top: 12px; }
 
-  .m-ctas { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
   .m-btn {
     display: inline-flex;
     align-items: center;
@@ -186,12 +195,6 @@ const steps = [
     box-shadow: 0 0 26px -8px rgb(77 124 255 / 0.7);
   }
   .m-btn-solid:hover { box-shadow: 0 0 42px -8px rgb(77 124 255 / 0.9); }
-  .m-btn-ghost {
-    background: rgb(245 247 249 / 0.04);
-    color: var(--color-sheet);
-    border: 1px solid rgb(245 247 249 / 0.22);
-  }
-  .m-btn-ghost:hover { border-color: rgb(77 124 255 / 0.7); }
 
   /* the scene as ground: pinned to the section's own top-right corner,
      running to both edges with no frame — only the left and bottom fades
@@ -381,6 +384,7 @@ const steps = [
   @media (max-width: 860px) {
     .m-built { grid-template-columns: 1fr; }
     .m-top { min-height: 0; padding-top: clamp(200px, 52vw, 380px); }
+    .m-copy { max-width: none; margin-left: 0; }
     .m-scene { width: min(86vw, 520px); }
   }
   @media (max-width: 620px) {
