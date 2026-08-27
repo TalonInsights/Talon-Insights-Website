@@ -133,7 +133,7 @@ const steps = [
     display: flex;
     align-items: center;
     /* reserves the hero band the scene fills behind */
-    min-height: clamp(360px, 30vw, 560px);
+    min-height: clamp(360px, 30vw, 760px);
   }
   /* the copy band lives OUTSIDE the capped wrap, in the hero-inner's own
      environment (full width, 24px padding), and the copy takes the hero
@@ -141,14 +141,14 @@ const steps = [
      construction, scrollbar and all */
   .m-top-band { padding-inline: 24px; }
   .m-copy {
-    max-width: min(46vw, 820px);
+    max-width: min(46vw, 1180px);
     margin-left: max(24px, calc(50% - 1180px), min(5vw, 120px));
   }
 
   .m-h {
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: clamp(2.5rem, 4vw, 3.75rem);
+    font-size: clamp(2.5rem, 3.15vw, 5.25rem);
     line-height: 1.05;
     letter-spacing: -0.02em;
     color: var(--color-sheet);
@@ -161,7 +161,7 @@ const steps = [
     margin-top: 22px;
     font-family: var(--font-display);
     font-weight: 500;
-    font-size: clamp(1.25rem, 1.8vw, 1.625rem);
+    font-size: clamp(1.25rem, 1.4vw, 2.25rem);
     line-height: 1.3;
     color: rgb(245 247 249 / 0.92);
     max-width: 22em;
@@ -169,7 +169,7 @@ const steps = [
   .m-lead em { font-style: italic; color: var(--color-cobalt-lift); }
   .m-sub {
     margin-top: 20px;
-    font-size: 1.0625rem;
+    font-size: clamp(1rem, 0.92vw, 1.5rem);
     line-height: 1.65;
     color: rgb(245 247 249 / 0.68);
     max-width: 34em;
@@ -204,7 +204,7 @@ const steps = [
     position: absolute;
     top: 0;
     right: 0;
-    width: min(58vw, 1010px);
+    width: min(58vw, 1400px);
     pointer-events: none;
   }
   .m-scene img {
