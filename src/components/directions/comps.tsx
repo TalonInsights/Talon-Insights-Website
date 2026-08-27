@@ -14,6 +14,18 @@ const SPARKS: Array<[number, number, number, number]> = [
 ];
 
 export function DirectionFire() {
+  // 27 Aug (owner's directive): the FIRE card carries the finished hero
+  // page's own portrait — supplied by the owner — instead of the coded
+  // mini-comp. The comp below is retired from the card but kept for git
+  // archaeology via the export beneath it.
+  return (
+    <div className="comp comp-fire-shot" aria-hidden="true">
+      <img src="/images/direction-fire-card.webp" alt="" loading="lazy" decoding="async" />
+    </div>
+  );
+}
+
+export function DirectionFireComp() {
   return (
     <div className="comp comp-fire" aria-hidden="true">
       <div className="glow" />
