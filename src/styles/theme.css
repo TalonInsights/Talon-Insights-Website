@@ -20,49 +20,24 @@
      hero burst, and hover states on the dark header. */
   --color-cobalt-lift: #4D7CFF;
   --color-amber-lift:  #F0B455;
-  --font-sans: "ABC Diatype", "Instrument Sans", system-ui, sans-serif;
-  /* the display voice (27 Aug, owner: headings were bland — twice): Clash
-     Display, self-hosted below (the CSP admits only self + gstatic, and
-     Fontshare's CDN is neither). Bricolage stays in the chain as the
-     Google-served fallback. */
-  --font-display: "Clash Display", "Bricolage Grotesque", "Instrument Sans", system-ui, sans-serif;
+  --font-sans: "ABC Diatype", "Inter", system-ui, sans-serif;
+  /* Display: Space Grotesk; body/UI: Inter; labels/data: JetBrains Mono -
+     the 27 Aug restack (all Google-served; the CSP admits gstatic only,
+     Fontshare's CDN never qualified). ABC Diatype stays first in the
+     chains for the day the licence lands. */
+  --font-display: "Space Grotesk", "Inter", system-ui, sans-serif;
   /* the hero's supporting voice, same source */
-  --font-standfirst: "General Sans", "Instrument Sans", system-ui, sans-serif;
-  --font-mono: "ABC Diatype Mono", "Martian Mono", ui-monospace, monospace;
+  --font-standfirst: "Inter", system-ui, sans-serif;
+  --font-mono: "ABC Diatype Mono", "JetBrains Mono", ui-monospace, monospace;
   --radius: 4px;
   --shadow-card: 0 1px 2px rgb(11 31 58 / .05), 0 8px 24px rgb(11 31 58 / .06);
   --ease: cubic-bezier(.22,.61,.36,1);
 }
 
 /* Self-hosted faces (Fontshare, ITF Free Font Licence — permits web
-   embedding). Files live in public/fonts; woff2 only, every target
-   browser reads it. */
-@font-face {
-  font-family: "Clash Display";
-  src: url("/fonts/clash-display-600.woff2") format("woff2");
-  font-weight: 600; font-style: normal; font-display: swap;
-}
-@font-face {
-  font-family: "Clash Display";
-  src: url("/fonts/clash-display-700.woff2") format("woff2");
-  font-weight: 700; font-style: normal; font-display: swap;
-}
-@font-face {
-  font-family: "General Sans";
-  src: url("/fonts/general-sans-400.woff2") format("woff2");
-  font-weight: 400; font-style: normal; font-display: swap;
-}
-@font-face {
-  font-family: "General Sans";
-  src: url("/fonts/general-sans-500.woff2") format("woff2");
-  font-weight: 500; font-style: normal; font-display: swap;
-}
-@font-face {
-  font-family: "General Sans";
-  src: url("/fonts/general-sans-600.woff2") format("woff2");
-  font-weight: 600; font-style: normal; font-display: swap;
-}
-
+   embedding). Clash Display + General Sans retired 27 Aug with the
+   Space Grotesk / Inter / JetBrains Mono restack — their woff2 files
+   remain in public/fonts, unreferenced, in case the voice returns. */
 /* Derived (§2): hairlines on light and on ink */
 :root {
   --hairline: 1px solid rgb(90 102 117 / 0.16);

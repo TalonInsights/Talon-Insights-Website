@@ -7,13 +7,18 @@ interface Props {
 }
 const { title, description } = Astro.props;
 
-// §1: Instrument Sans + Martian Mono are the licensed-Diatype fallbacks.
-// Oswald + Fraunces exist solely for the Wrekin Forge direction comps, which
-// render their own type by design (§6/B5).
+// §1 revised 27 Aug (owner: "fix the fonts… deploy sitewide") — the site
+// speaks the high-tech tri-stack from the design database: Space Grotesk
+// (display), Inter (body/UI), JetBrains Mono (labels + data). Clash
+// Display / General Sans / Bricolage / Instrument retired from the site
+// voice (self-hosted woff2 files remain in public/fonts, unreferenced).
+// Martian Mono + Oswald + Fraunces still load ONLY for the Wrekin Forge
+// direction comps/pages, which render their own type by design (§6/B5).
 const fontsHref =
   "https://fonts.googleapis.com/css2" +
-  "?family=Instrument+Sans:ital,wght@0,400..700;1,400..700" +
-  "&family=Bricolage+Grotesque:opsz,wght@12..96,400..800" +
+  "?family=Space+Grotesk:wght@500;600;700" +
+  "&family=Inter:ital,wght@0,400..700;1,400..700" +
+  "&family=JetBrains+Mono:ital,wght@0,400..700;1,400..700" +
   "&family=Martian+Mono:wght@400..700" +
   "&family=Oswald:wght@500;600" +
   "&family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600" +

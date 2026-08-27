@@ -2,7 +2,7 @@
    THE ARCHITECTURAL — Direction C's interactable hero page (27 Aug).
    Exempt from the token system like the comps: this IS the demonstration.
    One viewport, no scrolling; container-query units against the portal.
-   Instrument Sans for display, Martian Mono for figures — both already
+   Inter for display, Martian Mono for figures — both already
    load with the site head. All ah- classes: this file is UNSCOPED global
    CSS, so the prefix is reserved (same rule as fh-/hh-/fgal-).
    ========================================================================== */
@@ -23,7 +23,7 @@
     var(--ah-sheet);
   background-size: 3.4cqw 3.4cqw, 3.4cqw 3.4cqw, auto;
   color: var(--ah-ink);
-  font-family: "Instrument Sans", system-ui, sans-serif;
+  font-family: "Inter", system-ui, sans-serif;
   overflow: hidden;
   user-select: none;
 }

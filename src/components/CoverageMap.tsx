@@ -143,7 +143,7 @@ export default function CoverageMap() {
     ) => {
       ctx.save();
       ctx.globalAlpha = alpha;
-      ctx.font = "11px 'Martian Mono', ui-monospace, monospace";
+      ctx.font = "12px 'JetBrains Mono', ui-monospace, monospace";
       try { (ctx as CanvasRenderingContext2D & { letterSpacing: string }).letterSpacing = "0.06em"; } catch { /* pre-letterSpacing engines */ }
       ctx.textBaseline = "middle";
       ctx.shadowColor = "rgba(11, 31, 58, 0.9)";
