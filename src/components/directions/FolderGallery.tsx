@@ -48,7 +48,8 @@ const DIRECTIONS = [
 
 const FOLDER_NAME = "WREKIN FORGE · THREE DIRECTIONS";
 const DRAG_HINT = "SELECT A DESIGN TO ENLARGE IT · DRAG ONE DOWN TO CLOSE — OR PRESS ESCAPE";
-const OPEN_SPREAD = 1.06; // fan offset per step, as a fraction of card width
+const OPEN_SPREAD = 1.42; // fan offset per step, as a fraction of card width
+const OPEN_SCALE = 1.32; // fanned cards grow a third (owner: too small to judge)
 const EXPAND_FRACTION = 0.75; // the enlarged design fills 3/4 of the screen
 
 // Closed pose — mirrored as nth-child CSS in directions.css.
@@ -262,15 +263,15 @@ export default function FolderGallery() {
                             x: openX(offset),
                             y: -60,
                             rotate: 0,
-                            scale: 1.02,
+                            scale: OPEN_SCALE,
                             // a returning card rides above the fading scrim
                             zIndex: returning === i ? 160 : 50,
                           }
                         : closedPose(offset, hoverFolder, i)
                     : undefined
                 }
-                whileHover={selectable ? { scale: 1.06, zIndex: 100 } : undefined}
-                whileDrag={selectable ? { scale: 1.1, rotate: 3, zIndex: 150 } : undefined}
+                whileHover={selectable ? { scale: OPEN_SCALE * 1.05, zIndex: 100 } : undefined}
+                whileDrag={selectable ? { scale: OPEN_SCALE * 1.08, rotate: 3, zIndex: 150 } : undefined}
               >
                 <direction.Comp />
               </motion.div>

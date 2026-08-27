@@ -54,6 +54,16 @@ export function DirectionFireComp() {
 }
 
 export function DirectionHeritage() {
+  // owner-supplied portrait of the finished heritage page (27 Aug), like
+  // the fire card; the coded comp survives below for history
+  return (
+    <div className="comp comp-fire-shot" aria-hidden="true">
+      <img src="/images/direction-heritage-card.webp" alt="" loading="lazy" decoding="async" />
+    </div>
+  );
+}
+
+export function DirectionHeritageComp() {
   return (
     <div className="comp comp-heritage" aria-hidden="true">
       <div className="her-inner">
@@ -80,6 +90,15 @@ export function DirectionHeritage() {
 }
 
 export function DirectionArchitectural() {
+  // owner-supplied portrait of the finished architectural page (27 Aug)
+  return (
+    <div className="comp comp-fire-shot" aria-hidden="true">
+      <img src="/images/direction-arch-card.webp" alt="" loading="lazy" decoding="async" />
+    </div>
+  );
+}
+
+export function DirectionArchitecturalComp() {
   return (
     <div className="comp comp-arch" aria-hidden="true">
       <div className="arch-bar">

@@ -236,7 +236,7 @@
   --g-card: clamp(250px, 30vw, 380px);
   position: relative;
   width: 100%;
-  height: calc(var(--g-card) * 0.625 + 210px); /* reserved — zero layout shift */
+  height: calc(var(--g-card) * 0.625 + 260px); /* reserved — zero layout shift; room for the larger fan */
   /* no perspective here: it would become the containing block for the
      fixed scrim/close overlay; the folder-front tilt carries its own
      transformPerspective instead */
