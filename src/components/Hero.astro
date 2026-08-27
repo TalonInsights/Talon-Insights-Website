@@ -357,7 +357,12 @@
     width: 150px; height: 96px;
     border-radius: 7px;
     transform-style: preserve-3d;
-    transform-origin: 50% 0%;
+    /* the hinge: BOTTOM edge, same edge the screen folds on — the import
+       left this origin implicit and a top-edge guess folds the deck away
+       from the viewer, landing it above the lid like a grille (the
+       owner's reference video exposed it). Bottom-origin lays the deck
+       flat toward the camera, beneath the screen, the pen's true pose. */
+    transform-origin: 50% 100%;
     transform: rotateX(-90deg);
     background: linear-gradient(45deg, rgb(0 0 0 / 0.24), rgb(0 0 0 / 0)), #cbcbcb;
   }
@@ -431,14 +436,15 @@
     25%  { transform: rotateX(-60deg) rotateY(150deg); }
     60%  { transform: rotateX(-20deg) rotateY(130deg); }
     65%  { transform: rotateX(-20deg) rotateY(120deg); }
+    /* the tail is the import's, VERBATIM: the pen's -20deg landing is its
+       face-on pose, screen up with the keyboard deck showing beneath —
+       flattening it further (tried at -6 and -12) hides the deck, turns
+       the machine into a bezelled tablet, and walks the pose through the
+       band where the deck's far key row peeks above the lid */
     80%  { transform: rotateX(-20deg) rotateY(375deg); }
-    85%  { transform: rotateX(-17deg) rotateY(357deg); }
-    90%  { transform: rotateX(-14deg) rotateY(360deg); }
-    /* settles no shallower than -12deg: between roughly -10 and -6 the
-       deck's far key row peeks above the lid as a serrated strip (caught
-       on the owner's recording) — this pose stays out of that band while
-       still reading as face-on */
-    100% { transform: rotateX(-12deg) rotateY(360deg); }
+    85%  { transform: rotateX(-20deg) rotateY(357deg); }
+    87%  { transform: rotateX(-20deg) rotateY(360deg); }
+    100% { transform: rotateX(-20deg) rotateY(360deg); }
   }
   @keyframes mb-lid {
     0%   { transform: rotateX(0deg); background-position: left bottom; }
