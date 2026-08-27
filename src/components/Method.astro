@@ -87,6 +87,12 @@ const steps = [
       <p>It’s not just research. It’s your <em>unfair advantage.</em></p>
     </div>
 
+  </div>
+
+  <!-- 27 Aug (owner): the built row uses the FULL page — its own band
+       outside the 1560 wrap, symmetric gutters both sides, copy pushed
+       to the left edge and the stat card to the right -->
+  <div class="m-built-band">
     <div class="m-built" data-rv>
       <div class="m-built-copy">
         <p class="t-micro m-built-eyebrow">BUILT DIFFERENTLY</p>
@@ -336,11 +342,18 @@ const steps = [
   .m-banner em { font-style: italic; color: var(--color-cobalt-lift); }
 
   /* ---------- built differently ---------- */
+  /* the band spans the FULL page with symmetric gutters — the same
+     max(24px, min(5vw, 120px)) both sides, so the copy holds the left
+     edge and the card the right at any width (27 Aug, owner) */
+  .m-built-band {
+    padding-inline: max(24px, min(5vw, 120px));
+  }
   .m-built {
     margin-top: 84px;
     display: grid;
     grid-template-columns: minmax(340px, 7fr) 5fr;
-    gap: clamp(28px, 4vw, 64px);
+    /* the wide gap is the point: the pair pull apart across the page */
+    gap: clamp(48px, 12vw, 300px);
     align-items: center;
   }
   .m-built-eyebrow { color: var(--color-cobalt-lift); letter-spacing: 0.4em; }
@@ -405,7 +418,7 @@ const steps = [
 
   /* ---------- responsive ---------- */
   @media (max-width: 860px) {
-    .m-built { grid-template-columns: 1fr; }
+    .m-built { grid-template-columns: 1fr; gap: 40px; }
     .m-left {
       min-height: 0;
       max-width: none;
