@@ -77,6 +77,13 @@ const movements = [
         </p>
       </div>
     </div>
+
+    <!-- the outcome, moved from the directions stage (27 Aug, owner:
+         "loud and proud") — the claim belongs under the delivered proof -->
+    <div class="case-outcome" data-rv>
+      <p class="outcome-rule" aria-hidden="true"><i>◆</i><span class="t-micro">OUTCOME</span><i>◆</i></p>
+      <p class="outcome-line">A site nobody else could&nbsp;have.</p>
+    </div>
   </div>
 </section>
 
@@ -217,8 +224,52 @@ const movements = [
     color: rgb(77 124 255 / 0.7);
   }
 
+  /* ---------- the outcome ---------- */
+  .case-outcome {
+    margin-top: 88px;
+    text-align: center;
+  }
+  .outcome-rule {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+  .outcome-rule .t-micro {
+    color: var(--color-cobalt-lift);
+    letter-spacing: 0.34em;
+  }
+  .outcome-rule i {
+    font-style: normal;
+    flex: 1;
+    position: relative;
+    height: 1px;
+    background: rgb(245 247 249 / 0.14);
+    color: rgb(77 124 255 / 0.8);
+    font-size: 0.5625rem;
+    line-height: 0;
+  }
+  /* diamond tips on the hairlines, drawn as the glyphs they are */
+  .outcome-rule i::before {
+    content: "◆";
+    position: absolute;
+    top: 0.5px;
+    translate: 0 -50%;
+  }
+  .outcome-rule i:first-child::before { left: 0; }
+  .outcome-rule i:last-child::before { right: 0; }
+  .outcome-line {
+    margin-top: 26px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(2rem, 3.4vw, 4rem);
+    line-height: 1.08;
+    letter-spacing: -0.015em;
+    color: var(--color-sheet);
+  }
+
   @media (max-width: 899.98px) {
     .case { padding-block: 96px; }
+    .case-outcome { margin-top: 64px; }
     .case-grid { grid-template-columns: 1fr; gap: 48px; }
     .movements { gap: 30px; }
     .movement { padding-left: 44px; }

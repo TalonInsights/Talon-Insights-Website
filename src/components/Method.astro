@@ -141,21 +141,28 @@ const steps = [
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    gap: 48px;
+    gap: 36px;
     max-width: min(46vw, 900px);
     margin-left: max(24px, calc(50% - 1180px), min(5vw, 120px));
     /* the owner's brief: text + shapes together run the length of the
        image. The scene renders at min(58vw, 1400px) wide with a fixed
        1330:1182 aspect, so its height is that width × 1182/1330 — the
        column reserves exactly it and space-between spreads copy and grid
-       across it */
-    min-height: calc(min(58vw, 1400px) * 0.8887);
+       across it. MINUS the section's own 110px top padding: the scene
+       pins to the section's very top edge but this column starts below
+       the padding — without the subtraction the grid ran 110px past the
+       scene's foot (the owner's screenshot). Change padding-block and
+       this changes with it. */
+    min-height: calc(min(58vw, 1400px) * 0.8887 - 110px);
   }
 
   .m-h {
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: clamp(2.5rem, 3.15vw, 5.25rem);
+    /* sized so copy + the 2×2 fit INSIDE the scene's height (owner: all
+       four boxes visible beside the image) — the old 3.15vw/5.25rem scale
+       pushed the second row past the scene's foot */
+    font-size: clamp(2.25rem, 2.6vw, 4rem);
     line-height: 1.05;
     letter-spacing: -0.02em;
     color: var(--color-sheet);
@@ -165,18 +172,18 @@ const steps = [
     color: var(--color-cobalt-lift);
   }
   .m-lead {
-    margin-top: 22px;
+    margin-top: 18px;
     font-family: var(--font-display);
     font-weight: 500;
-    font-size: clamp(1.25rem, 1.4vw, 2.25rem);
+    font-size: clamp(1.125rem, 1.2vw, 1.75rem);
     line-height: 1.3;
     color: rgb(245 247 249 / 0.92);
     max-width: 22em;
   }
   .m-lead em { font-style: italic; color: var(--color-cobalt-lift); }
   .m-sub {
-    margin-top: 20px;
-    font-size: clamp(1rem, 0.92vw, 1.5rem);
+    margin-top: 16px;
+    font-size: clamp(0.9375rem, 0.85vw, 1.25rem);
     line-height: 1.65;
     color: rgb(245 247 249 / 0.68);
     max-width: 34em;
@@ -236,10 +243,10 @@ const steps = [
   .m-steps {
     list-style: none;
     padding: 0;
-    margin: 24px 0 0;
+    margin: 18px 0 0;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 18px;
+    gap: 16px;
     position: relative;
   }
   /* the glints in the joints — only between row neighbours now the grid
@@ -278,29 +285,29 @@ const steps = [
       radial-gradient(80% 60% at 50% 0%, rgb(29 78 216 / 0.1), transparent 75%),
       var(--color-ink-deep);
     height: 100%;
-    padding: 26px 34px 30px;
+    padding: 20px 26px 22px;
     text-align: center;
   }
   .m-hex-n { color: var(--color-cobalt-lift); }
   .m-hex-icon {
-    margin: 14px auto 0;
-    width: 52px; height: 52px;
+    margin: 10px auto 0;
+    width: 44px; height: 44px;
     display: grid; place-items: center;
     border: 1px solid rgb(77 124 255 / 0.5);
     border-radius: 50%;
     color: var(--color-cobalt-lift);
   }
-  .m-hex-icon svg { width: 26px; height: 26px; }
+  .m-hex-icon svg { width: 22px; height: 22px; }
   .m-hex-title {
-    margin-top: 14px;
+    margin-top: 10px;
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: 1.1875rem;
+    font-size: 1.0625rem;
     color: var(--color-sheet);
   }
   .m-hex-body {
-    margin-top: 10px;
-    font-size: 0.875rem;
+    margin-top: 8px;
+    font-size: 0.8125rem;
     line-height: 1.55;
     color: rgb(245 247 249 / 0.62);
   }
