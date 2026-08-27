@@ -67,7 +67,7 @@ const closedPose = (offset: number, hover: boolean, index: number) => ({
   zIndex: 10 + index,
 });
 
-type ExpandTarget = { x: number; y: number; scale: number };
+type ExpandTarget = { x: number; y: number; scale: number; pw: number; ph: number };
 
 export default function FolderGallery() {
   const [mounted, setMounted] = useState(false);
@@ -77,7 +77,7 @@ export default function FolderGallery() {
   const [expanded, setExpanded] = useState<number | null>(null);
   const [returning, setReturning] = useState<number | null>(null);
   const [portal, setPortal] = useState(false);
-  const [target, setTarget] = useState<ExpandTarget>({ x: 0, y: 0, scale: 1 });
+  const [target, setTarget] = useState<ExpandTarget>({ x: 0, y: 0, scale: 1, pw: 0, ph: 0 });
 
   const rootRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -139,11 +139,22 @@ export default function FolderGallery() {
     const baseCy = rect.bottom - 56 - (width * 0.625) / 2;
     const vw = window.innerWidth;
     const vh = window.innerHeight;
-    const targetW = Math.min(vw * EXPAND_FRACTION, vh * EXPAND_FRACTION * 1.6);
+    /* Phones (27 Aug, owner: mobile compatibility): the 16:10 desktop
+       portal is a postage stamp in portrait — the portal instead takes
+       nearly the whole screen as a PORTRAIT sheet, and the pages' own
+       mobile styles reflow inside it. The card still springs to the
+       width-matched scale; the portal fades in over it with its own
+       dimensions. */
+    const mobile = vw < 768;
+    const targetW = mobile
+      ? vw * 0.94
+      : Math.min(vw * EXPAND_FRACTION, vh * EXPAND_FRACTION * 1.6);
     setTarget({
       x: vw / 2 - baseCx,
       y: vh / 2 - baseCy,
       scale: targetW / width,
+      pw: targetW,
+      ph: mobile ? Math.min(vh * 0.82, 720) : targetW * 0.625,
     });
     setReturning(null);
     setPortal(false);
@@ -354,7 +365,7 @@ export default function FolderGallery() {
                   <motion.div
                     key="portal"
                     className={`fgal-portal fgal-portal--${expanded}`}
-                    style={{ width: cardW * target.scale, height: cardW * target.scale * 0.625 }}
+                    style={{ width: target.pw, height: target.ph }}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}

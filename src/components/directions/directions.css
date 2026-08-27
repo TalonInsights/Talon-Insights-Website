@@ -393,8 +393,8 @@
   top: 24px;
   right: 24px;
   z-index: 310;
-  width: 40px;
-  height: 40px;
+  width: 44px; /* 44px touch minimum */
+  height: 44px;
   border-radius: 50%;
   border: 1px solid rgb(245 247 249 / 0.3);
   background: transparent;
@@ -426,4 +426,10 @@
   border: 1px solid rgb(245 247 249 / 0.14);
   border-radius: 2px;
   overflow: hidden;
+}
+
+/* mobile: the close control hugs the corner above the near-fullscreen
+   portal (27 Aug) */
+@media (max-width: 767.98px) {
+  .fgal-close { top: 10px; right: 10px; }
 }
