@@ -113,12 +113,21 @@ export default function CoverageMap() {
       layer.width = Math.round(cssWidth * dpr);
       layer.height = Math.round(mapData.h * scale * dpr);
       const lctx = layer.getContext("2d")!;
-      lctx.setTransform(dpr * scale, 0, 0, dpr * scale, 0, 0);
+      /* Dots draw in DEVICE pixels, every centre snapped to the same
+         mid-pixel phase (27 Aug, owner: "no visible square"). The hex
+         pitch lands at a fractional device-pixel interval at most widths
+         and DPRs, so unsnapped centres drift across the pixel grid — dots
+         cycle crisp→smeared every dozen columns and the interference
+         reads as large bright/dim rectangles over the field. Same phase
+         for every dot = identical antialiasing = one even field. */
+      const k = dpr * scale;
+      const r = Math.max(1.25, 1.1 * k);
+      lctx.setTransform(1, 0, 0, 1, 0, 0);
       lctx.fillStyle = COBALT_LIFT;
+      lctx.globalAlpha = 0.7;
       dots.forEach(([x, y]) => {
-        lctx.globalAlpha = 0.7;
         lctx.beginPath();
-        lctx.arc(x, y, 1.1, 0, Math.PI * 2);
+        lctx.arc(Math.round(x * k) + 0.5, Math.round(y * k) + 0.5, r, 0, Math.PI * 2);
         lctx.fill();
       });
       fieldLayer = layer;
