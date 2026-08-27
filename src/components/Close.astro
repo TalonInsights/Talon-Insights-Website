@@ -25,6 +25,17 @@ import CoverageMap from "./CoverageMap";
           <BookingForm client:idle />
         </div>
 
+        <!-- 28 Aug (owner): the booking page fleshes out — what happens
+             after the button, in the site's numbered language -->
+        <ol class="next-steps" data-rv>
+          <li><b>01</b><span>You send this — or just call.</span></li>
+          <li><b>02</b><span>I ring back within one working day.</span></li>
+          <li><b>03</b><span>We book the visit — free within an hour of Telford.</span></li>
+          <li><b>04</b><span>You see real directions before any code is written.</span></li>
+        </ol>
+
+        <p class="t-mono close-trust" data-rv>FIXED PRICE<i>◆</i>WRITTEN SCOPE<i>◆</i>YOU OWN EVERYTHING</p>
+
         <p class="close-call">
           Or call <a class="tel" href="tel:+447742082423">07742 082423</a>
           <span class="t-micro call-note">REPLY WITHIN ONE WORKING DAY</span>
@@ -110,6 +121,26 @@ import CoverageMap from "./CoverageMap";
     transition: border-color 180ms var(--ease);
   }
   .close-form :global(input:hover) { border-color: rgb(245 247 249 / 0.3); }
+  /* the full field set (28 Aug): selects and the textarea wear the same
+     skin as the inputs; color-scheme keeps native popups dark */
+  .close-form { color-scheme: dark; }
+  .close-form :global(select),
+  .close-form :global(textarea) {
+    background: rgb(245 247 249 / 0.06);
+    border: var(--hairline-dark);
+    border-radius: 2px;
+    padding: 12px 14px;
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    color: var(--color-sheet);
+    transition: border-color 180ms var(--ease);
+  }
+  .close-form :global(select:hover),
+  .close-form :global(textarea:hover) { border-color: rgb(245 247 249 / 0.3); }
+  .close-form :global(textarea) { resize: vertical; min-height: 120px; }
+  .close-form :global(input::placeholder),
+  .close-form :global(textarea::placeholder) { color: rgb(245 247 249 / 0.35); }
+  .close-form :global(.bfield-full) { grid-column: 1 / -1; }
   .close-form :global(input[aria-invalid="true"]) { border-color: var(--color-breach); }
   .close-form :global(.berr) {
     margin-top: 8px;
@@ -126,6 +157,46 @@ import CoverageMap from "./CoverageMap";
     color: var(--color-amber); /* success state — not part of the at-rest amber budget */
     text-align: left;
     padding-block: 32px;
+  }
+
+  /* what happens next: the site's numbered voice, compact */
+  .next-steps {
+    list-style: none;
+    margin: 36px 0 0;
+    padding: 24px 0 0;
+    border-top: 1px solid rgb(245 247 249 / 0.12);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 28px;
+    max-width: 640px;
+  }
+  .next-steps li {
+    display: flex;
+    gap: 12px;
+    align-items: baseline;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: rgb(245 247 249 / 0.75);
+  }
+  .next-steps b {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.9375rem;
+    color: var(--color-cobalt-lift);
+  }
+
+  .close-trust {
+    margin-top: 24px;
+    font-size: 0.9375rem;
+    letter-spacing: 0.12em;
+    color: rgb(245 247 249 / 0.6);
+  }
+  .close-trust i {
+    font-style: normal;
+    margin-inline: 10px;
+    font-size: 0.625rem;
+    vertical-align: 1px;
+    color: rgb(77 124 255 / 0.7);
   }
 
   .close-call { margin-top: 36px; display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 16px; }
@@ -184,5 +255,6 @@ import CoverageMap from "./CoverageMap";
   }
   @media (max-width: 639.98px) {
     .close-form :global(.bform-grid) { grid-template-columns: 1fr; }
+    .next-steps { grid-template-columns: 1fr; }
   }
 </style>

@@ -153,6 +153,43 @@ export default function BookingForm() {
           />
           {errors.email && <p className="berr" id="bf-email-err">{errors.email}</p>}
         </div>
+
+        {/* The full enquiry set (28 Aug, owner): what the job is, when,
+            where, and the story — all optional, all delivered by Formspree
+            under their field names. */}
+        <div className="bfield">
+          <label className="bloc" htmlFor="bf-project">What do you need</label>
+          <select id="bf-project" name="project" defaultValue="">
+            <option value="">Choose…</option>
+            <option>A website</option>
+            <option>Software — an internal tool</option>
+            <option>Website and software</option>
+            <option>Not sure yet</option>
+          </select>
+        </div>
+        <div className="bfield">
+          <label className="bloc" htmlFor="bf-timescale">Rough timescale</label>
+          <select id="bf-timescale" name="timescale" defaultValue="">
+            <option value="">Choose…</option>
+            <option>As soon as possible</option>
+            <option>In the next three months</option>
+            <option>Three to six months</option>
+            <option>Just getting a feel for it</option>
+          </select>
+        </div>
+        <div className="bfield bfield-full">
+          <label className="bloc" htmlFor="bf-based">Where you’re based</label>
+          <input id="bf-based" name="based" type="text" autoComplete="address-level2" placeholder="Town or postcode — the map shows the free-visit reach" />
+        </div>
+        <div className="bfield bfield-full">
+          <label className="bloc" htmlFor="bf-message">Tell me about it</label>
+          <textarea
+            id="bf-message"
+            name="message"
+            rows={5}
+            placeholder="What you do, what the website or tool needs to do, and anything already in place."
+          />
+        </div>
       </div>
 
       <input type="hidden" name="_subject" value="New enquiry from taloninsights.co.uk" />
