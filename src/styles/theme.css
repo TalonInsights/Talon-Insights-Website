@@ -86,7 +86,7 @@ body {
   line-height: 1.15;
 }
 .t-h3 { font-family: var(--font-display); font-size: 1.375rem; font-weight: 600; line-height: 1.3; }
-.t-body { font-size: 1.0625rem; font-weight: 400; line-height: 1.65; max-width: 34em; }
+.t-body { font-size: 1.1875rem; /* body tier up 27 Aug (owner) */ font-weight: 400; line-height: 1.65; max-width: 34em; }
 .t-mono {
   font-family: var(--font-mono);
   font-size: 0.875rem; /* stepped up 27 Aug (owner: small text everywhere) */
@@ -107,8 +107,16 @@ body {
 /* Space above any heading ≈ 2× the space below it (§3). Blocks set their own
    figures on the scale; these are the safety defaults. */
 .t-h2 { margin-bottom: 16px; }
-.eyebrow { display: block; color: var(--color-graphite); margin-bottom: 16px; }
-.lede { color: var(--color-graphite); font-size: 1.0625rem; max-width: 36em; }
+.eyebrow {
+  display: block;
+  /* eyebrows are headings, not whispers (owner, twice) — they leave the
+     micro tier for a 16px voice of their own */
+  font-size: 1rem;
+  letter-spacing: 0.28em;
+  color: var(--color-graphite);
+  margin-bottom: 16px;
+}
+.lede { color: var(--color-graphite); font-size: 1.1875rem; max-width: 36em; }
 
 /* ---------- grounds ---------- */
 .g-sheet { background: var(--color-sheet); }
@@ -120,7 +128,8 @@ body {
 .g-ink { color: var(--on-ink-body); }
 .g-ink p, .g-ink li { font-weight: 350; }
 .g-ink h1, .g-ink h2, .g-ink h3 { color: var(--color-sheet); }
-.g-ink .eyebrow, .g-ink .lede { color: var(--on-ink-body); }
+.g-ink .eyebrow { color: rgb(245 247 249 / 0.78); }
+.g-ink .lede { color: var(--on-ink-body); }
 
 /* ---------- layout (§4) ---------- */
 .wrap { max-width: 1180px; margin-inline: auto; padding-inline: 24px; }
