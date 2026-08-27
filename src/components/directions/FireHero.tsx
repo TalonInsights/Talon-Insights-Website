@@ -362,8 +362,36 @@ function FireLine({ stokedRef }: { stokedRef: React.MutableRefObject<boolean> })
   return <div ref={mountRef} className="fh-fire" aria-hidden="true" />;
 }
 
+/* The hero's typography is its own: Big Shoulders for the display (civic
+   signage stock — engineered rather than merely condensed, with strokes wide
+   enough to carry the steel gradient), Archivo for running text and controls
+   (a grotesque whose width echoes the logo's tracked wordmark), and Chivo
+   Mono for the technical labels, which should read like drawing annotations.
+   The stylesheet is fetched when this page mounts rather than declared in
+   the site head, so three families the homepage never renders stay out of
+   its critical path — the same rule three.js follows. */
+const FONT_ID = "fh-fonts";
+const FONT_HREF =
+  "https://fonts.googleapis.com/css2" +
+  "?family=Big+Shoulders+Display:wght@600;700;800" +
+  "&family=Archivo:wght@400;500;600;700" +
+  "&family=Chivo+Mono:wght@400;500" +
+  "&display=swap";
+
+function useHeroFonts() {
+  useEffect(() => {
+    if (document.getElementById(FONT_ID)) return;
+    const link = document.createElement("link");
+    link.id = FONT_ID;
+    link.rel = "stylesheet";
+    link.href = FONT_HREF;
+    document.head.appendChild(link);
+  }, []);
+}
+
 export default function FireHero() {
   const stokedRef = useRef(false);
+  useHeroFonts();
 
   return (
     <div className="fh" role="document" aria-label="Wrekin Forge demonstration hero page — Direction A, The Fire">
@@ -375,7 +403,13 @@ export default function FireHero() {
       </div>
 
       <div className="fh-nav">
-        <span className="fh-word">Wrekin Forge</span>
+        <img
+          className="fh-logo"
+          src="/images/wrekin-forge-lockup.webp"
+          width={1406}
+          height={144}
+          alt="Wrekin Forge"
+        />
         <nav className="fh-links" aria-label="Wrekin Forge demonstration">
           <button type="button">Gates</button>
           <button type="button">Railings</button>

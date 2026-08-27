@@ -2,8 +2,9 @@
    THE FIRE — the interactable hero page behind Direction A (27 Aug).
    Exempt from the site token system like the comps: this IS the
    demonstration. One viewport, no scrolling; everything scales with the
-   portal frame via container-query units. Oswald for display, Martian
-   Mono for labels — both already loaded for the comps.
+   portal frame via container-query units. Its typography is its own —
+   Big Shoulders (display), Archivo (text and controls), Chivo Mono
+   (technical labels) — loaded by FireHero.tsx when the page mounts.
    ========================================================================== */
 
 .fh {
@@ -21,7 +22,7 @@
      bloom halo turns to grey smoke. Change one and you must change both. */
   background: var(--fh-ground);
   color: #f4ede4;
-  font-family: "Oswald", "Arial Narrow", sans-serif;
+  font-family: "Archivo", "Helvetica Neue", system-ui, sans-serif;
   overflow: hidden;
   user-select: none;
 
@@ -42,7 +43,7 @@
   padding: 1.1cqw 2.2cqw;
   background: #0c0a08;
   border-bottom: 1px solid rgb(244 237 228 / 0.08);
-  font-family: "Martian Mono", ui-monospace, monospace;
+  font-family: "Chivo Mono", ui-monospace, monospace;
   font-size: 1.25cqw;
   letter-spacing: 0.08em;
   color: rgb(244 237 228 / 0.5);
@@ -64,11 +65,14 @@
   gap: 3cqw;
   padding: 2cqw 4cqw;
 }
-.fh-word {
-  font-weight: 600;
-  font-size: 2.1cqw;
-  letter-spacing: 0.26em;
-  text-transform: uppercase;
+/* The supplied logo, recut to light steel on transparent and composed as
+   a horizontal lockup for the nav strip (scripts/build-wrekin-logo.py).
+   Height drives it; the width follows the artwork's own 9.76:1. */
+.fh-logo {
+  height: 3cqw;
+  width: auto;
+  display: block;
+  flex: none;
 }
 .fh-links { margin-left: auto; display: flex; gap: 2.6cqw; }
 .fh-links button {
@@ -76,7 +80,7 @@
   border: 0;
   padding: 0.4cqw 0;
   font: inherit;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 1.6cqw;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -116,7 +120,7 @@
   min-height: 0;
 }
 .fh-kicker {
-  font-family: "Martian Mono", ui-monospace, monospace;
+  font-family: "Chivo Mono", ui-monospace, monospace;
   font-size: 1.35cqw;
   letter-spacing: 0.3em;
   text-transform: uppercase;
@@ -126,11 +130,13 @@
   position: relative;
   z-index: 2; /* the fire arc rises behind and beside the headline */
   margin-top: 1.2cqw;
-  font-weight: 600;
-  /* sized so the headline renders at the width the frame was composed
-     around, keeping the arc's tips either side of it — and staying inside
-     the frame in the fallback face too */
-  font-size: 6.7cqw;
+  font-family: "Big Shoulders Display", "Oswald", "Arial Narrow", sans-serif;
+  font-weight: 800;
+  /* sized so the headline fills ~86% of the frame, which is the measure
+     the arc's tips were composed around. Retuned for Big Shoulders, which
+     sets narrower than Oswald did at the same size; the fallbacks are
+     narrower still, so they can only under-fill, never overflow. */
+  font-size: 7.95cqw;
   line-height: 1;
   letter-spacing: 0.01em;
   text-transform: uppercase;
@@ -198,7 +204,7 @@
   z-index: 2;
   margin-top: 0.6cqw;
   max-width: 58cqw;
-  font-family: "Instrument Sans", system-ui, sans-serif;
+  font-family: "Archivo", "Helvetica Neue", system-ui, sans-serif;
   font-size: 1.75cqw;
   line-height: 1.6;
   color: rgb(244 237 228 / 0.7);
@@ -261,7 +267,7 @@
   display: flex;
   gap: 3.4cqw;
   margin-top: 2.6cqw;
-  font-family: "Martian Mono", ui-monospace, monospace;
+  font-family: "Chivo Mono", ui-monospace, monospace;
   font-size: 1.2cqw;
   letter-spacing: 0.22em;
   color: rgb(244 237 228 / 0.4);
@@ -270,7 +276,7 @@
 .fh-foot {
   padding: 1.4cqw 4cqw;
   border-top: 1px solid rgb(244 237 228 / 0.08);
-  font-family: "Martian Mono", ui-monospace, monospace;
+  font-family: "Chivo Mono", ui-monospace, monospace;
   font-size: 1.05cqw;
   letter-spacing: 0.14em;
   text-align: center;
