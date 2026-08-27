@@ -257,10 +257,13 @@
     opacity: 0;
     /* the fixed point of the expansion: solved so that at the starting
        scale the capture's box coincides with the laptop display's landed
-       rect (O = (D − s·C)/(1 − s), rects measured live at 1912×1080
-       for the centred pose: display 415×217 @ (1041,470), capture
-       945×509 @ (896,287) - s = 415/945). */
-    transform-origin: 27.4% 63.9%;
+       rect — solved numerically against live rects at 1912×1080 WITH the
+       keystoned start pose applied (the analytic flat-box solve can't see
+       the perspective): start bbox lands on the display within 0.4px in
+       x/y and 0.1px in width; the ~10px height slack tucks the panel
+       inside the screen's glass. Re-run the browser iteration if the
+       hero's geometry or type changes. */
+    transform-origin: 27.43% 61.14%;
     animation: shot-arrive 1500ms var(--ease) 4.15s forwards;
   }
 
@@ -280,8 +283,11 @@
     scale: 3.1;
     pointer-events: none;
     /* a full beat of rest with the screen lit before the swell — the
-       owner wanted the switch-on to land before anything else moves */
-    animation: mb-exit 1100ms var(--ease) 4.15s forwards;
+       owner wanted the switch-on to land before anything else moves.
+       And the swell waits 150ms past the panel's start (27 Aug): the
+       panel must be visible ON the screen's exact rect before the
+       laptop begins to move off it, or the handoff reads misaligned */
+    animation: mb-exit 1100ms var(--ease) 4.3s forwards;
   }
   .mb-frame {
     position: absolute;
@@ -448,13 +454,18 @@
     0%   { opacity: 1; scale: 3.1; }
     100% { opacity: 0; scale: 4.1; }
   }
-  /* the panel starts at the display's own size and position (scale .27
-     about the solved origin) and expands to rest, fading up fast so the
-     growth is what reads, not the fade */
+  /* the panel starts at the display's own size and position (scale .439
+     about the solved origin) AND on the display's own plane: the laptop
+     screen is a rotateX(−20°) surface under the frame's 500px perspective
+     (×3.1 theatre scale ≈ 1550px in screen space), so a flat start never
+     sat exactly on the photo — the panel now begins keystoned to match
+     and unfolds to flat as it grows (27 Aug, owner: start exactly where
+     the mac screen is). Opacity front-loads harder so the panel is fully
+     there before the laptop's swell moves the screen away. */
   @keyframes shot-arrive {
-    0%   { opacity: 0; scale: 0.439; }
-    15%  { opacity: 1; }
-    100% { opacity: 1; scale: 1; }
+    0%   { opacity: 0; transform: perspective(1550px) rotateX(-20deg) scale(0.4265); }
+    8%   { opacity: 1; }
+    100% { opacity: 1; transform: none; }
   }
 
   /* No theatre for reduced motion: the panel is simply there. */
