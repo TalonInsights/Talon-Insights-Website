@@ -188,8 +188,9 @@ const gateShader = {
     }
   `,
 };
-const FIRE_BASE = new THREE.Color(201 / 255, 158 / 255, 72 / 255).convertSRGBToLinear();
-const FIRE_BORDER = new THREE.Color(74 / 255, 30 / 255, 0).convertSRGBToLinear();
+const FIRE_BASE = new THREE.Color(226 / 255, 98 / 255, 32 / 255).convertSRGBToLinear();
+const FIRE_BORDER = new THREE.Color(110 / 255, 40 / 255, 6 / 255).convertSRGBToLinear();
+const EMBER = new THREE.Color(255 / 255, 130 / 255, 45 / 255).convertSRGBToLinear();
 
 function FireLine({ stokedRef }: { stokedRef: React.MutableRefObject<boolean> }) {
   const mountRef = useRef<HTMLDivElement | null>(null);
@@ -220,6 +221,73 @@ function FireLine({ stokedRef }: { stokedRef: React.MutableRefObject<boolean> })
     composer.addPass(bloomPass);
     const gatePass = new ShaderPass(gateShader);
     composer.addPass(gatePass);
+
+    /* Embers: orange motes born on the arc, rising up the screen with a
+       little drift, fading as they climb. Rendered as their own pass after
+       the gate so the flame-field mask can't erase them, and clocked from
+       the fire's own time so stoking speeds them up too. */
+    const COUNT = 80;
+    const seeds = new Float32Array(COUNT);
+    const phases = new Float32Array(COUNT);
+    const speeds = new Float32Array(COUNT);
+    const sizes = new Float32Array(COUNT);
+    for (let i = 0; i < COUNT; i++) {
+      seeds[i] = 0.07 + Math.random() * 0.86;
+      phases[i] = Math.random();
+      speeds[i] = 0.7 + Math.random() * 0.9;
+      sizes[i] = 2.2 + Math.random() * 3.2;
+    }
+    const pGeometry = new THREE.BufferGeometry();
+    pGeometry.setAttribute("position", new THREE.BufferAttribute(new Float32Array(COUNT * 3), 3));
+    pGeometry.setAttribute("aSeed", new THREE.BufferAttribute(seeds, 1));
+    pGeometry.setAttribute("aPhase", new THREE.BufferAttribute(phases, 1));
+    pGeometry.setAttribute("aSpeed", new THREE.BufferAttribute(speeds, 1));
+    pGeometry.setAttribute("aSize", new THREE.BufferAttribute(sizes, 1));
+    const pUniforms = {
+      time: { value: 0.0 }, // synced from the fire's clock every tick
+      uPixelRatio: { value: renderer.getPixelRatio() },
+      color: { value: new THREE.Vector3(EMBER.r, EMBER.g, EMBER.b) },
+    };
+    const pMaterial = new THREE.ShaderMaterial({
+      uniforms: pUniforms,
+      transparent: true,
+      depthWrite: false,
+      depthTest: false, // the composer buffer's depth would cull them
+      blending: THREE.AdditiveBlending,
+      vertexShader: `
+        uniform float time;
+        uniform float uPixelRatio;
+        attribute float aSeed;
+        attribute float aPhase;
+        attribute float aSpeed;
+        attribute float aSize;
+        varying float vT;
+        void main() {
+          float t = fract(time * 0.00025 * aSpeed + aPhase);
+          float ux = aSeed + sin(time * 0.002 + aPhase * 40.0) * 0.012;
+          // the rope's clip-space height at this x (same curve as the fire)
+          float cy = 2.0 * (0.12 + 2.0 * (ux - 0.5) * (ux - 0.5)) - 1.0;
+          vT = t;
+          gl_Position = vec4(ux * 2.0 - 1.0, cy + t * 1.7, 0.0, 1.0);
+          gl_PointSize = aSize * uPixelRatio * (1.0 - t * 0.6);
+        }
+      `,
+      fragmentShader: `
+        uniform vec3 color;
+        varying float vT;
+        void main() {
+          vec2 d = gl_PointCoord - vec2(0.5);
+          float dot = smoothstep(0.5, 0.15, length(d));
+          float fade = pow(1.0 - vT, 1.5) * smoothstep(0.0, 0.06, vT);
+          gl_FragColor = vec4(color, dot * fade);
+        }
+      `,
+    });
+    const pScene = new THREE.Scene();
+    pScene.add(new THREE.Points(pGeometry, pMaterial));
+    const particlePass = new RenderPass(pScene, camera);
+    particlePass.clear = false; // draw over the gated fire
+    if (!reduce) composer.addPass(particlePass);
     // Without this, the composer displays linear values as sRGB: the whole
     // canvas washes brighter than the page (a visible khaki rectangle) and
     // the golden base reads cream. This converts the output properly, so
@@ -267,6 +335,7 @@ function FireLine({ stokedRef }: { stokedRef: React.MutableRefObject<boolean> })
         last = now;
         uniforms.time.value = elapsed * 1000.0;
         gatePass.uniforms.time.value = uniforms.time.value;
+        pUniforms.time.value = uniforms.time.value;
       }
       composer.render();
       if (!reduce) raf = requestAnimationFrame(tick);
@@ -279,6 +348,8 @@ function FireLine({ stokedRef }: { stokedRef: React.MutableRefObject<boolean> })
       ro.disconnect();
       geometry.dispose();
       material.dispose();
+      pGeometry.dispose();
+      pMaterial.dispose();
       composer.dispose();
       renderer.dispose();
       scene.clear();
