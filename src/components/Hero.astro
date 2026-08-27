@@ -221,7 +221,7 @@
        screen's position into its resting pose */
     opacity: 0;
     transform-origin: 62% 58%;
-    animation: shot-arrive 1400ms var(--ease) 4s forwards;
+    animation: shot-arrive 1400ms var(--ease) 4.4s forwards;
     /* as wide as the screen allows while holding a 660px reserve for the
        copy column — on a large monitor this is roughly double the grid
        column it replaces */
@@ -283,7 +283,7 @@
     pointer-events: none;
     /* a full beat of rest with the screen lit before the swell — the
        owner wanted the switch-on to land before anything else moves */
-    animation: mb-exit 1250ms var(--ease) 3.75s forwards;
+    animation: mb-exit 1250ms var(--ease) 4.15s forwards;
   }
   .mb-frame {
     position: absolute;
@@ -342,7 +342,9 @@
     object-fit: cover;
     object-position: top;
     opacity: 0;
-    animation: mb-content 600ms ease-out 2.1s forwards;
+    /* the screen waits for the turn to fully settle (2.6s), THEN switches
+       on — the hold follows the light, not leftover rotation */
+    animation: mb-content 500ms ease-out 2.65s forwards;
   }
   .mb-glare {
     position: absolute;
