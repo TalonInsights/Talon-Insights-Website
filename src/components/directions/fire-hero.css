@@ -125,14 +125,10 @@
 .fh-fire {
   position: absolute;
   inset: 0;
-  /* the bloom halo must never meet a canvas edge — fade it out first, so
-     the glow melts into the page instead of cutting a rectangle */
-  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 30%, #000 100%),
-    linear-gradient(90deg, transparent 0%, #000 5%, #000 95%, transparent 100%);
-  -webkit-mask-composite: source-in;
-  mask-image: linear-gradient(180deg, transparent 0%, #000 30%, #000 100%),
-    linear-gradient(90deg, transparent 0%, #000 5%, #000 95%, transparent 100%);
-  mask-composite: intersect;
+  /* gentle top fade only — the shader fades the fire's ends itself, so
+     the halo decays naturally before any edge */
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 22%);
+  mask-image: linear-gradient(180deg, transparent 0%, #000 22%);
 }
 .fh-fire canvas { display: block; width: 100%; height: 100%; }
 

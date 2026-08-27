@@ -100,6 +100,9 @@ const frag = `
     vec3 rim = rgbcol(color0.r, color0.g, color0.b);
     vec3 col = aFront > 0.0 ? rim : body;
     float alpha = max(aBack, aFront > 0.0 ? 1.0 : 0.0);
+    // the fire dies away before the frame's ends — faded here, pre-bloom,
+    // so the halo decays with it instead of being clipped by a mask
+    alpha *= smoothstep(0.0, 0.07, x) * smoothstep(1.0, 0.93, x);
     if (alpha <= 0.0) { discard; }
     gl_FragColor = vec4(col, alpha);
   }
@@ -134,9 +137,9 @@ function FireLine({ stokedRef }: { stokedRef: React.MutableRefObject<boolean> })
     const composer = new EffectComposer(renderer);
     composer.addPass(new RenderPass(scene, camera));
     const bloomPass = new UnrealBloomPass(new THREE.Vector2(width, height), 1.5, 0.4, 0.85);
-    bloomPass.threshold = 0.15;
-    bloomPass.strength = 1.2;
-    bloomPass.radius = 0.6;
+    bloomPass.threshold = 0.1;
+    bloomPass.strength = 1.0;
+    bloomPass.radius = 0.32; /* tight: the glow hugs the rope, no slab */
     composer.addPass(bloomPass);
     // Without this, the composer displays linear values as sRGB: the whole
     // canvas washes brighter than the page (a visible khaki rectangle) and
@@ -177,7 +180,7 @@ function FireLine({ stokedRef }: { stokedRef: React.MutableRefObject<boolean> })
       if (!reduce) {
         // hovering the commission button stokes the seam
         const targetSpeed = stokedRef.current ? 2.2 : 1;
-        const targetBloom = stokedRef.current ? 1.9 : 1.2;
+        const targetBloom = stokedRef.current ? 1.6 : 1.0;
         speed += (targetSpeed - speed) * 0.06;
         bloomPass.strength += (targetBloom - bloomPass.strength) * 0.06;
         const now = (performance.now() - start) / 1000;
