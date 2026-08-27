@@ -13,7 +13,12 @@ import { useRef, useState } from "react";
 
    SLOT (§6/B11): paste the Formspree endpoint below to connect the form,
    e.g. "https://formspree.io/f/xxxxxxxx". The CSP already allows it. */
-const ENDPOINT = "";
+// The old site's working Formspree connection, restored 28 Aug (owner) —
+// endpoint xrpzjjzg, delivering to taloninsights@gmail.com. The CSP's
+// connect-src already admits formspree.io (that groundwork survived the
+// rebuild), and the _subject below identifies the source the way the old
+// contact form did.
+const ENDPOINT = "https://formspree.io/f/xrpzjjzg";
 
 type Errors = Partial<Record<"name" | "phone" | "email" | "reach" | "send", string>>;
 
@@ -150,6 +155,7 @@ export default function BookingForm() {
         </div>
       </div>
 
+      <input type="hidden" name="_subject" value="New enquiry from taloninsights.co.uk" />
       {/* D3 — honeypot: hidden from people, irresistible to bots. */}
       <div className="visually-hidden" aria-hidden="true">
         <label htmlFor="bf-company-website">Company website</label>

@@ -105,9 +105,10 @@ npm run map        # regenerate src/data/map-dots.json (network; result is commi
 
 ## Open slots (owner-held)
 
-Formspree endpoint → `ENDPOINT` in `src/components/BookingForm.tsx` (until
-then the form validates but reports itself unconnected). `hello@`
-mailbox on the domain. Diatype licence (fallback fonts are live). P1/P2
+~~Formspree endpoint~~ — CONNECTED 28 Aug: the old site's endpoint
+(`https://formspree.io/f/xrpzjjzg` → taloninsights@gmail.com) restored to
+`BookingForm.tsx` with the source-identifying `_subject`; CSP already
+admitted formspree.io. `hello@` mailbox on the domain still pending. Diatype licence (fallback fonts are live). P1/P2
 photos, Q1 quote, W1 nod, V1 capture per §12. Other routes
 (/work/david-jackson-son, /founding-projects, /privacy, /accessibility,
 /terms) are linked but intentionally unbuilt.
