@@ -341,7 +341,7 @@
     object-fit: cover;
     object-position: top;
     opacity: 0;
-    animation: mb-content 700ms ease-out 3.9s forwards;
+    animation: mb-content 700ms ease-out 3.55s forwards;
   }
   .mb-glare {
     position: absolute;
@@ -432,9 +432,13 @@
     60%  { transform: rotateX(-20deg) rotateY(130deg); }
     65%  { transform: rotateX(-20deg) rotateY(120deg); }
     80%  { transform: rotateX(-20deg) rotateY(375deg); }
-    85%  { transform: rotateX(-14deg) rotateY(357deg); }
-    90%  { transform: rotateX(-10deg) rotateY(360deg); }
-    100% { transform: rotateX(-6deg) rotateY(360deg); }
+    85%  { transform: rotateX(-17deg) rotateY(357deg); }
+    90%  { transform: rotateX(-14deg) rotateY(360deg); }
+    /* settles no shallower than -12deg: between roughly -10 and -6 the
+       deck's far key row peeks above the lid as a serrated strip (caught
+       on the owner's recording) — this pose stays out of that band while
+       still reading as face-on */
+    100% { transform: rotateX(-12deg) rotateY(360deg); }
   }
   @keyframes mb-lid {
     0%   { transform: rotateX(0deg); background-position: left bottom; }
