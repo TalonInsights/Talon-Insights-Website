@@ -74,6 +74,22 @@ export default function FolderGallery() {
   const hintButtonRef = useRef<HTMLButtonElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
+  /* Deep link: #fire opens the folder with Direction A already enlarged.
+     The owner's iteration loop lives on that page, and driven browsers
+     cannot always perform the tap gestures — a URL that lands there
+     directly serves both. The expand pose is computed on the next frame,
+     once the fan has real geometry to measure. */
+  useEffect(() => {
+    if (window.location.hash !== "#fire") return;
+    setIsOpen(true);
+    const t = window.setTimeout(() => {
+      rootRef.current?.scrollIntoView({ block: "center", behavior: "instant" });
+      expand(0);
+    }, 120);
+    return () => window.clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   useEffect(() => {
     setMounted(true);
     const card = cardRefs.current[1];
