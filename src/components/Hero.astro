@@ -1,56 +1,68 @@
 ---
-// B1 — Hero, rebuilt 27 Aug 2026 to the owner-supplied centred reference
-// (21st "hero-section"): announcement chip → display headline → standfirst
-// → CTA pair, over a fine grid with a soft burst. Integrated the house way:
-// the reference's bundled nav, Poppins import, remote grid image and mobile
-// overlay did not survive — the site header already carries the mark and
-// wordmark, the grid and burst are drawn in CSS from token blues (the hero
-// is the site's one sanctioned gradient zone, and the CSP allows no remote
-// images), and the copy is the master build's verbatim hero text.
-//
-// Retired with this layout: the delivery-plan panel (signature #1, in git
-// history) — and with it the hero's two amber marks and its draw-on-load
-// motion moment. No JS, no island: this block is fully static.
+// B1 — Hero, restaged 27 Aug 2026 (owner's directive, Linear reference):
+// the centred block goes left-aligned and gains the site's first showcase
+// shot — the WulfTek Tuning homepage, a real delivered client page, lying
+// back at a Linear-style tilt below the copy. The copy itself is still the
+// master build's verbatim hero text: chip → H1 → standfirst → CTA pair →
+// trust line. Grid and burst remain drawn in CSS from token blues; the
+// shot is a real capture (no mockups, §8), self-hosted (CSP allows no
+// remote images). No JS, no island: this block is fully static — the tilt
+// is a stylesheet transform.
 ---
 
 <section class="hero">
   <div class="wrap hero-inner">
-    <a class="announce" href="#pricing">
-      <span class="announce-text">Taking on founding projects at a reduced rate</span>
-      <span class="announce-more">Read more
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
-      </span>
-    </a>
+    <div class="hero-copy">
+      <a class="announce" href="#pricing">
+        <span class="announce-text">Taking on founding projects at a reduced rate</span>
+        <span class="announce-more">Read more
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </span>
+      </a>
 
-    <h1 class="t-display">You’re a&nbsp;specialist.<br />Your website&nbsp;isn’t.</h1>
+      <h1 class="t-display">You’re a&nbsp;specialist.<br />Your website&nbsp;isn’t.</h1>
 
-    <p class="standfirst">
-      <span class="nowrap-sentence">The reason people choose you already exists.</span>
-      <span class="nowrap-sentence">It’s just not on the page.</span>
-    </p>
+      <p class="standfirst">
+        <span class="nowrap-sentence">The reason people choose you already exists.</span>
+        <span class="nowrap-sentence">It’s just not on the page.</span>
+      </p>
 
-    <div class="ctas">
-      <a class="btn btn-primary" href="#method">See how I work</a>
-      <a class="btn btn-ghost" href="#work">See the work</a>
+      <div class="ctas">
+        <a class="btn btn-primary" href="#method">See how I work</a>
+        <a class="btn btn-ghost" href="#work">See the work</a>
+      </div>
+
+      <p class="t-micro hero-trust">FIXED PRICE · WRITTEN SCOPE · YOU OWN EVERYTHING</p>
     </div>
 
-    <p class="t-micro hero-trust">FIXED PRICE · WRITTEN SCOPE · YOU OWN EVERYTHING</p>
+    <!-- The showcase: real client work, angled off the page the way the
+         reference presents its product. The proof strip directly below
+         names the client. -->
+    <div class="hero-shot">
+      <img
+        src="/images/work-wulftek-home.webp"
+        width="1910"
+        height="1026"
+        alt="The WulfTek Tuning homepage — a delivered client site: registration lookup hero with the line ‘What could your car actually do?’"
+        decoding="async"
+        fetchpriority="high"
+      />
+    </div>
   </div>
 </section>
 
 <style>
-  /* Ground: ink-black (27 Aug — the darker undertone), the blue burst
-     glowing out of it. */
+  /* Ground: ink-black, the blue burst rising behind the copy block. */
   .hero {
     position: relative;
     background:
-      radial-gradient(640px 420px at 50% 34%, rgb(77 124 255 / 0.26), transparent 70%),
-      radial-gradient(1000px 640px at 50% 26%, rgb(29 78 216 / 0.16), transparent 72%),
+      radial-gradient(720px 460px at 30% 24%, rgb(77 124 255 / 0.24), transparent 70%),
+      radial-gradient(1100px 700px at 42% 20%, rgb(29 78 216 / 0.15), transparent 72%),
       var(--color-ink-deep);
-    padding-top: clamp(96px, 14vh, 160px);
-    padding-bottom: clamp(96px, 12vw, 176px);
+    padding-top: clamp(88px, 12vh, 140px);
+    padding-bottom: 0; /* the shot melts straight into the proof strip */
     overflow: clip;
   }
   /* The fine grid, fading out radially — drawn, not downloaded. */
@@ -62,28 +74,31 @@
       linear-gradient(rgb(245 247 249 / 0.055) 1px, transparent 1px),
       linear-gradient(90deg, rgb(245 247 249 / 0.055) 1px, transparent 1px);
     background-size: 56px 56px;
-    -webkit-mask-image: radial-gradient(72% 82% at 50% 34%, #000 42%, transparent 78%);
-    mask-image: radial-gradient(72% 82% at 50% 34%, #000 42%, transparent 78%);
+    -webkit-mask-image: radial-gradient(70% 64% at 40% 26%, #000 40%, transparent 78%);
+    mask-image: radial-gradient(70% 64% at 40% 26%, #000 40%, transparent 78%);
     pointer-events: none;
   }
 
   .hero-inner {
     position: relative;
     container-type: inline-size;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
   }
 
-  /* ---------- announcement chip ---------- */
+  /* ---------- the copy block, left-aligned to the reference ---------- */
+  .hero-copy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    max-width: 640px;
+  }
+
   .announce {
     display: inline-flex;
     flex-wrap: wrap;
-    justify-content: center;
     align-items: baseline;
     gap: 4px 12px;
-    padding: 10px 20px;
+    padding: 9px 18px;
     border: 1px solid rgb(245 247 249 / 0.2);
     border-radius: 999px;
     text-decoration: none;
@@ -102,17 +117,16 @@
   .announce-more svg { width: 15px; height: 15px; }
 
   /* The H1 must break exactly once, after "specialist." — at every
-     breakpoint. The container cap keeps the longer first line on one line
-     where the display clamp alone would wrap it. */
-  .hero-inner h1 {
-    margin-top: 32px;
+     breakpoint. */
+  .hero-copy h1 {
+    margin-top: 28px;
     max-width: 16ch;
-    font-size: min(clamp(2.75rem, 6vw, 4.5rem), 9.4cqw);
+    font-size: min(clamp(2.625rem, 5.2vw, 4.125rem), 9.4cqw);
     color: var(--color-sheet);
   }
 
   .standfirst {
-    margin-top: 24px;
+    margin-top: 20px;
     max-width: 30em;
     color: rgb(245 247 249 / 0.65);
     font-size: 1.1875rem;
@@ -123,11 +137,9 @@
   .ctas {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
     gap: 12px;
-    margin-top: 32px;
+    margin-top: 28px;
   }
-  /* the ghost button, dark-ground variant */
   .ctas .btn-ghost {
     color: var(--color-sheet);
     border-color: rgb(245 247 249 / 0.3);
@@ -135,7 +147,42 @@
   .ctas .btn-ghost:hover { border-color: var(--color-sheet); }
 
   .hero-trust {
-    margin-top: 40px;
+    margin-top: 32px;
     color: rgb(245 247 249 / 0.45);
+  }
+
+  /* ---------- the showcase shot ---------- */
+  /* The panel lies back into the page: perspective + a lean to the right,
+     top edge away, exactly the reference's staging. The wrapper carries
+     the perspective so the shadow tilts with the panel; the bottom fade
+     melts it into the proof strip's ink. */
+  .hero-shot {
+    margin-top: clamp(40px, 6vw, 72px);
+    margin-inline: auto;
+    width: min(100%, 1040px);
+    perspective: 1800px;
+    -webkit-mask-image: linear-gradient(180deg, #000 72%, transparent 98%);
+    mask-image: linear-gradient(180deg, #000 72%, transparent 98%);
+  }
+  .hero-shot img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    border: 1px solid rgb(245 247 249 / 0.14);
+    transform: rotateX(26deg) rotateY(-7deg) rotateZ(3deg);
+    transform-origin: 50% 0%;
+    box-shadow:
+      0 40px 90px -30px rgb(0 0 0 / 0.65),
+      0 0 120px -40px rgb(29 78 216 / 0.45);
+  }
+
+  /* Small screens: the tilt reads as distortion at phone widths — the
+     panel sits flat and full-width instead, fade retained. */
+  @media (max-width: 720px) {
+    .hero-shot img {
+      transform: none;
+      border-radius: 8px;
+    }
   }
 </style>

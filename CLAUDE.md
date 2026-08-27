@@ -4,9 +4,11 @@
 [docs/homepage-master-build-v3.5.md](docs/homepage-master-build-v3.5.md).**
 Where an instinct and that document disagree, the document wins; where it is
 silent, its §9 Never List decides. Read it before changing copy, colour,
-motion, or layout — noting that the owner has since restyled B1 (centred
-hero, no plan panel), B5 (folder gallery) and B10 (travel map) by direct
-instruction, which supersedes the document for those blocks. The old
+motion, or layout — noting that the owner has since restyled B1 (27 Aug pm: left-aligned
+Linear-style hero with the WulfTek homepage as an angled real-work
+showcase shot; earlier that day: centred, no plan panel), B5 (folder
+gallery) and B10 (travel map) by direct instruction, which supersedes
+the document for those blocks. The old
 Python-generated site was wiped 26 Aug 2026 at the owner's instruction
 (recover anything via git history, pre-wipe).
 
