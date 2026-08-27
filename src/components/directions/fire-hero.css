@@ -17,6 +17,13 @@
   font-family: "Oswald", "Arial Narrow", sans-serif;
   overflow: hidden;
   user-select: none;
+
+  /* the page's own heat scale: the fire burns ember-orange, the controls
+     sit an octave hotter in amber so they read as worked metal rather
+     than competing with the seam itself */
+  --fh-amber: #f2a83c;
+  --fh-amber-hot: #ffc266;
+  --fh-amber-rgb: 242 168 60;
 }
 
 /* ---------- browser chrome ---------- */
@@ -72,18 +79,23 @@
 .fh-links button:hover { color: #f4ede4; }
 .fh-navcta {
   background: none;
-  border: 1px solid rgb(232 112 46 / 0.55);
+  border: 1px solid rgb(var(--fh-amber-rgb) / 0.45);
   padding: 0.9cqw 2.2cqw;
   font: inherit;
   font-weight: 600;
   font-size: 1.6cqw;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: #e8702e;
+  color: var(--fh-amber);
   cursor: pointer;
-  transition: border-color 180ms ease;
+  box-shadow: 0 0 1.6cqw -0.6cqw rgb(var(--fh-amber-rgb) / 0.5);
+  transition: border-color 180ms ease, box-shadow 180ms ease, color 180ms ease;
 }
-.fh-navcta:hover { border-color: #e8702e; }
+.fh-navcta:hover {
+  border-color: rgb(var(--fh-amber-rgb) / 0.9);
+  color: var(--fh-amber-hot);
+  box-shadow: 0 0 2.6cqw -0.5cqw rgb(var(--fh-amber-rgb) / 0.75);
+}
 
 /* ---------- the stage ---------- */
 .fh-stage {
@@ -107,7 +119,10 @@
   z-index: 2; /* the fire arc rises behind and beside the headline */
   margin-top: 1.2cqw;
   font-weight: 600;
-  font-size: 8.6cqw;
+  /* 7.8cqw sets the longer headline to the same rendered width the old
+     one had at 8.6cqw, so the arc's tips still flank it — and the
+     fallback face stays inside the frame too */
+  font-size: 7.8cqw;
   line-height: 1;
   letter-spacing: 0.01em;
   text-transform: uppercase;
@@ -138,19 +153,29 @@
 
 .fh-ctas { display: flex; gap: 1.8cqw; margin-top: 2.6cqw; }
 .fh-primary {
-  background: #e8702e;
-  border: 1px solid #e8702e;
+  background: var(--fh-amber);
+  border: 1px solid var(--fh-amber);
   padding: 1.4cqw 3.4cqw;
   font: inherit;
   font-weight: 600;
   font-size: 1.75cqw;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: #12100d;
+  color: #140f06;
   cursor: pointer;
-  transition: background-color 180ms ease;
+  /* a tight rim of heat, then a wide soft halo — the bar looks hot,
+     not neon-outlined */
+  box-shadow:
+    0 0 0.9cqw -0.2cqw rgb(var(--fh-amber-rgb) / 0.55),
+    0 0.4cqw 4.5cqw -1cqw rgb(var(--fh-amber-rgb) / 0.5);
+  transition: background-color 180ms ease, box-shadow 220ms ease;
 }
-.fh-primary:hover { background: #ff8a42; }
+.fh-primary:hover {
+  background: var(--fh-amber-hot);
+  box-shadow:
+    0 0 1.3cqw -0.2cqw rgb(var(--fh-amber-rgb) / 0.8),
+    0 0.5cqw 6.5cqw -1cqw rgb(var(--fh-amber-rgb) / 0.7);
+}
 .fh-ghost {
   background: none;
   border: 1px solid rgb(244 237 228 / 0.3);
@@ -162,9 +187,22 @@
   text-transform: uppercase;
   color: #f4ede4;
   cursor: pointer;
-  transition: border-color 180ms ease;
+  transition: border-color 180ms ease, color 180ms ease, box-shadow 180ms ease;
 }
-.fh-ghost:hover { border-color: #e8702e; }
+.fh-ghost:hover {
+  border-color: rgb(var(--fh-amber-rgb) / 0.7);
+  color: var(--fh-amber);
+  box-shadow: 0 0 2.2cqw -0.8cqw rgb(var(--fh-amber-rgb) / 0.55);
+}
+
+/* keyboard users get the same heat, stated plainly */
+.fh-primary:focus-visible,
+.fh-ghost:focus-visible,
+.fh-navcta:focus-visible,
+.fh-links button:focus-visible {
+  outline: 2px solid var(--fh-amber);
+  outline-offset: 3px;
+}
 
 .fh-specs {
   display: flex;

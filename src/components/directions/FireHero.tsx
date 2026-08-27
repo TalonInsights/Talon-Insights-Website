@@ -387,7 +387,7 @@ export default function FireHero() {
       <div className="fh-stage">
         <p className="fh-kicker">Architectural metalwork · Shropshire</p>
         <h2 className="fh-display">
-          Metal, worked <em>by fire.</em>
+          Every line begins in <em>fire.</em>
         </h2>
 
         <div className="fh-line">
