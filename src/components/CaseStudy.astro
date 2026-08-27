@@ -82,7 +82,7 @@ const movements = [
          "loud and proud") — the claim belongs under the delivered proof -->
     <div class="case-outcome" data-rv>
       <p class="outcome-rule" aria-hidden="true"><i>◆</i><span class="t-micro">OUTCOME</span><i>◆</i></p>
-      <p class="outcome-line">A site nobody else could&nbsp;have.</p>
+      <p class="outcome-line">A site <em>nobody else</em> could&nbsp;have.</p>
     </div>
   </div>
 </section>
@@ -259,6 +259,10 @@ const movements = [
   }
   .outcome-rule i:first-child::before { left: 0; }
   .outcome-rule i:last-child::before { right: 0; }
+  .outcome-line em {
+    font-style: normal;
+    color: var(--color-cobalt-lift);
+  }
   .outcome-line {
     margin-top: 26px;
     font-family: var(--font-display);
