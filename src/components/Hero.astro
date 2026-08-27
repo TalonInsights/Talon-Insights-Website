@@ -87,6 +87,11 @@
   .hero-inner {
     position: relative;
     container-type: inline-size;
+    /* uncapped for the hero only: the copy positions against the true
+       free zone left of the panel, not against a viewport-centred column
+       — on wide screens the wrap's centring pushed the text into the
+       panel */
+    max-width: none;
   }
 
   /* ---------- split stage: copy left, panel anchored bottom-right ---------- */
@@ -109,9 +114,11 @@
     text-align: left;
     justify-content: center;
     max-width: 660px;
-    /* centred in the left zone the panel leaves free, rather than hugging
-       the wrap's edge */
-    margin-left: clamp(0px, 5vw, 120px);
+    /* centred in the zone the panel leaves free. The constants are tied
+       to the panel: 1150px = (its 1640px width cap + this 660px column)/2,
+       so 50% − 1150px is the free zone's centre once the panel hits its
+       cap; below that the viewport term holds a sane offset. */
+    margin-left: max(24px, calc(50% - 1150px), min(5vw, 120px));
     min-height: clamp(620px, 84svh, 920px);
     padding-bottom: clamp(24px, 6vh, 72px);
   }
