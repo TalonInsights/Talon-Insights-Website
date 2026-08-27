@@ -63,7 +63,7 @@
 .fh-nav {
   position: relative;
   z-index: 2; /* the ember sky's canvas reaches up under the nav — without
-                 this its opaque ground covers the CTA's bottom border */
+                 this its opaque ground covers the links' baseline */
   display: flex;
   align-items: center;
   gap: 3cqw;
@@ -78,7 +78,7 @@
   display: block;
   flex: none;
 }
-.fh-links { margin-left: auto; display: flex; gap: 2.6cqw; }
+.fh-links { margin-left: auto; display: flex; align-items: center; gap: 3.4cqw; }
 .fh-links button {
   background: none;
   border: 0;
@@ -94,7 +94,6 @@
   transition: color 180ms ease;
 }
 .fh-links button:hover { color: #f4ede4; }
-.fh-navcta,
 .fh-primary {
   display: inline-flex;
   align-items: center;
@@ -112,11 +111,6 @@
   box-shadow: 0 0 1.6cqw -0.6cqw rgb(var(--fh-ember-rgb) / 0.5);
   transition: border-color 180ms ease, box-shadow 180ms ease, color 180ms ease;
 }
-.fh-navcta {
-  padding: 1cqw 2.2cqw;
-  font-size: 1.9cqw;
-}
-.fh-navcta:hover,
 .fh-primary:hover {
   border-color: rgb(var(--fh-ember-rgb) / 0.9);
   color: var(--fh-ember-hot);
@@ -272,7 +266,6 @@
 /* keyboard users get the same heat, stated plainly */
 .fh-primary:focus-visible,
 .fh-ghost:focus-visible,
-.fh-navcta:focus-visible,
 .fh-links button:focus-visible {
   outline: 2px solid var(--fh-ember);
   outline-offset: 3px;

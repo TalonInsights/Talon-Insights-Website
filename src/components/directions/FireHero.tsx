@@ -433,7 +433,6 @@ export default function FireHero() {
           <button type="button">Railings</button>
           <button type="button">Staircases</button>
         </nav>
-        <button type="button" className="fh-navcta">Commission</button>
       </div>
 
       <div className="fh-stage">
@@ -469,7 +468,7 @@ export default function FireHero() {
           <span>EST. 1998</span>
           <span>HAND-FORGED</span>
           <span>SITE-MEASURED</span>
-          <span>EN 1090</span>
+          <span>EN 1090-1 · EXC2 · UKCA</span>
         </div>
       </div>
 
