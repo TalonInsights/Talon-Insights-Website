@@ -30,10 +30,12 @@ npm run map        # regenerate src/data/map-dots.json (network; result is commi
 
 ## Rules that are easy to trip over
 
-- **Amber budget:** exactly six at-rest appearances of `--color-amber` —
-  hero ◆ + ●, the two process chips, the directions-artefact ◆ in the
-  Directions band's eyebrow, the fault-list payoff rule. The form success line is a transient
-  state, outside the count. The B10 map's markers use the separate
+- **Amber budget:** the at-rest appearances of `--color-amber` are now
+  THREE — the two process chips and the directions-artefact ◆ in the
+  Directions band's eyebrow. The hero's ◆ + ● retired with the delivery
+  panel (27 Aug am) and the fault-list payoff rule went cobalt with the
+  owner's infographic restage of B3 (27 Aug pm). The form success line is
+  a transient state, outside the count. The B10 map's markers use the separate
   `--color-amber-lift` token, exempted by the owner's 26-Aug B10 restyle
   directive (canvas + its legend swatches only).
 - **"Bespoke" appears once** on the page (hero eyebrow) — the owner reworded

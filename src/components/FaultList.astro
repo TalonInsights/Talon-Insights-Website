@@ -1,94 +1,317 @@
 ---
-// B3 — The fault list. Hand-built (§7). Fault 07 leads, full width and set
-// apart; six follow in two columns with the right column dropped 56px for
-// the staggered rhythm. Single column below 768px, offset removed.
+// B3 — The fault list, restaged 27 Aug 2026 to the owner-supplied
+// infographic mock: centred display headline with the let-down phrase in
+// blue, the falcon mark on a rule, and a seven-card board — three faults a
+// side, FAULT 07 enthroned in the centre with a glowing numeral. The copy
+// is the master build's, verbatim; only the presentation changed (uppercase
+// is CSS, not content). Icons are the lucide set's own geometry, inlined as
+// SVG — the same vectors 21st.dev icon components wrap — so they render
+// live at any size in the section's own blue.
+//
+// The payoff rule was one of the site's amber marks; the mock recolours the
+// whole section into cobalt, so the amber budget drops by one (noted in
+// CLAUDE.md). Still no JS and no island.
 
 const faults = [
-  { id: "FAULT 01", title: "The bait and switch.", body: "A senior person sells you the job, then a junior or offshore team builds it. You never speak to the seller again." },
-  { id: "FAULT 02", title: "Lock-in.", body: "You don’t own your domain, your code or your content. Leaving means starting from nothing — and everybody knows it." },
-  { id: "FAULT 03", title: "A pretty site that does nothing.", body: "It looks smart and generates no enquiries, because nobody asked what the business needed first." },
-  { id: "FAULT 04", title: "No discovery.", body: "Nobody came to see how you actually work. The quote was written from a ten-minute phone call and a guess." },
-  { id: "FAULT 05", title: "Vague quotes, moving numbers.", body: "Everything you assumed was included turns out to be extra, and there’s no written scope to point at." },
-  { id: "FAULT 06", title: "Support that vanishes.", body: "It went live, then the emails stopped being answered." },
+  { id: "FAULT 01", title: "The bait and switch.", body: "A senior person sells you the job, then a junior or offshore team builds it. You never speak to the seller again.", icon: "swap" },
+  { id: "FAULT 02", title: "Lock-in.", body: "You don’t own your domain, your code or your content. Leaving means starting from nothing — and everybody knows it.", icon: "lock" },
+  { id: "FAULT 03", title: "A pretty site that does nothing.", body: "It looks smart and generates no enquiries, because nobody asked what the business needed first.", icon: "monitor-x" },
+  { id: "FAULT 04", title: "No discovery.", body: "Nobody came to see how you actually work. The quote was written from a ten-minute phone call and a guess.", icon: "search" },
+  { id: "FAULT 05", title: "Vague quotes, moving numbers.", body: "Everything you assumed was included turns out to be extra, and there’s no written scope to point at.", icon: "file-pound" },
+  { id: "FAULT 06", title: "Support that vanishes.", body: "It went live, then the emails stopped being answered.", icon: "mail" },
 ];
+const left = faults.slice(0, 3);
+const right = faults.slice(3);
 ---
 
-<section class="faults g-ink">
+<section class="faults g-ink" id="faults">
   <div class="wrap">
-    <p class="t-micro eyebrow">WHY PEOPLE CALL ME</p>
-    <h2 class="t-h2">You’ve probably been let down by one of&nbsp;these.</h2>
-    <p class="lede">Every one of them is avoidable. Most of them are why I work the way I&nbsp;do.</p>
-
-    <article class="fault-featured" data-rv>
-      <p class="t-micro fault-id">FAULT 07</p>
-      <h3 class="featured-title">Approval, not involvement.</h3>
-      <p class="featured-body">
-        You were shown one mockup near the end and asked to sign it off. That’s not being
-        involved — that’s being consulted.
+    <header class="faults-head" data-rv>
+      <p class="t-micro faults-eyebrow">WHY PEOPLE CALL ME</p>
+      <h2 class="faults-h">
+        <span class="flt-line">You’ve probably <em>been let&nbsp;down</em></span>
+        <span class="flt-line">by one of&nbsp;these.</span>
+      </h2>
+      <div class="faults-mark" aria-hidden="true">
+        <span class="rule"></span>
+        <img src="/images/mark.webp" alt="" width="158" height="132" loading="lazy" />
+        <span class="rule"></span>
+      </div>
+      <p class="faults-lede">
+        <span class="lede-a">Every one of them is avoidable.</span>
+        <span class="lede-b">Most of them are why I work the way I&nbsp;do.</span>
       </p>
-    </article>
+    </header>
 
-    <div class="fault-grid" data-rv>
-      {faults.map((fault, i) => (
-        <article class={`fault ${i % 2 === 1 ? "is-right" : ""}`}>
-          <p class="t-micro fault-id">{fault.id}</p>
-          <p class="fault-body"><strong>{fault.title}</strong> {fault.body}</p>
-        </article>
-      ))}
+    <div class="fault-board">
+      <div class="fault-col" data-rv>
+        {left.map((fault) => (
+          <article class="fault-card">
+            <span class="corner" aria-hidden="true"></span>
+            <div class="fault-icon">
+              {fault.icon === "swap" && (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9.5" r="3" /><path d="M8 17.5c.9-1.6 2.3-2.5 4-2.5s3.1.9 4 2.5" /><path d="M3.5 12a8.5 8.5 0 0 1 14-6.4" /><path d="M17.5 2.6v3h-3" /><path d="M20.5 12a8.5 8.5 0 0 1-14 6.4" /><path d="M6.5 21.4v-3h3" /></svg>
+              )}
+              {fault.icon === "lock" && (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /><circle cx="12" cy="16.5" r="1" /></svg>
+              )}
+              {fault.icon === "monitor-x" && (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="3" rx="2" /><path d="M8 21h8" /><path d="M12 17v4" /><path d="m9.5 7.5 5 5" /><path d="m14.5 7.5-5 5" /></svg>
+              )}
+            </div>
+            <div class="fault-text">
+              <p class="t-micro fault-id">{fault.id}</p>
+              <h3 class="fault-title">{fault.title}</h3>
+              <p class="fault-body">{fault.body}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <article class="fault-featured" data-rv>
+        <span class="corner" aria-hidden="true"></span>
+        <p class="t-micro featured-kicker">FAULT</p>
+        <p class="featured-number" aria-hidden="true">07</p>
+        <div class="featured-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.25" /><circle cx="16.5" cy="6.5" r="2.5" /><path d="M3.5 19c.9-2.6 2.9-4 5.5-4s4.6 1.4 5.5 4" /><circle cx="18" cy="16" r="3.5" /><path d="m16.7 14.7 2.6 2.6" /><path d="m19.3 14.7-2.6 2.6" /></svg>
+        </div>
+        <h3 class="featured-title">Approval, <em>not</em>&nbsp;involvement.</h3>
+        <span class="featured-rule" aria-hidden="true"></span>
+        <p class="featured-body">
+          You were shown one mockup near the end and asked to sign it off. That’s not being
+          involved — that’s being consulted.
+        </p>
+      </article>
+
+      <div class="fault-col" data-rv>
+        {right.map((fault) => (
+          <article class="fault-card">
+            <span class="corner" aria-hidden="true"></span>
+            <div class="fault-icon">
+              {fault.icon === "search" && (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7" /><path d="m20.5 20.5-4.5-4.5" /></svg>
+              )}
+              {fault.icon === "file-pound" && (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h7" /><path d="M14 2v4a2 2 0 0 0 2 2h4" /><path d="m20 8-6-6" /><path d="M8 11h5" /><path d="M8 15h4" /><circle cx="16.5" cy="17.5" r="4" /><path d="M17.8 19.3h-2.6m.4 0v-2.9a1 1 0 0 1 1-1c.5 0 .9.3 1 .7m-2.4 1.7h1.9" /></svg>
+              )}
+              {fault.icon === "mail" && (
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2" /><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" /></svg>
+              )}
+            </div>
+            <div class="fault-text">
+              <p class="t-micro fault-id">{fault.id}</p>
+              <h3 class="fault-title">{fault.title}</h3>
+              <p class="fault-body">{fault.body}</p>
+            </div>
+          </article>
+        ))}
+      </div>
     </div>
 
     <div class="payoff" data-rv>
-      <p class="t-mono payoff-claim">ALL SEVEN — DESIGNED OUT</p>
-      <a class="payoff-link" href="#process">How every job runs →</a>
+      <span class="payoff-rule" aria-hidden="true"></span>
+      <p class="payoff-claim">
+        <span class="claim-a">ALL SEVEN —</span>
+        <svg class="payoff-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" /><path d="m9 12 2 2 4-4" /></svg>
+        <span class="claim-b">DESIGNED OUT</span>
+      </p>
+      <span class="payoff-rule" aria-hidden="true"></span>
     </div>
   </div>
 </section>
 
 <style>
-  .faults { padding-block: 120px; }
-  .lede { max-width: 34em; }
-
-  .fault-featured {
-    margin-top: 64px;
-    padding-bottom: 48px;
-    border-bottom: var(--hairline-dark);
+  .faults {
+    padding-block: 120px;
+    background: var(--color-ink-deep);
   }
-  .fault-id { color: rgb(245 247 249 / 0.45); margin-bottom: 12px; }
-  .featured-title { font-size: 1.75rem; font-weight: 500; margin-bottom: 12px; }
-  .featured-body { max-width: 38em; font-size: 1.125rem; }
 
-  .fault-grid {
-    margin-top: 48px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px 64px;
-    padding-bottom: 56px; /* room for the offset column */
+  /* ---------- header ---------- */
+  .faults-head { text-align: center; }
+  .faults-eyebrow {
+    color: var(--color-cobalt-lift);
+    letter-spacing: 0.42em;
+    margin-bottom: 20px;
   }
-  .fault.is-right { position: relative; top: 56px; }
-  .fault-body { max-width: 34em; }
-  .fault-body strong { color: var(--color-sheet); font-weight: 500; }
-
-  .payoff {
-    margin-top: 64px;
-    padding-top: 24px;
-    border-top: 1px solid rgb(232 163 61 / 0.4); /* amber: the payoff rule, one of six */
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 12px 32px;
-  }
-  .payoff-claim { color: var(--color-amber); font-weight: 500; }
-  .payoff-link {
+  .faults-h {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(2.125rem, 3.9vw, 3.5rem);
+    line-height: 1.04;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
     color: var(--color-sheet);
-    text-decoration: none;
-    transition: color 180ms var(--ease);
   }
-  .payoff-link:hover { color: var(--color-amber); }
+  .flt-line { display: block; }
+  .faults-h em { font-style: normal; color: var(--color-cobalt-lift); }
 
+  .faults-mark {
+    margin-top: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+  }
+  .faults-mark img { width: 34px; height: auto; opacity: 0.95; }
+  .faults-mark .rule {
+    width: clamp(48px, 9vw, 130px);
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgb(245 247 249 / 0.35));
+  }
+  .faults-mark .rule:last-child {
+    background: linear-gradient(90deg, rgb(245 247 249 / 0.35), transparent);
+  }
+
+  .faults-lede { margin-top: 24px; font-size: 1.0625rem; line-height: 1.6; }
+  .faults-lede span { display: block; }
+  .lede-a { color: var(--color-sheet); }
+  .lede-b { color: var(--color-cobalt-lift); }
+
+  /* ---------- the board ---------- */
+  .fault-board {
+    margin-top: 56px;
+    display: grid;
+    grid-template-columns: 1fr minmax(340px, 1.08fr) 1fr;
+    gap: 24px;
+    align-items: stretch;
+  }
+  .fault-col { display: flex; flex-direction: column; gap: 24px; }
+
+  /* the shared card chassis: chamfered top-left and bottom-right, a faint
+     panel over the ink, and a corner accent bracket */
+  .fault-card, .fault-featured {
+    position: relative;
+    background: rgb(245 247 249 / 0.035);
+    border: 1px solid rgb(245 247 249 / 0.13);
+    clip-path: polygon(18px 0, 100% 0, 100% calc(100% - 18px), calc(100% - 18px) 100%, 0 100%, 0 18px);
+  }
+  .corner {
+    position: absolute;
+    top: 7px; left: 7px;
+    width: 14px; height: 14px;
+    border-top: 1px solid rgb(77 124 255 / 0.6);
+    border-left: 1px solid rgb(77 124 255 / 0.6);
+    pointer-events: none;
+  }
+
+  .fault-card {
+    flex: 1;
+    display: flex;
+    gap: 18px;
+    padding: 24px 22px;
+  }
+  .fault-icon {
+    flex: none;
+    width: 60px; height: 60px;
+    display: grid; place-items: center;
+    border: 1px solid rgb(77 124 255 / 0.5);
+    border-radius: 10px;
+    color: var(--color-cobalt-lift);
+    background:
+      radial-gradient(60% 60% at 50% 50%, rgb(77 124 255 / 0.12), transparent 75%);
+  }
+  .fault-icon svg { width: 30px; height: 30px; }
+
+  .fault-id { color: var(--color-cobalt-lift); margin-bottom: 8px; }
+  .fault-title {
+    font-family: var(--font-mono);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-sheet);
+    margin-bottom: 8px;
+  }
+  .fault-body { font-size: 0.9375rem; line-height: 1.6; }
+
+  /* ---------- the enthroned seventh ---------- */
+  .fault-featured {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 36px 32px 40px;
+    border-color: rgb(77 124 255 / 0.45);
+    clip-path: polygon(26px 0, 100% 0, 100% calc(100% - 26px), calc(100% - 26px) 100%, 0 100%, 0 26px);
+    background:
+      radial-gradient(80% 55% at 50% 34%, rgb(29 78 216 / 0.14), transparent 75%),
+      rgb(245 247 249 / 0.03);
+    box-shadow: 0 0 90px -30px rgb(77 124 255 / 0.45);
+  }
+  .featured-kicker { color: rgb(245 247 249 / 0.6); letter-spacing: 0.5em; }
+  .featured-number {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(7.5rem, 11vw, 11.5rem);
+    line-height: 0.95;
+    color: #3D6BFF;
+    text-shadow:
+      0 0 26px rgb(61 107 255 / 0.75),
+      0 0 90px rgb(61 107 255 / 0.45);
+  }
+  .featured-icon { margin-top: 18px; color: var(--color-cobalt-lift); }
+  .featured-icon svg { width: 44px; height: 44px; }
+  .featured-title {
+    margin-top: 16px;
+    font-family: var(--font-mono);
+    font-size: 1.1875rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-sheet);
+  }
+  .featured-title em { font-style: normal; color: var(--color-cobalt-lift); }
+  .featured-rule {
+    margin-top: 16px;
+    width: 64px; height: 1px;
+    background: rgb(77 124 255 / 0.55);
+  }
+  .featured-body { margin-top: 16px; max-width: 30em; font-size: 0.9688rem; line-height: 1.65; }
+
+  /* ---------- payoff ---------- */
+  .payoff {
+    margin-top: 56px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+  .payoff-rule {
+    flex: 1;
+    height: 1px;
+    background: rgb(245 247 249 / 0.22);
+    position: relative;
+  }
+  /* the diamonds at the far ends */
+  .payoff-rule::before {
+    content: "";
+    position: absolute;
+    top: 50%; left: 0;
+    width: 7px; height: 7px;
+    translate: 0 -50%;
+    rotate: 45deg;
+    background: var(--color-cobalt-lift);
+  }
+  .payoff-rule:last-child::before { left: auto; right: 0; }
+  .payoff-claim {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    font-family: var(--font-mono);
+    font-weight: 600;
+    font-size: 1.0625rem;
+    letter-spacing: 0.22em;
+  }
+  .claim-a { color: var(--color-sheet); }
+  .claim-b { color: var(--color-cobalt-lift); }
+  .payoff-shield { width: 30px; height: 30px; color: var(--color-cobalt-lift); }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 1060px) {
+    .fault-board { grid-template-columns: 1fr; }
+    .fault-featured { order: -1; }
+  }
   @media (max-width: 767.98px) {
     .faults { padding-block: 96px; }
-    .fault-grid { grid-template-columns: 1fr; gap: 32px; padding-bottom: 0; }
-    .fault.is-right { top: 0; }
+    .payoff-claim { font-size: 0.875rem; letter-spacing: 0.14em; gap: 10px; }
   }
 </style>
