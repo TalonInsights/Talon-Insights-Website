@@ -220,8 +220,12 @@
     /* held back until the laptop hands over, then expands out of the
        screen's position into its resting pose */
     opacity: 0;
-    transform-origin: 62% 58%;
-    animation: shot-arrive 1400ms var(--ease) 4.4s forwards;
+    /* the fixed point of the expansion: solved so that at the starting
+       scale the panel's box coincides with the laptop display's landed
+       rect — the photo genuinely grows out of the screen. (Solved from
+       measured rects at 1912w: O = (D − s·C)/(1 − s).) */
+    transform-origin: 48% 44%;
+    animation: shot-arrive 1500ms var(--ease) 4.15s forwards;
     /* as wide as the screen allows while holding a 660px reserve for the
        copy column — on a large monitor this is roughly double the grid
        column it replaces */
@@ -283,7 +287,7 @@
     pointer-events: none;
     /* a full beat of rest with the screen lit before the swell — the
        owner wanted the switch-on to land before anything else moves */
-    animation: mb-exit 1250ms var(--ease) 4.15s forwards;
+    animation: mb-exit 1100ms var(--ease) 4.15s forwards;
   }
   .mb-frame {
     position: absolute;
@@ -443,14 +447,18 @@
     from { opacity: 0; }
     to   { opacity: 1; }
   }
-  /* the machine swells toward the camera and yields */
+  /* the machine swells gently and dissolves AROUND the growing photo —
+     it no longer needs to carry the expansion itself */
   @keyframes mb-exit {
     0%   { opacity: 1; scale: 3.1; }
-    100% { opacity: 0; scale: 5.4; }
+    100% { opacity: 0; scale: 4.1; }
   }
-  /* ...as the real panel expands out of its position */
+  /* the panel starts at the display's own size and position (scale .27
+     about the solved origin) and expands to rest, fading up fast so the
+     growth is what reads, not the fade */
   @keyframes shot-arrive {
-    0%   { opacity: 0; scale: 0.42; }
+    0%   { opacity: 0; scale: 0.27; }
+    15%  { opacity: 1; }
     100% { opacity: 1; scale: 1; }
   }
 
