@@ -175,6 +175,22 @@ const wtBuilt = [
           {djBuilt.map((b) => <li><i aria-hidden="true">◆</i>{b}</li>)}
         </ul>
 
+        <!-- V1 — the planning tool itself (owner-supplied capture, 28 Aug;
+             jobs anonymised in the tool's own demo data) -->
+        <figure class="wk-artefact">
+          <img
+            src="/images/work-dj-planner.webp"
+            width="1911"
+            height="948"
+            alt="The production planning tool built for David Jackson & Son — nine jobs across eight colour-coded workshop stages on one schedule, with deadline markers on the timeline."
+            loading="lazy"
+            decoding="async"
+          />
+          <figcaption class="wk-caption t-mono">
+            THE PRODUCTION PLANNER<i>◆</i>EIGHT STAGES, DRAG-AND-DROP<i>◆</i>DEADLINES WATCHED FOR&nbsp;BREACHES
+          </figcaption>
+        </figure>
+
         {/* [SLOT — Harry's quote. Omitted entirely until the real line
             exists. Never paraphrase, never placeholder. (Q1)] */}
 
@@ -490,6 +506,18 @@ const wtBuilt = [
     font-size: 0.9375rem;
     letter-spacing: 0.12em;
     color: rgb(245 247 249 / 0.55);
+  }
+
+  /* the planner artefact — same frame language as the sliders */
+  .wk-artefact {
+    margin: 64px 0 0;
+  }
+  .wk-artefact img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    border: 1px solid rgb(245 247 249 / 0.16);
   }
 
   /* ---------------- the stories ---------------- */
