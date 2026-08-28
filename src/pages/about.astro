@@ -1,27 +1,174 @@
 ---
-// /about — placeholder (28 Aug, owner: nav links get their own pages).
-// Holds the route and the voice until the real page is designed; noindex
-// so the thin page never ranks. The homepage section covers the story
-// meanwhile.
+// /about — the real page (28 Aug, owner: "complete and sophisticated").
+// The long-form answer to WHO YOU'D BE HIRING: the introduction with the
+// meeting portrait, the visit story rehomed from git history (the old B4
+// prose — David Jackson's workshop, WulfTek's events — finally has the
+// home the memory notes promised it), the way of working, the build side,
+// a facts rail, and the ask. Owner-supplied photography throughout
+// (about-meeting / about-window / about-studio, from the same shoot as
+// the homepage portrait). noindex dropped; /about joins the sitemap.
 import Base from "../layouts/Base.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+
+const ways = [
+  { key: "ON SITE", value: "Time where you work, at your events, with your customers" },
+  { key: "THE WORD SURVEY", value: "The phrases your customers use that nobody’s competing for" },
+  { key: "DIRECTIONS FIRST", value: "Real options before any code — chosen by you" },
+  { key: "OPEN LINE", value: "Message me during the build; ideas fold in as they come" },
+];
 ---
 
-<Base title="About — Talon Insights" description="About Talon Insights — the engineer who runs the job." path="/about" noindex>
+<Base
+  title="About — Talon Insights"
+  description="Who you’d be hiring: one person who runs the project and builds it — a qualified Associate Project Manager who ships full-stack, working from Telford."
+  path="/about"
+>
   <Header />
   <main>
-    <section class="ph g-ink">
-      <div class="ph-wrap">
-        <p class="t-micro eyebrow">ABOUT</p>
-        <h1 class="t-h2">Who you’d be hiring — the longer story is coming.</h1>
-        <p class="lede ph-lede">
-          This page is being built. The full story lives on the homepage for now —
-          and the door is open either way.
+    <!-- ---------- the introduction ---------- -->
+    <section class="ab-hero g-ink">
+      <div class="ab-wrap">
+        <div class="ab-hero-grid">
+          <div class="ab-hero-copy">
+            <p class="t-micro eyebrow">ABOUT</p>
+            <h1 class="ab-h1">One person. Both halves of the&nbsp;job.</h1>
+            <p class="ab-body">
+              Most developers can’t run a project to time and budget. Most project managers
+              can’t build. I do both — and it’s just me, which is the point: the person you
+              meet on site is the person who designs, builds, and answers the phone.
+            </p>
+            <p class="ab-body">
+              Talon Insights exists because the businesses worth building for are
+              specialists — and their websites almost never say so. Finding what the page
+              should say takes time in the room where the work happens. So that’s where
+              every job starts.
+            </p>
+          </div>
+          <div class="ab-photo" data-rv>
+            <figure class="ab-frame">
+              <img
+                src="/images/about-meeting.webp"
+                width="1443" height="941"
+                alt="Talon Herring in a first meeting — armchair, notebook open, client across the table."
+                fetchpriority="high"
+              />
+            </figure>
+            <p class="ab-caption t-mono">THE FIRST VISIT<i>◆</i>NOTEBOOK FIRST</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- where it comes from ---------- -->
+    <section class="ab-story g-ink">
+      <div class="ab-wrap">
+        <p class="t-micro eyebrow" data-rv>WHERE IT COMES FROM</p>
+        <h2 class="t-h2 ab-h2" data-rv>The difference never comes out in a&nbsp;questionnaire.</h2>
+        <div class="ab-story-body" data-rv>
+          <p>
+            Before I design anything, I turn up. I’ve stood in David Jackson’s workshop
+            watching timber become something that ends up in listed buildings. I’ve been
+            to events with WulfTek to hear what their customers actually say about them —
+            not what the website says.
+          </p>
+          <p>
+            That’s where the difference lives. It comes out on the third visit, in
+            something said offhand — a phrase a customer uses, a step in the process
+            nobody thought was worth mentioning, the thing the owner apologises for that
+            is actually the whole reason people come back.
+          </p>
+          <p>
+            Then we design from it. You see real directions before any code, you tell me
+            what’s wrong with them, and you can message me the moment you have a better
+            idea — all the way through. It’s just me, so there’s nobody in&nbsp;between.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- the way of working ---------- -->
+    <section class="ab-split g-ink">
+      <div class="ab-wrap">
+        <div class="ab-split-grid">
+          <div class="ab-photo" data-rv>
+            <figure class="ab-frame">
+              <img
+                src="/images/about-window.webp"
+                width="1600" height="900"
+                loading="lazy" decoding="async"
+                alt="Reading back through the visit notes — notebook against the laptop, Telford outside the window."
+              />
+            </figure>
+            <p class="ab-caption t-mono">THE NOTES DO THE DESIGNING<i>◆</i>TELFORD</p>
+          </div>
+          <div class="ab-split-copy" data-rv>
+            <p class="t-micro eyebrow">HOW I WORK</p>
+            <h2 class="t-h2 ab-h2">The notebook fills before the laptop&nbsp;opens.</h2>
+            <div class="ab-rows">
+              {ways.map((row) => (
+                <div class="ab-row">
+                  <span class="t-mono ab-row-key">{row.key}</span>
+                  <span class="ab-row-value">{row.value}</span>
+                </div>
+              ))}
+            </div>
+            <a class="ab-link" href="/#method">See the approach in full →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- the build side ---------- -->
+    <section class="ab-split g-ink">
+      <div class="ab-wrap">
+        <div class="ab-split-grid ab-split-rev">
+          <div class="ab-split-copy" data-rv>
+            <p class="t-micro eyebrow">THE BUILD SIDE</p>
+            <h2 class="t-h2 ab-h2">Then it gets built — properly, and to the&nbsp;plan.</h2>
+            <p class="ab-body">
+              The project management is formally trained, not improvised: I’m a qualified
+              Associate Project Manager with four years of running projects where scope
+              and deadlines were not negotiable. Your build gets milestones against real
+              dates, a written scope, and a price fixed before it starts.
+            </p>
+            <p class="ab-body">
+              The building is full-stack — Supabase, Stripe, Three.js, shipped through
+              GitHub and Vercel — and when it’s done, the domain, the code and the
+              content are yours.
+            </p>
+            <a class="ab-link" href="/#process">See the five steps →</a>
+          </div>
+          <div class="ab-photo" data-rv>
+            <figure class="ab-frame">
+              <img
+                src="/images/about-studio.webp"
+                width="1600" height="900"
+                loading="lazy" decoding="async"
+                alt="At the desk, building — the quiet half of the job."
+              />
+            </figure>
+            <p class="ab-caption t-mono">THE QUIET HALF<i>◆</i>DESIGNED, THEN SHIPPED</p>
+          </div>
+        </div>
+
+        <p class="ab-facts t-mono" data-rv>
+          QUALIFIED ASSOCIATE PROJECT MANAGER<i>◆</i>FOUR YEARS ON HARD DEADLINES<i>◆</i>FULL-STACK, SHIPPED<i>◆</i>TELFORD — AN HOUR FROM EVERYWHERE ON THE MAP
         </p>
-        <div class="ph-ctas">
-          <a class="btn btn-primary" href="/#about">Meet me on the homepage</a>
-          <a class="btn btn-ghost ph-ghost" href="/booking">Book a visit</a>
+      </div>
+    </section>
+
+    <!-- ---------- the ask ---------- -->
+    <section class="ab-close g-ink">
+      <div class="ab-wrap">
+        <h2 class="t-h2 ab-h2">Let’s find what makes you&nbsp;different.</h2>
+        <p class="lede ab-close-lede">
+          The first visit is free within an hour of Telford — and whatever we find is
+          yours to keep, whether or not we go ahead.
+        </p>
+        <div class="ab-ctas">
+          <a class="btn btn-primary" href="/booking">Book a visit</a>
+          <a class="btn btn-ghost ab-ghost" href="/#work">See the work</a>
         </div>
       </div>
     </section>
@@ -30,21 +177,175 @@ import Footer from "../components/Footer.astro";
 </Base>
 
 <style>
-  .ph {{
-    background:
-      radial-gradient(800px 460px at 18% 18%, rgb(29 78 216 / 0.1), transparent 70%),
-      var(--color-ink-deep);
-    padding-block: 160px 140px;
-    min-height: 62vh;
-  }}
-  .ph-wrap {{
+  .ab-wrap {
     max-width: 1560px;
     margin-inline: auto;
     padding-inline: 24px;
-  }}
-  .ph h1 {{ color: var(--color-sheet); }}
-  .ph-lede {{ margin-top: 14px; max-width: 38em; }}
-  .ph-ctas {{ display: flex; flex-wrap: wrap; gap: 14px; margin-top: 32px; }}
-  .ph-ghost {{ color: var(--color-sheet); border-color: rgb(245 247 249 / 0.3); }}
-  .ph-ghost:hover {{ border-color: var(--color-sheet); }}
+  }
+  .ab-h2 { color: var(--color-sheet); }
+
+  /* ---------- shared voice ---------- */
+  .ab-body {
+    margin-top: 20px;
+    font-size: 1.1875rem;
+    line-height: 1.65;
+    color: rgb(245 247 249 / 0.78);
+    max-width: 40em;
+  }
+  .ab-link {
+    display: inline-block;
+    margin-top: 26px;
+    font-size: 1.0625rem;
+    color: var(--color-cobalt-lift);
+    text-decoration: none;
+    transition: color 180ms var(--ease);
+  }
+  .ab-link:hover { color: var(--color-sheet); }
+
+  /* the frame language: hairline, radius, deep shadow, cobalt hover */
+  .ab-frame {
+    margin: 0;
+    border: 1px solid rgb(245 247 249 / 0.16);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow:
+      0 40px 90px -30px rgb(0 0 0 / 0.6),
+      0 12px 30px -12px rgb(0 0 0 / 0.5);
+    transition: border-color 220ms var(--ease), box-shadow 220ms var(--ease);
+  }
+  .ab-photo:hover .ab-frame {
+    border-color: rgb(77 124 255 / 0.45);
+    box-shadow:
+      0 40px 90px -30px rgb(0 0 0 / 0.7),
+      0 0 40px -8px rgb(77 124 255 / 0.25);
+  }
+  .ab-frame img { display: block; width: 100%; height: auto; }
+  .ab-caption {
+    margin-top: 16px;
+    text-align: center;
+    font-size: 0.9375rem;
+    letter-spacing: 0.14em;
+    color: rgb(245 247 249 / 0.55);
+  }
+  .ab-caption i,
+  .ab-facts i {
+    font-style: normal;
+    margin-inline: 12px;
+    font-size: 0.625rem;
+    vertical-align: 1px;
+    color: rgb(77 124 255 / 0.7);
+  }
+
+  /* ---------- the introduction ---------- */
+  .ab-hero {
+    padding-block: 150px 110px;
+    background:
+      radial-gradient(900px 520px at 80% 24%, rgb(29 78 216 / 0.2), transparent 68%),
+      radial-gradient(800px 440px at 8% 84%, rgb(29 78 216 / 0.1), transparent 70%),
+      var(--color-ink-deep);
+  }
+  .ab-hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 6fr) minmax(0, 6fr);
+    gap: clamp(40px, 5vw, 96px);
+    align-items: center;
+  }
+  .ab-h1 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(2.5rem, 3.4vw, 4.25rem);
+    line-height: 1.06;
+    letter-spacing: -0.02em;
+    color: var(--color-sheet);
+  }
+  .ab-hero-copy .ab-body:first-of-type { margin-top: 28px; }
+
+  /* ---------- the story ---------- -*/
+  .ab-story {
+    padding-block: 110px;
+    background:
+      radial-gradient(700px 400px at 50% 0%, rgb(29 78 216 / 0.08), transparent 72%),
+      var(--color-ink-deep);
+    border-top: 1px solid rgb(245 247 249 / 0.08);
+  }
+  .ab-story-body {
+    margin-top: 28px;
+    columns: 1;
+    max-width: 44em;
+  }
+  .ab-story-body p {
+    font-size: 1.1875rem;
+    line-height: 1.7;
+    color: rgb(245 247 249 / 0.78);
+  }
+  .ab-story-body p + p { margin-top: 18px; }
+
+  /* ---------- the splits ---------- */
+  .ab-split {
+    padding-block: 110px;
+    background:
+      radial-gradient(900px 500px at 16% 30%, rgb(29 78 216 / 0.12), transparent 70%),
+      var(--color-ink-deep);
+    border-top: 1px solid rgb(245 247 249 / 0.08);
+  }
+  .ab-split + .ab-split {
+    background:
+      radial-gradient(900px 500px at 84% 30%, rgb(29 78 216 / 0.12), transparent 70%),
+      var(--color-ink-deep);
+  }
+  .ab-split-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 6fr) minmax(0, 6fr);
+    gap: clamp(40px, 5vw, 96px);
+    align-items: center;
+  }
+  .ab-rows { margin-top: 28px; max-width: 40em; }
+  .ab-row {
+    padding-block: 14px;
+    border-top: 1px solid rgb(245 247 249 / 0.12);
+    display: grid;
+    grid-template-columns: 200px minmax(0, 1fr);
+    gap: 8px 20px;
+    align-items: baseline;
+  }
+  .ab-row:last-child { border-bottom: 1px solid rgb(245 247 249 / 0.12); }
+  .ab-row-key { color: var(--color-cobalt-lift); font-weight: 700; letter-spacing: 0.08em; }
+  .ab-row-value { font-size: 1.0625rem; line-height: 1.55; color: rgb(245 247 249 / 0.8); }
+
+  .ab-facts {
+    margin-top: 72px;
+    padding-top: 24px;
+    border-top: 1px solid rgb(245 247 249 / 0.12);
+    text-align: center;
+    font-size: 0.9375rem;
+    letter-spacing: 0.12em;
+    line-height: 2;
+    color: rgb(245 247 249 / 0.6);
+  }
+
+  /* ---------- the ask ---------- */
+  .ab-close {
+    padding-block: 120px;
+    text-align: center;
+    background:
+      radial-gradient(800px 460px at 50% 20%, rgb(29 78 216 / 0.1), transparent 70%),
+      #04080F; /* flows into the footer's ground */
+    border-top: var(--hairline-dark);
+  }
+  .ab-close-lede { margin-inline: auto; margin-top: 14px; max-width: 36em; }
+  .ab-ctas { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin-top: 36px; }
+  .ab-ghost { color: var(--color-sheet); border-color: rgb(245 247 249 / 0.3); }
+  .ab-ghost:hover { border-color: var(--color-sheet); }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 899.98px) {
+    .ab-hero { padding-block: 120px 88px; }
+    .ab-story, .ab-split { padding-block: 88px; }
+    .ab-hero-grid, .ab-split-grid { grid-template-columns: 1fr; gap: 48px; }
+    /* mirrored split keeps copy first when stacked */
+    .ab-split-rev .ab-photo { order: 2; }
+    .ab-row { grid-template-columns: 1fr; gap: 4px; }
+    .ab-facts { margin-top: 56px; line-height: 2.2; }
+    .ab-close { padding-block: 96px; }
+  }
 </style>
