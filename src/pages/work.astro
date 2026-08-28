@@ -39,11 +39,54 @@ const wtBuilt = [
   path="/work"
   schema={{
     "@context": "https://schema.org",
-    "@type": "WebPage",
-    "@id": "https://taloninsights.co.uk/work#page",
-    url: "https://taloninsights.co.uk/work",
-    name: "Work — Talon Insights",
-    about: { "@id": "https://taloninsights.co.uk/#business" },
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        "@id": "https://taloninsights.co.uk/work#page",
+        url: "https://taloninsights.co.uk/work",
+        name: "Work — Talon Insights",
+        about: { "@id": "https://taloninsights.co.uk/#business" },
+        mainEntity: { "@id": "https://taloninsights.co.uk/work#projects" },
+      },
+      {
+        "@type": "ItemList",
+        "@id": "https://taloninsights.co.uk/work#projects",
+        name: "Selected work",
+        numberOfItems: 2,
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            item: {
+              "@type": "WebSite",
+              name: "David Jackson & Son",
+              description:
+                "A twelve-page website, filterable gallery, consent checker and guidance library, plus an internal production planning tool, for a heritage joinery in Telford.",
+              creator: { "@id": "https://taloninsights.co.uk/#business" },
+            },
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            item: {
+              "@type": "WebSite",
+              name: "WulfTek Tuning",
+              description:
+                "A multi-page website for a performance and ECU remapping business in Telford, led by a vehicle registration lookup.",
+              creator: { "@id": "https://taloninsights.co.uk/#business" },
+            },
+          },
+        ],
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://taloninsights.co.uk/work#crumbs",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: "https://taloninsights.co.uk/" },
+          { "@type": "ListItem", position: 2, name: "Work", item: "https://taloninsights.co.uk/work" },
+        ],
+      },
+    ],
   }}
 >
   <Header />

@@ -16,11 +16,37 @@ import Footer from "../components/Footer.astro";
   path="/process"
   schema={{
     "@context": "https://schema.org",
-    "@type": "WebPage",
-    "@id": "https://taloninsights.co.uk/process#page",
-    url: "https://taloninsights.co.uk/process",
-    name: "Process — Talon Insights",
-    about: { "@id": "https://taloninsights.co.uk/#business" },
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://taloninsights.co.uk/process#page",
+        url: "https://taloninsights.co.uk/process",
+        name: "Process — Talon Insights",
+        about: { "@id": "https://taloninsights.co.uk/#business" },
+      },
+      {
+        "@type": "HowTo",
+        "@id": "https://taloninsights.co.uk/process#steps",
+        name: "The five steps from first call to handover",
+        description:
+          "How a Talon Insights project runs: a free call, free time on site, real design directions, a build against milestones, and everything yours at the end — with the price fixed before the build starts.",
+        step: [
+          { "@type": "HowToStep", position: 1, name: "A call", text: "Fifteen minutes to see whether it’s worth going further. Free." },
+          { "@type": "HowToStep", position: 2, name: "Time on site", text: "Time spent where you work, at your events, with your customers — writing down how you work and the words they use. Free." },
+          { "@type": "HowToStep", position: 3, name: "Directions", text: "Two or three real design directions. You pick, and you pull them apart." },
+          { "@type": "HowToStep", position: 4, name: "Build", text: "Milestones against real dates, with the line open for ideas throughout. The price is fixed in writing before this stage begins." },
+          { "@type": "HowToStep", position: 5, name: "Yours", text: "Domain, code and content are yours on full payment, plus a warranty period." },
+        ],
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://taloninsights.co.uk/process#crumbs",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: "https://taloninsights.co.uk/" },
+          { "@type": "ListItem", position: 2, name: "Process", item: "https://taloninsights.co.uk/process" },
+        ],
+      },
+    ],
   }}
 >
   <Header />
