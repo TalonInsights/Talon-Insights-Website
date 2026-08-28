@@ -1,28 +1,284 @@
 ---
-// /work — placeholder (28 Aug, owner: nav links get their own pages).
-// Holds the route and the voice until the real page is designed; noindex
-// so the thin page never ranks. The homepage section covers the story
-// meanwhile.
+// /work — the real page, to the owner's full copy (28 Aug), styled with
+// 21st. Import #12 is ziegfiroyt's Before/After Image Slider (demo
+// 19250): the clip-path reveal with a draggable grip divider and corner
+// labels, hand-rolled to zero deps (pointer events + keyboard arrows),
+// carrying both artefacts. Both befores are GENUINE owner captures —
+// A1's old DJ site and A2's old WulfTek site, each cropped to the same
+// 1880×930 frame as its after, homepage to homepage, per the copy's
+// honesty rules. (The Wayback route was checked and REJECTED:
+// wulftek.co.uk archives an unrelated London IT firm.)
+// Gates in force: WULFTEK_CONSENT=false omits the strategy sections
+// (their commercial story publishes only with their explicit nod); the
+// Harry quote slot ships absent per Q1; the optional agricultural-page
+// capture awaits an owner-supplied frame.
 import Base from "../layouts/Base.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+
+const WULFTEK_CONSENT = false; // flip only on WulfTek's explicit agreement
+
+const djBuilt = [
+  "A twelve-page website, designed and written from scratch",
+  "An interactive window and door configurator",
+  "A filterable gallery of completed work",
+  "A production planning tool — eight stages, drag-and-drop scheduling, automatic deadline breach detection",
+];
+
+const wtBuilt = [
+  "A multi-page website, designed and written from scratch",
+  "A dedicated agricultural remapping section",
+  "A vehicle registration lookup, so a customer can find their own car before enquiring",
+  "Service pages for ECU, economy and performance remapping",
+];
 ---
 
-<Base title="Work — Talon Insights" description="Selected work by Talon Insights — the full case studies are on their way." path="/work" noindex>
+<Base
+  title="Work — Talon Insights"
+  description="Two businesses, two sites that couldn’t belong to anyone else — David Jackson & Son and WulfTek Tuning, with honest before-and-afters of both."
+  path="/work"
+  schema={{
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "https://taloninsights.co.uk/work#page",
+    url: "https://taloninsights.co.uk/work",
+    name: "Work — Talon Insights",
+    about: { "@id": "https://taloninsights.co.uk/#business" },
+  }}
+>
   <Header />
-  <main>
-    <section class="ph g-ink">
-      <div class="ph-wrap">
-        <p class="t-micro eyebrow">WORK</p>
-        <h1 class="t-h2">The work speaks on the homepage — for now.</h1>
-        <p class="lede ph-lede">
-          This page is being built. The full story lives on the homepage for now —
-          and the door is open either way.
+  <main class="wk">
+
+    <!-- ---------------- HERO ---------------- -->
+    <section class="wk-hero">
+      <div class="wk-wrap">
+        <p class="t-micro eyebrow">SELECTED WORK</p>
+        <h1 class="wk-h1">Two businesses. Neither site could belong to anyone&nbsp;else.</h1>
+        <p class="wk-lede">
+          Both started the same way — <em>time on site, before anything was
+          designed.</em> What follows is what I found, what it changed, and
+          <strong>what got built.</strong>
         </p>
-        <div class="ph-ctas">
-          <a class="btn btn-primary" href="/#work">See the work</a>
-          <a class="btn btn-ghost ph-ghost" href="/booking">Book a visit</a>
+      </div>
+    </section>
+
+    <!-- ---------------- 01 · DAVID JACKSON & SON ---------------- -->
+    <section class="wk-case">
+      <div class="wk-wrap">
+        <p class="wk-meta t-mono">HERITAGE JOINERY<i>◆</i>TELFORD<i>◆</i>WEBSITE + INTERNAL TOOL + STRATEGY</p>
+
+        <!-- A1 — the slider (import #12) -->
+        <div
+          class="wk-compare"
+          role="slider"
+          tabindex="0"
+          aria-label="David Jackson & Son — drag to compare the site before and after the rebuild"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-valuenow="50"
+          data-compare
+        >
+          <img class="wk-after-img" src="/images/work-dj-after.webp" width="1880" height="930" alt="The David Jackson & Son homepage after the rebuild." />
+          <div class="wk-before-clip">
+            <img src="/images/work-dj-before.webp" width="1880" height="930" alt="The David Jackson & Son homepage before the rebuild." />
+          </div>
+          <div class="wk-divider" aria-hidden="true">
+            <span class="wk-grip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 5v14M15 5v14" /></svg>
+            </span>
+          </div>
+          <span class="wk-tag wk-tag-l" aria-hidden="true">BEFORE</span>
+          <span class="wk-tag wk-tag-r" aria-hidden="true">AFTER</span>
         </div>
+        <p class="wk-caption t-mono">DAVID JACKSON &amp; SON<i>◆</i>BEFORE / AFTER<i>◆</i>DRAG THE HANDLE</p>
+
+        <div class="wk-story">
+          <div class="wk-block">
+            <h2 class="wk-h2">What I found</h2>
+            <p>
+              Harry’s workshop is not a joinery in the general sense. The work that comes
+              out of it ends up in listed buildings — sash windows matched to a
+              two-hundred-year-old original, doors made to a conservation officer’s
+              satisfaction, staircases that have to look as though they were always there.
+            </p>
+            <p class="wk-land">The website said “joinery services”.</p>
+            <p>
+              That gap was the entire brief, and it wasn’t visible from the outside. It
+              became obvious standing in the workshop watching a window being made — the
+              amount of knowledge in a single component, none of which was anywhere on
+              the&nbsp;site.
+            </p>
+          </div>
+          <div class="wk-block">
+            <h2 class="wk-h2">What it changed</h2>
+            <p>
+              If the difference is in the making, the site has to lead with the making.
+              Not a gallery of finished jobs sitting under a services list, but the work
+              itself, photographed in progress, with the heritage and conservation
+              language a customer looking for that standard would actually search for.
+            </p>
+            <p>
+              Two other things followed from being there rather than from being briefed.
+              Customers kept asking what their windows would look like before committing —
+              so a configurator, letting them build their own and see it. And production
+              was being planned on paper and in people’s heads, which is a different
+              problem entirely, but I was in there&nbsp;anyway.
+            </p>
+          </div>
+        </div>
+
+        <h2 class="wk-h2 wk-built-h">What got built</h2>
+        <ul class="wk-built">
+          {djBuilt.map((b) => <li><i aria-hidden="true">◆</i>{b}</li>)}
+        </ul>
+
+        {/* [SLOT — Harry's quote. Omitted entirely until the real line
+            exists. Never paraphrase, never placeholder. (Q1)] */}
+
+        <p class="wk-case-link"><a class="wk-link" href="/work/david-jackson-son">Read the full case study →</a></p>
+      </div>
+    </section>
+
+    <!-- ---------------- 02 · WULFTEK TUNING ---------------- -->
+    <section class="wk-case">
+      <div class="wk-wrap">
+        <p class="wk-meta t-mono">PERFORMANCE &amp; ECU REMAPPING<i>◆</i>TELFORD<i>◆</i>WEBSITE</p>
+
+        <!-- A2 — same treatment, same frame -->
+        <div
+          class="wk-compare"
+          role="slider"
+          tabindex="0"
+          aria-label="WulfTek Tuning — drag to compare the site before and after the rebuild"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-valuenow="50"
+          data-compare
+        >
+          <img class="wk-after-img" src="/images/work-wt-after.webp" width="1880" height="930" alt="The WulfTek Tuning homepage after the rebuild." loading="lazy" decoding="async" />
+          <div class="wk-before-clip">
+            <img src="/images/work-wt-before.webp" width="1880" height="930" alt="The WulfTek Tuning homepage before the rebuild." loading="lazy" decoding="async" />
+          </div>
+          <div class="wk-divider" aria-hidden="true">
+            <span class="wk-grip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 5v14M15 5v14" /></svg>
+            </span>
+          </div>
+          <span class="wk-tag wk-tag-l" aria-hidden="true">BEFORE</span>
+          <span class="wk-tag wk-tag-r" aria-hidden="true">AFTER</span>
+        </div>
+        <p class="wk-caption t-mono">WULFTEK TUNING<i>◆</i>BEFORE / AFTER<i>◆</i>DRAG THE HANDLE</p>
+
+        {/* [A2 second capture — the agricultural remapping page, captioned
+            THE PAGE THAT CAME OUT OF A CONVERSATION — awaits an
+            owner-supplied frame.] */}
+
+        {WULFTEK_CONSENT && (
+          <div class="wk-story">
+            <div class="wk-block">
+              <h2 class="wk-h2">What I found</h2>
+              <p>
+                During a Groundwork Visit, a conversation turned to something the website
+                barely mentioned: he remaps tractors.
+              </p>
+              <p>
+                There is farmland on every side of Telford. There is also almost nobody
+                competing for the words. Meanwhile every tuning shop in the Midlands is
+                fighting over “ECU remapping” — a term with real volume and no way in for
+                a business this size.
+              </p>
+            </div>
+            <div class="wk-block">
+              <h2 class="wk-h2">What it changed</h2>
+              <p>
+                ECU and economy remapping stayed front and centre. They’re the core of the
+                business and nothing was taken away.
+              </p>
+              <p>
+                But agricultural remapping got its own ground and real prominence, because
+                that was territory he could actually own. Not a paragraph on a services
+                page — its own space, written in the language a farm manager would use,
+                aimed at people within driving distance who didn’t know the service
+                existed nearby.
+              </p>
+              <p>
+                That’s the Word Survey: the phrases your customers already use, that your
+                competitors haven’t noticed, found by turning up and listening.
+              </p>
+            </div>
+          </div>
+        )}
+
+        <h2 class="wk-h2 wk-built-h">What got built</h2>
+        <ul class="wk-built">
+          {wtBuilt.map((b) => <li><i aria-hidden="true">◆</i>{b}</li>)}
+        </ul>
+      </div>
+    </section>
+
+    <!-- ---------------- 03 · THE PATTERN ---------------- -->
+    <section class="wk-pattern">
+      <div class="wk-wrap">
+        <h2 class="wk-h2c">Both jobs found something the brief wouldn’t&nbsp;have.</h2>
+        <div class="wk-prose">
+          <p>
+            A form would not have told me that David Jackson’s work belongs in listed
+            buildings, or that Harry’s customers wanted to see their windows before
+            ordering. A questionnaire would not have surfaced&nbsp;tractors.
+          </p>
+          <p>
+            Both of those came out of being in the room, more than once, after the polite
+            part of the conversation was over. That’s not a nice extra on top of the
+            design work. <strong>It is the design work</strong> — everything after it
+            is&nbsp;execution.
+          </p>
+          <p class="wk-land">
+            It’s also why I can’t tell you what your site should be until I’ve been to
+            see&nbsp;you.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------------- 04 · HONEST ABOUT THE LIST ---------------- -->
+    <section class="wk-honest">
+      <div class="wk-wrap">
+        <div class="wk-honest-panel">
+          <h2 class="wk-h2c">Two clients. That’s the whole&nbsp;list.</h2>
+          <div class="wk-prose wk-prose-onpanel">
+            <p>
+              Talon Insights is new, and I’d rather say that than pad this page with
+              logos I’ve had tangential involvement&nbsp;with.
+            </p>
+            <p>
+              What I’d say instead is: look at what those two sites do that a template
+              can’t, and at how specific each one is to the business behind it. That’s
+              the part that scales. The number of them is a matter of&nbsp;time.
+            </p>
+            <p>
+              I’m currently taking a small number of projects at a founding rate — same
+              scope, same standard, in exchange for a written case study and a&nbsp;review.
+            </p>
+          </div>
+          <a class="wk-link" href="/founding-projects">How founding projects work →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------------- CLOSE ---------------- -->
+    <section class="wk-close">
+      <div class="wk-wrap">
+        <h2 class="wk-h2c">Your site would be the&nbsp;third.</h2>
+        <p class="wk-close-body">
+          Start with fifteen minutes on the phone. If it sounds like a fit, I’ll come to
+          you — and you’ll have a written scope and a fixed price before you’ve
+          spent&nbsp;anything.
+        </p>
+        <div class="wk-ctas">
+          <a class="btn btn-primary" href="/booking">Book a visit</a>
+          <a class="btn btn-ghost wk-ghost" href="tel:+447742082423">Or call 07742 082423</a>
+        </div>
+        <p class="t-mono wk-reply">REPLY WITHIN ONE WORKING DAY</p>
       </div>
     </section>
   </main>
@@ -30,21 +286,296 @@ import Footer from "../components/Footer.astro";
 </Base>
 
 <style>
-  .ph {{
-    background:
-      radial-gradient(800px 460px at 18% 18%, rgb(29 78 216 / 0.1), transparent 70%),
-      var(--color-ink-deep);
-    padding-block: 160px 140px;
-    min-height: 62vh;
-  }}
-  .ph-wrap {{
+  .wk { background: var(--color-ink-deep); }
+  .wk-wrap {
     max-width: 1560px;
     margin-inline: auto;
     padding-inline: 24px;
-  }}
-  .ph h1 {{ color: var(--color-sheet); }}
-  .ph-lede {{ margin-top: 14px; max-width: 38em; }}
-  .ph-ctas {{ display: flex; flex-wrap: wrap; gap: 14px; margin-top: 32px; }}
-  .ph-ghost {{ color: var(--color-sheet); border-color: rgb(245 247 249 / 0.3); }}
-  .ph-ghost:hover {{ border-color: var(--color-sheet); }}
+  }
+
+  /* ---------------- hero ---------------- */
+  .wk-hero { padding-block: 150px 88px; text-align: center; }
+  .wk-h1 {
+    margin-top: 14px;
+    margin-inline: auto;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(2.5rem, 3.8vw, 4.75rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--color-sheet);
+    max-width: 18em;
+  }
+  .wk-lede {
+    margin: 26px auto 0;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(1.375rem, 1.7vw, 1.875rem);
+    line-height: 1.5;
+    letter-spacing: -0.01em;
+    color: rgb(245 247 249 / 0.55);
+    max-width: 34em;
+  }
+  .wk-lede em { font-style: normal; color: var(--color-cobalt-lift); }
+  .wk-lede strong { font-weight: 600; color: var(--color-sheet); }
+
+  /* ---------------- case sections ---------------- */
+  .wk-case {
+    padding-block: 88px;
+    border-top: 1px solid rgb(245 247 249 / 0.1);
+  }
+  .wk-meta {
+    text-align: center;
+    font-size: 0.9375rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: rgb(245 247 249 / 0.6);
+    margin-bottom: 40px;
+  }
+  .wk-meta i, .wk-caption i {
+    font-style: normal;
+    margin-inline: 12px;
+    font-size: 0.625rem;
+    vertical-align: 1px;
+    color: rgb(77 124 255 / 0.8);
+  }
+
+  /* ---------------- the slider (import #12, recoloured) ---------------- */
+  .wk-compare {
+    position: relative;
+    aspect-ratio: 1880 / 930;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgb(245 247 249 / 0.16);
+    cursor: ew-resize;
+    user-select: none;
+    touch-action: none;
+    --pos: 50%;
+  }
+  .wk-compare:focus-visible {
+    outline: 2px solid var(--color-cobalt-lift);
+    outline-offset: 4px;
+  }
+  .wk-compare img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .wk-before-clip {
+    position: absolute;
+    inset: 0;
+    clip-path: inset(0 calc(100% - var(--pos)) 0 0);
+  }
+  .wk-divider {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: var(--pos);
+    width: 3px;
+    translate: -50% 0;
+    background: var(--color-sheet);
+    z-index: 2;
+  }
+  .wk-grip {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    translate: -50% -50%;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--color-cobalt);
+    border: 3px solid var(--color-sheet);
+    color: #fff;
+  }
+  .wk-grip svg { width: 20px; height: 20px; }
+  .wk-tag {
+    position: absolute;
+    top: 16px;
+    z-index: 3;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: rgb(4 8 15 / 0.75);
+    backdrop-filter: blur(4px);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.9375rem;
+    letter-spacing: 0.12em;
+    color: var(--color-sheet);
+  }
+  .wk-tag-l { left: 16px; }
+  .wk-tag-r { right: 16px; color: var(--color-cobalt-lift); }
+  .wk-caption {
+    margin-top: 16px;
+    text-align: center;
+    font-size: 0.9375rem;
+    letter-spacing: 0.12em;
+    color: rgb(245 247 249 / 0.55);
+  }
+
+  /* ---------------- the stories ---------------- */
+  .wk-story {
+    margin-top: 72px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px clamp(40px, 5vw, 96px);
+  }
+  @media (max-width: 899.98px) { .wk-story { grid-template-columns: 1fr; } }
+  .wk-h2 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1.5rem, 1.9vw, 2.125rem);
+    color: var(--color-sheet);
+  }
+  .wk-block p {
+    margin-top: 18px;
+    font-size: 1.25rem;
+    line-height: 1.7;
+    color: rgb(245 247 249 / 0.75);
+  }
+  .wk-land {
+    color: var(--color-cobalt-lift) !important;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.375rem !important;
+  }
+
+  .wk-built-h { margin-top: 64px; text-align: center; }
+  .wk-built {
+    list-style: none;
+    margin: 28px auto 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px clamp(40px, 5vw, 96px);
+    max-width: 68em;
+  }
+  @media (max-width: 899.98px) { .wk-built { grid-template-columns: 1fr; } }
+  .wk-built li {
+    display: flex;
+    gap: 12px;
+    align-items: baseline;
+    padding: 16px 20px;
+    border-radius: 12px;
+    background: rgb(245 247 249 / 0.03);
+    border: 1px solid rgb(245 247 249 / 0.1);
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: rgb(245 247 249 / 0.78);
+  }
+  .wk-built li i { font-style: normal; font-size: 0.625rem; color: rgb(77 124 255 / 0.8); }
+
+  .wk-case-link { margin-top: 40px; text-align: center; }
+  .wk-link {
+    font-size: 1.125rem;
+    color: var(--color-cobalt-lift);
+    text-decoration: none;
+    border-bottom: 1px solid rgb(77 124 255 / 0.45);
+    padding-bottom: 2px;
+    transition: color 180ms var(--ease), border-color 180ms var(--ease);
+  }
+  .wk-link:hover { color: var(--color-sheet); border-color: rgb(245 247 249 / 0.5); }
+
+  /* ---------------- pattern + honest + close ---------------- */
+  .wk-h2c {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1.875rem, 2.6vw, 3rem);
+    line-height: 1.12;
+    letter-spacing: -0.015em;
+    color: var(--color-sheet);
+    text-align: center;
+    margin-inline: auto;
+    max-width: 24em;
+  }
+  .wk-pattern {
+    padding-block: 96px;
+    border-top: 1px solid rgb(245 247 249 / 0.1);
+  }
+  .wk-prose { margin-top: 28px; }
+  .wk-prose p {
+    margin: 20px auto 0;
+    font-size: 1.25rem;
+    line-height: 1.7;
+    color: rgb(245 247 249 / 0.75);
+    max-width: 42em;
+  }
+  .wk-prose strong { color: var(--color-sheet); font-weight: 600; }
+  .wk-prose .wk-land { text-align: center; }
+
+  .wk-honest { padding-block: 0 96px; }
+  .wk-honest-panel {
+    padding: clamp(32px, 4vw, 56px);
+    border-radius: 12px;
+    background: rgb(29 78 216 / 0.12);
+    border: 1px solid rgb(77 124 255 / 0.35);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    text-align: center;
+  }
+  .wk-prose-onpanel p { text-align: left; color: rgb(245 247 249 / 0.8); }
+  .wk-honest-panel .wk-link { margin-top: 24px; }
+
+  .wk-close {
+    padding-block: 110px;
+    text-align: center;
+    background: #04080F;
+    border-top: var(--hairline-dark);
+  }
+  .wk-close-body {
+    margin: 16px auto 0;
+    font-size: 1.3125rem;
+    line-height: 1.65;
+    color: rgb(245 247 249 / 0.75);
+    max-width: 36em;
+  }
+  .wk-ctas { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin-top: 36px; }
+  .wk-ghost { color: var(--color-sheet); border-color: rgb(245 247 249 / 0.3); }
+  .wk-ghost:hover { border-color: var(--color-sheet); }
+  .wk-reply { margin-top: 20px; font-size: 0.9375rem; letter-spacing: 0.12em; color: rgb(245 247 249 / 0.45); }
+
+  @media (max-width: 899.98px) {
+    .wk-hero { padding-block: 110px 64px; }
+    .wk-case, .wk-pattern { padding-block: 64px; }
+    .wk-story { margin-top: 48px; }
+  }
 </style>
+
+<script>
+  /* Import #12's mechanic, hand-rolled: pointer drag (and keyboard
+     arrows) drive --pos, which clips the before layer and places the
+     divider. One handler wires every slider on the page. */
+  document.querySelectorAll<HTMLElement>("[data-compare]").forEach((el) => {
+    let dragging = false;
+    const set = (clientX: number) => {
+      const r = el.getBoundingClientRect();
+      const pct = Math.max(0, Math.min(100, ((clientX - r.left) / r.width) * 100));
+      el.style.setProperty("--pos", pct + "%");
+      el.setAttribute("aria-valuenow", String(Math.round(pct)));
+    };
+    el.addEventListener("pointerdown", (e) => {
+      dragging = true;
+      el.setPointerCapture(e.pointerId);
+      set(e.clientX);
+    });
+    el.addEventListener("pointermove", (e) => { if (dragging) set(e.clientX); });
+    el.addEventListener("pointerup", () => { dragging = false; });
+    el.addEventListener("pointercancel", () => { dragging = false; });
+    el.addEventListener("keydown", (e) => {
+      const now = Number(el.getAttribute("aria-valuenow") || 50);
+      if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
+        e.preventDefault();
+        const next = Math.max(0, Math.min(100, now + (e.key === "ArrowRight" ? 5 : -5)));
+        el.style.setProperty("--pos", next + "%");
+        el.setAttribute("aria-valuenow", String(next));
+      }
+    });
+  });
+</script>
