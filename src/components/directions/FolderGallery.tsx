@@ -78,6 +78,10 @@ export default function FolderGallery() {
   const [returning, setReturning] = useState<number | null>(null);
   const [portal, setPortal] = useState(false);
   const [target, setTarget] = useState<ExpandTarget>({ x: 0, y: 0, scale: 1, pw: 0, ph: 0 });
+  /* Phones (28 Aug, owner: two of the three fanned designs sat off-screen):
+     under 768px the open fan goes VERTICAL — a column centred in the
+     viewport, scaled so all three fit. null = desktop's horizontal fan. */
+  const [stack, setStack] = useState<{ y0: number; step: number; scale: number } | null>(null);
 
   const rootRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -96,6 +100,7 @@ export default function FolderGallery() {
     setIsOpen(true);
     const t = window.setTimeout(() => {
       rootRef.current?.scrollIntoView({ block: "center", behavior: "instant" });
+      computeStack(); // the scroll just moved the anchor the stack centres on
       expand(target);
     }, 120);
     return () => window.clearTimeout(t);
@@ -112,6 +117,32 @@ export default function FolderGallery() {
     ro.observe(card);
     return () => ro.disconnect();
   }, []);
+
+  /* The stack pose is measured, not styled: card height from the live
+     card, the column centred on the viewport via the same bottom-56
+     anchor arithmetic expand() uses, and the scale shrunk until three
+     cards and their gaps fit the screen height. */
+  const computeStack = useCallback(() => {
+    const root = rootRef.current;
+    const card = cardRefs.current[1];
+    if (!root || !card || window.innerWidth >= 768) {
+      setStack(null);
+      return;
+    }
+    const rect = root.getBoundingClientRect();
+    const cardH = card.offsetWidth * 0.625;
+    const vh = window.innerHeight;
+    const scale = Math.max(0.85, Math.min(OPEN_SCALE, ((vh - 170) / 3 - 14) / cardH));
+    const baseCy = rect.bottom - 56 - cardH / 2;
+    setStack({ y0: vh / 2 - baseCy, step: cardH * scale + 14, scale });
+  }, []);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    computeStack();
+    window.addEventListener("resize", computeStack);
+    return () => window.removeEventListener("resize", computeStack);
+  }, [isOpen, computeStack]);
 
   const closeFolder = useCallback(() => {
     setIsOpen(false);
@@ -167,10 +198,11 @@ export default function FolderGallery() {
   const collapse = useCallback(() => {
     setPortal(false);
     setReturning(expanded);
+    computeStack(); // re-centre the column before the card springs home
     setExpanded(null);
     const card = expanded !== null ? cardRefs.current[expanded] : null;
     card?.focus({ preventScroll: true });
-  }, [expanded]);
+  }, [expanded, computeStack]);
 
   // Escape: an expanded design collapses first; a second press closes the
   // folder. Focus follows: close control while expanded, card on return,
@@ -277,19 +309,28 @@ export default function FolderGallery() {
                     ? isExpanded
                       ? { x: target.x, y: target.y, rotate: 0, scale: target.scale, zIndex: 300 }
                       : isOpen
-                        ? {
-                            x: openX(offset),
-                            y: -60,
-                            rotate: 0,
-                            scale: OPEN_SCALE,
-                            // a returning card rides above the fading scrim
-                            zIndex: returning === i ? 160 : 50,
-                          }
+                        ? stack
+                          ? {
+                              // phone: the vertical column, centred on screen
+                              x: 0,
+                              y: stack.y0 + offset * stack.step,
+                              rotate: 0,
+                              scale: stack.scale,
+                              zIndex: returning === i ? 160 : 50,
+                            }
+                          : {
+                              x: openX(offset),
+                              y: -60,
+                              rotate: 0,
+                              scale: OPEN_SCALE,
+                              // a returning card rides above the fading scrim
+                              zIndex: returning === i ? 160 : 50,
+                            }
                         : closedPose(offset, hoverFolder, i)
                     : undefined
                 }
-                whileHover={selectable ? { scale: OPEN_SCALE * 1.05, zIndex: 100 } : undefined}
-                whileDrag={selectable ? { scale: OPEN_SCALE * 1.08, rotate: 3, zIndex: 150 } : undefined}
+                whileHover={selectable ? { scale: (stack ? stack.scale : OPEN_SCALE) * 1.05, zIndex: 100 } : undefined}
+                whileDrag={selectable ? { scale: (stack ? stack.scale : OPEN_SCALE) * 1.08, rotate: 3, zIndex: 150 } : undefined}
               >
                 <direction.Comp />
               </motion.div>

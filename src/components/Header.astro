@@ -1,9 +1,10 @@
 ---
 // Header (§6) — sticky, 68px, and dark (27 Aug: the owner wants the site's
 // undertone darker, starting here). It floats its ink-black surface over
-// every section as the page scrolls. Every nav target lives on this page,
-// so below 820px the nav simply hides and the button carries on: no
-// hamburger.
+// every section as the page scrolls. 28 Aug (owner: "no dropdown visible
+// on mobile"): now that the nav targets are real pages, below 820px a
+// hamburger opens a dropdown of the same links — the old nav-just-hides
+// rule died with the single-page era.
 ---
 
 <header class="site-head" id="top">
@@ -19,7 +20,19 @@
       <a href="/about">About</a>
     </nav>
     <a class="btn btn-primary" href="/booking">Book a visit</a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-menu" aria-label="Open the menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true">
+        <path class="nt-bars" d="M4 7h16M4 12h16M4 17h16" />
+        <path class="nt-x" d="M6 6l12 12M18 6L6 18" />
+      </svg>
+    </button>
   </div>
+  <nav class="nav-drop" id="site-menu" aria-label="Primary, mobile">
+    <a href="/">Home</a>
+    <a href="/work">Work</a>
+    <a href="/pricing">Pricing</a>
+    <a href="/about">About</a>
+  </nav>
 </header>
 
 <script>
@@ -40,6 +53,35 @@
     );
     io.observe(hero);
   }
+
+  /* The mobile menu. Same failsafe stance: closed is the default pose and
+     only this script opens it, so a script-dead environment shows the bar
+     it always showed. Closes on link choice, Escape (focus returned),
+     any press outside the header, and on growing past the breakpoint. */
+  const toggle = document.querySelector<HTMLButtonElement>(".nav-toggle");
+  if (head && toggle) {
+    const setOpen = (open: boolean) => {
+      head.classList.toggle("menu-open", open);
+      toggle.setAttribute("aria-expanded", String(open));
+      toggle.setAttribute("aria-label", open ? "Close the menu" : "Open the menu");
+    };
+    toggle.addEventListener("click", () => setOpen(!head.classList.contains("menu-open")));
+    document.querySelectorAll(".nav-drop a").forEach((a) =>
+      a.addEventListener("click", () => setOpen(false))
+    );
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && head.classList.contains("menu-open")) {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+    document.addEventListener("pointerdown", (e) => {
+      if (head.classList.contains("menu-open") && !head.contains(e.target as Node)) setOpen(false);
+    });
+    window.matchMedia("(min-width: 820px)").addEventListener("change", (mq) => {
+      if (mq.matches) setOpen(false);
+    });
+  }
 </script>
 
 <style>
@@ -55,8 +97,9 @@
     transition: background-color 240ms var(--ease), border-color 240ms var(--ease);
   }
   /* the clear state: no surface, no rule, no blur — the hero's own ground
-     shows through until it has fully passed */
-  .site-head--clear {
+     shows through until it has fully passed. An open menu overrides it:
+     links need a surface to sit on. */
+  .site-head--clear:not(.menu-open) {
     background: transparent;
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
@@ -94,8 +137,49 @@
   }
   .nav a:hover { color: var(--color-cobalt-lift); }
 
+  /* ---------- the mobile menu ---------- */
+  .nav-toggle {
+    display: none;
+    width: 44px; /* touch minimum */
+    height: 44px;
+    padding: 0;
+    background: none;
+    border: 0;
+    color: var(--color-sheet);
+    cursor: pointer;
+  }
+  .nav-toggle svg { width: 24px; height: 24px; display: block; margin-inline: auto; }
+  .nav-toggle .nt-x { display: none; }
+  .menu-open .nav-toggle .nt-bars { display: none; }
+  .menu-open .nav-toggle .nt-x { display: block; }
+
+  .nav-drop {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    background: var(--color-ink-deep);
+    border-bottom: var(--hairline-dark);
+    padding: 8px 24px 16px;
+  }
+  .menu-open .nav-drop { display: flex; }
+  .nav-drop a {
+    padding: 14px 0;
+    font-size: 1.125rem;
+    font-weight: 500;
+    text-decoration: none;
+    color: rgb(245 247 249 / 0.85);
+    border-bottom: 1px solid rgb(245 247 249 / 0.08);
+    transition: color 180ms var(--ease);
+  }
+  .nav-drop a:last-child { border-bottom: 0; }
+  .nav-drop a:hover { color: var(--color-cobalt-lift); }
+
   @media (max-width: 819.98px) {
     .nav { display: none; }
     .site-head .btn { margin-left: auto; }
+    .nav-toggle { display: block; }
   }
 </style>
