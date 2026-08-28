@@ -1,12 +1,15 @@
 ---
-// /about — the real page (28 Aug, owner: "complete and sophisticated").
-// The long-form answer to WHO YOU'D BE HIRING: the introduction with the
-// meeting portrait, the visit story rehomed from git history (the old B4
-// prose — David Jackson's workshop, WulfTek's events — finally has the
-// home the memory notes promised it), the way of working, the build side,
-// a facts rail, and the ask. Owner-supplied photography throughout
-// (about-meeting / about-window / about-studio, from the same shoot as
-// the homepage portrait). noindex dropped; /about joins the sitemap.
+// /about — the real page (28 Aug, owner: "complete and sophisticated",
+// then "more rustic and authentic… reflect the personal element").
+// Same scheme, different material: the photographs hang as matted PRINTS
+// (sheet-white mattes, tape corners, a degree or two off square,
+// straightening on touch), the story reads as a LETTER (Fraunces — already
+// in the site head for the heritage demo — with a drop cap), and the
+// rules are dashed, hand-ruled lines rather than machine hairlines.
+// Space Grotesk keeps the headings so the page is still unmistakably this
+// site. Copy unchanged from the first build; the visit story remains the
+// rehomed pre-restage B4 prose. noindex stays dropped; /about is in the
+// sitemap.
 import Base from "../layouts/Base.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
@@ -45,16 +48,18 @@ const ways = [
               every job starts.
             </p>
           </div>
-          <div class="ab-photo" data-rv>
-            <figure class="ab-frame">
+          <div class="ab-photo ab-tilt-l" data-rv>
+            <figure class="ab-print">
+              <span class="ab-tape ab-tape-l" aria-hidden="true"></span>
+              <span class="ab-tape ab-tape-r" aria-hidden="true"></span>
               <img
                 src="/images/about-meeting.webp"
                 width="1443" height="941"
                 alt="Talon Herring in a first meeting — armchair, notebook open, client across the table."
                 fetchpriority="high"
               />
+              <figcaption class="ab-note">The first visit — notebook first.</figcaption>
             </figure>
-            <p class="ab-caption t-mono">THE FIRST VISIT<i>◆</i>NOTEBOOK FIRST</p>
           </div>
         </div>
       </div>
@@ -66,7 +71,7 @@ const ways = [
         <p class="t-micro eyebrow" data-rv>WHERE IT COMES FROM</p>
         <h2 class="t-h2 ab-h2" data-rv>The difference never comes out in a&nbsp;questionnaire.</h2>
         <div class="ab-story-body" data-rv>
-          <p>
+          <p class="ab-letter-open">
             Before I design anything, I turn up. I’ve stood in David Jackson’s workshop
             watching timber become something that ends up in listed buildings. I’ve been
             to events with WulfTek to hear what their customers actually say about them —
@@ -91,16 +96,18 @@ const ways = [
     <section class="ab-split g-ink">
       <div class="ab-wrap">
         <div class="ab-split-grid">
-          <div class="ab-photo" data-rv>
-            <figure class="ab-frame">
+          <div class="ab-photo ab-tilt-r" data-rv>
+            <figure class="ab-print">
+              <span class="ab-tape ab-tape-l" aria-hidden="true"></span>
+              <span class="ab-tape ab-tape-r" aria-hidden="true"></span>
               <img
                 src="/images/about-window.webp"
                 width="1600" height="900"
                 loading="lazy" decoding="async"
                 alt="Reading back through the visit notes — notebook against the laptop, Telford outside the window."
               />
+              <figcaption class="ab-note">The notes do the designing. Telford, out the window.</figcaption>
             </figure>
-            <p class="ab-caption t-mono">THE NOTES DO THE DESIGNING<i>◆</i>TELFORD</p>
           </div>
           <div class="ab-split-copy" data-rv>
             <p class="t-micro eyebrow">HOW I WORK</p>
@@ -139,16 +146,18 @@ const ways = [
             </p>
             <a class="ab-link" href="/#process">See the five steps →</a>
           </div>
-          <div class="ab-photo" data-rv>
-            <figure class="ab-frame">
+          <div class="ab-photo ab-tilt-l" data-rv>
+            <figure class="ab-print">
+              <span class="ab-tape ab-tape-l" aria-hidden="true"></span>
+              <span class="ab-tape ab-tape-r" aria-hidden="true"></span>
               <img
                 src="/images/about-studio.webp"
                 width="1600" height="900"
                 loading="lazy" decoding="async"
                 alt="At the desk, building — the quiet half of the job."
               />
+              <figcaption class="ab-note">The quiet half — designed, then shipped.</figcaption>
             </figure>
-            <p class="ab-caption t-mono">THE QUIET HALF<i>◆</i>DESIGNED, THEN SHIPPED</p>
           </div>
         </div>
 
@@ -162,7 +171,7 @@ const ways = [
     <section class="ab-close g-ink">
       <div class="ab-wrap">
         <h2 class="t-h2 ab-h2">Let’s find what makes you&nbsp;different.</h2>
-        <p class="lede ab-close-lede">
+        <p class="ab-close-lede">
           The first visit is free within an hour of Telford — and whatever we find is
           yours to keep, whether or not we go ahead.
         </p>
@@ -185,55 +194,72 @@ const ways = [
   .ab-h2 { color: var(--color-sheet); }
 
   /* ---------- shared voice ---------- */
+  /* the running text goes to Fraunces — the letter voice, not the panel
+     voice; the scheme's colours are untouched */
   .ab-body {
     margin-top: 20px;
-    font-size: 1.1875rem;
-    line-height: 1.65;
-    color: rgb(245 247 249 / 0.78);
-    max-width: 40em;
+    font-family: "Fraunces", Georgia, serif;
+    font-size: 1.25rem;
+    line-height: 1.7;
+    color: rgb(245 247 249 / 0.8);
+    max-width: 38em;
   }
   .ab-link {
     display: inline-block;
     margin-top: 26px;
-    font-size: 1.0625rem;
+    font-family: "Fraunces", Georgia, serif;
+    font-style: italic;
+    font-size: 1.125rem;
     color: var(--color-cobalt-lift);
     text-decoration: none;
-    transition: color 180ms var(--ease);
+    border-bottom: 1px dashed rgb(77 124 255 / 0.45);
+    padding-bottom: 2px;
+    transition: color 180ms var(--ease), border-color 180ms var(--ease);
   }
-  .ab-link:hover { color: var(--color-sheet); }
+  .ab-link:hover { color: var(--color-sheet); border-color: rgb(245 247 249 / 0.5); }
 
-  /* the frame language: hairline, radius, deep shadow, cobalt hover */
-  .ab-frame {
+  /* ---------- the prints ---------- */
+  /* photographs hang as matted prints: a sheet-white matte, tape at the
+     corners, a degree or two off square — straightening when touched */
+  .ab-photo { display: flex; justify-content: center; }
+  .ab-print {
+    position: relative;
     margin: 0;
-    border: 1px solid rgb(245 247 249 / 0.16);
-    border-radius: 12px;
-    overflow: hidden;
+    background: var(--color-sheet);
+    padding: 14px 14px 12px;
     box-shadow:
-      0 40px 90px -30px rgb(0 0 0 / 0.6),
-      0 12px 30px -12px rgb(0 0 0 / 0.5);
-    transition: border-color 220ms var(--ease), box-shadow 220ms var(--ease);
+      0 24px 60px -18px rgb(0 0 0 / 0.65),
+      0 6px 18px -6px rgb(0 0 0 / 0.5);
+    transition: rotate 320ms var(--ease), box-shadow 320ms var(--ease);
   }
-  .ab-photo:hover .ab-frame {
-    border-color: rgb(77 124 255 / 0.45);
+  .ab-tilt-l .ab-print { rotate: -1.6deg; }
+  .ab-tilt-r .ab-print { rotate: 1.3deg; }
+  .ab-photo:hover .ab-print {
+    rotate: 0deg;
     box-shadow:
-      0 40px 90px -30px rgb(0 0 0 / 0.7),
-      0 0 40px -8px rgb(77 124 255 / 0.25);
+      0 30px 70px -18px rgb(0 0 0 / 0.7),
+      0 6px 18px -6px rgb(0 0 0 / 0.5);
   }
-  .ab-frame img { display: block; width: 100%; height: auto; }
-  .ab-caption {
-    margin-top: 16px;
+  .ab-print img { display: block; width: 100%; height: auto; }
+  .ab-tape {
+    position: absolute;
+    top: -12px;
+    width: 74px;
+    height: 26px;
+    background: rgb(245 247 249 / 0.22);
+    border-inline: 1px solid rgb(245 247 249 / 0.12);
+    backdrop-filter: blur(1px);
+  }
+  .ab-tape-l { left: 8%; rotate: -6deg; }
+  .ab-tape-r { right: 8%; rotate: 5deg; }
+  /* the caption is written on the matte, not printed under glass */
+  .ab-note {
+    padding: 10px 4px 2px;
+    font-family: "Fraunces", Georgia, serif;
+    font-style: italic;
+    font-size: 1.0625rem;
     text-align: center;
-    font-size: 0.9375rem;
-    letter-spacing: 0.14em;
-    color: rgb(245 247 249 / 0.55);
-  }
-  .ab-caption i,
-  .ab-facts i {
-    font-style: normal;
-    margin-inline: 12px;
-    font-size: 0.625rem;
-    vertical-align: 1px;
-    color: rgb(77 124 255 / 0.7);
+    color: var(--color-ink);
   }
 
   /* ---------- the introduction ---------- */
@@ -260,25 +286,35 @@ const ways = [
   }
   .ab-hero-copy .ab-body:first-of-type { margin-top: 28px; }
 
-  /* ---------- the story ---------- -*/
+  /* ---------- the story: a letter ---------- */
   .ab-story {
     padding-block: 110px;
     background:
       radial-gradient(700px 400px at 50% 0%, rgb(29 78 216 / 0.08), transparent 72%),
       var(--color-ink-deep);
-    border-top: 1px solid rgb(245 247 249 / 0.08);
+    border-top: 1px dashed rgb(245 247 249 / 0.14);
   }
   .ab-story-body {
-    margin-top: 28px;
-    columns: 1;
-    max-width: 44em;
+    margin-top: 30px;
+    max-width: 42em;
   }
   .ab-story-body p {
-    font-size: 1.1875rem;
-    line-height: 1.7;
-    color: rgb(245 247 249 / 0.78);
+    font-family: "Fraunces", Georgia, serif;
+    font-size: 1.3125rem;
+    line-height: 1.75;
+    color: rgb(245 247 249 / 0.82);
   }
-  .ab-story-body p + p { margin-top: 18px; }
+  .ab-story-body p + p { margin-top: 20px; }
+  /* the letter opens with a drop cap — Fraunces at its most personal */
+  .ab-letter-open::first-letter {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 600;
+    font-size: 3.4em;
+    line-height: 0.82;
+    float: left;
+    padding: 6px 12px 0 0;
+    color: var(--color-cobalt-lift);
+  }
 
   /* ---------- the splits ---------- */
   .ab-split {
@@ -286,7 +322,7 @@ const ways = [
     background:
       radial-gradient(900px 500px at 16% 30%, rgb(29 78 216 / 0.12), transparent 70%),
       var(--color-ink-deep);
-    border-top: 1px solid rgb(245 247 249 / 0.08);
+    border-top: 1px dashed rgb(245 247 249 / 0.14);
   }
   .ab-split + .ab-split {
     background:
@@ -302,25 +338,37 @@ const ways = [
   .ab-rows { margin-top: 28px; max-width: 40em; }
   .ab-row {
     padding-block: 14px;
-    border-top: 1px solid rgb(245 247 249 / 0.12);
+    border-top: 1px dashed rgb(245 247 249 / 0.18);
     display: grid;
     grid-template-columns: 200px minmax(0, 1fr);
     gap: 8px 20px;
     align-items: baseline;
   }
-  .ab-row:last-child { border-bottom: 1px solid rgb(245 247 249 / 0.12); }
+  .ab-row:last-child { border-bottom: 1px dashed rgb(245 247 249 / 0.18); }
   .ab-row-key { color: var(--color-cobalt-lift); font-weight: 700; letter-spacing: 0.08em; }
-  .ab-row-value { font-size: 1.0625rem; line-height: 1.55; color: rgb(245 247 249 / 0.8); }
+  .ab-row-value {
+    font-family: "Fraunces", Georgia, serif;
+    font-size: 1.1875rem;
+    line-height: 1.6;
+    color: rgb(245 247 249 / 0.82);
+  }
 
   .ab-facts {
     margin-top: 72px;
     padding-top: 24px;
-    border-top: 1px solid rgb(245 247 249 / 0.12);
+    border-top: 1px dashed rgb(245 247 249 / 0.18);
     text-align: center;
     font-size: 0.9375rem;
     letter-spacing: 0.12em;
     line-height: 2;
     color: rgb(245 247 249 / 0.6);
+  }
+  .ab-facts i {
+    font-style: normal;
+    margin-inline: 12px;
+    font-size: 0.625rem;
+    vertical-align: 1px;
+    color: rgb(77 124 255 / 0.7);
   }
 
   /* ---------- the ask ---------- */
@@ -330,9 +378,18 @@ const ways = [
     background:
       radial-gradient(800px 460px at 50% 20%, rgb(29 78 216 / 0.1), transparent 70%),
       #04080F; /* flows into the footer's ground */
-    border-top: var(--hairline-dark);
+    border-top: 1px dashed rgb(245 247 249 / 0.16);
   }
-  .ab-close-lede { margin-inline: auto; margin-top: 14px; max-width: 36em; }
+  .ab-close-lede {
+    margin-inline: auto;
+    margin-top: 14px;
+    max-width: 34em;
+    font-family: "Fraunces", Georgia, serif;
+    font-style: italic;
+    font-size: 1.3125rem;
+    line-height: 1.65;
+    color: rgb(245 247 249 / 0.75);
+  }
   .ab-ctas { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin-top: 36px; }
   .ab-ghost { color: var(--color-sheet); border-color: rgb(245 247 249 / 0.3); }
   .ab-ghost:hover { border-color: var(--color-sheet); }
@@ -342,10 +399,10 @@ const ways = [
     .ab-hero { padding-block: 120px 88px; }
     .ab-story, .ab-split { padding-block: 88px; }
     .ab-hero-grid, .ab-split-grid { grid-template-columns: 1fr; gap: 48px; }
-    /* mirrored split keeps copy first when stacked */
     .ab-split-rev .ab-photo { order: 2; }
     .ab-row { grid-template-columns: 1fr; gap: 4px; }
     .ab-facts { margin-top: 56px; line-height: 2.2; }
     .ab-close { padding-block: 96px; }
+    .ab-tilt-l .ab-print, .ab-tilt-r .ab-print { rotate: 0deg; }
   }
 </style>
