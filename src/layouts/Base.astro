@@ -74,7 +74,12 @@ const fontsHref =
          live section hashes pass untouched. */
       const retired: Record<string, string> = { "#pricing": "/pricing" };
       const dest = retired[location.hash];
-      if (dest) location.replace(dest);
+      /* one attempt per session: browsers that cached the old permanent
+         /pricing→/#pricing redirect would otherwise ping-pong forever */
+      if (dest && !sessionStorage.getItem("ti-anchor-redirect")) {
+        sessionStorage.setItem("ti-anchor-redirect", "1");
+        location.replace(dest);
+      }
     </script>
   </head>
   <body>
