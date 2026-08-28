@@ -72,8 +72,8 @@
 
   <!-- the visible toggle (28 Aug, owner: "add a click here toggle") —
        revealed by the script only where the toy is wired -->
-  <button type="button" class="hero-toy-hint" aria-label="Toggle the laptop handoff">
-    <i aria-hidden="true">◆</i><span>CLICK THE MAC</span>
+  <button type="button" class="hero-toy-hint" aria-label="View a delivered website">
+    <i aria-hidden="true">◆</i><span>CLICK — SEE A SITE I’VE BUILT</span>
   </button>
 
   <!-- The showcase: real client work, straight-on (27 Aug, owner's review:
@@ -652,7 +652,7 @@
       img.removeAttribute("role");
       img.removeAttribute("tabindex");
       img.removeAttribute("aria-label");
-      if (hintLabel) hintLabel.textContent = "CLICK THE MAC";
+      if (hintLabel) hintLabel.textContent = "CLICK — SEE A SITE I’VE BUILT";
     };
     const key = (fn: () => void) => (e: KeyboardEvent) => {
       if (e.key === "Enter" || e.key === " ") { e.preventDefault(); fn(); }
