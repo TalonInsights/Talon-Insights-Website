@@ -26,6 +26,16 @@ import Footer from "../components/Footer.astro";
     <!-- ---------------- HERO ---------------- -->
     <section class="au-hero">
       <div class="au-wrap">
+        <div class="au-about-head au-page-open">
+          <h2 class="au-h2">About</h2>
+          <p>
+            Before anything gets designed, I turn up — time in your workshop watching
+            the work happen, at your events hearing what customers actually say. The
+            difference never comes out in a questionnaire; it comes out on the third
+            visit, in something said offhand. Then we design from it.
+          </p>
+        </div>
+
         <img
           class="au-banner"
           src="/images/about-meeting.webp"
@@ -57,16 +67,6 @@ import Footer from "../components/Footer.astro";
     <!-- ---------------- ABOUT ---------------- -->
     <section class="au-about">
       <div class="au-wrap">
-        <div class="au-about-head">
-          <h2 class="au-h2">About</h2>
-          <p>
-            Before anything gets designed, I turn up — time in your workshop watching
-            the work happen, at your events hearing what customers actually say. The
-            difference never comes out in a questionnaire; it comes out on the third
-            visit, in something said offhand. Then we design from it.
-          </p>
-        </div>
-
         <!-- ---------------- THE THREE-CARD ROW ---------------- -->
         <div class="au-cards">
           <!-- left big image -->
@@ -202,7 +202,8 @@ import Footer from "../components/Footer.astro";
   }
 
   /* ---------------- hero ---------------- */
-  .au-hero { padding-block: 140px 64px; }
+  .au-hero { padding-block: 132px 64px; }
+  .au-page-open { margin-bottom: 48px; }
   .au-banner {
     display: block;
     width: 100%;
@@ -252,7 +253,7 @@ import Footer from "../components/Footer.astro";
   .au-chip svg { width: 16px; height: 16px; }
 
   /* ---------------- about ---------------- */
-  .au-about { padding-block: 80px 120px; }
+  .au-about { padding-block: 24px 120px; }
   .au-about-head {
     display: grid;
     gap: 24px;
@@ -276,7 +277,7 @@ import Footer from "../components/Footer.astro";
 
   /* ---------------- the three-card row ---------------- */
   .au-cards {
-    margin-top: 64px;
+    margin-top: 0;
     display: flex;
     flex-direction: column;
     gap: 24px;
