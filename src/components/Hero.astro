@@ -591,19 +591,36 @@
     if (!img || !inner || !disp) return;
     if (matchMedia("(max-width: 860px)").matches) return;
     if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const theatre = document.querySelector<HTMLElement>(".hero-theatre");
     const prevT = inner.style.transform;
     const prevA = inner.style.animation;
+    const prevThA = theatre ? theatre.style.animation : "";
     inner.style.animation = "none";
     inner.style.transform = "rotateX(-20deg) rotateY(360deg)"; // the landing pose
+    /* a mid-return re-click leaves the theatre mid-swell (scale > 3.1) —
+       neutralise it too, or the display measures oversized */
+    if (theatre) theatre.style.animation = "none";
     const d = disp.getBoundingClientRect();
     inner.style.animation = prevA;
     inner.style.transform = prevT;
+    if (theatre) theatre.style.animation = prevThA;
     if (!d.width) return;
+    /* replays: the previous cycle's fill leaves the img TRANSFORMED —
+       measuring that box poisons the solve (the first play was smooth,
+       every later one jumped). Neutralise for the measurement pass;
+       synchronous, so nothing paints in between. */
+    const prevImgA = img.style.animation;
+    const prevImgT = img.style.transform;
+    img.style.animation = "none";
+    img.style.transform = "none";
     const c0 = img.getBoundingClientRect();
+    img.style.animation = prevImgA;
+    img.style.transform = prevImgT;
     if (!c0.width) return;
     let s = (d.width / c0.width) * 0.97; // keystone widens the bbox ~3%
     let tx = d.x + d.width / 2 - (c0.x + c0.width / 2);
     let ty = d.y + d.height / 2 - (c0.y + c0.height / 2);
+    img.style.animation = "none"; // keep the class animation out of the loop's measurements
     for (let i = 0; i < 5; i++) {
       img.style.transform = `translate(${tx}px, ${ty}px) perspective(1550px) rotateX(-20deg) scale(${s})`;
       const c = img.getBoundingClientRect();
@@ -612,6 +629,7 @@
       s *= d.width / c.width;
     }
     img.style.transform = "";
+    img.style.animation = "";
     img.style.setProperty("--ho-tx", tx.toFixed(1) + "px");
     img.style.setProperty("--ho-ty", ty.toFixed(1) + "px");
     img.style.setProperty("--ho-s", s.toFixed(4));
