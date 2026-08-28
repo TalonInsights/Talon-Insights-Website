@@ -23,6 +23,40 @@ import Footer from "../components/Footer.astro";
 <Base
   title="Talon Insights — Websites & Software, Telford"
   description="You're a specialist. Your website isn't. Websites and software built from repeated in-person visits to West Midlands businesses — designed with you, owned by you outright."
+  schema={{
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "ProfessionalService",
+        "@id": "https://taloninsights.co.uk/#business",
+        name: "Talon Insights",
+        description:
+          "Websites and custom software for specialist businesses, built from repeated in-person visits — one person, start to finish.",
+        url: "https://taloninsights.co.uk/",
+        telephone: "+447742082423",
+        email: "hello@taloninsights.co.uk",
+        image: "https://taloninsights.co.uk/og-card.png",
+        founder: { "@type": "Person", name: "Talon Herring" },
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: "Telford",
+          addressRegion: "Shropshire",
+          addressCountry: "GB",
+        },
+        areaServed: [
+          "Telford", "Shrewsbury", "Wolverhampton", "Birmingham",
+          "Stafford", "Worcester", "Shropshire", "West Midlands",
+        ],
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://taloninsights.co.uk/#website",
+        url: "https://taloninsights.co.uk/",
+        name: "Talon Insights",
+        publisher: { "@id": "https://taloninsights.co.uk/#business" },
+      },
+    ],
+  }}
 >
   <Header />
   <main>

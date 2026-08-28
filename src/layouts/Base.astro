@@ -4,10 +4,11 @@ import "../styles/theme.css";
 interface Props {
   path?: string;
   noindex?: boolean;
+  schema?: object;
   title: string;
   description: string;
 }
-const { title, description, path = "/", noindex = false } = Astro.props;
+const { title, description, path = "/", noindex = false, schema } = Astro.props;
 const pageUrl = "https://taloninsights.co.uk" + path;
 
 // §1 revised 27 Aug (owner: "fix the fonts… deploy sitewide") — the site
@@ -48,6 +49,15 @@ const fontsHref =
     <meta property="og:url" content={pageUrl} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
+    <meta property="og:image" content="https://taloninsights.co.uk/og-card.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Talon Insights — the falcon-feather mark on ink" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content="https://taloninsights.co.uk/og-card.png" />
+    {schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
 
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="icon" type="image/png" href="/favicon.png" />

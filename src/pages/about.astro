@@ -19,6 +19,30 @@ import Footer from "../components/Footer.astro";
   title="About — Talon Insights"
   description="Who you’d be hiring: one person who runs the project and builds it — a qualified Associate Project Manager who ships full-stack, working from Telford."
   path="/about"
+  schema={{
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "AboutPage",
+        "@id": "https://taloninsights.co.uk/about#page",
+        url: "https://taloninsights.co.uk/about",
+        name: "About — Talon Insights",
+        about: { "@id": "https://taloninsights.co.uk/#business" },
+      },
+      {
+        "@type": "Person",
+        "@id": "https://taloninsights.co.uk/about#talon",
+        name: "Talon Herring",
+        jobTitle: "Founder — websites & software",
+        worksFor: { "@id": "https://taloninsights.co.uk/#business" },
+        address: { "@type": "PostalAddress", addressLocality: "Telford", addressRegion: "Shropshire", addressCountry: "GB" },
+        knowsAbout: [
+          "Web design", "Custom software", "Project management",
+          "Supabase", "Stripe", "Three.js",
+        ],
+      },
+    ],
+  }}
 >
   <Header />
   <main class="au">
@@ -27,7 +51,7 @@ import Footer from "../components/Footer.astro";
     <section class="au-hero">
       <div class="au-wrap">
         <div class="au-about-head au-page-open">
-          <h2 class="au-h2">About</h2>
+          <p class="au-h2">About</p><!-- label, not a heading: the h1 lives below -->
           <p>
             Before anything gets designed, I turn up — time in your workshop watching
             the work happen, at your events hearing what customers actually say. The
