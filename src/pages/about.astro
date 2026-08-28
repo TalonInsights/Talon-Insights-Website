@@ -1,24 +1,18 @@
 ---
-// /about — third take (28 Aug, owner: "background looks AI… keeping only
-// the colour scheme, fresh take on everything else"). The glow-washes,
-// shadows, mattes and tilts are all gone. This is a PRINTED DOCUMENT on
-// flat ink: a masthead between double rules, movements numbered in a
-// margin rail, photographs set as bordered PLATES with figure lines,
-// index rows with dot leaders, and a colophon-style facts block. No
-// gradient anywhere on the page; the only colours are the scheme's own —
-// ink-deep, the deeper close, sheet, cobalt-lift, mono greys. Copy
-// unchanged (the rehomed visit story included). Fraunces keeps the
-// letter voice; Space Grotesk and the mono keep the site's identity.
+// /about — fourth take (28 Aug, owner: "pull an about page from 21st dev
+// and implement the colour scheme — freedom over everything else").
+// This IS the 21st import: ruixen.ui "About Page" (demo 8581), adopted
+// faithfully — the rounded hero banner, the two-tone split headline with
+// its chip CTA, the About header pair, and the three-card row (big image
+// left; a dark media card with gradient fade + outline button, and an
+// image card with overlay text, both scaling on hover). Translated from
+// Next/shadcn/framer to plain Astro + scoped CSS per §7 (zero deps: the
+// hover springs are CSS transitions, the Buttons are hand-rolled). Only
+// the palette changed: ink-deep ground, sheet type, cobalt accents, the
+// deep close black for the dark card. Photography is the owner's shoot.
 import Base from "../layouts/Base.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-
-const ways = [
-  { key: "ON SITE", value: "Time where you work, at your events, with your customers" },
-  { key: "THE WORD SURVEY", value: "The phrases your customers use that nobody’s competing for" },
-  { key: "DIRECTIONS FIRST", value: "Real options before any code — chosen by you" },
-  { key: "OPEN LINE", value: "Message me during the build; ideas fold in as they come" },
-];
 ---
 
 <Base
@@ -27,178 +21,105 @@ const ways = [
   path="/about"
 >
   <Header />
-  <main class="ab g-ink">
-    <div class="ab-wrap">
+  <main class="au">
 
-      <!-- ---------- masthead ---------- -->
-      <header class="ab-masthead">
-        <p class="t-mono">TALON INSIGHTS — ABOUT</p>
-        <p class="t-mono">TELFORD · SHROPSHIRE</p>
-      </header>
+    <!-- ---------------- HERO ---------------- -->
+    <section class="au-hero">
+      <div class="au-wrap">
+        <img
+          class="au-banner"
+          src="/images/about-meeting.webp"
+          width="1443" height="941"
+          alt="Talon Herring in a first meeting — armchair, notebook open, client across the table."
+          fetchpriority="high"
+        />
 
-      <!-- ---------- 01 · the introduction ---------- -->
-      <section class="ab-mov">
-        <div class="ab-rail" aria-hidden="true"><span class="t-mono">01</span></div>
-        <div class="ab-mov-body">
-          <p class="t-micro eyebrow">THE INTRODUCTION</p>
-          <div class="ab-intro-grid">
-            <div>
-              <h1 class="ab-h1">One person. Both halves of the&nbsp;job.</h1>
-              <p class="ab-body" data-rv>
-                Most developers can’t run a project to time and budget. Most project managers
-                can’t build. I do both — and it’s just me, which is the point: the person you
-                meet on site is the person who designs, builds, and answers the phone.
-              </p>
-              <p class="ab-body" data-rv>
-                Talon Insights exists because the businesses worth building for are
-                specialists — and their websites almost never say so. Finding what the page
-                should say takes time in the room where the work happens. So that’s where
-                every job starts.
-              </p>
-            </div>
-            <figure class="ab-plate" data-rv>
-              <figcaption class="ab-fig t-mono">FIG. 1 — THE FIRST VISIT, NOTEBOOK FIRST</figcaption>
-              <img
-                src="/images/about-meeting.webp"
-                width="1443" height="941"
-                alt="Talon Herring in a first meeting — armchair, notebook open, client across the table."
-                fetchpriority="high"
-              />
-            </figure>
+        <div class="au-hero-grid">
+          <h1 class="au-headline">
+            Talon Insights is <span class="au-accent">one person</span>{" "}
+            <span class="au-dim">— the project manager and the builder in the same chair.</span>
+          </h1>
+          <div class="au-hero-side">
+            <p>
+              Most developers can’t run a project to time and budget. Most project
+              managers can’t build. I do both — and the person you meet on site is the
+              person who designs, builds, and answers the phone.
+            </p>
+            <a class="au-chip" href="/booking">
+              <span>Book a visit</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
+            </a>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- ---------- 02 · where it comes from ---------- -->
-      <section class="ab-mov">
-        <div class="ab-rail" aria-hidden="true"><span class="t-mono">02</span></div>
-        <div class="ab-mov-body">
-          <p class="t-micro eyebrow">WHERE IT COMES FROM</p>
-          <div class="ab-story-grid">
-            <div class="ab-story-text" data-rv>
-              <h2 class="t-h2 ab-h2">The difference never comes out in a&nbsp;questionnaire.</h2>
-              <p class="ab-body">
-                Before I design anything, I turn up. I’ve stood in David Jackson’s workshop
-                watching timber become something that ends up in listed buildings. I’ve been
-                to events with WulfTek to hear what their customers actually say about them —
-                not what the website says.
-              </p>
-              <p class="ab-body">
-                That’s where the difference lives. It comes out on the third visit, in
-                something said offhand — a phrase a customer uses, a step in the process
-                nobody thought was worth mentioning, the thing the owner apologises for that
-                is actually the whole reason people come back.
-              </p>
-              <p class="ab-body">
-                Then we design from it. You see real directions before any code, you tell me
-                what’s wrong with them, and you can message me the moment you have a better
-                idea — all the way through. It’s just me, so there’s nobody in&nbsp;between.
-              </p>
-            </div>
-            <aside class="ab-pull" data-rv>
-              <p>“It comes out on the third visit, in something said&nbsp;offhand.”</p>
-            </aside>
-          </div>
+    <!-- ---------------- ABOUT ---------------- -->
+    <section class="au-about">
+      <div class="au-wrap">
+        <div class="au-about-head">
+          <h2 class="au-h2">About</h2>
+          <p>
+            Before anything gets designed, I turn up — time in your workshop watching
+            the work happen, at your events hearing what customers actually say. The
+            difference never comes out in a questionnaire; it comes out on the third
+            visit, in something said offhand. Then we design from it.
+          </p>
         </div>
-      </section>
 
-      <!-- ---------- 03 · how I work ---------- -->
-      <section class="ab-mov">
-        <div class="ab-rail" aria-hidden="true"><span class="t-mono">03</span></div>
-        <div class="ab-mov-body">
-          <p class="t-micro eyebrow">HOW I WORK</p>
-          <div class="ab-split-grid">
-            <div data-rv>
-              <h2 class="t-h2 ab-h2">The notebook fills before the laptop&nbsp;opens.</h2>
-              <dl class="ab-index">
-                {ways.map((row) => (
-                  <div class="ab-index-row">
-                    <dt class="t-mono">{row.key}</dt>
-                    <dd>{row.value}</dd>
-                  </div>
-                ))}
-              </dl>
-              <a class="ab-link" href="/#method">See the approach in full →</a>
-            </div>
-            <figure class="ab-plate" data-rv>
-              <figcaption class="ab-fig t-mono">FIG. 2 — THE NOTES DO THE DESIGNING</figcaption>
+        <!-- ---------------- THE THREE-CARD ROW ---------------- -->
+        <div class="au-cards">
+          <!-- left big image -->
+          <div class="au-cards-left">
+            <img
+              src="/images/about-window.webp"
+              width="1600" height="900"
+              loading="lazy" decoding="async"
+              alt="Reading back through the visit notes — notebook against the laptop, Telford outside the window."
+            />
+          </div>
+
+          <!-- right two cards -->
+          <div class="au-cards-right">
+            <!-- dark media card -->
+            <article class="au-card au-card-dark">
+              <div class="au-card-media">
+                <img
+                  src="/images/about-studio.webp"
+                  width="1600" height="900"
+                  loading="lazy" decoding="async"
+                  alt="At the desk, building — the quiet half of the job."
+                />
+                <div class="au-fade" aria-hidden="true"></div>
+              </div>
+              <div class="au-card-body">
+                <h3>The build side</h3>
+                <p>
+                  A qualified Associate Project Manager who ships full-stack — Supabase,
+                  Stripe, Three.js — with milestones against real dates, a written scope,
+                  and a price fixed before the build starts.
+                </p>
+                <a class="au-outline" href="/#process">See the five steps</a>
+              </div>
+            </article>
+
+            <!-- overlay image card -->
+            <article class="au-card au-card-overlay">
               <img
-                src="/images/about-window.webp"
-                width="1600" height="900"
+                src="/images/talon-portrait.webp"
+                width="640" height="360"
                 loading="lazy" decoding="async"
-                alt="Reading back through the visit notes — notebook against the laptop, Telford outside the window."
+                alt="Talon Herring at a client table, notebook open, pen in hand."
               />
-            </figure>
+              <div class="au-overlay">
+                <h3>On site first</h3>
+                <p>
+                  Notebook and pen before a laptop — from Telford, everywhere on the
+                  coverage map is within an hour, and the first visit is free.
+                </p>
+              </div>
+            </article>
           </div>
-        </div>
-      </section>
-
-      <!-- ---------- 04 · the build side ---------- -->
-      <section class="ab-mov">
-        <div class="ab-rail" aria-hidden="true"><span class="t-mono">04</span></div>
-        <div class="ab-mov-body">
-          <p class="t-micro eyebrow">THE BUILD SIDE</p>
-          <div class="ab-split-grid ab-split-rev">
-            <figure class="ab-plate" data-rv>
-              <figcaption class="ab-fig t-mono">FIG. 3 — THE QUIET HALF</figcaption>
-              <img
-                src="/images/about-studio.webp"
-                width="1600" height="900"
-                loading="lazy" decoding="async"
-                alt="At the desk, building — the quiet half of the job."
-              />
-            </figure>
-            <div data-rv>
-              <h2 class="t-h2 ab-h2">Then it gets built — properly, and to the&nbsp;plan.</h2>
-              <p class="ab-body">
-                The project management is formally trained, not improvised: I’m a qualified
-                Associate Project Manager with four years of running projects where scope
-                and deadlines were not negotiable. Your build gets milestones against real
-                dates, a written scope, and a price fixed before it starts.
-              </p>
-              <p class="ab-body">
-                The building is full-stack — Supabase, Stripe, Three.js, shipped through
-                GitHub and Vercel — and when it’s done, the domain, the code and the
-                content are yours.
-              </p>
-              <a class="ab-link" href="/#process">See the five steps →</a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ---------- colophon ---------- -->
-      <footer class="ab-colophon" data-rv>
-        <div class="ab-col-row">
-          <span class="t-mono">TRAINED</span>
-          <span>Qualified Associate Project Manager</span>
-        </div>
-        <div class="ab-col-row">
-          <span class="t-mono">TESTED</span>
-          <span>Four years of projects on hard deadlines</span>
-        </div>
-        <div class="ab-col-row">
-          <span class="t-mono">BUILDS</span>
-          <span>Full-stack — Supabase, Stripe, Three.js, GitHub, Vercel</span>
-        </div>
-        <div class="ab-col-row">
-          <span class="t-mono">BASED</span>
-          <span>Telford — an hour from everywhere on the map</span>
-        </div>
-      </footer>
-    </div>
-
-    <!-- ---------- the ask ---------- -->
-    <section class="ab-close">
-      <div class="ab-wrap">
-        <h2 class="t-h2 ab-h2">Let’s find what makes you&nbsp;different.</h2>
-        <p class="ab-close-lede">
-          The first visit is free within an hour of Telford — and whatever we find is
-          yours to keep, whether or not we go ahead.
-        </p>
-        <div class="ab-ctas">
-          <a class="btn btn-primary" href="/booking">Book a visit</a>
-          <a class="btn btn-ghost ab-ghost" href="/#work">See the work</a>
         </div>
       </div>
     </section>
@@ -207,218 +128,193 @@ const ways = [
 </Base>
 
 <style>
-  /* FLAT ink, no gradient anywhere — structure comes from rules and type,
-     the way a printed document earns it */
-  .ab { background: var(--color-ink-deep); }
-  .ab-wrap {
-    max-width: 1400px;
+  /* the import's design, the site's colours — flat ink ground */
+  .au { background: var(--color-ink-deep); }
+  .au-wrap {
+    max-width: 1152px; /* the import's max-w-6xl */
     margin-inline: auto;
     padding-inline: 24px;
   }
-  .ab-h2 { color: var(--color-sheet); }
 
-  /* ---------- masthead: a document header between double rules ---------- */
-  .ab-masthead {
-    margin-top: 120px;
-    padding-block: 14px;
-    border-top: 3px double rgb(245 247 249 / 0.35);
-    border-bottom: 1px solid rgb(245 247 249 / 0.18);
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 8px 24px;
-  }
-  .ab-masthead p { letter-spacing: 0.14em; color: rgb(245 247 249 / 0.6); }
-
-  /* ---------- movements: a numbered margin rail ---------- */
-  .ab-mov {
-    display: grid;
-    grid-template-columns: 88px minmax(0, 1fr);
-    padding-block: 88px 96px;
-    border-bottom: 1px solid rgb(245 247 249 / 0.14);
-  }
-  .ab-rail {
-    border-right: 1px solid rgb(245 247 249 / 0.14);
-    padding-top: 6px;
-  }
-  .ab-rail span {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--color-cobalt-lift);
-  }
-  .ab-mov-body { padding-left: clamp(24px, 3vw, 56px); min-width: 0; }
-
-  /* ---------- type ---------- */
-  .ab-h1 {
-    margin-top: 18px;
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: clamp(2.5rem, 3.4vw, 4.25rem);
-    line-height: 1.06;
-    letter-spacing: -0.02em;
-    color: var(--color-sheet);
-  }
-  .ab-body {
-    margin-top: 20px;
-    font-family: "Fraunces", Georgia, serif;
-    font-size: 1.25rem;
-    line-height: 1.7;
-    color: rgb(245 247 249 / 0.8);
-    max-width: 36em;
-  }
-  .ab-link {
-    display: inline-block;
-    margin-top: 26px;
-    font-family: "Fraunces", Georgia, serif;
-    font-style: italic;
-    font-size: 1.125rem;
-    color: var(--color-cobalt-lift);
-    text-decoration: none;
-    border-bottom: 1px solid rgb(77 124 255 / 0.45);
-    padding-bottom: 2px;
-    transition: color 180ms var(--ease), border-color 180ms var(--ease);
-  }
-  .ab-link:hover { color: var(--color-sheet); border-color: rgb(245 247 249 / 0.5); }
-
-  /* ---------- plates: photographs set like figures in a book ---------- */
-  .ab-plate { margin: 0; min-width: 0; }
-  .ab-fig {
-    padding-bottom: 10px;
-    border-bottom: 1px solid rgb(245 247 249 / 0.18);
-    margin-bottom: 14px;
-    letter-spacing: 0.12em;
-    color: rgb(245 247 249 / 0.55);
-  }
-  .ab-plate img {
+  /* ---------------- hero ---------------- */
+  .au-hero { padding-block: 140px 64px; }
+  .au-banner {
     display: block;
     width: 100%;
-    height: auto;
-    border: 1px solid rgb(245 247 249 / 0.22);
+    height: clamp(240px, 34vw, 460px);
+    object-fit: cover;
+    border-radius: 12px;
   }
-
-  /* ---------- grids ---------- */
-  .ab-intro-grid,
-  .ab-split-grid {
+  .au-hero-grid {
+    margin-top: 40px;
     display: grid;
-    grid-template-columns: minmax(0, 6fr) minmax(0, 6fr);
-    gap: clamp(36px, 4vw, 80px);
-    align-items: start;
-    margin-top: 8px;
+    gap: 24px;
+    grid-template-columns: minmax(0, 1fr);
   }
-  .ab-story-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
-    gap: clamp(36px, 4vw, 80px);
-    align-items: start;
-    margin-top: 8px;
+  @media (min-width: 768px) {
+    .au-hero-grid { grid-template-columns: 1fr 1fr; gap: 48px; }
   }
-  .ab-story-text .t-h2 { max-width: 18em; }
-
-  /* the pull line: one sentence, set large against a cobalt rule */
-  .ab-pull {
-    border-left: 3px solid var(--color-cobalt);
-    padding-left: clamp(20px, 2vw, 36px);
-    margin-top: 56px;
+  .au-headline {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1.75rem, 2.4vw, 2.5rem);
+    line-height: 1.35;
+    color: var(--color-sheet);
   }
-  .ab-pull p {
-    font-family: "Fraunces", Georgia, serif;
-    font-style: italic;
-    font-size: clamp(1.5rem, 1.9vw, 2.125rem);
-    line-height: 1.4;
-    color: var(--color-cobalt-lift);
-  }
-
-  /* ---------- the index: dot leaders, like a contents page ---------- */
-  .ab-index { margin: 28px 0 0; max-width: 40em; }
-  .ab-index-row {
-    display: flex;
-    align-items: baseline;
-    gap: 12px;
-    padding-block: 13px;
-  }
-  .ab-index-row + .ab-index-row { border-top: 1px solid rgb(245 247 249 / 0.1); }
-  .ab-index-row dt {
-    flex: none;
-    color: var(--color-cobalt-lift);
-    font-weight: 700;
-    letter-spacing: 0.08em;
-  }
-  /* the leader: a dotted line filling the gap, contents-page style */
-  .ab-index-row::before { display: none; }
-  .ab-index-row dt::after {
-    content: "";
-    display: none;
-  }
-  .ab-index-row dd {
-    margin: 0;
-    font-family: "Fraunces", Georgia, serif;
-    font-size: 1.1875rem;
-    line-height: 1.6;
-    color: rgb(245 247 249 / 0.82);
-  }
-
-  /* ---------- colophon ---------- */
-  .ab-colophon {
-    padding-block: 40px 120px;
-  }
-  .ab-col-row {
-    display: flex;
-    align-items: baseline;
-    gap: 18px;
-    padding-block: 12px;
-  }
-  .ab-col-row + .ab-col-row { border-top: 1px solid rgb(245 247 249 / 0.1); }
-  .ab-col-row .t-mono {
-    flex: none;
-    width: 110px;
-    color: var(--color-cobalt-lift);
-    font-weight: 700;
-    letter-spacing: 0.12em;
-  }
-  /* dot leader between label and value */
-  .ab-col-row::after { display: none; }
-  .ab-col-row span:last-child {
-    font-family: "Fraunces", Georgia, serif;
+  .au-accent { color: var(--color-cobalt-lift); }
+  .au-dim { color: rgb(245 247 249 / 0.55); }
+  .au-hero-side { display: flex; flex-direction: column; gap: 24px; align-items: flex-start; }
+  .au-hero-side p {
     font-size: 1.125rem;
-    color: rgb(245 247 249 / 0.78);
-  }
-
-  /* ---------- the ask: the site's deepest flat black ---------- */
-  .ab-close {
-    background: #04080F;
-    border-top: 3px double rgb(245 247 249 / 0.3);
-    padding-block: 110px;
-    text-align: center;
-  }
-  .ab-close-lede {
-    margin-inline: auto;
-    margin-top: 14px;
-    max-width: 34em;
-    font-family: "Fraunces", Georgia, serif;
-    font-style: italic;
-    font-size: 1.3125rem;
     line-height: 1.65;
-    color: rgb(245 247 249 / 0.75);
+    color: rgb(245 247 249 / 0.65);
   }
-  .ab-ctas { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin-top: 36px; }
-  .ab-ghost { color: var(--color-sheet); border-color: rgb(245 247 249 / 0.3); }
-  .ab-ghost:hover { border-color: var(--color-sheet); }
+  /* the import's small secondary chip button */
+  .au-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 6px 8px 14px;
+    border-radius: 8px;
+    background: rgb(245 247 249 / 0.1);
+    color: var(--color-sheet);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background-color 180ms var(--ease);
+  }
+  .au-chip:hover { background: rgb(245 247 249 / 0.16); }
+  .au-chip svg { width: 16px; height: 16px; }
 
-  /* ---------- responsive ---------- */
-  @media (max-width: 899.98px) {
-    .ab-masthead { margin-top: 96px; }
-    .ab-mov { grid-template-columns: 1fr; padding-block: 64px 72px; }
-    .ab-rail {
-      border-right: 0;
-      border-bottom: 1px solid rgb(245 247 249 / 0.14);
-      padding-bottom: 10px;
-      margin-bottom: 24px;
-    }
-    .ab-mov-body { padding-left: 0; }
-    .ab-intro-grid, .ab-split-grid, .ab-story-grid { grid-template-columns: 1fr; gap: 40px; }
-    .ab-split-rev .ab-plate { order: 2; }
-    .ab-pull { margin-top: 8px; }
-    .ab-colophon { padding-block: 32px 88px; }
-    .ab-close { padding-block: 88px; }
+  /* ---------------- about ---------------- */
+  .au-about { padding-block: 80px 120px; }
+  .au-about-head {
+    display: grid;
+    gap: 24px;
+    text-align: center;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  @media (min-width: 768px) {
+    .au-about-head { grid-template-columns: 1fr 1fr; gap: 48px; text-align: left; }
+  }
+  .au-h2 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(2.25rem, 3.2vw, 3rem);
+    color: var(--color-sheet);
+  }
+  .au-about-head p {
+    font-size: 1.125rem;
+    line-height: 1.65;
+    color: rgb(245 247 249 / 0.65);
+  }
+
+  /* ---------------- the three-card row ---------------- */
+  .au-cards {
+    margin-top: 64px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  @media (min-width: 768px) {
+    .au-cards { flex-direction: row; }
+    .au-cards-left, .au-cards-right { flex: 1; }
+  }
+  .au-cards-left img {
+    display: block;
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 12px;
+  }
+  @media (min-width: 640px) { .au-cards-left img { height: 360px; } }
+  @media (min-width: 768px) { .au-cards-left img { height: 100%; } }
+
+  .au-cards-right { display: flex; flex-direction: column; gap: 24px; }
+
+  /* both cards scale gently on hover — the import's spring, as CSS */
+  .au-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    transition: transform 320ms cubic-bezier(0.34, 1.3, 0.64, 1);
+  }
+  .au-card:hover { transform: scale(1.03); }
+
+  /* dark media card: image with a fade into the card's own black */
+  .au-card-dark { background: #04080F; color: var(--color-sheet); }
+  .au-card-media {
+    position: relative;
+    height: 240px;
+    overflow: hidden;
+  }
+  @media (min-width: 768px) { .au-card-media { height: 192px; } }
+  .au-card-media img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 400ms var(--ease);
+  }
+  .au-card-dark:hover .au-card-media img { transform: scale(1.05); }
+  .au-fade {
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 128px;
+    background: linear-gradient(to top, #04080F, rgb(4 8 15 / 0.7), transparent);
+  }
+  .au-card-body { padding: 24px; }
+  .au-card-body h3 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--color-sheet);
+  }
+  .au-card-body p {
+    margin-top: 8px;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: rgb(245 247 249 / 0.6);
+  }
+  /* the import's outline button */
+  .au-outline {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 8px 16px;
+    border: 1px solid var(--color-sheet);
+    border-radius: 8px;
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--color-sheet);
+    text-decoration: none;
+    transition: background-color 180ms var(--ease), color 180ms var(--ease);
+  }
+  .au-outline:hover { background: var(--color-sheet); color: var(--color-ink); }
+
+  /* overlay image card */
+  .au-card-overlay img {
+    display: block;
+    width: 100%;
+    min-height: 220px;
+    object-fit: cover;
+  }
+  @media (min-width: 640px) { .au-card-overlay img { min-height: 240px; } }
+  .au-overlay {
+    position: absolute;
+    inset: auto 0 0 0;
+    padding: 24px;
+    background: linear-gradient(to top, rgb(4 8 15 / 0.85), rgb(4 8 15 / 0.4), transparent);
+    color: var(--color-sheet);
+  }
+  .au-overlay h3 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.25rem;
+  }
+  .au-overlay p {
+    margin-top: 8px;
+    font-size: 0.9375rem;
+    line-height: 1.55;
+    color: rgb(245 247 249 / 0.85);
   }
 </style>
