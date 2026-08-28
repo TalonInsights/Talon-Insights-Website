@@ -290,6 +290,10 @@ import Footer from "../components/Footer.astro";
     width: 100%;
     height: 300px;
     object-fit: cover;
+    /* the landscape source in a portrait column: bias the crop to the
+       right where the subject sits, or cover() centres him half out of
+       frame — 82% keeps him whole with the lake still reading behind */
+    object-position: 82% center;
     border-radius: 12px;
   }
   @media (min-width: 640px) { .au-cards-left img { height: 400px; } }
