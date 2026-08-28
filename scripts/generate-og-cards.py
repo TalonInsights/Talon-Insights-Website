@@ -5,8 +5,11 @@
 import os
 from PIL import Image, ImageDraw, ImageFont
 
+# Fonts: drop the two variable TTFs beside this script before running —
+#   https://github.com/google/fonts/raw/main/ofl/spacegrotesk/SpaceGrotesk[wght].ttf
+#   https://github.com/google/fonts/raw/main/ofl/jetbrainsmono/JetBrainsMono[wght].ttf
 SCRATCH = os.path.dirname(os.path.abspath(__file__))
-SITE = r"C:\Users\ishaq\Desktop\Website Development Area\Talon Insights Website"
+SITE = os.path.dirname(SCRATCH)
 IMG = os.path.join(SITE, "public", "images")
 OUT = os.path.join(SITE, "public")
 
