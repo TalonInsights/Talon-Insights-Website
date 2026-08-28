@@ -123,6 +123,68 @@ import Footer from "../components/Footer.astro";
         </div>
       </div>
     </section>
+
+    <!-- ---------------- THE JOURNEY ---------------- -->
+    <!-- why Talon Insights exists — the same header-pair + card language
+         as the rest of the import, laid as four connected steps -->
+    <section class="au-journey">
+      <div class="au-wrap">
+        <div class="au-about-head">
+          <h2 class="au-h2">Why Talon Insights&nbsp;exists</h2>
+          <p>
+            It wasn’t a business plan first. It was a pattern that kept repeating —
+            noticed from inside other people’s projects — until building the answer
+            was the only honest response.
+          </p>
+        </div>
+
+        <ol class="au-steps">
+          <li class="au-step">
+            <span class="au-step-n">01</span>
+            <h3>The project years</h3>
+            <p>
+              Four years running projects where scope and deadlines were not
+              negotiable taught me what delivery actually takes — the plan, the
+              milestones, the phone call before the surprise.
+            </p>
+          </li>
+          <li class="au-step">
+            <span class="au-step-n">02</span>
+            <h3>The pattern</h3>
+            <p>
+              Everywhere I looked, good businesses were being let down the same seven
+              ways — sold by one person, built by another, locked in, and left with a
+              pretty site that did nothing.
+            </p>
+          </li>
+          <li class="au-step">
+            <span class="au-step-n">03</span>
+            <h3>The discovery</h3>
+            <p>
+              Standing in a joinery workshop, listening at a tuner’s events, it
+              clicked: the reason people choose a specialist already exists — it just
+              never survives the handoffs between the people building the website.
+            </p>
+          </li>
+          <li class="au-step">
+            <span class="au-step-n">04</span>
+            <h3>Talon Insights</h3>
+            <p>
+              So I removed the handoffs. One person who finds the difference on site,
+              designs from it, builds it, and answers the phone — with everything
+              yours at the end.
+            </p>
+          </li>
+        </ol>
+
+        <div class="au-journey-close">
+          <a class="au-chip" href="/booking">
+            <span>Start your own chapter</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
+          </a>
+        </div>
+      </div>
+    </section>
   </main>
   <Footer />
 </Base>
@@ -131,7 +193,7 @@ import Footer from "../components/Footer.astro";
   /* the import's design, the site's colours — flat ink ground */
   .au { background: var(--color-ink-deep); }
   .au-wrap {
-    max-width: 1152px; /* the import's max-w-6xl */
+    max-width: 1560px; /* widened to the site's full measure (owner) */
     margin-inline: auto;
     padding-inline: 24px;
   }
@@ -141,7 +203,7 @@ import Footer from "../components/Footer.astro";
   .au-banner {
     display: block;
     width: 100%;
-    height: clamp(240px, 34vw, 460px);
+    height: clamp(260px, 36vw, 560px);
     object-fit: cover;
     border-radius: 12px;
   }
@@ -152,7 +214,7 @@ import Footer from "../components/Footer.astro";
     grid-template-columns: minmax(0, 1fr);
   }
   @media (min-width: 768px) {
-    .au-hero-grid { grid-template-columns: 1fr 1fr; gap: 48px; }
+    .au-hero-grid { grid-template-columns: 7fr 5fr; gap: clamp(48px, 5vw, 96px); }
   }
   .au-headline {
     font-family: var(--font-display);
@@ -195,7 +257,7 @@ import Footer from "../components/Footer.astro";
     grid-template-columns: minmax(0, 1fr);
   }
   @media (min-width: 768px) {
-    .au-about-head { grid-template-columns: 1fr 1fr; gap: 48px; text-align: left; }
+    .au-about-head { grid-template-columns: 5fr 7fr; gap: clamp(48px, 5vw, 96px); text-align: left; }
   }
   .au-h2 {
     font-family: var(--font-display);
@@ -227,7 +289,7 @@ import Footer from "../components/Footer.astro";
     object-fit: cover;
     border-radius: 12px;
   }
-  @media (min-width: 640px) { .au-cards-left img { height: 360px; } }
+  @media (min-width: 640px) { .au-cards-left img { height: 400px; } }
   @media (min-width: 768px) { .au-cards-left img { height: 100%; } }
 
   .au-cards-right { display: flex; flex-direction: column; gap: 24px; }
@@ -248,7 +310,7 @@ import Footer from "../components/Footer.astro";
     height: 240px;
     overflow: hidden;
   }
-  @media (min-width: 768px) { .au-card-media { height: 192px; } }
+  @media (min-width: 768px) { .au-card-media { height: 230px; } }
   .au-card-media img {
     display: block;
     width: 100%;
@@ -316,5 +378,76 @@ import Footer from "../components/Footer.astro";
     font-size: 0.9375rem;
     line-height: 1.55;
     color: rgb(245 247 249 / 0.85);
+  }
+
+  /* ---------------- the journey ---------------- */
+  .au-journey { padding-block: 0 120px; }
+  .au-steps {
+    list-style: none;
+    margin: 64px 0 0;
+    padding: 0;
+    position: relative;
+    display: grid;
+    gap: 24px;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  @media (min-width: 900px) {
+    .au-steps { grid-template-columns: repeat(4, 1fr); }
+    /* the connecting line the steps sit on */
+    .au-steps::before {
+      content: "";
+      position: absolute;
+      top: 46px;
+      left: 24px;
+      right: 24px;
+      height: 1px;
+      background: rgb(245 247 249 / 0.14);
+    }
+  }
+  .au-step {
+    position: relative;
+    padding: 24px;
+    border-radius: 12px;
+    background: rgb(245 247 249 / 0.03);
+    transition: transform 320ms cubic-bezier(0.34, 1.3, 0.64, 1), background-color 220ms var(--ease);
+  }
+  .au-step:hover { transform: scale(1.03); background: rgb(245 247 249 / 0.06); }
+  .au-step-n {
+    display: inline-grid;
+    place-items: center;
+    position: relative;
+    z-index: 1;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--color-ink-deep);
+    border: 1px solid rgb(77 124 255 / 0.5);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.9375rem;
+    color: var(--color-cobalt-lift);
+  }
+  .au-step:last-child .au-step-n {
+    background: var(--color-cobalt);
+    border-color: var(--color-cobalt);
+    color: #fff;
+  }
+  .au-step h3 {
+    margin-top: 18px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.1875rem;
+    color: var(--color-sheet);
+  }
+  .au-step p {
+    margin-top: 8px;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: rgb(245 247 249 / 0.6);
+  }
+  .au-journey-close {
+    margin-top: 48px;
+    display: flex;
+    justify-content: center;
   }
 </style>
