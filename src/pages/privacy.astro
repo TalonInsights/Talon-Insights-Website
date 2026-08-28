@@ -1,0 +1,165 @@
+---
+// /privacy — a plain privacy notice (28 Aug, owner: "not fancy formatting
+// … just a simple privacy policy"). One readable column, site voice, no
+// decoration. Every claim in it is checked against what the site actually
+// does: a Formspree form, Vercel hosting, Google-served fonts, one
+// sessionStorage flag, no analytics, no cookies of our own. Keep this
+// page truthful when the stack changes — if analytics or new processors
+// ever arrive, this page updates in the same commit.
+import Base from "../layouts/Base.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<Base
+  title="Privacy — Talon Insights"
+  description="How Talon Insights handles the personal information you send through this site — what’s collected, why, where it goes, and your rights."
+  path="/privacy"
+  schema={{
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "https://taloninsights.co.uk/privacy#page",
+    url: "https://taloninsights.co.uk/privacy",
+    name: "Privacy — Talon Insights",
+    about: { "@id": "https://taloninsights.co.uk/#business" },
+  }}
+>
+  <Header />
+  <main class="pv">
+    <div class="pv-wrap">
+      <p class="t-micro eyebrow">PRIVACY</p>
+      <h1 class="pv-h1">Privacy notice</h1>
+      <p class="pv-updated t-mono">LAST UPDATED — 28 AUGUST 2026</p>
+
+      <h2>Who I am</h2>
+      <p>
+        Talon Insights is run by Talon Herring, based in Telford, Shropshire. I build
+        websites and software for local businesses. For anything in this notice —
+        questions, requests, complaints — contact me directly:
+      </p>
+      <p>
+        Email: <a href="mailto:taloninsights@gmail.com">taloninsights@gmail.com</a><br />
+        Phone: <a href="tel:+447742082423">07742 082423</a>
+      </p>
+
+      <h2>What I collect, and when</h2>
+      <p>
+        The only personal information this site collects is what you choose to send
+        through the enquiry form: your name, your business name, a phone number or
+        email address, and whatever you tell me about your project. There are no
+        accounts, no sign-ups and no mailing lists.
+      </p>
+      <p>
+        If you phone or email me directly, I’ll hold the details you give me the same
+        way — to deal with your enquiry and nothing else.
+      </p>
+
+      <h2>Why I use it</h2>
+      <p>
+        To reply to you, arrange a call or a visit, and put together a scope and a
+        price if we get that far. That’s the whole list. The lawful basis is that
+        you’ve asked me to — taking steps at your request before entering into a
+        contract, and my legitimate interest in answering people who contact me. I
+        don’t use your details for marketing, and I don’t sell or share them with
+        anyone for their own purposes.
+      </p>
+
+      <h2>Where it goes</h2>
+      <p>
+        A few services help run this site, and each handles some data as part of
+        doing its job:
+      </p>
+      <p>
+        <strong>Formspree</strong> processes the enquiry form and forwards what you
+        submit to my email. <strong>Vercel</strong> hosts the site, and like any web
+        host keeps standard server logs (such as IP addresses) for security and
+        reliability. <strong>Google Fonts</strong> serves the site’s typefaces, which
+        means your browser requests the font files from Google’s servers when a page
+        loads. None of these are given your form details for their own use.
+      </p>
+
+      <h2>Cookies and tracking</h2>
+      <p>
+        This site sets no cookies and runs no analytics or advertising trackers. It
+        uses one small piece of browser storage — a flag that prevents an old
+        redirect from looping — which contains nothing personal and never leaves
+        your browser.
+      </p>
+
+      <h2>How long I keep it</h2>
+      <p>
+        Enquiries are kept for as long as it takes to deal with them, and for a
+        reasonable period afterwards in case you come back. If we work together,
+        your details become part of normal business records and are kept for as
+        long as the law requires. If you’d like an enquiry deleted sooner, ask and
+        I’ll do it.
+      </p>
+
+      <h2>Your rights</h2>
+      <p>
+        Under UK data protection law you can ask me for a copy of the personal
+        information I hold about you, ask for it to be corrected or deleted, object
+        to or restrict how it’s used, and ask for it in a portable format. Email me
+        and I’ll sort it — there’s no form or process, it’s one person reading one
+        inbox.
+      </p>
+      <p>
+        If you’re not happy with how I’ve handled your information, you have the
+        right to complain to the Information Commissioner’s Office at
+        <a href="https://ico.org.uk" rel="noopener">ico.org.uk</a>.
+      </p>
+
+      <h2>Changes</h2>
+      <p>
+        If how this site handles information changes, this page changes with it,
+        and the date at the top tells you when.
+      </p>
+    </div>
+  </main>
+  <Footer />
+</Base>
+
+<style>
+  .pv { background: var(--color-ink-deep); }
+  .pv-wrap {
+    max-width: 46em;
+    margin-inline: auto;
+    padding: 140px 24px 110px;
+  }
+  .pv-h1 {
+    margin-top: 14px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(2.25rem, 3vw, 3.5rem);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    color: var(--color-sheet);
+  }
+  .pv-updated {
+    margin-top: 14px;
+    font-size: 0.9375rem;
+    letter-spacing: 0.12em;
+    color: rgb(245 247 249 / 0.45);
+  }
+  .pv h2 {
+    margin-top: 44px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.5rem;
+    color: var(--color-sheet);
+  }
+  .pv p {
+    margin-top: 16px;
+    font-size: 1.1875rem;
+    line-height: 1.7;
+    color: rgb(245 247 249 / 0.75);
+  }
+  .pv strong { color: var(--color-sheet); font-weight: 600; }
+  .pv a {
+    color: var(--color-cobalt-lift);
+    text-decoration: none;
+    border-bottom: 1px solid rgb(77 124 255 / 0.45);
+    transition: color 180ms var(--ease), border-color 180ms var(--ease);
+  }
+  .pv a:hover { color: var(--color-sheet); border-color: rgb(245 247 249 / 0.5); }
+</style>
