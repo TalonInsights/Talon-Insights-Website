@@ -91,7 +91,7 @@ const faqs = [
       <div class="pz-wrap">
         <h2 class="pz-h2">Only template agencies can price a website&nbsp;upfront.</h2>
         <p class="pz-pull">That isn’t a criticism of them. It’s arithmetic.</p>
-        <div class="pz-prose">
+        <div class="pz-prose pz-prose-grid">
           <p>
             If every site is the same site with different colours, the price is knowable
             in advance, because the work is knowable in advance. Three hundred pounds, or
@@ -166,7 +166,7 @@ const faqs = [
           </p>
         </div>
         <p class="pz-pull pz-pull-big">One thing changes the price: <em>you</em> changing the&nbsp;scope.</p>
-        <div class="pz-prose">
+        <div class="pz-prose pz-prose-grid">
           <p>
             If you decide halfway through that you want an online shop, or a booking
             system, or four more pages, that’s a different job to the one we agreed. It
@@ -346,6 +346,18 @@ const faqs = [
     margin-inline: auto; /* blocks ride the centre spine; text stays left */
   }
   .pz-prose-land { color: var(--color-sheet) !important; font-weight: 500; }
+  /* full-width variant (owner): paragraphs pair up across the wrap
+     instead of queuing down a narrow column */
+  .pz-prose-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px clamp(40px, 5vw, 96px);
+    margin-top: 12px;
+  }
+  .pz-prose-grid p { margin-inline: 0; max-width: none; }
+  @media (max-width: 899.98px) {
+    .pz-prose-grid { grid-template-columns: 1fr; }
+  }
   .pz-pull {
     margin-top: 26px;
     margin-inline: auto;
@@ -380,7 +392,7 @@ const faqs = [
     line-height: 1.05;
     letter-spacing: -0.02em;
     color: var(--color-sheet);
-    max-width: 16em;
+    max-width: 20em;
     margin-inline: auto;
   }
   .pz-h1 .pz-dim { display: block; }
@@ -392,7 +404,7 @@ const faqs = [
     line-height: 1.5;
     letter-spacing: -0.01em;
     color: rgb(245 247 249 / 0.55);
-    max-width: 30em;
+    max-width: 38em;
     margin-inline: auto;
   }
   .pz-lede em { font-style: normal; color: var(--color-cobalt-lift); }
@@ -449,8 +461,8 @@ const faqs = [
   }
   .pz-card {
     display: flex;
-    min-width: min(62%, 760px);
-    max-width: min(62%, 760px);
+    min-width: min(60%, 980px);
+    max-width: min(60%, 980px);
     border: 1px solid rgb(245 247 249 / 0.16);
     border-radius: 4px;
     backdrop-filter: blur(12px);
@@ -505,7 +517,7 @@ const faqs = [
     font-size: 1.25rem;
     line-height: 1.65;
     color: rgb(245 247 249 / 0.8);
-    max-width: 42em;
+    max-width: 52em;
     margin-inline: auto;
     text-align: center;
   }
@@ -588,11 +600,22 @@ const faqs = [
 
   /* ---------------- questions ---------------- */
   .pz-faq { padding-block: 0 110px; }
-  .pz-faq-list { margin-top: 36px; max-width: 60em; }
+  .pz-faq-list {
+    margin-top: 44px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 clamp(40px, 5vw, 96px);
+    align-items: start;
+  }
+  @media (max-width: 899.98px) { .pz-faq-list { grid-template-columns: 1fr; } }
   .pz-q {
     border-top: 1px solid rgb(245 247 249 / 0.12);
   }
-  .pz-q:last-child { border-bottom: 1px solid rgb(245 247 249 / 0.12); }
+  .pz-q:nth-last-child(-n+1) { border-bottom: 1px solid rgb(245 247 249 / 0.12); }
+  @media (min-width: 900px) {
+    /* both columns close with a rule */
+    .pz-q:nth-last-child(2) { border-bottom: 1px solid rgb(245 247 249 / 0.12); }
+  }
   .pz-q summary {
     list-style: none;
     cursor: pointer;
