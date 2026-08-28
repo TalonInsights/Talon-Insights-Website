@@ -22,7 +22,10 @@ const steps = [
 
 <section class="process g-ink" id="process">
   <div class="process-wrap">
-    <h2 class="t-h2">Five steps — and you know the price before the build&nbsp;starts.</h2>
+    {/* "stages of the job" here, "steps to the price" on /pricing — the
+        two five-part sections were reading as the same list (owner, 28
+        Aug); the vocabulary split is the differentiator. */}
+    <h2 class="t-h2">The whole job, stage by stage — on one&nbsp;schedule.</h2>
 
     <div class="process-grid">
       <!-- the schedule: no dates, just honest proportion — and the one
@@ -30,7 +33,7 @@ const steps = [
       <div class="gantt-box">
         <i class="g-mark-line" aria-hidden="true"></i>
         <span class="g-mark-label t-mono" aria-hidden="true"><b>◆</b> PRICE FIXED</span>
-        <ol class="gantt" data-process aria-label="The five steps in sequence — bar length shows each stage’s share of the whole, and the price is fixed before the build bar begins">
+        <ol class="gantt" data-process aria-label="The five stages of a project in sequence — bar length shows each stage’s share of the whole, and the price is fixed before the build bar begins">
           {steps.map((step) => (
             <li class="g-row">
               <span class="g-label t-mono"><b>{step.num}</b> {step.bar}</span>
