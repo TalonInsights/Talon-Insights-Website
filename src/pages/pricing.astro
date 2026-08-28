@@ -15,11 +15,11 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 
 const steps = [
-  { n: "01", h: "A call. Free.", p: "Fifteen minutes. What you do, what’s wrong with the site you’ve got, what you’re hoping changes. If it’s obviously not a fit, I’ll say so on that call rather than waste a visit." },
-  { n: "02", h: "Time on site. Free.", p: "I come to you. How the work gets done, what your customers say about you, the words they use. Usually more than one visit, because the useful things surface late." },
-  { n: "03", h: "A written scope. Free.", p: "Everything the job includes, in plain English, on paper. Pages, functionality, who provides what, how long it takes. You read it. You disagree with parts of it. We change them." },
-  { n: "04", h: "A fixed price against that scope.", p: "One number, in writing, attached to a specific document. Not a range. Not an estimate. Not “starting from.”" },
-  { n: "05", h: "You decide.", p: "The scope is yours to keep either way. If you take it to somebody else and get it built cheaper, that’s a legitimate outcome and I’d rather that than talk you into something." },
+  { n: "01", key: "THE CALL", h: "A call. Free.", p: "Fifteen minutes. What you do, what’s wrong with the site you’ve got, what you’re hoping changes. If it’s obviously not a fit, I’ll say so on that call rather than waste a visit." },
+  { n: "02", key: "ON SITE", h: "Time on site. Free.", p: "I come to you. How the work gets done, what your customers say about you, the words they use. Usually more than one visit, because the useful things surface late." },
+  { n: "03", key: "THE SCOPE", h: "A written scope. Free.", p: "Everything the job includes, in plain English, on paper. Pages, functionality, who provides what, how long it takes. You read it. You disagree with parts of it. We change them." },
+  { n: "04", key: "THE PRICE", h: "A fixed price against that scope.", p: "One number, in writing, attached to a specific document. Not a range. Not an estimate. Not “starting from.”" },
+  { n: "05", key: "YOURS TO KEEP", h: "You decide.", p: "The scope is yours to keep either way. If you take it to somebody else and get it built cheaper, that’s a legitimate outcome and I’d rather that than talk you into something." },
 ];
 
 const money = [
@@ -128,11 +128,13 @@ const faqs = [
             <span class="pz-dim">It just isn’t the first thing.</span>
           </h2>
         </div>
+        <p class="pz-deck-cue t-mono" aria-hidden="true">KEEP SCROLLING<i>◆</i>EACH STEP STACKS ON THE LAST</p>
         <div class="pz-deck" aria-label="The five steps to a fixed price">
           {steps.map((s2) => (
             <article class="pz-card">
               <div class="pz-card-rail">
                 <span class="pz-card-n">{s2.n}</span>
+                <span class="pz-card-key t-mono">{s2.key}</span>
               </div>
               <div class="pz-card-body">
                 <h3>{s2.h}</h3>
@@ -328,6 +330,9 @@ const faqs = [
     letter-spacing: -0.015em;
     color: var(--color-sheet);
     max-width: 24em;
+    /* the whole page reads down a centred spine (owner) */
+    margin-inline: auto;
+    text-align: center;
   }
   .pz-dim { color: rgb(245 247 249 / 0.5); }
 
@@ -338,10 +343,14 @@ const faqs = [
     line-height: 1.7;
     color: rgb(245 247 249 / 0.75);
     max-width: 42em;
+    margin-inline: auto; /* blocks ride the centre spine; text stays left */
   }
   .pz-prose-land { color: var(--color-sheet) !important; font-weight: 500; }
   .pz-pull {
     margin-top: 26px;
+    margin-inline: auto;
+    text-align: center;
+    max-width: 30em;
     font-family: var(--font-display);
     font-weight: 600;
     font-size: clamp(1.25rem, 1.6vw, 1.75rem);
@@ -362,7 +371,7 @@ const faqs = [
   .pz-inline-link:hover { color: var(--color-sheet); border-color: rgb(245 247 249 / 0.5); }
 
   /* ---------------- hero ---------------- */
-  .pz-hero { padding-block: 150px 96px; }
+  .pz-hero { padding-block: 150px 96px; text-align: center; }
   .pz-h1 {
     margin-top: 14px;
     font-family: var(--font-display);
@@ -372,6 +381,7 @@ const faqs = [
     letter-spacing: -0.02em;
     color: var(--color-sheet);
     max-width: 16em;
+    margin-inline: auto;
   }
   .pz-h1 .pz-dim { display: block; }
   .pz-lede {
@@ -383,6 +393,7 @@ const faqs = [
     letter-spacing: -0.01em;
     color: rgb(245 247 249 / 0.55);
     max-width: 30em;
+    margin-inline: auto;
   }
   .pz-lede em { font-style: normal; color: var(--color-cobalt-lift); }
   .pz-lede strong { font-weight: 600; color: var(--color-sheet); }
@@ -416,6 +427,20 @@ const faqs = [
     padding-block: 96px 64px;
   }
   .pz-deck-h { max-width: 20em; }
+  .pz-deck-cue {
+    text-align: center;
+    font-size: 0.9375rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: rgb(245 247 249 / 0.6);
+    transition: opacity 400ms var(--ease);
+  }
+  .pz-deck-cue i {
+    font-style: normal;
+    margin-inline: 10px;
+    color: rgb(77 124 255 / 0.8);
+  }
+  .pz-deck-cue.is-done { opacity: 0; }
   .pz-deck {
     display: flex;
     flex-wrap: nowrap;
@@ -434,8 +459,22 @@ const faqs = [
     will-change: transform;
   }
   .pz-card-rail {
-    padding: 24px;
+    padding: 24px 20px;
     border-right: 1px solid rgb(245 247 249 / 0.16);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+  /* the key runs down the rail, so a collapsed sliver still says what
+     it is (owner: the stack needed explaining) */
+  .pz-card-key {
+    writing-mode: vertical-rl;
+    font-size: 0.9375rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: rgb(245 247 249 / 0.55);
+    white-space: nowrap;
   }
   .pz-card-n {
     display: grid;
@@ -467,6 +506,8 @@ const faqs = [
     line-height: 1.65;
     color: rgb(245 247 249 / 0.8);
     max-width: 42em;
+    margin-inline: auto;
+    text-align: center;
   }
 
   /* ---------------- fixed / money / early / after ---------------- */
@@ -506,6 +547,8 @@ const faqs = [
   }
 
   .pz-early { padding-block: 0 96px; }
+  .pz-early-panel { text-align: center; }
+  .pz-early-panel .pz-prose p { text-align: left; }
   .pz-early-panel,
   .pz-founding-panel {
     padding: clamp(32px, 4vw, 56px);
@@ -533,7 +576,14 @@ const faqs = [
   @media (max-width: 899.98px) { .pz-after-grid { grid-template-columns: 1fr; } }
 
   .pz-founding { padding-block: 0 96px; }
-  .pz-founding-panel { display: flex; align-items: flex-end; justify-content: space-between; gap: 28px 48px; flex-wrap: wrap; }
+  .pz-founding-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    text-align: center;
+  }
+  .pz-founding-panel .pz-prose p { text-align: left; }
   .pz-founding-link { font-size: 1.125rem; flex: none; }
 
   /* ---------------- questions ---------------- */
@@ -626,21 +676,30 @@ const faqs = [
     !matchMedia("(prefers-reduced-motion: reduce)").matches
   ) {
     const n = deckCards.length;
+    const deck = document.querySelector<HTMLElement>(".pz-deck");
+    const cue = document.querySelector<HTMLElement>(".pz-deck-cue");
     let ticking = false;
     const paint = () => {
       ticking = false;
       const rect = scroller.getBoundingClientRect();
       const total = rect.height - window.innerHeight;
       const progress = Math.min(1, Math.max(0, -rect.top / total));
+      const w = deckCards[0].offsetWidth;
+      /* centre the FINAL composition: one card + the shingled rails sit
+         symmetric in the viewport (owner) */
+      const stackW = w + 64 * (n - 1);
+      if (deck) deck.style.paddingLeft = Math.max(24, (window.innerWidth - stackW) / 2) + "px";
       deckCards.forEach((card, i) => {
         if (i === 0) return;
         const start = i / n;
         const end = start + 1 / n;
         const t = Math.min(1, Math.max(0, (progress - start) / (end - start)));
         const from = window.innerWidth;
-        const to = -(card.offsetWidth * i) + 64 * i;
+        const to = -(w * i) + 64 * i;
         card.style.transform = `translateX(${from + (to - from) * t}px)`;
       });
+      /* the cue teaches the gesture, then leaves once the deck is dealt */
+      cue?.classList.toggle("is-done", progress > 0.92);
     };
     window.addEventListener("scroll", () => {
       if (!ticking) { ticking = true; requestAnimationFrame(paint); }
