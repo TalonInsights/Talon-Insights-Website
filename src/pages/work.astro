@@ -170,41 +170,69 @@ const wtBuilt = [
             THE PAGE THAT CAME OUT OF A CONVERSATION — awaits an
             owner-supplied frame.] */}
 
-        {WULFTEK_CONSENT && (
-          <div class="wk-story">
-            <div class="wk-block">
-              <h2 class="wk-h2">What I found</h2>
-              <p>
-                During a Groundwork Visit, a conversation turned to something the website
-                barely mentioned: he remaps tractors.
-              </p>
-              <p>
-                There is farmland on every side of Telford. There is also almost nobody
-                competing for the words. Meanwhile every tuning shop in the Midlands is
-                fighting over “ECU remapping” — a term with real volume and no way in for
-                a business this size.
-              </p>
-            </div>
-            <div class="wk-block">
-              <h2 class="wk-h2">What it changed</h2>
-              <p>
-                ECU and economy remapping stayed front and centre. They’re the core of the
-                business and nothing was taken away.
-              </p>
-              <p>
-                But agricultural remapping got its own ground and real prominence, because
-                that was territory he could actually own. Not a paragraph on a services
-                page — its own space, written in the language a farm manager would use,
-                aimed at people within driving distance who didn’t know the service
-                existed nearby.
-              </p>
-              <p>
-                That’s the Word Survey: the phrases your customers already use, that your
-                competitors haven’t noticed, found by turning up and listening.
-              </p>
-            </div>
+        <div class="wk-story">
+          <div class="wk-block">
+            <h2 class="wk-h2">What I found</h2>
+            <p>
+              WulfTek doesn’t meet most customers through a screen — he meets them at
+              events, next to the van. I stood at a few and listened, and the same
+              moment kept repeating: someone stops, names their car, and wants to know
+              — right then — what it could do. Not what remapping is.
+              What <em>their car</em> could&nbsp;do.
+            </p>
+            <p class="wk-land">The website was a template. It answered none of that.</p>
+            <p>
+              It could have belonged to any tuning shop in the country — stock imagery,
+              generic promises, nothing of the van, the work, or the man people were
+              actually queueing to talk&nbsp;to.
+            </p>
+            {WULFTEK_CONSENT && (
+              <>
+                <p>
+                  And during a Groundwork Visit, a conversation turned to something the
+                  website barely mentioned: he remaps tractors.
+                </p>
+                <p>
+                  There is farmland on every side of Telford. There is also almost nobody
+                  competing for the words. Meanwhile every tuning shop in the Midlands is
+                  fighting over “ECU remapping” — a term with real volume and no way in
+                  for a business this size.
+                </p>
+              </>
+            )}
           </div>
-        )}
+          <div class="wk-block">
+            <h2 class="wk-h2">What it changed</h2>
+            <p>
+              The site had to do what those conversations at the van were doing. So the
+              hero is built around the instant answer: a registration lookup, front and
+              centre — type the plate and the site is about <em>your car</em> before
+              you’ve spoken to anyone. That’s the psychology of the moment at the
+              events, moved&nbsp;online.
+            </p>
+            <p>
+              And the template imagery went. In its place, what a customer standing at
+              an event actually sees: his remapping van, and a car he’d remapped
+              himself. Proof he does the work — not pictures of someone&nbsp;else’s.
+            </p>
+            {WULFTEK_CONSENT && (
+              <>
+                <p>
+                  ECU and economy remapping stayed front and centre. They’re the core of
+                  the business and nothing was taken away. But agricultural remapping got
+                  its own ground and real prominence, because that was territory he could
+                  actually own — its own space, written in the language a farm manager
+                  would use, aimed at people within driving distance who didn’t know the
+                  service existed nearby.
+                </p>
+                <p>
+                  That’s the Word Survey: the phrases your customers already use, that
+                  your competitors haven’t noticed, found by turning up and listening.
+                </p>
+              </>
+            )}
+          </div>
+        </div>
 
         <h2 class="wk-h2 wk-built-h">What got built</h2>
         <ul class="wk-built">
@@ -435,6 +463,7 @@ const wtBuilt = [
     line-height: 1.7;
     color: rgb(245 247 249 / 0.75);
   }
+  .wk-block em { font-style: normal; color: var(--color-cobalt-lift); }
   .wk-land {
     color: var(--color-cobalt-lift) !important;
     font-family: var(--font-display);
