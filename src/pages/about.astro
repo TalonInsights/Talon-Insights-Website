@@ -166,19 +166,22 @@ import Footer from "../components/Footer.astro";
               never survives the handoffs between the people building the website.
             </p>
           </li>
-          <li class="au-step">
-            <span class="au-step-n">04</span>
-            <h3>Talon Insights</h3>
-            <p>
-              So I removed the handoffs. One person who finds the difference on site,
-              designs from it, builds it, and answers the phone — with everything
-              yours at the end.
-            </p>
-          </li>
         </ol>
 
-        <div class="au-journey-close">
-          <a class="au-chip" href="/booking">
+        <!-- the arrival — full width, because it's the point -->
+        <div class="au-step-final au-card">
+          <div class="au-final-lead">
+            <span class="au-step-n au-step-n-final">04</span>
+            <div>
+              <h3>Talon Insights</h3>
+              <p>
+                So I removed the handoffs. One person who finds the difference on
+                site, designs from it, builds it, and answers the phone — with
+                everything yours at the end.
+              </p>
+            </div>
+          </div>
+          <a class="au-chip au-final-chip" href="/booking">
             <span>Start your own chapter</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
           </a>
@@ -392,7 +395,7 @@ import Footer from "../components/Footer.astro";
     grid-template-columns: minmax(0, 1fr);
   }
   @media (min-width: 900px) {
-    .au-steps { grid-template-columns: repeat(4, 1fr); }
+    .au-steps { grid-template-columns: repeat(3, 1fr); }
     /* the connecting line the steps sit on */
     .au-steps::before {
       content: "";
@@ -427,11 +430,48 @@ import Footer from "../components/Footer.astro";
     font-size: 0.9375rem;
     color: var(--color-cobalt-lift);
   }
-  .au-step:last-child .au-step-n {
+  /* the arrival panel: full width beneath the three, cobalt-washed */
+  .au-step-final {
+    margin-top: 24px;
+    padding: clamp(28px, 3vw, 44px);
+    background: rgb(29 78 216 / 0.12);
+    border: 1px solid rgb(77 124 255 / 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 28px 40px;
+    flex-wrap: wrap;
+  }
+  .au-final-lead {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    min-width: 0;
+    flex: 1 1 480px;
+  }
+  .au-step-n-final {
+    width: 56px;
+    height: 56px;
+    font-size: 1.0625rem;
     background: var(--color-cobalt);
     border-color: var(--color-cobalt);
     color: #fff;
+    flex: none;
   }
+  .au-step-final h3 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(1.375rem, 1.8vw, 1.875rem);
+    color: var(--color-sheet);
+  }
+  .au-step-final p {
+    margin-top: 10px;
+    font-size: 1.125rem;
+    line-height: 1.65;
+    color: rgb(245 247 249 / 0.75);
+    max-width: 52em;
+  }
+  .au-final-chip { flex: none; }
   .au-step h3 {
     margin-top: 18px;
     font-family: var(--font-display);
@@ -444,10 +484,5 @@ import Footer from "../components/Footer.astro";
     font-size: 0.9375rem;
     line-height: 1.6;
     color: rgb(245 247 249 / 0.6);
-  }
-  .au-journey-close {
-    margin-top: 48px;
-    display: flex;
-    justify-content: center;
   }
 </style>
