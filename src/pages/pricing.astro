@@ -1,79 +1,49 @@
 ---
-// /pricing — the portrayal review B8's withdrawal promised (28 Aug,
-// owner: "add a new webpage called pricing"). The homepage table was
-// pulled for undercutting the bespoke positioning; this page keeps the
-// spec's numbers but frames them the way the service works: the price
-// comes from the visit, gets fixed in writing before the build, and the
-// figures below are honest starting anchors, not a menu. Built in the
-// approved subpage language (the about page's import look): flat ink,
-// wide measure, rounded cards, statement text, three-tone ledes.
-// Plan data verbatim from the withdrawn Pricing.astro (spec §6/B8).
+// /pricing — full rebuild to the owner's long-form copy (28 Aug), styling
+// pulled from 21st per instruction: import #11 is youcefbnm's Process
+// Timeline (demo 1943) — the scroll-pinned horizontal card deck — carrying
+// Section 02, its indigo language recoloured to the scheme's cobalt; the
+// money grid and the questions wear the approved ruixen card language;
+// the accordion is native <details> (zero-dep, accessible) in the same
+// skin. Colours are the site's only: ink-deep, the deep close black,
+// sheet, cobalt/cobalt-lift. The deck's scroll choreography is a plain
+// hashed script (no framer, per §7); stacked + static under 900px and
+// reduced motion. Copy verbatim from the owner's document, including the
+// recommended range line (flagged for their veto).
 import Base from "../layouts/Base.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 
-const plans = [
-  {
-    name: "Websites",
-    label: "FROM",
-    price: "£3,000",
-    per: "",
-    features: [
-      "Designed with you, from real visits",
-      "Directions before code",
-      "The Word Survey included",
-      "You own domain, code and content",
-    ],
-    struck: "Templates and page builders",
-  },
-  {
-    name: "Custom software",
-    label: "FROM",
-    price: "£6,000",
-    per: "",
-    features: [
-      "Built round your actual workflow",
-      "Real database, proper sign-in",
-      "Warranty after launch",
-    ],
-    struck: "Licences you rent forever",
-  },
-  {
-    name: "Local SEO",
-    label: "FROM",
-    price: "£450",
-    per: "/mo",
-    features: [
-      "Google Business Profile done right",
-      "Local citations and content",
-      "Honest monthly reporting",
-    ],
-    struck: "Lock-in contracts",
-  },
-  {
-    name: "Research & strategy",
-    label: "PRICED",
-    price: "Per job",
-    per: "",
-    features: [
-      "Competitor and market analysis",
-      "Modelling with stated assumptions",
-      "Written up to act on",
-    ],
-    struck: "Opinion dressed as data",
-  },
+const steps = [
+  { n: "01", h: "A call. Free.", p: "Fifteen minutes. What you do, what’s wrong with the site you’ve got, what you’re hoping changes. If it’s obviously not a fit, I’ll say so on that call rather than waste a visit." },
+  { n: "02", h: "Time on site. Free.", p: "I come to you. How the work gets done, what your customers say about you, the words they use. Usually more than one visit, because the useful things surface late." },
+  { n: "03", h: "A written scope. Free.", p: "Everything the job includes, in plain English, on paper. Pages, functionality, who provides what, how long it takes. You read it. You disagree with parts of it. We change them." },
+  { n: "04", h: "A fixed price against that scope.", p: "One number, in writing, attached to a specific document. Not a range. Not an estimate. Not “starting from.”" },
+  { n: "05", h: "You decide.", p: "The scope is yours to keep either way. If you take it to somebody else and get it built cheaper, that’s a legitimate outcome and I’d rather that than talk you into something." },
 ];
 
-const how = [
-  { n: "01", h: "The call and the visits", p: "Fifteen minutes to see whether it’s worth going further, then time where you work. All of it free — the price is built from what I learn there." },
-  { n: "02", h: "The directions", p: "Two or three real design directions before any code. You pick one and pull it apart — so the quote describes the thing you actually chose." },
-  { n: "03", h: "The price, fixed", p: "A written scope with one figure and milestones against real dates — before the build starts. If it isn’t in writing, you don’t pay it." },
+const money = [
+  { h: "The visits", p: "Time on site, more than once. This is the part nobody else does and it’s the reason the site ends up being about you rather than about your category." },
+  { h: "The Word Survey", p: "The phrases your customers actually use, including the ones nobody in your area is competing for. Listed in your scope, built into the site from day one." },
+  { h: "Real directions", p: "Two or three genuinely different designs before a line of code is written. You choose. You pull them apart. We go again if neither is right." },
+  { h: "The build", p: "Designed and coded from scratch. Fast, accessible, works properly on a phone, and built so search engines can find it." },
+  { h: "The open line", p: "Message me during the build, whenever, with whatever. There’s nobody in between — you get the person doing the work." },
+  { h: "Ownership", p: "Domain, code, content and accounts are yours on final payment. If you leave, you take everything. There is no version of working with me that leaves you stuck." },
+];
+
+const faqs = [
+  { q: "Isn’t “no upfront price” just a way of charging more?", a: "The opposite, usually. Firms that quote blind price defensively — they pad the number to cover what they haven’t seen. I’ve seen the job before I price it, so there’s nothing to pad against." },
+  { q: "What if the scope is wrong?", a: "Then we fix it before it’s signed, which is why you read it and argue with it. That’s the entire purpose of putting it in writing rather than describing it on a call." },
+  { q: "What if I don’t like the designs?", a: "You see two or three, and if none is right we go again. The directions stage exists so that “I don’t like it” happens in week two rather than week eight." },
+  { q: "Do you take deposits?", a: "Yes — a deposit on signing, then payments against milestones, with the balance on handover. All of it stated in the scope before you commit to anything." },
+  { q: "What if I go elsewhere after the visits?", a: "Then you go elsewhere, and you keep the written scope. It cost you nothing and it’s a genuinely useful document to hand to whoever you use instead. I’d rather be the person who was straight with you than the person who tied you in." },
+  { q: "Is this going to be expensive?", a: "It’s more than a template and less than an agency, because there’s no account manager, no office and no junior doing the work. What you’re paying for is the visits and the person building it being the same person you met." },
 ];
 ---
 
 <Base
   title="Pricing — Talon Insights"
-  description="How Talon Insights pricing works: free visits, directions before code, then one fixed written price before the build starts. Websites from £3,000, software from £6,000."
+  description="Why nobody can honestly price your website upfront — and how you still get one fixed number, in writing, before anything is built. Free visits, a written scope, no moving figures."
   path="/pricing"
   schema={{
     "@context": "https://schema.org",
@@ -86,293 +56,596 @@ const how = [
         about: { "@id": "https://taloninsights.co.uk/#business" },
       },
       {
-        "@type": "OfferCatalog",
-        "@id": "https://taloninsights.co.uk/pricing#offers",
-        name: "Talon Insights services",
-        itemListElement: [
-          { "@type": "Offer", name: "Websites", price: "3000", priceCurrency: "GBP", description: "Starting price — every job is quoted fixed, in writing, from the visit." },
-          { "@type": "Offer", name: "Custom software", price: "6000", priceCurrency: "GBP", description: "Starting price — internal tools built round the workflow, fixed quote in writing." },
-          { "@type": "Offer", name: "Local SEO", price: "450", priceCurrency: "GBP", description: "Starting monthly price — no lock-in contracts." },
-          { "@type": "Offer", name: "Research & strategy", description: "Priced per engagement." },
-        ],
+        "@type": "FAQPage",
+        "@id": "https://taloninsights.co.uk/pricing#faq",
+        mainEntity: faqs.map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: { "@type": "Answer", text: f.a },
+        })),
       },
     ],
   }}
 >
   <Header />
-  <main class="pr">
-    <div class="pr-wrap">
+  <main class="pz">
 
-      <!-- ---------------- head ---------------- -->
-      <header class="pr-head">
+    <!-- ---------------- HERO ---------------- -->
+    <section class="pz-hero">
+      <div class="pz-wrap">
         <p class="t-micro eyebrow">PRICING</p>
-        <h1 class="pr-h1">You know the price before the build&nbsp;starts.</h1>
-        <p class="pr-lede">
-          Nothing here is a menu. <em>Every job is priced from the visit</em> — then
-          fixed in writing before a line of code.
-          <strong>The figures below are honest starting points.</strong>
+        <h1 class="pz-h1">
+          I can’t price your website today.
+          <span class="pz-dim">Neither can anyone else.</span>
+        </h1>
+        <p class="pz-lede">
+          They just don’t tell you that. A number given before anyone has seen how you
+          work is <em>a guess dressed as a quote</em> — and guesses get corrected
+          later, <strong>upwards.</strong>
         </p>
-      </header>
-
-      <!-- ---------------- how the price happens ---------------- -->
-      <ol class="pr-how">
-        {how.map((step) => (
-          <li class="pr-how-step">
-            <span class="pr-how-n">{step.n}</span>
-            <h2>{step.h}</h2>
-            <p>{step.p}</p>
-          </li>
-        ))}
-      </ol>
-
-      <!-- ---------------- the anchors ---------------- -->
-      <div class="pr-plans">
-        {plans.map((plan) => (
-          <article class="pr-plan">
-            <h3>{plan.name}</h3>
-            <p class="pr-price">
-              <span class="t-mono pr-price-label">{plan.label}</span>
-              <span class="pr-price-fig">{plan.price}</span>
-              {plan.per && <span class="pr-price-per t-mono">{plan.per}</span>}
-            </p>
-            <ul>
-              {plan.features.map((f) => (
-                <li><i aria-hidden="true">◆</i>{f}</li>
-              ))}
-            </ul>
-            <p class="pr-struck">{plan.struck}</p>
-          </article>
-        ))}
       </div>
+    </section>
 
-      <!-- ---------------- always included ---------------- -->
-      <div class="pr-always">
-        <p class="t-mono pr-trust">FIXED PRICE<i>◆</i>WRITTEN SCOPE<i>◆</i>YOU OWN EVERYTHING</p>
-        <p class="pr-always-line">
-          Every job, whatever the size: a warranty after launch, the line open for
-          ideas all the way through, and the domain, code and content yours on
-          full&nbsp;payment.
-        </p>
-        <div class="pr-ctas">
-          <a class="btn btn-primary" href="/booking">Book a visit</a>
-          <a class="btn btn-ghost pr-ghost" href="/process">See the five steps</a>
+    <!-- ---------------- 01 · THE ARGUMENT ---------------- -->
+    <section class="pz-argument">
+      <div class="pz-wrap">
+        <h2 class="pz-h2">Only template agencies can price a website&nbsp;upfront.</h2>
+        <p class="pz-pull">That isn’t a criticism of them. It’s arithmetic.</p>
+        <div class="pz-prose">
+          <p>
+            If every site is the same site with different colours, the price is knowable
+            in advance, because the work is knowable in advance. Three hundred pounds, or
+            three thousand, for the same theme with your logo on it. Fair enough — and if
+            that’s what you want, there are plenty of people who’ll do it well.
+          </p>
+          <p>
+            But you’re not buying a theme. You’re buying a site built from how your
+            business actually works: what you make, who chooses you and why, the words
+            your customers use, the things you do that nobody else in your area does.
+            None of that is visible from a price list. Most of it isn’t visible from a
+            phone call.
+          </p>
+          <p>
+            So a firm quoting you before they’ve been to see you is doing one of two
+            things. Either they’re selling you something standard, or they’re guessing —
+            and a guess that turns out low doesn’t get absorbed. It gets recovered, in
+            extras, in change requests, in the things you assumed were included.
+          </p>
+          <p class="pz-prose-land">
+            I’d rather find out what the job is, then tell you what it costs, and then
+            not&nbsp;move.
+          </p>
         </div>
       </div>
-    </div>
+    </section>
+
+    <!-- ---------------- 02 · HOW IT ACTUALLY WORKS — the deck ---------------- -->
+    <section class="pz-deck-scroll" id="deck">
+      <div class="pz-deck-sticky">
+        <div class="pz-wrap">
+          <h2 class="pz-h2 pz-deck-h">
+            You’ll have a number before anything is built.
+            <span class="pz-dim">It just isn’t the first thing.</span>
+          </h2>
+        </div>
+        <div class="pz-deck" aria-label="The five steps to a fixed price">
+          {steps.map((s2) => (
+            <article class="pz-card">
+              <div class="pz-card-rail">
+                <span class="pz-card-n">{s2.n}</span>
+              </div>
+              <div class="pz-card-body">
+                <h3>{s2.h}</h3>
+                <p>{s2.p}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+        <div class="pz-wrap">
+          <p class="pz-deck-note">
+            Everything up to step 04 costs nothing, and there’s no obligation at the end
+            of it. The first time money is mentioned, you already know exactly what
+            you’d be&nbsp;buying.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------------- 03 · FIXED MEANS FIXED ---------------- -->
+    <section class="pz-fixed">
+      <div class="pz-wrap">
+        <h2 class="pz-h2">Fixed means&nbsp;fixed.</h2>
+        <div class="pz-prose">
+          <p>
+            The number attached to your scope is the number you pay. It doesn’t move
+            because the job took longer than I thought, because something turned out
+            harder than it looked, or because I underestimated. That risk is mine —
+            that’s what pricing after the visits buys me, and it’s why I can carry it.
+          </p>
+        </div>
+        <p class="pz-pull pz-pull-big">One thing changes the price: <em>you</em> changing the&nbsp;scope.</p>
+        <div class="pz-prose">
+          <p>
+            If you decide halfway through that you want an online shop, or a booking
+            system, or four more pages, that’s a different job to the one we agreed. It
+            goes through a written variation: what’s being added, what it costs, what it
+            does to the timeline. You sign it or you don’t. Nothing gets added quietly
+            and appears on an invoice later.
+          </p>
+          <p>
+            New ideas during the build are welcome — that’s the whole point of the open
+            line, and most of the best things on the sites I’ve built arrived that way.
+            Wanting them is not the same as being charged for them without being asked.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------------- 04 · WHERE THE MONEY GOES ---------------- -->
+    <section class="pz-money">
+      <div class="pz-wrap">
+        <h2 class="pz-h2">Where the money&nbsp;goes.</h2>
+        <div class="pz-money-grid">
+          {money.map((m) => (
+            <article class="pz-money-card">
+              <h3><i aria-hidden="true">◆</i>{m.h}</h3>
+              <p>{m.p}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------------- 05 · WHAT I'LL TELL YOU EARLY ---------------- -->
+    <section class="pz-early">
+      <div class="pz-wrap">
+        <div class="pz-early-panel">
+          <h2 class="pz-h2">If you want a rough idea before committing to visits, ask on the&nbsp;call.</h2>
+          <div class="pz-prose pz-prose-onpanel">
+            <p>
+              I won’t quote a number I can’t stand behind. But I will tell you, on that
+              first fifteen minutes, whether what you’re describing is a small job or a
+              large one, and roughly what range that puts you in — with the honest caveat
+              that it’s a range, not a price, and it exists to save us both a wasted
+              afternoon.
+            </p>
+            <p>
+              What I won’t do is send you a figure by email an hour after we’ve spoken
+              and call it a quote.
+            </p>
+          </div>
+          <p class="pz-range t-mono">
+            MOST WEBSITES I BUILD LAND BETWEEN £3,000 AND £8,000 · CUSTOM SOFTWARE STARTS HIGHER
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------------- 06 · AFTER LAUNCH ---------------- -->
+    <section class="pz-after">
+      <div class="pz-wrap">
+        <h2 class="pz-h2">After&nbsp;launch.</h2>
+        <div class="pz-after-grid">
+          <div class="pz-prose">
+            <p>
+              Some clients want nothing further — the site is theirs, it works, that’s
+              the end of it. That’s a perfectly good outcome and I don’t sell
+              against&nbsp;it.
+            </p>
+          </div>
+          <div class="pz-prose">
+            <p>
+              Others want the territory maintained: the words kept current, the Google
+              Business Profile looked after, new content as the business changes. That’s
+              a monthly arrangement, priced against what’s actually being done,
+              cancellable with a month’s notice. No twelve-month tie-in, ever —
+              <a class="pz-inline-link" href="/#faults">Fault 02 exists for a reason</a>.
+            </p>
+            <p>
+              Ongoing changes to the site itself are quoted job by job, or covered by
+              the retainer if that’s how we’ve set it up. Either way, in writing, before
+              the&nbsp;work.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------------- 07 · FOUNDING PROJECTS ---------------- -->
+    <section class="pz-founding">
+      <div class="pz-wrap">
+        <div class="pz-founding-panel">
+          <div>
+            <h2 class="pz-h2">A reduced rate, for a&nbsp;reason.</h2>
+            <div class="pz-prose pz-prose-onpanel">
+              <p>
+                Talon Insights is new. I’m taking on a small number of projects at a
+                reduced rate in exchange for a written case study and a review — same
+                scope, same standard, same fixed price guarantee.
+              </p>
+              <p>
+                That’s a straightforward trade and I’d rather name it than dress it up:
+                you get the work for less, I get proof that the work exists. When the
+                case studies are written, the rate goes back&nbsp;up.
+              </p>
+            </div>
+          </div>
+          <a class="pz-inline-link pz-founding-link" href="/founding-projects">How founding projects work →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------------- 08 · QUESTIONS ---------------- -->
+    <section class="pz-faq">
+      <div class="pz-wrap">
+        <h2 class="pz-h2">Questions.</h2>
+        <div class="pz-faq-list">
+          {faqs.map((f) => (
+            <details class="pz-q">
+              <summary>
+                <span>{f.q}</span>
+                <i aria-hidden="true">+</i>
+              </summary>
+              <p>{f.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------------- CLOSE ---------------- -->
+    <section class="pz-close">
+      <div class="pz-wrap">
+        <h2 class="pz-h2">Find out what it&nbsp;costs.</h2>
+        <p class="pz-close-body">
+          Start with fifteen minutes on the phone. If it sounds like a fit, I’ll come to
+          you — and you’ll have a written scope and a fixed price before you’ve
+          spent&nbsp;anything.
+        </p>
+        <div class="pz-ctas">
+          <a class="btn btn-primary" href="/booking">Book a visit</a>
+          <a class="btn btn-ghost pz-ghost" href="tel:+447742082423">Or call 07742 082423</a>
+        </div>
+        <p class="t-mono pz-reply">REPLY WITHIN ONE WORKING DAY</p>
+      </div>
+    </section>
   </main>
   <Footer />
 </Base>
 
 <style>
-  .pr { background: var(--color-ink-deep); }
-  .pr-wrap {
+  .pz { background: var(--color-ink-deep); }
+  .pz-wrap {
     max-width: 1560px;
     margin-inline: auto;
     padding-inline: 24px;
   }
+  .pz-h2 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1.875rem, 2.6vw, 3rem);
+    line-height: 1.12;
+    letter-spacing: -0.015em;
+    color: var(--color-sheet);
+    max-width: 24em;
+  }
+  .pz-dim { color: rgb(245 247 249 / 0.5); }
 
-  /* ---------------- head ---------------- */
-  .pr-head { padding-top: 140px; max-width: 60em; }
-  .pr-h1 {
+  /* the shared prose voice — statement-sized */
+  .pz-prose p {
+    margin-top: 20px;
+    font-size: 1.25rem;
+    line-height: 1.7;
+    color: rgb(245 247 249 / 0.75);
+    max-width: 42em;
+  }
+  .pz-prose-land { color: var(--color-sheet) !important; font-weight: 500; }
+  .pz-pull {
+    margin-top: 26px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1.25rem, 1.6vw, 1.75rem);
+    color: var(--color-cobalt-lift);
+  }
+  .pz-pull-big {
+    font-size: clamp(1.5rem, 2vw, 2.25rem);
+    margin-block: 44px 8px;
+    color: var(--color-sheet);
+  }
+  .pz-pull-big em { font-style: normal; color: var(--color-cobalt-lift); }
+  .pz-inline-link {
+    color: var(--color-cobalt-lift);
+    text-decoration: none;
+    border-bottom: 1px solid rgb(77 124 255 / 0.45);
+    transition: color 180ms var(--ease), border-color 180ms var(--ease);
+  }
+  .pz-inline-link:hover { color: var(--color-sheet); border-color: rgb(245 247 249 / 0.5); }
+
+  /* ---------------- hero ---------------- */
+  .pz-hero { padding-block: 150px 96px; }
+  .pz-h1 {
     margin-top: 14px;
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: clamp(2.5rem, 3.4vw, 4.25rem);
-    line-height: 1.06;
+    font-size: clamp(2.5rem, 3.8vw, 4.75rem);
+    line-height: 1.05;
     letter-spacing: -0.02em;
     color: var(--color-sheet);
+    max-width: 16em;
   }
-  /* the three-tone lede voice from /about */
-  .pr-lede {
-    margin-top: 22px;
+  .pz-h1 .pz-dim { display: block; }
+  .pz-lede {
+    margin-top: 26px;
     font-family: var(--font-display);
     font-weight: 500;
-    font-size: clamp(1.375rem, 1.6vw, 1.75rem);
-    line-height: 1.55;
+    font-size: clamp(1.375rem, 1.7vw, 1.875rem);
+    line-height: 1.5;
     letter-spacing: -0.01em;
     color: rgb(245 247 249 / 0.55);
-    max-width: 34em;
+    max-width: 30em;
   }
-  .pr-lede em { font-style: normal; color: var(--color-cobalt-lift); }
-  .pr-lede strong { font-weight: 600; color: var(--color-sheet); }
+  .pz-lede em { font-style: normal; color: var(--color-cobalt-lift); }
+  .pz-lede strong { font-weight: 600; color: var(--color-sheet); }
 
-  /* ---------------- how ---------------- */
-  .pr-how {
-    list-style: none;
-    margin: 72px 0 0;
-    padding: 0;
-    position: relative;
-    display: grid;
-    gap: 24px;
-    grid-template-columns: minmax(0, 1fr);
+  /* ---------------- the argument ---------------- */
+  .pz-argument {
+    padding-block: 96px;
+    border-top: 1px solid rgb(245 247 249 / 0.1);
   }
-  @media (min-width: 900px) {
-    .pr-how { grid-template-columns: repeat(3, 1fr); }
-    .pr-how::before {
-      content: "";
-      position: absolute;
-      top: 46px;
-      left: 24px;
-      right: 24px;
-      height: 1px;
-      background: rgb(245 247 249 / 0.14);
-    }
-  }
-  .pr-how-step {
+
+  /* ---------------- the deck (21st import #11, recoloured) ----------------
+     The import's mechanic: a tall scroll region with a sticky viewport;
+     card 0 stands, cards 1..n slide in from the right edge as scroll
+     progresses, stacking with a 64px shingle. Its indigo radial ground
+     and gradient cards arrive recoloured to the scheme's cobalt. */
+  .pz-deck-scroll {
     position: relative;
+    height: 420vh; /* 5 cards: 1 standing + 4 travelling */
+    background: radial-gradient(30% 80% at 0% 70%,
+      #1D4ED8 0%, #16368F 22.92%, #0B1F3A 42.71%, var(--color-ink-deep) 88.54%);
+  }
+  .pz-deck-sticky {
+    position: sticky;
+    top: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 40px;
+    overflow: hidden;
+    padding-block: 96px 64px;
+  }
+  .pz-deck-h { max-width: 20em; }
+  .pz-deck {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    padding-left: max(24px, calc((100% - 1512px) / 2 + 24px));
+  }
+  .pz-card {
+    display: flex;
+    min-width: min(62%, 760px);
+    max-width: min(62%, 760px);
+    border: 1px solid rgb(245 247 249 / 0.16);
+    border-radius: 4px;
+    backdrop-filter: blur(12px);
+    background: linear-gradient(135deg, rgb(6 14 28 / 0.7) 40%, #1D4ED8 120%);
+    color: var(--color-sheet);
+    will-change: transform;
+  }
+  .pz-card-rail {
     padding: 24px;
-    border-radius: 12px;
-    background: rgb(245 247 249 / 0.03);
-    transition: transform 320ms cubic-bezier(0.34, 1.3, 0.64, 1), background-color 220ms var(--ease);
+    border-right: 1px solid rgb(245 247 249 / 0.16);
   }
-  .pr-how-step:hover { transform: scale(1.03); background: rgb(245 247 249 / 0.06); }
-  .pr-how-n {
-    display: inline-grid;
+  .pz-card-n {
+    display: grid;
     place-items: center;
-    position: relative;
-    z-index: 1;
-    width: 44px;
-    height: 44px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
-    background: var(--color-ink-deep);
-    border: 1px solid rgb(77 124 255 / 0.5);
+    background: var(--color-cobalt);
     font-family: var(--font-mono);
     font-weight: 700;
     font-size: 0.9375rem;
-    color: var(--color-cobalt-lift);
-  }
-  .pr-how-step:last-child .pr-how-n {
-    background: var(--color-cobalt);
-    border-color: var(--color-cobalt);
     color: #fff;
   }
-  .pr-how-step h2 {
-    margin-top: 18px;
+  .pz-card-body { padding: 24px 28px 28px; display: flex; flex-direction: column; gap: 14px; }
+  .pz-card-body h3 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1.375rem, 1.9vw, 2rem);
+    line-height: 1.2;
+  }
+  .pz-card-body p {
+    font-size: 1.1875rem;
+    line-height: 1.65;
+    color: rgb(245 247 249 / 0.8);
+    max-width: 34em;
+  }
+  .pz-deck-note {
+    font-size: 1.25rem;
+    line-height: 1.65;
+    color: rgb(245 247 249 / 0.8);
+    max-width: 42em;
+  }
+
+  /* ---------------- fixed / money / early / after ---------------- */
+  .pz-fixed { padding-block: 110px 96px; }
+  .pz-money { padding-block: 0 96px; }
+  .pz-money-grid {
+    margin-top: 44px;
+    display: grid;
+    gap: 24px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  @media (max-width: 1099.98px) { .pz-money-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 639.98px) { .pz-money-grid { grid-template-columns: 1fr; } }
+  .pz-money-card {
+    padding: 26px;
+    border-radius: 12px;
+    background: rgb(245 247 249 / 0.03);
+    border: 1px solid rgb(245 247 249 / 0.1);
+    transition: transform 320ms cubic-bezier(0.34, 1.3, 0.64, 1), border-color 220ms var(--ease);
+  }
+  .pz-money-card:hover { transform: scale(1.03); border-color: rgb(77 124 255 / 0.45); }
+  .pz-money-card h3 {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
     font-family: var(--font-display);
     font-weight: 700;
     font-size: 1.375rem;
     color: var(--color-sheet);
   }
-  .pr-how-step p {
+  .pz-money-card h3 i { font-style: normal; font-size: 0.625rem; color: rgb(77 124 255 / 0.8); }
+  .pz-money-card p {
     margin-top: 10px;
     font-size: 1.125rem;
     line-height: 1.65;
     color: rgb(245 247 249 / 0.72);
   }
 
-  /* ---------------- the anchors ---------------- */
-  .pr-plans {
-    margin-top: 88px;
-    display: grid;
-    gap: 24px;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-  @media (max-width: 1199.98px) { .pr-plans { grid-template-columns: 1fr 1fr; } }
-  @media (max-width: 639.98px) { .pr-plans { grid-template-columns: 1fr; } }
-  .pr-plan {
-    display: flex;
-    flex-direction: column;
-    padding: 28px;
-    border-radius: 12px;
-    background: rgb(245 247 249 / 0.03);
-    border: 1px solid rgb(245 247 249 / 0.1);
-    transition: transform 320ms cubic-bezier(0.34, 1.3, 0.64, 1), border-color 220ms var(--ease);
-  }
-  .pr-plan:hover { transform: scale(1.03); border-color: rgb(77 124 255 / 0.45); }
-  .pr-plan h3 {
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 1.375rem;
-    color: var(--color-sheet);
-  }
-  .pr-price {
-    margin-top: 14px;
-    display: flex;
-    align-items: baseline;
-    gap: 10px;
-  }
-  .pr-price-label {
-    font-size: 0.9375rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    color: var(--color-cobalt-lift);
-  }
-  .pr-price-fig {
-    font-family: var(--font-mono);
-    font-weight: 700;
-    font-size: 2rem;
-    font-variant-numeric: tabular-nums;
-    color: var(--color-sheet);
-  }
-  .pr-price-per { font-size: 1rem; color: rgb(245 247 249 / 0.55); }
-  .pr-plan ul {
-    list-style: none;
-    margin: 20px 0 0;
-    padding: 18px 0 0;
-    border-top: 1px solid rgb(245 247 249 / 0.1);
-    display: grid;
-    gap: 10px;
-    flex: 1;
-  }
-  .pr-plan li {
-    display: flex;
-    gap: 10px;
-    align-items: baseline;
-    font-size: 1.0625rem;
-    line-height: 1.55;
-    color: rgb(245 247 249 / 0.75);
-  }
-  .pr-plan li i {
-    font-style: normal;
-    font-size: 0.5625rem;
-    color: rgb(77 124 255 / 0.8);
-  }
-  .pr-struck {
-    margin-top: 18px;
-    font-size: 1rem;
-    color: rgb(245 247 249 / 0.4);
-    text-decoration: line-through;
-  }
-
-  /* ---------------- always ---------------- */
-  .pr-always {
-    margin-block: 96px 0;
+  .pz-early { padding-block: 0 96px; }
+  .pz-early-panel,
+  .pz-founding-panel {
     padding: clamp(32px, 4vw, 56px);
     border-radius: 12px;
     background: rgb(29 78 216 / 0.12);
     border: 1px solid rgb(77 124 255 / 0.35);
-    text-align: center;
   }
-  .pr-trust {
+  .pz-prose-onpanel p { color: rgb(245 247 249 / 0.8); }
+  .pz-range {
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid rgb(245 247 249 / 0.14);
     font-size: 1rem;
     font-weight: 700;
-    letter-spacing: 0.14em;
-    color: rgb(245 247 249 / 0.8);
+    letter-spacing: 0.1em;
+    color: var(--color-cobalt-lift);
   }
-  .pr-trust i {
+
+  .pz-after { padding-block: 0 96px; }
+  .pz-after-grid {
+    display: grid;
+    gap: clamp(24px, 4vw, 80px);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+  @media (max-width: 899.98px) { .pz-after-grid { grid-template-columns: 1fr; } }
+
+  .pz-founding { padding-block: 0 96px; }
+  .pz-founding-panel { display: flex; align-items: flex-end; justify-content: space-between; gap: 28px 48px; flex-wrap: wrap; }
+  .pz-founding-link { font-size: 1.125rem; flex: none; }
+
+  /* ---------------- questions ---------------- */
+  .pz-faq { padding-block: 0 110px; }
+  .pz-faq-list { margin-top: 36px; max-width: 60em; }
+  .pz-q {
+    border-top: 1px solid rgb(245 247 249 / 0.12);
+  }
+  .pz-q:last-child { border-bottom: 1px solid rgb(245 247 249 / 0.12); }
+  .pz-q summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 24px;
+    padding-block: 22px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(1.1875rem, 1.4vw, 1.5rem);
+    color: var(--color-sheet);
+    transition: color 180ms var(--ease);
+  }
+  .pz-q summary::-webkit-details-marker { display: none; }
+  .pz-q summary:hover { color: var(--color-cobalt-lift); }
+  .pz-q summary i {
     font-style: normal;
-    margin-inline: 12px;
-    font-size: 0.625rem;
-    vertical-align: 1px;
-    color: rgb(77 124 255 / 0.8);
+    flex: none;
+    color: var(--color-cobalt-lift);
+    font-size: 1.5rem;
+    line-height: 1;
+    transition: rotate 220ms var(--ease);
   }
-  .pr-always-line {
+  .pz-q[open] summary i { rotate: 45deg; }
+  .pz-q > p {
+    padding: 0 0 26px;
+    font-size: 1.1875rem;
+    line-height: 1.7;
+    color: rgb(245 247 249 / 0.75);
+    max-width: 48em;
+  }
+
+  /* ---------------- close ---------------- */
+  .pz-close {
+    padding-block: 110px;
+    text-align: center;
+    background: #04080F; /* flows into the footer */
+    border-top: var(--hairline-dark);
+  }
+  .pz-close .pz-h2 { margin-inline: auto; }
+  .pz-close-body {
     margin: 16px auto 0;
-    max-width: 44em;
-    font-size: 1.25rem;
+    font-size: 1.3125rem;
     line-height: 1.65;
-    color: rgb(245 247 249 / 0.78);
+    color: rgb(245 247 249 / 0.75);
+    max-width: 36em;
   }
-  .pr-ctas { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin-top: 32px; }
-  .pr-ghost { color: var(--color-sheet); border-color: rgb(245 247 249 / 0.3); }
-  .pr-ghost:hover { border-color: var(--color-sheet); }
+  .pz-ctas { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin-top: 36px; }
+  .pz-ghost { color: var(--color-sheet); border-color: rgb(245 247 249 / 0.3); }
+  .pz-ghost:hover { border-color: var(--color-sheet); }
+  .pz-reply { margin-top: 20px; font-size: 0.9375rem; letter-spacing: 0.12em; color: rgb(245 247 249 / 0.45); }
 
-  .pr-wrap { padding-bottom: 120px; }
-
+  /* ---------------- deck: stacked fallback ---------------- */
+  @media (max-width: 899.98px), (prefers-reduced-motion: reduce) {
+    .pz-deck-scroll { height: auto; background: var(--color-ink-deep); }
+    .pz-deck-sticky { position: static; min-height: 0; overflow: visible; }
+    .pz-deck {
+      flex-direction: column;
+      gap: 20px;
+      padding-inline: 24px;
+    }
+    .pz-card { min-width: 0; max-width: none; transform: none !important; }
+  }
   @media (max-width: 899.98px) {
-    .pr-head { padding-top: 110px; }
-    .pr-how { margin-top: 56px; }
-    .pr-plans { margin-top: 64px; }
-    .pr-always { margin-top: 72px; }
+    .pz-hero { padding-block: 110px 72px; }
+    .pz-argument, .pz-fixed { padding-block: 72px; }
   }
 </style>
+
+<script>
+  /* Import #11's scroll choreography, hand-rolled: within the tall deck
+     section, progress maps each card (after the first) from off-screen
+     right to its shingled stack position — 64px per index, the import's
+     own offset. Plain script; the stacked fallback above never runs it. */
+  const scroller = document.querySelector<HTMLElement>(".pz-deck-scroll");
+  const deckCards = Array.from(document.querySelectorAll<HTMLElement>(".pz-card"));
+  if (
+    scroller && deckCards.length &&
+    matchMedia("(min-width: 900px)").matches &&
+    !matchMedia("(prefers-reduced-motion: reduce)").matches
+  ) {
+    const n = deckCards.length;
+    let ticking = false;
+    const paint = () => {
+      ticking = false;
+      const rect = scroller.getBoundingClientRect();
+      const total = rect.height - window.innerHeight;
+      const progress = Math.min(1, Math.max(0, -rect.top / total));
+      deckCards.forEach((card, i) => {
+        if (i === 0) return;
+        const start = i / n;
+        const end = start + 1 / n;
+        const t = Math.min(1, Math.max(0, (progress - start) / (end - start)));
+        const from = window.innerWidth;
+        const to = -(card.offsetWidth * i) + 64 * i;
+        card.style.transform = `translateX(${from + (to - from) * t}px)`;
+      });
+    };
+    window.addEventListener("scroll", () => {
+      if (!ticking) { ticking = true; requestAnimationFrame(paint); }
+    }, { passive: true });
+    window.addEventListener("resize", paint);
+    paint();
+  }
+</script>
