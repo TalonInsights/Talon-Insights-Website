@@ -66,6 +66,16 @@ const fontsHref =
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href={fontsHref} />
+    <script>
+      /* Retired-anchor safety net (28 Aug): #pricing was a homepage
+         section until B8 withdrew; stale cached pages and old bookmarks
+         still point at it. Fragments never reach the server, so the
+         redirect has to live here. Only retired anchors are mapped —
+         live section hashes pass untouched. */
+      const retired: Record<string, string> = { "#pricing": "/pricing" };
+      const dest = retired[location.hash];
+      if (dest) location.replace(dest);
+    </script>
   </head>
   <body>
     <slot />
