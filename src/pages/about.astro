@@ -293,7 +293,9 @@ import Footer from "../components/Footer.astro";
     font-size: clamp(2.25rem, 3.2vw, 3rem);
     color: var(--color-sheet);
   }
-  .au-about-head p {
+  /* :not(.au-h2): the About label is a p now (heading-order fix) and
+     this paragraph rule out-specified .au-h2, shrinking it to lede size */
+  .au-about-head p:not(.au-h2) {
     font-size: 1.375rem; /* the page opener earns lede size (owner) */
     line-height: 1.65;
     color: rgb(245 247 249 / 0.72);
